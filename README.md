@@ -11,7 +11,7 @@
 | [다예](https://github.com/yeahh315) | [민재](https://github.com/mini-min) | [준혁](https://github.com/Genesis2010) | [가현](https://github.com/mcrkgus) | 
 | :--: | :--: | :--: | :--: |
 | | 
-| <p align = "center">`검색 페이지` `링크 저장` | <p align = "center">`카테고리 페이지` `카테고리 세부` | <p align = "center">`소셜 로그인` `마이페이지` | <p align = "center">`메인 페이지` `링크 저장` |
+| <p align = "center">`검색 페이지` `리마인드` | <p align = "center">`카테고리 페이지` `카테고리 세부` | <p align = "center">`소셜 로그인` `마이페이지` | <p align = "center">`메인 페이지` `링크 저장` |
 
 <br>
 
