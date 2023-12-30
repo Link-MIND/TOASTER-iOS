@@ -32,6 +32,11 @@
 		6B6AE69C2B3FF5CC000E2366 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE69B2B3FF5CC000E2366 /* HomeViewController.swift */; };
 		6B6AE69F2B3FF5D7000E2366 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE69E2B3FF5D7000E2366 /* LoginViewController.swift */; };
 		6B6AE6A22B3FF5F7000E2366 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6A12B3FF5F7000E2366 /* TabBarController.swift */; };
+		6B6AE6A42B3FF6B0000E2366 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6A32B3FF6B0000E2366 /* UIViewController+.swift */; };
+		6B6AE6A62B3FF6BD000E2366 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6A52B3FF6BD000E2366 /* UIView+.swift */; };
+		6B6AE6A82B3FF6D5000E2366 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6A72B3FF6D5000E2366 /* UITextField+.swift */; };
+		6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6A92B3FF6EA000E2366 /* UIStackView+.swift */; };
+		6B6AE6AC2B3FF6F7000E2366 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6AB2B3FF6F7000E2366 /* UIColor+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +56,11 @@
 		6B6AE69B2B3FF5CC000E2366 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6B6AE69E2B3FF5D7000E2366 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6B6AE6A12B3FF5F7000E2366 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		6B6AE6A32B3FF6B0000E2366 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		6B6AE6A52B3FF6BD000E2366 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		6B6AE6A72B3FF6D5000E2366 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		6B6AE6A92B3FF6EA000E2366 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
+		6B6AE6AB2B3FF6F7000E2366 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +155,11 @@
 		6B6AE6812B3FF50A000E2366 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6B6AE6AB2B3FF6F7000E2366 /* UIColor+.swift */,
+				6B6AE6A92B3FF6EA000E2366 /* UIStackView+.swift */,
+				6B6AE6A72B3FF6D5000E2366 /* UITextField+.swift */,
+				6B6AE6A52B3FF6BD000E2366 /* UIView+.swift */,
+				6B6AE6A32B3FF6B0000E2366 /* UIViewController+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -365,13 +380,18 @@
 			files = (
 				6B6AE6532B3FF101000E2366 /* ViewController.swift in Sources */,
 				6B6AE6902B3FF59C000E2366 /* DetailCategoryViewController.swift in Sources */,
+				6B6AE6A62B3FF6BD000E2366 /* UIView+.swift in Sources */,
 				6B6AE6932B3FF5A9000E2366 /* CategoryViewController.swift in Sources */,
 				6B6AE6992B3FF5C1000E2366 /* SearchViewController.swift in Sources */,
 				6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */,
+				6B6AE6A82B3FF6D5000E2366 /* UITextField+.swift in Sources */,
+				6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */,
+				6B6AE6AC2B3FF6F7000E2366 /* UIColor+.swift in Sources */,
 				6B6AE69C2B3FF5CC000E2366 /* HomeViewController.swift in Sources */,
 				6B6AE6962B3FF5B5000E2366 /* AddLinkViewController.swift in Sources */,
 				6B6AE68D2B3FF58D000E2366 /* RemindViewController.swift in Sources */,
 				6B6AE6512B3FF101000E2366 /* SceneDelegate.swift in Sources */,
+				6B6AE6A42B3FF6B0000E2366 /* UIViewController+.swift in Sources */,
 				6B6AE6A22B3FF5F7000E2366 /* TabBarController.swift in Sources */,
 				6B6AE68A2B3FF582000E2366 /* MypageViewController.swift in Sources */,
 				6B6AE69F2B3FF5D7000E2366 /* LoginViewController.swift in Sources */,
