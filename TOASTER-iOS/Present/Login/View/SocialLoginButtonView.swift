@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SocialLoginButtonView: UIButton {
+final class SocialLoginButtonView: UIButton {
 
     // MARK: - Properties
     
