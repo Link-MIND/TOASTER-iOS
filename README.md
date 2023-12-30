@@ -1,8 +1,10 @@
 # TOASTER-iOS
-더 이상 링크를 태우지 마세요. 토스트 먹듯이 간단하게! 
+<img src="https://img.shields.io/badge/Swift-F05138?style=flat-square&logo=Swift&logoColor=white"/> <img src="https://img.shields.io/badge/Xcode-147EFB?style=flat-square&logo=Xcode&logoColor=white"/>    
+
+더 이상 링크를 태우지 마세요. 토스트 먹듯이 간단하게!
 
 - 33기 DO SOPT APP-JAM (2023.12.17 ~ )
-- Development Environment : `iOS 13.0+` `Xcode 15.1`
+- Development Environment : `iOS 15.0+` `Xcode 15.1`
 
 <br>
 
@@ -10,18 +12,17 @@
 
 | [다예](https://github.com/yeahh315) | [민재](https://github.com/mini-min) | [준혁](https://github.com/Genesis2010) | [가현](https://github.com/mcrkgus) | 
 | :--: | :--: | :--: | :--: |
-| | 
-| <p align = "center">`검색 페이지` `리마인드` | <p align = "center">`카테고리 페이지` `카테고리 세부` | <p align = "center">`소셜 로그인` `마이페이지` | <p align = "center">`메인 페이지` `링크 저장` |
-
-<br>
+| <img width="600" alt="다예" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/29ac865d-b9cb-42e4-9b38-855e4a518c8a"> | <img width="600" alt="민재" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/6f2dfb8a-333c-4aea-a307-d85fc3fd2e41"> | <img width="600" alt="준혁" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/74e2ca95-2045-4bf7-9975-02818db5886a"> | <img width="600" alt="가현" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/2ef93291-7ffb-49fc-a99e-1f083e0c5887"> |
+| <p align = "center">`검색 페이지` `리마인드` | <p align = "center">`카테고리 페이지` `카테고리 세부` | <p align = "center">`소셜 로그인` `마이페이지` | <p align = "center">`메인 페이지` `링크 저장` |
 
 ## 📦 Libraries
 | Library | Version | Description |
 |:-----:|:-----:|:-----:|
-| [**Moya**](https://github.com/Moya/Moya) | | Networking 시 사용 |
-| [**SnapKit**](https://github.com/SnapKit/SnapKit) |  | UI AutoLayout을 잡을 때 사용 |
-| [**SwiftLint**](https://github.com/realm/SwiftLint) |  | 같은 iOS 개발자 사이, 코딩 컨벤션 규칙을 설정하는 데 사용 |
-| [**Then**](https://github.com/devxoul/Then) |  | 클로저를 통한 인스턴스 초기화를 할 수 있도록 도와주는 라이브러리 |
+| [**KakaoSDK**](https://github.com/kakao/kakao-ios-sdk) | 2.20.0 | 카카오 소셜 로그인 시 사용 |
+| [**Moya**](https://github.com/Moya/Moya) | 15.0.0 | Networking 시 사용 |
+| [**SnapKit**](https://github.com/SnapKit/SnapKit) | 5.6.0 | UI AutoLayout을 잡을 때 사용 |
+| [**SwiftLint**](https://github.com/realm/SwiftLint) | 0.54.0 | 같은 iOS 개발자 사이, 코딩 컨벤션 규칙을 설정하는 데 사용 |
+| [**Then**](https://github.com/devxoul/Then) | 3.0.0 | 클로저를 통한 인스턴스 초기화를 할 수 있도록 도와주는 라이브러리 |
 
 <br>
 
@@ -66,7 +67,7 @@
 ```bash
 1. 작업할 내용에 대해 이슈를 판다.
 2. 내 로컬에서 develop 브랜치가 최신화 되어있는지 확인한다. (develop 브랜치는 항상 pull을 받아 최신화를 시키자)
-3. develop 브랜치로부터 새 브랜치를 만든다. (브랜치명은 `커밋타입/이슈번호-뷰이름`)
+3. develop 브랜치로부터 새 브랜치를 만든다. (브랜치명은 `커밋타입/#이슈번호-뷰이름`)
 4. 만든 브랜치에서 작업을 한다
 5. 커밋은 쪼개서 작성하며 커밋 메시지는 컨벤션을 따른다.
 6. 작업할 내용을 다 끝내면 ⭐️⭐️⭐️에러가 없는지 잘 돌아가는지 (안터지는지) 확인⭐️⭐️⭐️한 후 push한다. 
@@ -82,9 +83,8 @@ PR : [종류] #이슈번호 작업명 (예시: [Feat] #13 Main View UI 구현)
 ```
 
 ### 3, Commit Message
-- 커밋 메시지의 경우, 깃 이모지를 아래에 있는 "이모지와 태그별 사용 경우" 가이드라인에 맞춰 함께 사용하도록 한다.
 ```bash
-커밋 메시지 : `[종류] #이슈 - 작업 이름` - 예시 `[✨Feat] #13 - Main UI 구현`
+커밋 메시지 : `[종류] #이슈 - 작업 이름` - 예시 `[Feat] #13 - Main UI 구현`
 
 Conflict 해결 시 : `[Conflict] #이슈 - Conflict 해결`
 
@@ -92,7 +92,7 @@ PR을 develop에 merge 시 : 기본 머지 메시지
 
 내 브랜치에 develop merge 시 (브랜치 최신화) : `[Merge] #이슈 - Pull Develop` - `[Merge] #13 - Pull Develop`
 ```
-#### 이모지와 태그별 사용 경우
+#### 이모지와 태그별 사용 경우 (라벨로만 사용하기로!)
 | 이모지 | 태그 | 사용 경우 |
 | :--: | :--: | :--: |
 | ✨ | Feat | 새로운 기능 구현 |
