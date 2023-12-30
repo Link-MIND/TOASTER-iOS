@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum SocialLoginType: String {
+enum SocialLoginType {
     case kakao, apple
     
     var title: String {
