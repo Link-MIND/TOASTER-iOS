@@ -1,0 +1,14 @@
+# 실행에서 제외할 룰 식별자
+disabled_rules:
+- line_length
+- trailing_whitespace
+- function_parameter_count
+- file_length
+- identifier_name
+- function_body_length
+- nesting
+# 린트 과정에서 무시할 파일 경로
+excluded:
+- TOASTER-iOS/Application/AppDelegate.swift
+- TOASTER-iOS/Application/SceneDelegate.swift
+- TOASTER-iOS/Present/ViewController.swift
