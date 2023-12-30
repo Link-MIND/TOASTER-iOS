@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39BC5B0B2B400602004024E6 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0A2B400602004024E6 /* .swiftlint.yml */; };
 		6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE64E2B3FF101000E2366 /* AppDelegate.swift */; };
 		6B6AE6512B3FF101000E2366 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6502B3FF101000E2366 /* SceneDelegate.swift */; };
 		6B6AE6532B3FF101000E2366 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6522B3FF101000E2366 /* ViewController.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		39BC5B0A2B400602004024E6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		6B6AE64B2B3FF101000E2366 /* TOASTER-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TOASTER-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B6AE64E2B3FF101000E2366 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B6AE6502B3FF101000E2366 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 		6B6AE6422B3FF101000E2366 = {
 			isa = PBXGroup;
 			children = (
+				39BC5B0A2B400602004024E6 /* .swiftlint.yml */,
 				6B6AE64D2B3FF101000E2366 /* TOASTER-iOS */,
 				6B6AE64C2B3FF101000E2366 /* Products */,
 			);
@@ -301,6 +304,7 @@
 				6B6AE6472B3FF101000E2366 /* Sources */,
 				6B6AE6482B3FF101000E2366 /* Frameworks */,
 				6B6AE6492B3FF101000E2366 /* Resources */,
+				39BC5B092B4004AD004024E6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -369,12 +373,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39BC5B0B2B400602004024E6 /* .swiftlint.yml in Resources */,
 				6B6AE65B2B3FF103000E2366 /* LaunchScreen.storyboard in Resources */,
 				6B6AE6582B3FF103000E2366 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		39BC5B092B4004AD004024E6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6B6AE6472B3FF101000E2366 /* Sources */ = {
@@ -542,6 +568,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TOASTER-iOS/Global/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -571,6 +598,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TOASTER-iOS/Global/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
