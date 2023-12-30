@@ -7,23 +7,64 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+import SnapKit
+import Then
+
+final class LoginViewController: UIViewController {
+    
+    // MARK: - UI Properties
+    
+    private let kakaoSocialLoginButtonView = SocialLoginButtonView(type: .kakao)
+    private let appleSocialLoginButtonView = SocialLoginButtonView(type: .apple)
+    
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupStyle()
+        setupHierarchy()
+        setupLayout()
+        setupAddTarget()
+    }
+}
 
-        // Do any additional setup after loading the view.
+// MARK: - Private Extensions
+
+private extension LoginViewController {
+    func setupStyle() {
+        view.backgroundColor = .white
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setupHierarchy() {
+        view.addSubviews(kakaoSocialLoginButtonView, appleSocialLoginButtonView)
     }
-    */
-
+    
+    func setupLayout() {
+        kakaoSocialLoginButtonView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(30)
+            $0.bottom.equalTo(appleSocialLoginButtonView.snp.top).offset(-15)
+        }
+        
+        appleSocialLoginButtonView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(30)
+            $0.bottom.equalToSuperview().offset(-100)
+        }
+    }
+    
+    func setupAddTarget() {
+        kakaoSocialLoginButtonView.addTarget(self, action: #selector(kakaoButtonTapped), for: .touchUpInside)
+        
+        appleSocialLoginButtonView.addTarget(self, action: #selector(appleButtonTapped), for: .touchUpInside)
+    }
+    
+    // MARK: - @objc
+    
+    @objc func kakaoButtonTapped() {
+        print("kakaoButton 눌림")
+    }
+    
+    @objc func appleButtonTapped() {
+        print("appleButton 눌림")
+    }
 }
