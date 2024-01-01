@@ -28,8 +28,8 @@ final class SocialLoginButtonView: UIButton {
 
 // MARK: - Private Extensions
 
-extension SocialLoginButtonView {
-    private func setupSocialButton(type: SocialLoginType) {
+private extension SocialLoginButtonView {
+    func setupSocialButton(type: SocialLoginType) {
         var configuration = UIButton.Configuration.filled()
         
         configuration.title = type.title
