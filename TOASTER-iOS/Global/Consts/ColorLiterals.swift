@@ -15,10 +15,6 @@ extension UIColor {
         return UIColor(hex: "#F05A39")
     }
     
-    static var toasterSecondary: UIColor {
-        return UIColor(hex: "#0F232E")
-    }
-    
     static var toasterBackground: UIColor {
         return UIColor(hex: "#F8F8F8")
     }
@@ -35,10 +31,6 @@ extension UIColor {
     
     static var toasterError: UIColor {
         return UIColor(hex: "#FF3B30")
-    }
-    
-    static var toasterInfo: UIColor {
-        return UIColor(hex: "#276EF1")
     }
     
     // MARK: - Neutral Colors
