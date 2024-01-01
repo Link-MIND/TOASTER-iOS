@@ -10,11 +10,11 @@ import Foundation
 enum StringLiterals {
     
     enum Tabbar {
-            enum title{
-                static let home = "HOME"
-                static let clip = "CLIP"
-                static let timer = "TIMER"
-                static let my = "MY"
-            }
+        enum Title {
+            static let home = "HOME"
+            static let clip = "CLIP"
+            static let timer = "TIMER"
+            static let my = "MY"
         }
+    }
 }

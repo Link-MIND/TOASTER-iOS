@@ -16,20 +16,13 @@ final class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupStyle()
         addTabBarController()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBar.isHidden = true
-        self.navigationItem.hidesBackButton = true
+        setupNavigation()
     }
     
 }
-
 
 // MARK: - Private Extensions
 
@@ -37,6 +30,11 @@ private extension TabBarController {
     func setupStyle() {
         self.view.backgroundColor = .toasterBackground
         tabBar.backgroundColor = .toasterWhite
+    }
+    
+    func setupNavigation() {
+        navigationController?.navigationBar.isHidden = true
+        navigationItem.hidesBackButton = true
     }
     
     func addTabBarController() {
@@ -78,13 +76,10 @@ private extension TabBarController {
         tabbarItem.setTitleTextAttributes(normalAttributes, for: .normal)
         tabbarItem.setTitleTextAttributes(selectedAttributes, for: .selected)
         
-        
         tabNavigationController.tabBarItem = tabbarItem
         if let viewController = viewController {
-                tabNavigationController.viewControllers = [viewController]
-            }
+            tabNavigationController.viewControllers = [viewController]
+        }
         return tabNavigationController
     }
-    
-    
 }

@@ -9,12 +9,8 @@ import UIKit
 
 enum TabBarItem: CaseIterable {
     
-    case home
-    case clip
-    case plus
-    case timer
-    case my
-    
+    case home, clip, plus, timer, my
+
     // 선택되지 않은 탭
     var normalItem: UIImage? {
         switch self {
@@ -50,14 +46,13 @@ enum TabBarItem: CaseIterable {
     // 탭 별 제목
     var itemTitle: String? {
         switch self {
-        case .home: return StringLiterals.Tabbar.title.home
-        case .clip: return StringLiterals.Tabbar.title.clip
-        case .plus: return nil 
-        case .timer: return StringLiterals.Tabbar.title.timer
-        case .my: return StringLiterals.Tabbar.title.my
+        case .home: return StringLiterals.Tabbar.Title.home
+        case .clip: return StringLiterals.Tabbar.Title.clip
+        case .plus: return nil
+        case .timer: return StringLiterals.Tabbar.Title.timer
+        case .my: return StringLiterals.Tabbar.Title.my
         }
     }
-    
     
     // 탭 별 전환될 화면 -> 나중에 하나씩 추가
     var targetViewController: UIViewController? {
@@ -71,4 +66,3 @@ enum TabBarItem: CaseIterable {
     }
     
 }
-
