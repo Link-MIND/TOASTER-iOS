@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		39BC5B0B2B400602004024E6 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0A2B400602004024E6 /* .swiftlint.yml */; };
-		3F2BFAC92B40370D00DA76B7 /* SocialLoginButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BFAC82B40370D00DA76B7 /* SocialLoginButtonView.swift */; };
-		3F2BFACB2B40373C00DA76B7 /* SocialLoginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BFACA2B40373C00DA76B7 /* SocialLoginType.swift */; };
 		39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BC5B0C2B4046C1004024E6 /* ColorLiterals.swift */; };
 		39BC5B132B410EF3004024E6 /* SUIT-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0E2B410EF2004024E6 /* SUIT-Bold.otf */; };
 		39BC5B142B410EF3004024E6 /* SUIT-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0F2B410EF2004024E6 /* SUIT-Medium.otf */; };
@@ -17,6 +15,8 @@
 		39BC5B162B410EF3004024E6 /* SUIT-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B112B410EF3004024E6 /* SUIT-ExtraBold.otf */; };
 		39BC5B172B410EF3004024E6 /* SUIT-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B122B410EF3004024E6 /* SUIT-Regular.otf */; };
 		39BC5B192B411037004024E6 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BC5B182B411037004024E6 /* FontLiterals.swift */; };
+		3F2BFAC92B40370D00DA76B7 /* SocialLoginButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BFAC82B40370D00DA76B7 /* SocialLoginButtonView.swift */; };
+		3F2BFACB2B40373C00DA76B7 /* SocialLoginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BFACA2B40373C00DA76B7 /* SocialLoginType.swift */; };
 		6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE64E2B3FF101000E2366 /* AppDelegate.swift */; };
 		6B6AE6512B3FF101000E2366 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6502B3FF101000E2366 /* SceneDelegate.swift */; };
 		6B6AE6532B3FF101000E2366 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6522B3FF101000E2366 /* ViewController.swift */; };
@@ -48,12 +48,12 @@
 		6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6A92B3FF6EA000E2366 /* UIStackView+.swift */; };
 		6B6AE6AC2B3FF6F7000E2366 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6AB2B3FF6F7000E2366 /* UIColor+.swift */; };
 		6B6AE6AE2B3FF721000E2366 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */; };
+		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
+		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		39BC5B0A2B400602004024E6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		3F2BFAC82B40370D00DA76B7 /* SocialLoginButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginButtonView.swift; sourceTree = "<group>"; };
-		3F2BFACA2B40373C00DA76B7 /* SocialLoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginType.swift; sourceTree = "<group>"; };
 		39BC5B0C2B4046C1004024E6 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		39BC5B0E2B410EF2004024E6 /* SUIT-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Bold.otf"; sourceTree = "<group>"; };
 		39BC5B0F2B410EF2004024E6 /* SUIT-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Medium.otf"; sourceTree = "<group>"; };
@@ -61,6 +61,8 @@
 		39BC5B112B410EF3004024E6 /* SUIT-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-ExtraBold.otf"; sourceTree = "<group>"; };
 		39BC5B122B410EF3004024E6 /* SUIT-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Regular.otf"; sourceTree = "<group>"; };
 		39BC5B182B411037004024E6 /* FontLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLiterals.swift; sourceTree = "<group>"; };
+		3F2BFAC82B40370D00DA76B7 /* SocialLoginButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginButtonView.swift; sourceTree = "<group>"; };
+		3F2BFACA2B40373C00DA76B7 /* SocialLoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginType.swift; sourceTree = "<group>"; };
 		6B6AE64B2B3FF101000E2366 /* TOASTER-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TOASTER-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B6AE64E2B3FF101000E2366 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B6AE6502B3FF101000E2366 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,8 @@
 		6B6AE6A92B3FF6EA000E2366 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		6B6AE6AB2B3FF6F7000E2366 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
+		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
+		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +205,7 @@
 				6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */,
 				39BC5B0C2B4046C1004024E6 /* ColorLiterals.swift */,
 				39BC5B182B411037004024E6 /* FontLiterals.swift */,
+				830517642B42D996009FFB60 /* StringLiterals.swift */,
 			);
 			path = Consts;
 			sourceTree = "<group>";
@@ -325,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				6B6AE6A12B3FF5F7000E2366 /* TabBarController.swift */,
+				830517622B42D871009FFB60 /* TabBarItem.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -452,6 +458,8 @@
 				6B6AE6902B3FF59C000E2366 /* DetailCategoryViewController.swift in Sources */,
 				6B6AE6A62B3FF6BD000E2366 /* UIView+.swift in Sources */,
 				6B6AE6932B3FF5A9000E2366 /* CategoryViewController.swift in Sources */,
+				830517632B42D871009FFB60 /* TabBarItem.swift in Sources */,
+				830517652B42D996009FFB60 /* StringLiterals.swift in Sources */,
 				6B6AE6992B3FF5C1000E2366 /* SearchViewController.swift in Sources */,
 				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
 				6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */,
