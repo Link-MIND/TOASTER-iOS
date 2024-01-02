@@ -54,14 +54,15 @@ private extension TabBarController {
                 title: item.itemTitle ?? "",
                 image: item.normalItem ?? UIImage(),
                 selectedImage: item.selectedItem ?? UIImage(),
-                viewController: item.targetViewController
+                viewController: item.targetViewController,
+                inset: item == TabBarItem.plus ? UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0) : nil
             )
             tabNavigationControllers.append(tabNavController)
         }
         setViewControllers(tabNavigationControllers, animated: true)
     }
     
-    func createTabNavigationController(title: String, image: UIImage, selectedImage: UIImage, viewController: UIViewController?) -> UINavigationController {
+    func createTabNavigationController(title: String, image: UIImage, selectedImage: UIImage, viewController: UIViewController?, inset: UIEdgeInsets? ) -> UINavigationController {
         let tabNavigationController = UINavigationController()
         
         var tabbarItem = UITabBarItem(
@@ -69,6 +70,10 @@ private extension TabBarController {
             image: image.withRenderingMode(.alwaysOriginal),
             selectedImage: selectedImage.withRenderingMode(.alwaysOriginal)
         )
+        
+        if let inset {
+            tabbarItem.imageInsets = inset
+        }
         
         // title이 선택되지 않았을 때 폰트, 색상 설정
         let normalAttributes: [NSAttributedString.Key: Any] = [
