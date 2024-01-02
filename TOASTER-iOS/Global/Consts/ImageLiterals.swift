@@ -11,6 +11,10 @@ enum ImageLiterals {
     
     // MARK: - Normal Icon
     
+    enum Common {
+        static var check: UIImage { .load(systemName: "checkmark.circle.fill") }
+    }
+    
     enum TabBar {
         static var home: UIImage { .load(name: "ic_home_24") }
         static var clip: UIImage { .load(name: "ic_clip_24") }
