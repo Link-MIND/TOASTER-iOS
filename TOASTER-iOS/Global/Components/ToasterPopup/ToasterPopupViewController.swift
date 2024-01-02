@@ -64,12 +64,17 @@ final class ToasterPopupViewController: UIViewController {
         setupStyle()
         setupHierarchy()
         setupLayout()
+        setupButtonAction()
     }
 }
 
 // MARK: - Private Extensions
 
 private extension ToasterPopupViewController {
+    
+    func cancleAction() {
+        dismiss(animated: false)
+    }
     
     func setupStyle() {
         view.backgroundColor = .black900.withAlphaComponent(0.5)
@@ -151,6 +156,27 @@ private extension ToasterPopupViewController {
                 $0.width.equalTo(121)
                 $0.height.equalTo(48)
             }
+        }
+    }
+    
+    func setupButtonAction() {
+        leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func leftButtonTapped() {
+        if let action = leftButtonHandler {
+            action()
+        } else {
+            cancleAction()
+        }
+    }
+    
+    @objc func rightButtonTapped() {
+        if let action = rightButtonHandler {
+            action()
+        } else {
+            cancleAction()
         }
     }
 }
