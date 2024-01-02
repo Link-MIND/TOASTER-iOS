@@ -14,6 +14,15 @@ final class ToasterPopupViewController: UIViewController {
     
     // MARK: - Properties
     
+    typealias buttonAction = () -> Void
+    
+    private var mainText: String?
+    private var subText: String?
+    private var leftButtonTitle: String = ""
+    private var rightButtonTitle: String = ""
+    private var leftButtonHandler: buttonAction?
+    private var rightButtonHandler: buttonAction?
+    
     // MARK: - UI Properties
     
     private let popupStackView: UIStackView = UIStackView()
@@ -27,6 +36,27 @@ final class ToasterPopupViewController: UIViewController {
     private let rightButton: UIButton = UIButton()
     
     // MARK: - Life Cycle
+    
+    init(mainText: String?,
+         subText: String?,
+         leftButtonTitle: String,
+         rightButtonTitle: String,
+         leftButtonHandler: buttonAction?,
+         rightButtonHandler: buttonAction?) {
+        
+        self.mainText = mainText
+        self.subText = subText
+        self.leftButtonTitle = leftButtonTitle
+        self.rightButtonTitle = rightButtonTitle
+        self.leftButtonHandler = leftButtonHandler
+        self.rightButtonHandler = rightButtonHandler
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,11 +91,14 @@ private extension ToasterPopupViewController {
         }
         
         mainLabel.do {
+            $0.text = mainText
+            $0.numberOfLines = 0
             $0.textColor = .gray800
-            $0.font = .suitBold(size: 20)
+            $0.font = subText == nil ? .suitBold(size: 16) : .suitBold(size: 20)
         }
         
         subLabel.do {
+            $0.text = subText
             $0.numberOfLines = 0
             $0.textColor = .gray800
             $0.font = .suitRegular(size: 16)
@@ -79,6 +112,7 @@ private extension ToasterPopupViewController {
         leftButton.do {
             $0.makeRounded(radius: 8)
             $0.backgroundColor = .gray50
+            $0.setTitle(leftButtonTitle, for: .normal)
             $0.setTitleColor(.gray400, for: .normal)
             $0.titleLabel?.font = .suitSemiBold(size: 16)
         }
@@ -86,6 +120,7 @@ private extension ToasterPopupViewController {
         rightButton.do {
             $0.makeRounded(radius: 8)
             $0.backgroundColor = .toasterPrimary
+            $0.setTitle(rightButtonTitle, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitSemiBold(size: 16)
         }
@@ -95,8 +130,12 @@ private extension ToasterPopupViewController {
         view.addSubview(popupStackView)
         popupStackView.addArrangedSubviews(labelStackView,
                                            buttonStackView)
-        labelStackView.addArrangedSubviews(mainLabel,
-                                           subLabel)
+        if let _ = mainText {
+            labelStackView.addArrangedSubview(mainLabel)
+        }
+        if let _ = subText {
+            labelStackView.addArrangedSubview(subLabel)
+        }
         buttonStackView.addArrangedSubviews(leftButton,
                                             rightButton)
     }
@@ -105,11 +144,6 @@ private extension ToasterPopupViewController {
         popupStackView.snp.makeConstraints {
             $0.width.equalTo(view.convertByWidthRatio(300))
             $0.center.equalToSuperview()
-        }
-        
-        buttonStackView.snp.makeConstraints {
-            $0.top.equalTo(subLabel.snp.bottom).offset(18)
-            $0.centerX.equalToSuperview()
         }
         
         [leftButton, rightButton].forEach {
