@@ -12,16 +12,25 @@ import Then
 
 final class TabBarController: UITabBarController {
     
+    var customTabBar = CustomTabBar()
+    
     // MARK: - Life Cycle
     
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        object_setClass(self.tabBar, CustomTabBar.self)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupStyle()
         addTabBarController()
         setupNavigation()
     }
-    
 }
 
 // MARK: - Private Extensions
@@ -55,7 +64,7 @@ private extension TabBarController {
     func createTabNavigationController(title: String, image: UIImage, selectedImage: UIImage, viewController: UIViewController?) -> UINavigationController {
         let tabNavigationController = UINavigationController()
         
-        let tabbarItem = UITabBarItem(
+        var tabbarItem = UITabBarItem(
             title: title,
             image: image.withRenderingMode(.alwaysOriginal),
             selectedImage: selectedImage.withRenderingMode(.alwaysOriginal)
@@ -75,11 +84,21 @@ private extension TabBarController {
         
         tabbarItem.setTitleTextAttributes(normalAttributes, for: .normal)
         tabbarItem.setTitleTextAttributes(selectedAttributes, for: .selected)
+        tabbarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5)
         
         tabNavigationController.tabBarItem = tabbarItem
         if let viewController = viewController {
             tabNavigationController.viewControllers = [viewController]
         }
         return tabNavigationController
+    }
+}
+
+// Custom Tab Bar
+class CustomTabBar: UITabBar {
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        var size = super.sizeThatFits(size)
+        size.height = 60 + safeAreaInsets.bottom
+        return size
     }
 }
