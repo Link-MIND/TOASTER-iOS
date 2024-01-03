@@ -20,7 +20,7 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setValue(tabBar, forKey: "tabBar")
+        self.setValue(customTabBar, forKey: "tabBar")
         setupStyle()
         addTabBarController()
         setupNavigation()
