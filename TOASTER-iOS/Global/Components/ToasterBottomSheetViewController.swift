@@ -11,24 +11,13 @@ import SnapKit
 import Then
 
 enum BottomType {
-    /// 토스터 메인 컬러 색상 버튼이 있는 바텀 -> 키보드가 딸려 있는 것이 default
-    case orangeBottom
-    
-    /// 검정색 버튼이 있는 바텀 -> 키보드 사용 x, 버튼 간격이 존재
-    case blackBottom
-    
-    /// 버튼을 사용하지 않는 바텀
-    case defaultBottom
-}
-
-enum ColorType {
-    case whiteColor, grayColor
+    case white, gray
     
     var color: UIColor {
         switch self {
-        case .whiteColor:
+        case .white:
             return .toasterWhite
-        case .grayColor:
+        case .gray:
             return .gray50
         }
     }
@@ -38,7 +27,6 @@ final class ToasterBottomSheetViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var bottomType: BottomType = .defaultBottom
     private var bottomHeight: CGFloat = 100
     
     // MARK: - UI Properties
@@ -46,7 +34,6 @@ final class ToasterBottomSheetViewController: UIViewController {
     private let dimmedBackView = UIView()
     
     private let bottomSheetView = UIView().then {
-        $0.backgroundColor = .toasterBackground
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         $0.makeRounded(radius: 20)
     }
@@ -62,14 +49,16 @@ final class ToasterBottomSheetViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    init(bottomStyle: BottomType,
-         colorStyle: ColorType,
+    init(bottomType: BottomType,
          bottomTitle: String,
          height: CGFloat) {
         super.init(nibName: nil, bundle: nil)
         
-        self.bottomType = bottomStyle
-        self.bottomSheetView.backgroundColor = colorStyle.color
+        if bottomType == .gray {
+            titleLabel.textAlignment = .center
+        }
+        
+        self.bottomSheetView.backgroundColor = bottomType.color
         self.titleLabel.text = bottomTitle
         self.bottomHeight = height
     }
@@ -149,7 +138,7 @@ private extension ToasterBottomSheetViewController {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(20)
+            $0.top.leading.trailing.equalToSuperview().inset(20)
         }
         
         closeButton.snp.makeConstraints {
