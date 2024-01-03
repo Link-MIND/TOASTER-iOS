@@ -21,6 +21,15 @@ enum BottomType {
             return .gray50
         }
     }
+    
+    var alignment: NSTextAlignment {
+        switch self {
+        case .white:
+            return .left
+        case .gray:
+            return .center
+        }
+    }
 }
 
 final class ToasterBottomSheetViewController: UIViewController {
@@ -32,7 +41,6 @@ final class ToasterBottomSheetViewController: UIViewController {
     // MARK: - UI Properties
     
     private let dimmedBackView = UIView()
-    
     private let bottomSheetView = UIView().then {
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         $0.makeRounded(radius: 20)
@@ -51,16 +59,20 @@ final class ToasterBottomSheetViewController: UIViewController {
     
     init(bottomType: BottomType,
          bottomTitle: String,
-         height: CGFloat) {
+         height: CGFloat,
+         insertView: UIView) {
         super.init(nibName: nil, bundle: nil)
         
-        if bottomType == .gray {
-            titleLabel.textAlignment = .center
-        }
-        
+        // if bottomType == .gray { titleLabel.textAlignment = .center }
         self.bottomSheetView.backgroundColor = bottomType.color
+        self.titleLabel.textAlignment = bottomType.alignment
         self.titleLabel.text = bottomTitle
         self.bottomHeight = height
+        bottomSheetView.addSubview(insertView)
+        insertView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(bottomHeight-64)
+        }
     }
     
     required init?(coder: NSCoder) {
