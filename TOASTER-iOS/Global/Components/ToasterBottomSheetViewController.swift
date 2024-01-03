@@ -40,22 +40,12 @@ final class ToasterBottomSheetViewController: UIViewController {
     
     private var bottomType: BottomType = .defaultBottom
     private var bottomHeight: CGFloat = 100
-    private var bottomSheetViewTopConstraint: NSLayoutConstraint?
-    private var hideAnimationDuration: Float = 0.2
     
     // MARK: - UI Properties
     
-    private let dimmedBackView = UIView().then {
-        $0.backgroundColor = .black900
-    }
+    private let dimmedBackView = UIView()
     
     private let bottomSheetView = UIView().then {
-        $0.backgroundColor = .toasterBackground
-        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        $0.makeRounded(radius: 20)
-    }
-    
-    private let bottomSheetCoverView = UIView().then {
         $0.backgroundColor = .toasterBackground
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         $0.makeRounded(radius: 20)
@@ -108,25 +98,34 @@ final class ToasterBottomSheetViewController: UIViewController {
 extension ToasterBottomSheetViewController {
     /// 바텀 시트 표출
     func showBottomSheet() {
-        UIView.animate(withDuration: TimeInterval(0.2), delay: 0, options: .curveEaseIn, animations: {
-            self.dimmedBackView.alpha = 0.5
-            self.view.layoutIfNeeded()
-        }, completion: { _ in
-            self.bottomSheetCoverView.isHidden = true
-        })
+        DispatchQueue.main.async {
+            self.bottomSheetView.snp.remakeConstraints {
+                $0.bottom.leading.trailing.equalToSuperview()
+                $0.top.lessThanOrEqualToSuperview().inset(self.view.frame.height-self.bottomHeight)
+            }
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut, animations: {
+                self.dimmedBackView.backgroundColor = .black900.withAlphaComponent(0.5)
+                self.view.layoutIfNeeded()
+            })
+        }
     }
     
     /// 바텀 시트 내리기
     func hideBottomSheet() {
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
-            self.dimmedBackView.alpha = 0.0
-            self.view.layoutIfNeeded()
-            self.bottomSheetCoverView.isHidden = false
-        }, completion: { _ in
-            if self.presentingViewController != nil {
-                self.dismiss(animated: false, completion: nil)
+        DispatchQueue.main.async {
+            self.bottomSheetView.snp.remakeConstraints {
+                $0.bottom.leading.trailing.equalToSuperview()
+                $0.top.equalTo(self.bottomSheetView.snp.bottom)
             }
-        })
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut, animations: {
+                self.dimmedBackView.backgroundColor = .clear
+                self.view.layoutIfNeeded()
+            }, completion: { _ in
+                if self.presentingViewController != nil {
+                    self.dismiss(animated: false, completion: nil)
+                }
+            })
+        }
     }
 }
 
@@ -135,7 +134,7 @@ extension ToasterBottomSheetViewController {
 private extension ToasterBottomSheetViewController {
     
     func setupHierarchy() {
-        view.addSubviews(dimmedBackView, bottomSheetView, bottomSheetCoverView)
+        view.addSubviews(dimmedBackView, bottomSheetView)
         bottomSheetView.addSubviews(titleLabel, closeButton)
     }
     
@@ -146,12 +145,7 @@ private extension ToasterBottomSheetViewController {
         
         bottomSheetView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(bottomHeight)
-        }
-        
-        bottomSheetCoverView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(bottomHeight)
+            $0.top.equalToSuperview().inset(view.frame.height)
         }
         
         titleLabel.snp.makeConstraints {
@@ -166,7 +160,7 @@ private extension ToasterBottomSheetViewController {
     func setupDismissAction() {
         // x 버튼 누를 때, 바텀시트를 내리는 Action Target
         closeButton.addTarget(self, action: #selector(hideBottomSheetAction), for: .touchUpInside)
-
+        
         // 흐린 부분 탭할 때, 바텀시트를 내리는 TapGesture
         let dimmedTap = UITapGestureRecognizer(target: self, action: #selector(hideBottomSheetAction))
         dimmedBackView.addGestureRecognizer(dimmedTap)
