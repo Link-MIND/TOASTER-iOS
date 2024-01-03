@@ -14,14 +14,14 @@ final class ToasterPopupViewController: UIViewController {
     
     // MARK: - Properties
     
-    typealias buttonAction = () -> Void
+    typealias ButtonAction = () -> Void
     
     private var mainText: String?
     private var subText: String?
     private var leftButtonTitle: String = ""
     private var rightButtonTitle: String = ""
-    private var leftButtonHandler: buttonAction?
-    private var rightButtonHandler: buttonAction?
+    private var leftButtonHandler: ButtonAction?
+    private var rightButtonHandler: ButtonAction?
     
     // MARK: - UI Properties
     
@@ -41,8 +41,8 @@ final class ToasterPopupViewController: UIViewController {
          subText: String?,
          leftButtonTitle: String,
          rightButtonTitle: String,
-         leftButtonHandler: buttonAction?,
-         rightButtonHandler: buttonAction?) {
+         leftButtonHandler: ButtonAction?,
+         rightButtonHandler: ButtonAction?) {
         
         self.mainText = mainText
         self.subText = subText

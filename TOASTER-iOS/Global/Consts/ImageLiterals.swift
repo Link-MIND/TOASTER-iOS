@@ -13,6 +13,7 @@ enum ImageLiterals {
     
     enum Common {
         static var check: UIImage { .load(systemName: "checkmark.circle.fill") }
+        static var exclamation: UIImage { .load(systemName: "exclamationmark.circle.fill") }
         static var close: UIImage { .load(name: "ic_close_24") }
     }
     
