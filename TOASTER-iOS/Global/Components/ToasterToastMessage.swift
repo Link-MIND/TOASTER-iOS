@@ -28,7 +28,7 @@ extension UIViewController {
     func showToastMessage(width: CGFloat, status: ToastStatus, message: String) {
         
         // UI Components
-        let toastView = UIView(frame: CGRect(x: view.center.x-width/2, y: view.frame.size.height-138, width: width, height: 46))
+        let toastView = UIView(frame: CGRect(x: view.center.x-width/2, y: view.convertByHeightRatio(668), width: width, height: 46))
         let toastImage = UIImageView()
         let toastLabel = UILabel()
         
