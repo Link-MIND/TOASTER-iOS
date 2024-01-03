@@ -63,7 +63,6 @@ final class ToasterBottomSheetViewController: UIViewController {
          insertView: UIView) {
         super.init(nibName: nil, bundle: nil)
         
-        // if bottomType == .gray { titleLabel.textAlignment = .center }
         self.bottomSheetView.backgroundColor = bottomType.color
         self.titleLabel.textAlignment = bottomType.alignment
         self.titleLabel.text = bottomTitle
