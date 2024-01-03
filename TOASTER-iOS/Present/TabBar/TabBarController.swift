@@ -10,23 +10,17 @@ import UIKit
 import SnapKit
 import Then
 
+// MARK: - Tab Bar
+
 final class TabBarController: UITabBarController {
     
     var customTabBar = CustomTabBar()
     
     // MARK: - Life Cycle
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        object_setClass(self.tabBar, CustomTabBar.self)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setValue(tabBar, forKey: "tabBar")
         setupStyle()
         addTabBarController()
         setupNavigation()
@@ -100,7 +94,7 @@ private extension TabBarController {
 }
 
 // Custom Tab Bar
-class CustomTabBar: UITabBar {
+final class CustomTabBar: UITabBar {
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         var size = super.sizeThatFits(size)
         size.height = 60 + safeAreaInsets.bottom
