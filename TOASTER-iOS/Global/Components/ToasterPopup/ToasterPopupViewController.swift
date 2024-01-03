@@ -72,10 +72,6 @@ final class ToasterPopupViewController: UIViewController {
 
 private extension ToasterPopupViewController {
     
-    func cancleAction() {
-        dismiss(animated: false)
-    }
-    
     func setupStyle() {
         view.backgroundColor = .black900.withAlphaComponent(0.5)
         
@@ -147,7 +143,7 @@ private extension ToasterPopupViewController {
     
     func setupLayout() {
         popupStackView.snp.makeConstraints {
-            $0.width.equalTo(view.convertByWidthRatio(300))
+            $0.width.equalTo(300)
             $0.center.equalToSuperview()
         }
         
@@ -178,5 +174,9 @@ private extension ToasterPopupViewController {
         } else {
             cancleAction()
         }
+    }
+    
+    func cancleAction() {
+        dismiss(animated: false)
     }
 }
