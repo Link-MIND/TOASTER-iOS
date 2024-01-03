@@ -10,28 +10,6 @@ import UIKit
 import SnapKit
 import Then
 
-enum BottomType {
-    case white, gray
-    
-    var color: UIColor {
-        switch self {
-        case .white:
-            return .toasterWhite
-        case .gray:
-            return .gray50
-        }
-    }
-    
-    var alignment: NSTextAlignment {
-        switch self {
-        case .white:
-            return .left
-        case .gray:
-            return .center
-        }
-    }
-}
-
 final class ToasterBottomSheetViewController: UIViewController {
     
     // MARK: - Properties
@@ -39,7 +17,7 @@ final class ToasterBottomSheetViewController: UIViewController {
     private var bottomHeight: CGFloat = 100
     
     // MARK: - UI Properties
-    
+    private var insertView = UIView()
     private let dimmedBackView = UIView()
     private let bottomSheetView = UIView().then {
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -67,11 +45,7 @@ final class ToasterBottomSheetViewController: UIViewController {
         self.titleLabel.textAlignment = bottomType.alignment
         self.titleLabel.text = bottomTitle
         self.bottomHeight = height
-        bottomSheetView.addSubview(insertView)
-        insertView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(bottomHeight-64)
-        }
+        self.insertView = insertView
     }
     
     required init?(coder: NSCoder) {
@@ -101,7 +75,7 @@ extension ToasterBottomSheetViewController {
         DispatchQueue.main.async {
             self.bottomSheetView.snp.remakeConstraints {
                 $0.bottom.leading.trailing.equalToSuperview()
-                $0.top.lessThanOrEqualToSuperview().inset(self.view.frame.height-self.bottomHeight)
+                $0.top.equalToSuperview().inset(self.view.frame.height-self.bottomHeight)
             }
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut, animations: {
                 self.dimmedBackView.backgroundColor = .black900.withAlphaComponent(0.5)
@@ -115,7 +89,6 @@ extension ToasterBottomSheetViewController {
         DispatchQueue.main.async {
             self.bottomSheetView.snp.remakeConstraints {
                 $0.bottom.leading.trailing.equalToSuperview()
-                $0.top.equalTo(self.bottomSheetView.snp.bottom)
             }
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut, animations: {
                 self.dimmedBackView.backgroundColor = .clear
@@ -135,7 +108,7 @@ private extension ToasterBottomSheetViewController {
     
     func setupHierarchy() {
         view.addSubviews(dimmedBackView, bottomSheetView)
-        bottomSheetView.addSubviews(titleLabel, closeButton)
+        bottomSheetView.addSubviews(titleLabel, closeButton, insertView)
     }
     
     func setupLayout() {
@@ -145,7 +118,11 @@ private extension ToasterBottomSheetViewController {
         
         bottomSheetView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.top.equalToSuperview().inset(view.frame.height)
+        }
+        
+        insertView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalToSuperview().inset(64)
         }
         
         titleLabel.snp.makeConstraints {
