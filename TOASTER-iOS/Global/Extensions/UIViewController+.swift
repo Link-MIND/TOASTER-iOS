@@ -30,4 +30,22 @@ extension UIViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    func showPopup(forMainText: String? = nil,
+                   forSubText: String? = nil,
+                   forLeftButtonTitle: String,
+                   forRightButtonTitle: String,
+                   forLeftButtonHandler: (() -> Void)? = nil,
+                   forRightButtonHandler: (() -> Void)? = nil) {
+        
+        let popupViewController = ToasterPopupViewController(mainText: forMainText,
+                                                             subText: forSubText,
+                                                             leftButtonTitle: forLeftButtonTitle,
+                                                             rightButtonTitle: forRightButtonTitle,
+                                                             leftButtonHandler: forLeftButtonHandler,
+                                                             rightButtonHandler: forRightButtonHandler)
+        
+        popupViewController.modalPresentationStyle = .overFullScreen
+        present(popupViewController, animated: false)
+    }
 }
