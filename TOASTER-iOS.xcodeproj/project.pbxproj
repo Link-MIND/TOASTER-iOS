@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39049C8D2B43EEF400C9196E /* ToastStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39049C8C2B43EEF400C9196E /* ToastStatus.swift */; };
+		39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39049C8E2B43F70400C9196E /* ToasterBottomSheetViewController.swift */; };
+		398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */; };
+		398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F52B456AF9001595E0 /* BottomType.swift */; };
 		39BC5B0B2B400602004024E6 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0A2B400602004024E6 /* .swiftlint.yml */; };
 		39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BC5B0C2B4046C1004024E6 /* ColorLiterals.swift */; };
 		39BC5B132B410EF3004024E6 /* SUIT-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0E2B410EF2004024E6 /* SUIT-Bold.otf */; };
@@ -48,12 +52,17 @@
 		6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6A92B3FF6EA000E2366 /* UIStackView+.swift */; };
 		6B6AE6AC2B3FF6F7000E2366 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6AB2B3FF6F7000E2366 /* UIColor+.swift */; };
 		6B6AE6AE2B3FF721000E2366 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */; };
+		6BC4935E2B4414B400544249 /* ToasterPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC4935D2B4414B400544249 /* ToasterPopupViewController.swift */; };
 		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
 		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
 		8305177D2B46AB76009FFB60 /* AddLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305177C2B46AB76009FFB60 /* AddLinkView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		39049C8C2B43EEF400C9196E /* ToastStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastStatus.swift; sourceTree = "<group>"; };
+		39049C8E2B43F70400C9196E /* ToasterBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterBottomSheetViewController.swift; sourceTree = "<group>"; };
+		398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterToastMessageView.swift; sourceTree = "<group>"; };
+		398BE7F52B456AF9001595E0 /* BottomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomType.swift; sourceTree = "<group>"; };
 		39BC5B0A2B400602004024E6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		39BC5B0C2B4046C1004024E6 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		39BC5B0E2B410EF2004024E6 /* SUIT-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Bold.otf"; sourceTree = "<group>"; };
@@ -86,6 +95,7 @@
 		6B6AE6A92B3FF6EA000E2366 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		6B6AE6AB2B3FF6F7000E2366 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
+		6BC4935D2B4414B400544249 /* ToasterPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterPopupViewController.swift; sourceTree = "<group>"; };
 		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		8305177C2B46AB76009FFB60 /* AddLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLinkView.swift; sourceTree = "<group>"; };
@@ -113,6 +123,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		398BE7F12B45628F001595E0 /* ToasterToastMessage */ = {
+			isa = PBXGroup;
+			children = (
+				39049C8C2B43EEF400C9196E /* ToastStatus.swift */,
+				398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */,
+			);
+			path = ToasterToastMessage;
+			sourceTree = "<group>";
+		};
+		398BE7F42B456ACF001595E0 /* ToasterBottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				398BE7F52B456AF9001595E0 /* BottomType.swift */,
+				39049C8E2B43F70400C9196E /* ToasterBottomSheetViewController.swift */,
+			);
+			path = ToasterBottomSheet;
+			sourceTree = "<group>";
+		};
 		3F2BFAC72B4036E200DA76B7 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,6 +243,9 @@
 		6B6AE6832B3FF514000E2366 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				398BE7F42B456ACF001595E0 /* ToasterBottomSheet */,
+				398BE7F12B45628F001595E0 /* ToasterToastMessage */,
+				6BC4935C2B44148200544249 /* ToasterPopup */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -336,6 +367,14 @@
 				830517622B42D871009FFB60 /* TabBarItem.swift */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		6BC4935C2B44148200544249 /* ToasterPopup */ = {
+			isa = PBXGroup;
+			children = (
+				6BC4935D2B4414B400544249 /* ToasterPopupViewController.swift */,
+			);
+			path = ToasterPopup;
 			sourceTree = "<group>";
 		};
 		8305177E2B46AB7A009FFB60 /* View */ = {
@@ -464,17 +503,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */,
 				39BC5B192B411037004024E6 /* FontLiterals.swift in Sources */,
 				6B6AE6532B3FF101000E2366 /* ViewController.swift in Sources */,
 				6B6AE6902B3FF59C000E2366 /* DetailCategoryViewController.swift in Sources */,
 				6B6AE6A62B3FF6BD000E2366 /* UIView+.swift in Sources */,
+				39049C8D2B43EEF400C9196E /* ToastStatus.swift in Sources */,
 				6B6AE6932B3FF5A9000E2366 /* CategoryViewController.swift in Sources */,
 				830517632B42D871009FFB60 /* TabBarItem.swift in Sources */,
 				830517652B42D996009FFB60 /* StringLiterals.swift in Sources */,
 				6B6AE6992B3FF5C1000E2366 /* SearchViewController.swift in Sources */,
+				398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */,
 				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
 				6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */,
+				6BC4935E2B4414B400544249 /* ToasterPopupViewController.swift in Sources */,
 				6B6AE6A82B3FF6D5000E2366 /* UITextField+.swift in Sources */,
+				39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */,
 				6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */,
 				6B6AE6AC2B3FF6F7000E2366 /* UIColor+.swift in Sources */,
 				6B6AE69C2B3FF5CC000E2366 /* HomeViewController.swift in Sources */,
@@ -632,6 +676,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TOASTER-iOS/Global/Supporting Files/Info.plist";
@@ -662,6 +707,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TOASTER-iOS/Global/Supporting Files/Info.plist";
