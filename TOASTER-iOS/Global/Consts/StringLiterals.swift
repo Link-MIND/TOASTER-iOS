@@ -17,4 +17,10 @@ enum StringLiterals {
             static let my = "MY"
         }
     }
+    
+    enum Clip {
+        enum Title {
+            static let addClip = "클립 추가"
+        }
+    }
 }
