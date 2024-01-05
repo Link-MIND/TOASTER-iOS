@@ -70,8 +70,10 @@ extension ToasterNavigationController {
         }
         
         if forType.hasRightButtonImage {
+            rightButton.setTitle(nil, for: .normal)
             rightButton.setImage(forType.rightButtonImage, for: .normal)
         } else {
+            rightButton.setImage(nil, for: .normal)
             rightButton.setTitle(forType.rightButtonTitle, for: .normal)
         }
         
