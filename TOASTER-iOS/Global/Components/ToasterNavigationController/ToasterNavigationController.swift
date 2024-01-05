@@ -17,6 +17,12 @@ final class ToasterNavigationController: UINavigationController {
 
     private let safeAreaView: UIView = UIView()
     private let customNavigationBar: UIView = UINavigationBar()
+    
+    private let leftStackView: UIStackView = UIStackView()
+    private let mainImageView: UIImageView = UIImageView()
+    private let mainTitleLabel: UILabel = UILabel()
+    private let backButton: UIButton = UIButton()
+    private let rightButton: UIButton = UIButton()
 
     // MARK: - Life Cycle
 
@@ -40,6 +46,28 @@ final class ToasterNavigationController: UINavigationController {
     }
 }
 
+extension ToasterNavigationController {
+    func setupNavigationBar(forType: ToasterNavigationType) {
+        backButton.isHidden = !forType.hasBackButton
+        rightButton.isHidden = !forType.hasRightButton
+        
+        if forType.hasMainImage {
+            mainTitleLabel.isHidden = true
+            mainImageView.image = forType.mainImage
+        } else {
+            mainImageView.isHidden = true
+            mainTitleLabel.text = forType.mainTitle
+        }
+        
+        if forType.hasRightButtonImage {
+            rightButton.setImage(forType.rightButtonImage, for: .normal)
+        } else {
+            rightButton.setTitle(forType.rightButtonTitle, for: .normal)
+        }
+        
+    }
+}
+
 // MARK: - Private Extensions
 
 private extension ToasterNavigationController {
@@ -52,10 +80,32 @@ private extension ToasterNavigationController {
         safeAreaView.do {
             $0.backgroundColor = customNavigationBar.backgroundColor
         }
+        
+        leftStackView.do {
+            $0.axis = .horizontal
+            $0.alignment = .center
+            $0.spacing = 4
+        }
+        
+        mainTitleLabel.do {
+            $0.font = .suitBold(size: 18)
+            $0.textColor = .black900
+        }
+        
+        backButton.do {
+            $0.setImage(ImageLiterals.Common.arrowLeft, for: .normal)
+        }
+        
+        rightButton.do {
+            $0.titleLabel?.font = .suitBold(size: 14)
+            $0.setTitleColor(.gray600, for: .normal)
+        }
     }
     
     func setupHierarchy() {
         view.addSubviews(safeAreaView, customNavigationBar)
+        customNavigationBar.addSubviews(leftStackView, rightButton)
+        leftStackView.addArrangedSubviews(backButton, mainTitleLabel, mainImageView)
     }
     
     func setupLayout() {
@@ -69,6 +119,16 @@ private extension ToasterNavigationController {
             $0.top.equalToSuperview()
             $0.bottom.equalTo(view.snp.topMargin)
             $0.horizontalEdges.equalToSuperview()
+        }
+        
+        leftStackView.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+        }
+        
+        rightButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
         }
     }
     
