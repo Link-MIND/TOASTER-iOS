@@ -61,9 +61,11 @@ extension ToasterNavigationController {
         
         if forType.hasMainImage {
             mainTitleLabel.isHidden = true
+            mainImageView.isHidden = false
             mainImageView.image = forType.mainImage
         } else {
             mainImageView.isHidden = true
+            mainTitleLabel.isHidden = false
             mainTitleLabel.text = forType.mainTitle
         }
         
