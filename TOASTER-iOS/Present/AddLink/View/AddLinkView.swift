@@ -15,11 +15,13 @@ final class AddLinkView: UIView, UITextFieldDelegate {
     // MARK: - Properties
     
     private let descriptLabel = UILabel()
-    let urlTextField = UITextField()
-    // private let titleTextField = UITextField()
+    private let urlTextField = UITextField()
+    private let titleDescriptLabel = UILabel()
+    private let titleTextField = UITextField()
     private let nextButton = UIButton()
-    private let checkButton = UIButton()
+    let checkButton = UIButton()
     
+    // keyboard 위에 올라갈 checkButton을 위한 View
     lazy var accessoryView: UIView = { return UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 56.0)) }()
     
     // MARK: - Life Cycle
@@ -30,6 +32,7 @@ final class AddLinkView: UIView, UITextFieldDelegate {
         urlTextField.delegate = self
         urlTextField.resignFirstResponder()
         setView()
+        setupAddTarget()
     }
     
     @available(*, unavailable)
@@ -43,41 +46,61 @@ final class AddLinkView: UIView, UITextFieldDelegate {
         setupStyle()
         setupHierarchy()
         setupLayout()
+        
     }
     
+    // MARK: - @objc
+    
     @objc func tappedNextButton() {
-        nextButton.backgroundColor = .black850
-        let urlLink = urlTextField.text!
+        // nextButton.backgroundColor = .black850
+        _ = urlTextField.text! //링크 -> 서버에 넘겨주기
         // metaData()
+        print("이제 제목 텍스트 필드를 만들 차례임니다 ㅋㅋ... ")
+        setupTitleTextFieldLayout()
+        titleTextField.text = urlTextField.text
+        // 제목 입력하는 텍스트 필드 + 설명 라벨 띄우기
+        // 키보드 올리기 :  titleTextfield.becomeFirstResponder()
+        // 근데 ... 이 로직을 하나의 뷰컨에 때려 박고 해결하는게 맞나?
+       
+        
     }
     
     @objc func tappedCheckButton() {
         print("확인 버튼이 눌렸다용")
+        urlTextField.resignFirstResponder() // 키보드 내려가고
+        nextButton.backgroundColor = .black850 // 다음 버튼 검정색으로 바뀌고
+        nextButton.isEnabled = true //활성화
+
+        
     }
     
     @objc func textFieldDidChange(_ sender: Any?) {
         let textCount = urlTextField.text!.count
         if textCount > 0 {
             checkButton.backgroundColor = .black850
-        }
-        else {
+            checkButton.isEnabled = true
+        } else {
             checkButton.backgroundColor = .gray100
+            checkButton.isEnabled = false
         }
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.placeholder = nil
+        
     }
     
 }
 
 private extension AddLinkView {
     
+    func setupAddTarget() {
+        urlTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        nextButton.addTarget(self, action: #selector(tappedNextButton), for: .touchUpInside)
+        checkButton.addTarget(self, action: #selector(tappedCheckButton), for: .touchUpInside)
+    }
+    
     func setupStyle() {
         self.backgroundColor = .toasterBackground
         
         descriptLabel.do {
-            $0.text = "링크를 입력하세요"
+            $0.text = "링크를 입력하세요" // 나중에 StringLiterals로 빼쟈
             $0.font = .suitMedium(size: 18)
         }
         
@@ -89,38 +112,41 @@ private extension AddLinkView {
             $0.inputAccessoryView = accessoryView
             $0.clearButtonMode = .always
             $0.addPadding(left: 15.0)
-            $0.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        }
+    
+        titleDescriptLabel.do {
+            $0.text = "제목을 입력해주세요"
+            $0.font = .suitMedium(size: 18)
         }
         
-        //        titleTextField.do {
-        //            $0.backgroundColor = .white
-        //            $0.layer.borderColor = UIColor.black.cgColor
-        //            $0.layer.borderWidth = 1
-        //        }
+        titleTextField.do {
+            $0.backgroundColor = .gray50
+            $0.layer.cornerRadius = 12
+            $0.inputAccessoryView = accessoryView
+            $0.clearButtonMode = .always
+            $0.addPadding(left: 15.0)
+        }
         
         nextButton.do {
             $0.setTitle("다음", for: .normal)
-            $0.titleLabel?.font = .boldSystemFont(ofSize: 16)
-            $0.setTitleColor(.toasterWhite, for: .normal)
             $0.backgroundColor = .gray200
             $0.layer.cornerRadius = 12
-            $0.addTarget(self, action: #selector(tappedNextButton), for: .touchUpInside)
         }
         
         checkButton.do {
             $0.setTitle("확인", for: .normal)
-            $0.titleLabel?.font = .boldSystemFont(ofSize: 16)
-            $0.setTitleColor(.toasterWhite, for: .normal)
             $0.backgroundColor = .gray100
-            $0.addTarget(self, action: #selector(tappedCheckButton), for: .touchUpInside)
         }
         
+        [nextButton, checkButton].forEach {
+            $0.titleLabel?.font = .boldSystemFont(ofSize: 16)
+            $0.setTitleColor(.toasterWhite, for: .normal)
+            $0.isEnabled = false
+        }
     }
     
     func setupHierarchy() {
-        self.addSubview(descriptLabel)
-        self.addSubview(urlTextField)
-        self.addSubview(nextButton)
+        addSubviews(descriptLabel, urlTextField, nextButton)
         // self.addSubview(titleTextField)
         accessoryView.addSubview(checkButton)
     }
@@ -128,7 +154,9 @@ private extension AddLinkView {
     func setupLayout() {
         descriptLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(75)
-            $0.leading.equalToSuperview().inset(35)
+            $0.leading.equalToSuperview().inset(35) //20으로 해보기
+            $0.height.equalTo(22)
+            $0.width.equalTo(146)
         }
         
         urlTextField.snp.makeConstraints {
@@ -144,13 +172,7 @@ private extension AddLinkView {
             $0.width.equalTo(335)
             $0.height.equalTo(62)
         }
-        
-        //        titleTextField.snp.makeConstraints {
-        //            $0.top.equalTo(urlTextField.snp.bottom).offset(50)
-        //            $0.leading.equalToSuperview().inset(30)
-        //            $0.width.equalTo(300)
-        //            $0.height.equalTo(45)
-        //        }
+
         
         // 키보드 위에 버튼 올리기 위한 Layout
         guard let checkButtonSuperView = checkButton.superview else { return }
@@ -159,5 +181,21 @@ private extension AddLinkView {
             $0.height.equalTo(56)
         }
         
+    }
+    func setupTitleTextFieldLayout() {
+        super.addSubviews(titleDescriptLabel, titleTextField)
+        titleDescriptLabel.snp.makeConstraints {
+            $0.top.equalTo(urlTextField.snp.bottom).offset(18)
+            $0.leading.equalToSuperview().inset(35)
+            $0.height.equalTo(22)
+            $0.width.equalTo(146)
+        }
+        
+        titleTextField.snp.makeConstraints {
+            $0.top.equalTo(titleDescriptLabel.snp.bottom).offset(15)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(335)
+            $0.height.equalTo(54)
+        }
     }
 }
