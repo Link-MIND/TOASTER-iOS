@@ -13,13 +13,14 @@ import Then
 final class ClipViewController: UIViewController {
     
     // MARK: - Properties
-    
+        
     // MARK: - UI Properties
     
+    private let clipEmptyView = ClipEmptyView()
     private let clipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
         $0.backgroundColor = .toasterBackground
     }
-    
+        
     // MARK: - Life Cycle
     
     override func loadView() {
@@ -34,14 +35,27 @@ final class ClipViewController: UIViewController {
         setupStyle()
         setupHierarchy()
         setupLayout()
-        setupCollectionView()
+        setupRegisterCell()
+        setupDelegate()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupEmptyView()
+    }
 }
 
 // MARK: - Networks
 
 extension ClipViewController {
+    func showBottom() {
+        let view = AddClipBottomSheetView()
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 500, insertView: view)
+        exampleBottom.modalPresentationStyle = .overFullScreen  // 애니메이션을 위해 필수 지정
+        self.present(exampleBottom, animated: false)  // 애니메이션을 위해 필수 지정
+    }
+    
     func fetchMain() {
         
     }
@@ -51,23 +65,39 @@ extension ClipViewController {
 
 private extension ClipViewController {
     func setupStyle() {
+
     }
     
     func setupHierarchy() {
-        view.addSubviews(clipListCollectionView)
+        view.addSubviews(clipListCollectionView, clipEmptyView)
     }
     
     func setupLayout() {
         clipListCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        clipEmptyView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
     
-    func setupCollectionView() {
+    func setupRegisterCell() {
         clipListCollectionView.register(ClipListCollectionViewCell.self, forCellWithReuseIdentifier: ClipListCollectionViewCell.identifier)
         clipListCollectionView.register(ClipCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.identifier)
+    }
+    
+    func setupDelegate() {
         clipListCollectionView.delegate = self
         clipListCollectionView.dataSource = self
+    }
+    
+    func setupEmptyView() {
+        if dummyClipList.count > 1 {
+            clipEmptyView.isHidden = true
+        } else {
+            clipEmptyView.isHidden = false
+        }
     }
 }
 
@@ -79,7 +109,7 @@ extension ClipViewController: UICollectionViewDelegate {}
 
 extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return dummyClipList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
