@@ -23,6 +23,10 @@ final class TabBarController: UITabBarController {
         self.setValue(customTabBar, forKey: "tabBar")
         setupStyle()
         addTabBarController()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupNavigation()
     }
 }
@@ -36,7 +40,7 @@ private extension TabBarController {
     }
     
     func setupNavigation() {
-        navigationController?.navigationBar.isHidden = true
+        hideNavigationBar()
         navigationItem.hidesBackButton = true
     }
     
@@ -59,7 +63,7 @@ private extension TabBarController {
     func createTabNavigationController(title: String, image: UIImage, selectedImage: UIImage, viewController: UIViewController?, inset: UIEdgeInsets? ) -> UINavigationController {
         let tabNavigationController = UINavigationController()
         
-        var tabbarItem = UITabBarItem(
+        let tabbarItem = UITabBarItem(
             title: title,
             image: image.withRenderingMode(.alwaysOriginal),
             selectedImage: selectedImage.withRenderingMode(.alwaysOriginal)

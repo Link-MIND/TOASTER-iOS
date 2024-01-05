@@ -18,6 +18,15 @@ enum StringLiterals {
         }
     }
     
+    enum BottomSheet {
+        enum Placeholder {
+            static let addClip = "클립의 이름을 입력해 주세요"
+        }
+        enum Button {
+            static let complete = "확인"
+        }
+    }
+    
     enum Clip {
         enum Title {
             static let addClip = "클립 추가"

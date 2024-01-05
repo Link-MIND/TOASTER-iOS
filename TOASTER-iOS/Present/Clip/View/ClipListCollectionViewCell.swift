@@ -25,13 +25,11 @@ final class ClipListCollectionViewCell: UICollectionViewCell {
     private let clipNameLabel = UILabel().then {
         $0.font = .suitSemiBold(size: 16)
         $0.textColor = .black850
-        $0.text = "전체 클립"
     }
     
     private let countLabel = UILabel().then {
         $0.font = .suitSemiBold(size: 14)
         $0.textColor = .gray600
-        $0.text = "n개"
     }
     
     private let arrowImage = UIImageView().then {
@@ -50,6 +48,15 @@ final class ClipListCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Extensions
+
+extension ClipListCollectionViewCell {
+    func configureCell(forModel: ClipListModel) {
+        clipNameLabel.text = forModel.categoryTitle
+        countLabel.text = "\(forModel.toastNum)개"
     }
 }
 
