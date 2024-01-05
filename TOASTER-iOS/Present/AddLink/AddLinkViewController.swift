@@ -13,14 +13,13 @@ import Then
 final class AddLinkViewController: UIViewController {
     
     // MARK: - UI Properties
-
+    
     private var addLinkView: AddLinkView?
-
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setAddLinkVew()
         hideKeyboard()
     }

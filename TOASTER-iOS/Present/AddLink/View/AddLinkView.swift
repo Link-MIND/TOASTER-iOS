@@ -19,7 +19,7 @@ final class AddLinkView: UIView, UITextFieldDelegate {
     private let titleDescriptLabel = UILabel()
     private let titleTextField = UITextField()
     private let nextButton = UIButton()
-    let checkButton = UIButton()
+    private let checkButton = UIButton()
     
     // keyboard 위에 올라갈 checkButton을 위한 View
     lazy var accessoryView: UIView = { return UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 56.0)) }()
@@ -46,32 +46,22 @@ final class AddLinkView: UIView, UITextFieldDelegate {
         setupStyle()
         setupHierarchy()
         setupLayout()
-        
     }
     
     // MARK: - @objc
     
     @objc func tappedNextButton() {
-        // nextButton.backgroundColor = .black850
         _ = urlTextField.text! //링크 -> 서버에 넘겨주기
-        // metaData()
-        print("이제 제목 텍스트 필드를 만들 차례임니다 ㅋㅋ... ")
+        // metaData() network
         setupTitleTextFieldLayout()
         titleTextField.text = urlTextField.text
-        // 제목 입력하는 텍스트 필드 + 설명 라벨 띄우기
         // 키보드 올리기 :  titleTextfield.becomeFirstResponder()
-        // 근데 ... 이 로직을 하나의 뷰컨에 때려 박고 해결하는게 맞나?
-       
-        
     }
     
     @objc func tappedCheckButton() {
-        print("확인 버튼이 눌렸다용")
         urlTextField.resignFirstResponder() // 키보드 내려가고
         nextButton.backgroundColor = .black850 // 다음 버튼 검정색으로 바뀌고
         nextButton.isEnabled = true //활성화
-
-        
     }
     
     @objc func textFieldDidChange(_ sender: Any?) {
@@ -83,13 +73,10 @@ final class AddLinkView: UIView, UITextFieldDelegate {
             checkButton.backgroundColor = .gray100
             checkButton.isEnabled = false
         }
-        
     }
-    
 }
 
 private extension AddLinkView {
-    
     func setupAddTarget() {
         urlTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         nextButton.addTarget(self, action: #selector(tappedNextButton), for: .touchUpInside)
@@ -113,7 +100,7 @@ private extension AddLinkView {
             $0.clearButtonMode = .always
             $0.addPadding(left: 15.0)
         }
-    
+        
         titleDescriptLabel.do {
             $0.text = "제목을 입력해주세요"
             $0.font = .suitMedium(size: 18)
@@ -172,7 +159,7 @@ private extension AddLinkView {
             $0.width.equalTo(335)
             $0.height.equalTo(62)
         }
-
+        
         
         // 키보드 위에 버튼 올리기 위한 Layout
         guard let checkButtonSuperView = checkButton.superview else { return }
@@ -183,7 +170,7 @@ private extension AddLinkView {
         
     }
     func setupTitleTextFieldLayout() {
-        super.addSubviews(titleDescriptLabel, titleTextField)
+        addSubviews(titleDescriptLabel, titleTextField)
         titleDescriptLabel.snp.makeConstraints {
             $0.top.equalTo(urlTextField.snp.bottom).offset(18)
             $0.leading.equalToSuperview().inset(35)
