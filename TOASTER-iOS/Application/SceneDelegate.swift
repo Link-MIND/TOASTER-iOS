@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let navigationController = UINavigationController(rootViewController: rootViewController)
+        let navigationController = ToasterNavigationController(rootViewController: rootViewController)
         self.window = UIWindow(windowScene: windowScene)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
