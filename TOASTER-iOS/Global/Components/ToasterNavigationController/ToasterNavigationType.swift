@@ -18,4 +18,5 @@ struct ToasterNavigationType {
     var hasRightButtonImage: Bool
     var rightButtonImage: UIImage?
     var rightButtonTitle: String? 
+    var rightButtonAction: () -> Void
 }

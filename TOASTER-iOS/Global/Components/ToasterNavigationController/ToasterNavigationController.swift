@@ -9,6 +9,13 @@ import UIKit
 
 final class ToasterNavigationController: UINavigationController {
 
+    typealias ButtonAction = () -> Void
+    private var rightButtonAction: ButtonAction? {
+        didSet {
+            rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        }
+    }
+    
     // MARK: - Properties
 
     private let navigationHeight: CGFloat = 64
@@ -31,7 +38,7 @@ final class ToasterNavigationController: UINavigationController {
     private let mainImageView: UIImageView = UIImageView()
     private let mainTitleLabel: UILabel = UILabel()
     private let backButton: UIButton = UIButton()
-    private let rightButton: UIButton = UIButton()
+    private var rightButton: UIButton = UIButton()
     
     // MARK: - Life Cycle
 
@@ -66,6 +73,7 @@ extension ToasterNavigationController {
             rightButton.setTitle(forType.rightButtonTitle, for: .normal)
         }
         
+        rightButtonAction = forType.rightButtonAction
     }
 }
 
@@ -95,6 +103,7 @@ private extension ToasterNavigationController {
         
         backButton.do {
             $0.setImage(ImageLiterals.Common.arrowLeft, for: .normal)
+            $0.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         }
         
         rightButton.do {
@@ -151,5 +160,13 @@ private extension ToasterNavigationController {
     /// DetaultNavigationBar를 hidden 시켜주는 함수
     func hideDefaultNavigationBar() {
         navigationBar.isHidden = true
+    }
+    
+    @objc func backButtonTapped() {
+        popViewController(animated: true)
+    }
+    
+    @objc func rightButtonTapped() {
+        rightButtonAction?()
     }
 }
