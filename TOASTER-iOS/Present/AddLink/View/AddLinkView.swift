@@ -55,16 +55,16 @@ final class AddLinkView: UIView, UITextFieldDelegate {
         // metaData() network
         setupTitleTextFieldLayout()
         titleTextField.text = urlTextField.text
-        // 키보드 올리기 :  titleTextfield.becomeFirstResponder()
+        titleTextField.becomeFirstResponder()
     }
     
     @objc func tappedCheckButton() {
-        urlTextField.resignFirstResponder() // 키보드 내려가고
-        nextButton.backgroundColor = .black850 // 다음 버튼 검정색으로 바뀌고
-        nextButton.isEnabled = true //활성화
+        urlTextField.resignFirstResponder()
+        nextButton.backgroundColor = .black850
+        nextButton.isEnabled = true
     }
     
-    @objc func textFieldDidChange(_ sender: Any?) {
+    @objc func urltextFieldDidChange(_ sender: Any?) {
         let textCount = urlTextField.text!.count
         if textCount > 0 {
             checkButton.backgroundColor = .black850
@@ -74,13 +74,26 @@ final class AddLinkView: UIView, UITextFieldDelegate {
             checkButton.isEnabled = false
         }
     }
+    
+    @objc func titletextFieldDidChange(_ sender: Any?) {
+        let textCount = titleTextField.text!.count
+        print(textCount)
+        // text가 15자 초과 시 Text Field Error
+        if textCount > 15 {
+            titleTextField.layer.borderColor = UIColor.toasterError.cgColor
+            titleTextField.layer.borderWidth = 1
+        } else {
+            titleTextField.tintColor = .toasterPrimary
+        }
+    }
 }
 
 private extension AddLinkView {
     func setupAddTarget() {
-        urlTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        urlTextField.addTarget(self, action: #selector(urltextFieldDidChange(_:)), for: .editingChanged)
         nextButton.addTarget(self, action: #selector(tappedNextButton), for: .touchUpInside)
         checkButton.addTarget(self, action: #selector(tappedCheckButton), for: .touchUpInside)
+        titleTextField.addTarget(self, action: #selector(titletextFieldDidChange(_:)), for: .editingChanged)
     }
     
     func setupStyle() {
@@ -107,6 +120,7 @@ private extension AddLinkView {
         }
         
         titleTextField.do {
+            $0.tintColor = .toasterPrimary
             $0.backgroundColor = .gray50
             $0.layer.cornerRadius = 12
             $0.inputAccessoryView = accessoryView
@@ -134,14 +148,13 @@ private extension AddLinkView {
     
     func setupHierarchy() {
         addSubviews(descriptLabel, urlTextField, nextButton)
-        // self.addSubview(titleTextField)
         accessoryView.addSubview(checkButton)
     }
     
     func setupLayout() {
         descriptLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(75)
-            $0.leading.equalToSuperview().inset(35) //20으로 해보기
+            $0.leading.equalToSuperview().inset(35)
             $0.height.equalTo(22)
             $0.width.equalTo(146)
         }
@@ -159,7 +172,6 @@ private extension AddLinkView {
             $0.width.equalTo(335)
             $0.height.equalTo(62)
         }
-        
         
         // 키보드 위에 버튼 올리기 위한 Layout
         guard let checkButtonSuperView = checkButton.superview else { return }
