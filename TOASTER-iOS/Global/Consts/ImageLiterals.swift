@@ -27,6 +27,10 @@ enum ImageLiterals {
         static var timer: UIImage { .load(name: "ic_timer_24") }
         static var my: UIImage { .load(name: "ic_my_24") }
     }
+    
+    enum Logo {
+        static var wordmark: UIImage { .load(name: "wordmark") }
+    }
 }
 
 extension UIImage {
