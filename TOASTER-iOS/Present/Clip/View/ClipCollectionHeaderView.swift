@@ -52,14 +52,6 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
     }
 }
 
-// MARK: - Extensions
-
-extension ClipCollectionHeaderView {
-    func setupDataBind() {
-        
-    }
-}
-
 // MARK: - Private Extensions
 
 private extension ClipCollectionHeaderView {

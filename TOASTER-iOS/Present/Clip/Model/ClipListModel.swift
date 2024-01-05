@@ -13,4 +13,6 @@ struct ClipListModel: Codable {
     let toastNum: Int
 }
 
-var dummyClipList: [ClipListModel] = [.init(categoryID: 1, categoryTitle: "제목", toastNum: 50)]
+// TODO: - 테스트용 더미 데이터, 서버 연결 후 지울 것!
+// var dummyClipList: [ClipListModel] = [.init(categoryID: 1, categoryTitle: "제목", toastNum: 50)]
+ var dummyClipList: [ClipListModel] = []
