@@ -13,6 +13,15 @@ final class ToasterNavigationController: UINavigationController {
 
     private let navigationHeight: CGFloat = 64
     
+    override var isNavigationBarHidden: Bool {
+        didSet {
+            hideDefaultNavigationBar()
+            safeAreaView.isHidden = isNavigationBarHidden
+            customNavigationBar.isHidden = isNavigationBarHidden
+            setupSafeArea(navigationBarHidden: isNavigationBarHidden)
+        }
+    }
+    
     // MARK: - UI Properties
 
     private let safeAreaView: UIView = UIView()
@@ -23,7 +32,7 @@ final class ToasterNavigationController: UINavigationController {
     private let mainTitleLabel: UILabel = UILabel()
     private let backButton: UIButton = UIButton()
     private let rightButton: UIButton = UIButton()
-
+    
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -35,18 +44,10 @@ final class ToasterNavigationController: UINavigationController {
         hideDefaultNavigationBar()
         setupSafeArea(navigationBarHidden: isNavigationBarHidden)
     }
-    
-    override var isNavigationBarHidden: Bool {
-        didSet {
-            hideDefaultNavigationBar()
-            safeAreaView.isHidden = isNavigationBarHidden
-            customNavigationBar.isHidden = isNavigationBarHidden
-            setupSafeArea(navigationBarHidden: isNavigationBarHidden)
-        }
-    }
 }
 
 extension ToasterNavigationController {
+    /// NavigationBar를 세팅해주는 함수
     func setupNavigationBar(forType: ToasterNavigationType) {
         backButton.isHidden = !forType.hasBackButton
         rightButton.isHidden = !forType.hasRightButton
