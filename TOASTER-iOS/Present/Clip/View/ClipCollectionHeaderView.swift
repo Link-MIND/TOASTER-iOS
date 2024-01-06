@@ -12,10 +12,6 @@ import Then
 
 final class ClipCollectionHeaderView: UICollectionReusableView {
     
-    // MARK: - Properties
-    
-    static let identifier = "ClipCollectionHeaderView"
-    
     // MARK: - UI Components
     
     private let searchBar = UIButton().then {
@@ -102,7 +98,6 @@ private extension ClipCollectionHeaderView {
     func buttonTapped() {
         guard let viewController = findViewController() else { return }
         let view = AddClipBottomSheetView()        
-        print(keyboardLayoutGuide.layoutFrame)
         let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: keyboardLayoutGuide.layoutFrame.height-137+(keyboardLayoutGuide.owningView?.frame.height ?? 0), insertView: view)
         exampleBottom.modalPresentationStyle = .overFullScreen
         viewController.present(exampleBottom, animated: false)

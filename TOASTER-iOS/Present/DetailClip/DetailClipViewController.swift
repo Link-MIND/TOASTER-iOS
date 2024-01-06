@@ -1,5 +1,5 @@
 //
-//  DetailCategoryViewController.swift
+//  DetailClipViewController.swift
 //  TOASTER-iOS
 //
 //  Created by 김다예 on 12/30/23.
@@ -7,23 +7,61 @@
 
 import UIKit
 
-class DetailCategoryViewController: UIViewController {
+import SnapKit
+import Then
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+final class DetailClipViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    // MARK: - UI Properties
+    
+    // private let myView = View()
+    
+    // MARK: - Life Cycle
+    
+    override func loadView() {
+        super.loadView()
+        
+        // view = myView
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupStyle()
+        setupHierarchy()
+        setupLayout()
+        setupDelegate()
     }
-    */
+    
+}
 
+// MARK: - Networks
+
+extension DetailClipViewController {
+    func fetchMain() {
+        
+    }
+}
+
+// MARK: - Private Extensions
+
+private extension DetailClipViewController {
+    func setupStyle() {
+        
+    }
+    
+    func setupHierarchy() {
+        
+    }
+    
+    func setupLayout() {
+        
+    }
+    
+    func setupDelegate() {
+        
+    }
+    
 }

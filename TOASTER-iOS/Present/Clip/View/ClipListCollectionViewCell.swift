@@ -12,10 +12,6 @@ import Then
 
 final class ClipListCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - Properties
-    
-    static let identifier: String = "ClipListCollectionViewCell"
-    
     // MARK: - UI Components
     
     private let clipImage = UIImageView().then {
