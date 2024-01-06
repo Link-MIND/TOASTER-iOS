@@ -18,9 +18,7 @@ final class ClipViewController: UIViewController {
     
     private let clipEmptyView = ClipEmptyView()
     private let addClipBottomSheetView = AddClipBottomSheetView()
-    private let clipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
-        $0.backgroundColor = .toasterBackground
-    }
+    private let clipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         
     // MARK: - Life Cycle
     
@@ -54,6 +52,7 @@ extension ClipViewController {
 private extension ClipViewController {
     func setupStyle() {
         hideNavigationBar()
+        clipListCollectionView.backgroundColor = .toasterBackground
     }
     
     func setupHierarchy() {

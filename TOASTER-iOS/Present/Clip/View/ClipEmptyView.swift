@@ -14,17 +14,8 @@ final class ClipEmptyView: UIView {
     
     // MARK: - UI Components
     
-    private let emptyImage = UIImageView().then {
-        $0.image = ImageLiterals.Clip.clipEmpty
-    }
-    
-    private let emptyLabel = UILabel().then {
-        $0.text = StringLiterals.Clip.Title.emptyLabel
-        $0.numberOfLines = 2
-        $0.textColor = .gray500
-        $0.font = .suitRegular(size: 16)
-        $0.textAlignment = .center
-    }
+    private let emptyImage = UIImageView()
+    private let emptyLabel = UILabel()
     
     // MARK: - Life Cycles
     
@@ -47,6 +38,18 @@ final class ClipEmptyView: UIView {
 private extension ClipEmptyView {
     func setupStyle() {
         backgroundColor = .toasterBackground
+        
+        emptyImage.do {
+            $0.image = ImageLiterals.Clip.clipEmpty
+        }
+        
+        emptyLabel.do {
+            $0.text = StringLiterals.Clip.Title.emptyLabel
+            $0.numberOfLines = 2
+            $0.textColor = .gray500
+            $0.font = .suitRegular(size: 16)
+            $0.textAlignment = .center
+        }
     }
     
     func setupHierarchy() {

@@ -14,23 +14,10 @@ final class ClipListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    private let clipImage = UIImageView().then {
-        $0.image = ImageLiterals.TabBar.clip.withTintColor(.black900)
-    }
-    
-    private let clipNameLabel = UILabel().then {
-        $0.font = .suitSemiBold(size: 16)
-        $0.textColor = .black850
-    }
-    
-    private let countLabel = UILabel().then {
-        $0.font = .suitSemiBold(size: 14)
-        $0.textColor = .gray600
-    }
-    
-    private let arrowImage = UIImageView().then {
-        $0.image = ImageLiterals.Clip.rightarrow
-    }
+    private let clipImage = UIImageView()
+    private let clipNameLabel = UILabel()
+    private let countLabel = UILabel()
+    private let arrowImage = UIImageView()
     
     // MARK: - Life Cycles
     
@@ -60,8 +47,26 @@ extension ClipListCollectionViewCell {
 
 private extension ClipListCollectionViewCell {
     func setupStyle() {
-        backgroundColor = .toasterWhite
-        makeRounded(radius: 12)
+        self.backgroundColor = .toasterWhite
+        self.makeRounded(radius: 12)
+        
+        clipImage.do {
+            $0.image = ImageLiterals.TabBar.clip.withTintColor(.black900)
+        }
+        
+        clipNameLabel.do {
+            $0.font = .suitSemiBold(size: 16)
+            $0.textColor = .black850
+        }
+        
+        countLabel.do {
+            $0.font = .suitSemiBold(size: 14)
+            $0.textColor = .gray600
+        }
+        
+        arrowImage.do {
+            $0.image = ImageLiterals.Clip.rightarrow
+        }
     }
     
     func setupHierarchy() {

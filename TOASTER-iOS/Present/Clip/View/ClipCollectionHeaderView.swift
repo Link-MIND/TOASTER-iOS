@@ -14,22 +14,9 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
     
     // MARK: - UI Components
     
-    private let searchBar = UIButton().then {
-        $0.setImage(ImageLiterals.Clip.searchbar, for: .normal)
-    }
-    
-    private let clipCountLabel = UILabel().then {
-        $0.textColor = .gray500
-        $0.font = .suitBold(size: 12)
-        $0.text = "전체 (n)"
-    }
-    
-    private let addClipButton = UIButton().then {
-        $0.setImage(ImageLiterals.Clip.orangeplus, for: .normal)
-        $0.setTitle(StringLiterals.Clip.Title.addClip, for: .normal)
-        $0.setTitleColor(.toasterPrimary, for: .normal)
-        $0.titleLabel?.font = .suitBold(size: 12)
-    }
+    private let searchBar = UIButton()
+    private let clipCountLabel = UILabel()
+    private let addClipButton = UIButton()
     
     // MARK: - Life Cycles
     
@@ -53,6 +40,23 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
 private extension ClipCollectionHeaderView {
     func setupStyle() {
         backgroundColor = .toasterBackground
+        
+        searchBar.do {
+            $0.setImage(ImageLiterals.Clip.searchbar, for: .normal)
+        }
+        
+        clipCountLabel.do {
+            $0.textColor = .gray500
+            $0.font = .suitBold(size: 12)
+            $0.text = "전체 (n)"
+        }
+        
+        addClipButton.do {
+            $0.setImage(ImageLiterals.Clip.orangeplus, for: .normal)
+            $0.setTitle(StringLiterals.Clip.Title.addClip, for: .normal)
+            $0.setTitleColor(.toasterPrimary, for: .normal)
+            $0.titleLabel?.font = .suitBold(size: 12)
+        }
     }
     
     func setupHierarchy() {

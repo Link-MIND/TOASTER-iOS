@@ -22,20 +22,8 @@ final class AddClipBottomSheetView: UIView {
     
     // MARK: - UI Components
     
-    private let addClipTextField = UITextField().then {
-        $0.becomeFirstResponder()
-        $0.placeholder = StringLiterals.BottomSheet.Placeholder.addClip
-        $0.addPadding(left: 14, right: 14)
-        $0.backgroundColor = .gray50
-        $0.makeRounded(radius: 12)
-    }
-    
-    private let addClipButton = UIButton().then {
-        $0.backgroundColor = .toasterPrimary
-        $0.setTitle(StringLiterals.BottomSheet.Button.complete, for: .normal)
-        $0.setTitleColor(.toasterWhite, for: .normal)
-        $0.titleLabel?.font = .suitBold(size: 16)
-    }
+    private let addClipTextField = UITextField()
+    private let addClipButton = UIButton()
     
     // MARK: - Life Cycles
     
@@ -59,6 +47,21 @@ final class AddClipBottomSheetView: UIView {
 private extension AddClipBottomSheetView {
     func setupStyle() {
         backgroundColor = .toasterWhite
+        
+        addClipTextField.do {
+            $0.becomeFirstResponder()
+            $0.placeholder = StringLiterals.BottomSheet.Placeholder.addClip
+            $0.addPadding(left: 14, right: 14)
+            $0.backgroundColor = .gray50
+            $0.makeRounded(radius: 12)
+        }
+        
+        addClipButton.do {
+            $0.backgroundColor = .toasterPrimary
+            $0.setTitle(StringLiterals.BottomSheet.Button.complete, for: .normal)
+            $0.setTitleColor(.toasterWhite, for: .normal)
+            $0.titleLabel?.font = .suitBold(size: 16)
+        }
     }
     
     func setupHierarchy() {
