@@ -11,12 +11,12 @@ struct ToasterNavigationType {
     var hasBackButton: Bool     // backButton 존재 여부
     var hasRightButton: Bool    // rightButton 존재 여부
 
-    var mainTitle: StringOrImage        // mainTitle
-    var rightButton: StringOrImage      // rightButton
+    var mainTitle: StringOrImageType        // mainTitle
+    var rightButton: StringOrImageType      // rightButton
     var rightButtonAction: () -> Void   // rightButton의 액션
 }
 
-enum StringOrImage {
+enum StringOrImageType {
     case string(String)
     case image(UIImage)
 }

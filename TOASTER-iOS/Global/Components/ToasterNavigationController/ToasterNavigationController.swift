@@ -134,7 +134,7 @@ private extension ToasterNavigationController {
     /// navigationBar가 hidden 상태인지 아닌지에 따라 view의 safeArea를 정해주는 함수
     func setupSafeArea(navigationBarHidden: Bool) {
         if navigationBarHidden {
-            additionalSafeAreaInsets = UIEdgeInsets(top:0,
+            additionalSafeAreaInsets = UIEdgeInsets(top: 0,
                                                     left: 0,
                                                     bottom: 0,
                                                     right: 0)
@@ -151,7 +151,7 @@ private extension ToasterNavigationController {
         navigationBar.isHidden = true
     }
     
-    func setupMainTitle(stringOrImage: StringOrImage) {
+    func setupMainTitle(stringOrImage: StringOrImageType) {
         switch stringOrImage {
         case .string(let string):
             mainImageView.isHidden = true
@@ -164,7 +164,7 @@ private extension ToasterNavigationController {
         }
     }
     
-    func setupRightButton(stringOrImage: StringOrImage) {
+    func setupRightButton(stringOrImage: StringOrImageType) {
         switch stringOrImage {
         case .string(let string):
             rightButton.setImage(nil, for: .normal)
