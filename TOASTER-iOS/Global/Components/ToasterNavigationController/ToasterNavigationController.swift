@@ -59,25 +59,8 @@ extension ToasterNavigationController {
         backButton.isHidden = !forType.hasBackButton
         rightButton.isHidden = !forType.hasRightButton
     
-        switch forType.mainTitle {
-        case .string(let string):
-            mainImageView.isHidden = true
-            mainTitleLabel.isHidden = false
-            mainTitleLabel.text = string
-        case .image(let image):
-            mainTitleLabel.isHidden = true
-            mainImageView.isHidden = false
-            mainImageView.image = image
-        }
-
-        switch forType.rightButton {
-        case .string(let string):
-            rightButton.setImage(nil, for: .normal)
-            rightButton.setTitle(string, for: .normal)
-        case .image(let image):
-            rightButton.setTitle(nil, for: .normal)
-            rightButton.setImage(image, for: .normal)
-        }
+        setupMainTitle(stringOrImage: forType.mainTitle)
+        setupRightButton(stringOrImage: forType.rightButton)
         
         rightButtonAction = forType.rightButtonAction
     }
@@ -166,6 +149,30 @@ private extension ToasterNavigationController {
     /// DetaultNavigationBar를 hidden 시켜주는 함수
     func hideDefaultNavigationBar() {
         navigationBar.isHidden = true
+    }
+    
+    func setupMainTitle(stringOrImage: StringOrImage) {
+        switch stringOrImage {
+        case .string(let string):
+            mainImageView.isHidden = true
+            mainTitleLabel.isHidden = false
+            mainTitleLabel.text = string
+        case .image(let image):
+            mainTitleLabel.isHidden = true
+            mainImageView.isHidden = false
+            mainImageView.image = image
+        }
+    }
+    
+    func setupRightButton(stringOrImage: StringOrImage) {
+        switch stringOrImage {
+        case .string(let string):
+            rightButton.setImage(nil, for: .normal)
+            rightButton.setTitle(string, for: .normal)
+        case .image(let image):
+            rightButton.setTitle(nil, for: .normal)
+            rightButton.setImage(image, for: .normal)
+        }
     }
     
     @objc func backButtonTapped() {
