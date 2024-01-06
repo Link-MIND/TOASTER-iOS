@@ -7,6 +7,9 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 final class ToasterNavigationController: UINavigationController {
 
     typealias ButtonAction = () -> Void
@@ -146,7 +149,7 @@ private extension ToasterNavigationController {
         }
     }
     
-    /// DetaultNavigationBar를 hidden 시켜주는 함수
+    /// DefaultNavigationBar를 hidden 시켜주는 함수
     func hideDefaultNavigationBar() {
         navigationBar.isHidden = true
     }
