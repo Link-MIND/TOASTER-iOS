@@ -58,23 +58,25 @@ extension ToasterNavigationController {
     func setupNavigationBar(forType: ToasterNavigationType) {
         backButton.isHidden = !forType.hasBackButton
         rightButton.isHidden = !forType.hasRightButton
-        
-        if forType.hasMainImage {
-            mainTitleLabel.isHidden = true
-            mainImageView.isHidden = false
-            mainImageView.image = forType.mainImage
-        } else {
+    
+        switch forType.mainTitle {
+        case .string(let string):
             mainImageView.isHidden = true
             mainTitleLabel.isHidden = false
-            mainTitleLabel.text = forType.mainTitle
+            mainTitleLabel.text = string
+        case .image(let image):
+            mainTitleLabel.isHidden = true
+            mainImageView.isHidden = false
+            mainImageView.image = image
         }
-        
-        if forType.hasRightButtonImage {
-            rightButton.setTitle(nil, for: .normal)
-            rightButton.setImage(forType.rightButtonImage, for: .normal)
-        } else {
+
+        switch forType.rightButton {
+        case .string(let string):
             rightButton.setImage(nil, for: .normal)
-            rightButton.setTitle(forType.rightButtonTitle, for: .normal)
+            rightButton.setTitle(string, for: .normal)
+        case .image(let image):
+            rightButton.setTitle(nil, for: .normal)
+            rightButton.setImage(image, for: .normal)
         }
         
         rightButtonAction = forType.rightButtonAction
