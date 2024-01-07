@@ -44,7 +44,7 @@ private extension DeleteLinkBottomSheetView {
         backgroundColor = .toasterBackground
         
         deleteButton.do {
-            $0.setTitle("삭제", for: .normal)
+            $0.setTitle(StringLiterals.BottomSheet.Button.delete, for: .normal)
             $0.backgroundColor = .toasterWhite
             $0.setTitleColor(.toasterPrimary, for: .normal)
             $0.titleLabel?.font = .suitMedium(size: 16)

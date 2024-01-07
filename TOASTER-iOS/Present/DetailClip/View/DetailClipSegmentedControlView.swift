@@ -17,11 +17,14 @@ protocol DetailClipSegmentedDelegate: AnyObject {
 }
 
 final class DetailClipSegmentedControlView: UIView {
+    
+    // MARK: - Properties
+    
+    var detailClipSegmentedDelegate: DetailClipSegmentedDelegate?
         
     // MARK: - UI Components
     
     private let readSegmentedControl = UISegmentedControl()
-    var detailClipSegmentedDelegate: DetailClipSegmentedDelegate?
     
     // MARK: - Life Cycles
     
@@ -47,9 +50,9 @@ private extension DetailClipSegmentedControlView {
         backgroundColor = .toasterBackground
         
         readSegmentedControl.do {
-            $0.insertSegment(withTitle: "전체", at: 0, animated: true)
-            $0.insertSegment(withTitle: "열람", at: 1, animated: true)
-            $0.insertSegment(withTitle: "미열람", at: 2, animated: true)
+            $0.insertSegment(withTitle: StringLiterals.Clip.Segment.all, at: 0, animated: true)
+            $0.insertSegment(withTitle: StringLiterals.Clip.Segment.read, at: 1, animated: true)
+            $0.insertSegment(withTitle: StringLiterals.Clip.Segment.unread, at: 2, animated: true)
             $0.selectedSegmentIndex = 0
             $0.setTitleTextAttributes([
                 NSAttributedString.Key.foregroundColor: UIColor.black850,
@@ -68,7 +71,8 @@ private extension DetailClipSegmentedControlView {
     
     func setupLayout() {
         readSegmentedControl.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.height.equalTo(38)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
     }

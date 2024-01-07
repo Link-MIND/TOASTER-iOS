@@ -38,8 +38,14 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
 // MARK: - Extensions
 
 extension ClipCollectionHeaderView {
-    func isaddClipButtonHidden() {
+    func isDetailClipView() {
+        searchBar.isHidden = true
         addClipButton.isHidden = true
+        
+        clipCountLabel.snp.remakeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().inset(20)
+        }
     }
     
     func setupDataBind(count: Int) {

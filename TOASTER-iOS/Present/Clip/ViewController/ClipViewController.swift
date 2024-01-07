@@ -147,7 +147,7 @@ extension ClipViewController: UICollectionViewDataSource {
 extension ClipViewController: UICollectionViewDelegateFlowLayout {
     // sizeForItemAt: 각 Cell의 크기를 CGSize 형태로 return
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.convertByWidthRatio(335), height: collectionView.convertByHeightRatio(52))
+        return CGSize(width: collectionView.convertByWidthRatio(335), height: 52)
     }
     
     // ContentInset: Cell에서 Content 외부에 존재하는 Inset의 크기를 결정

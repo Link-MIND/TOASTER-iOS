@@ -68,24 +68,22 @@ private extension DetailClipListCollectionViewCell {
         }
         
         clipNameLabel.do {
-            $0.text = "세부 클립명"
             $0.backgroundColor = .toaster50
             $0.makeRounded(radius: 8)
             $0.textColor = .toasterPrimary
             $0.font = .suitMedium(size: 10)
             $0.textAlignment = .center
+            $0.text = "세부 클립명 API 나오면 붙일게요~"
         }
         
         linkTitleLabel.do {
             $0.font = .suitMedium(size: 16)
             $0.textColor = .black850
-            $0.text = "타이틀어쩌구"
         }
         
         linkLabel.do {
             $0.font = .suitMedium(size: 10)
             $0.textColor = .gray200
-            $0.text = "https://linklinklink"
         }
         
         modifiedButton.do {
@@ -105,7 +103,7 @@ private extension DetailClipListCollectionViewCell {
         }
         
         linkLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(12)
+            $0.bottom.trailing.equalToSuperview().inset(12)
             $0.leading.equalTo(linkImage.snp.trailing).offset(12)
         }
         

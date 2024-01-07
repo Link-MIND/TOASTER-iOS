@@ -18,7 +18,7 @@ final class DetailClipViewController: UIViewController {
     private let detailClipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     private let deleteLinkBottomSheetView = DeleteLinkBottomSheetView()
-    private lazy var bottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 172, insertView: deleteLinkBottomSheetView)
+    private lazy var bottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: StringLiterals.BottomSheet.Title.modified, height: 172, insertView: deleteLinkBottomSheetView)
     
     // MARK: - Life Cycle
     
@@ -36,14 +36,7 @@ final class DetailClipViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupEmptyView()
-    }
-}
-
-// MARK: - Networks
-
-extension DetailClipViewController {
-    func fetchMain() {
-        
+        setupNavigationBar()
     }
 }
 
@@ -63,7 +56,7 @@ private extension DetailClipViewController {
         detailClipSegmentedControlView.snp.makeConstraints {
             $0.top.equalTo(self.view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(38)
+            $0.height.equalTo(60)
         }
         
         detailClipListCollectionView.snp.makeConstraints {
@@ -93,6 +86,17 @@ private extension DetailClipViewController {
             detailClipEmptyView.isHidden = false
         }
     }
+    
+    func setupNavigationBar() {
+        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
+                                                                hasRightButton: false,
+                                                                mainTitle: StringOrImageType.string(StringLiterals.NavigationBar.Title.allClip),
+                                                                rightButton: StringOrImageType.string("어쩌구"), rightButtonAction: {})
+        
+        if let navigationController = navigationController as? ToasterNavigationController {
+            navigationController.setupNavigationBar(forType: type)
+        }
+    }
 }
 
 // MARK: - CollectionView DataSource
@@ -113,15 +117,15 @@ extension DetailClipViewController: UICollectionViewDataSource {
         deleteLinkBottomSheetView.deleteLinkBottomSheetViewButtonAction = {
             self.bottom.hideBottomSheet()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self.showToastMessage(width: 152, status: .check, message: "링크 삭제 완료")
-            }        }
-        
+                self.showToastMessage(width: 152, status: .check, message: StringLiterals.Toast.Message.completeDeleteLink)
+            }
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
-        headerView.isaddClipButtonHidden()
+        headerView.isDetailClipView()
         headerView.setupDataBind(count: dummyDetailClipList.count)
         return headerView
     }
@@ -129,15 +133,13 @@ extension DetailClipViewController: UICollectionViewDataSource {
 
 // MARK: - CollectionView Delegate
 
-extension DetailClipViewController: UICollectionViewDelegate {
-    
-}
+extension DetailClipViewController: UICollectionViewDelegate {}
 
 // MARK: - CollectionView Delegate Flow Layout
 extension DetailClipViewController: UICollectionViewDelegateFlowLayout {
     // sizeForItemAt: 각 Cell의 크기를 CGSize 형태로 return
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.convertByWidthRatio(335), height: collectionView.convertByHeightRatio(98))
+        return CGSize(width: collectionView.convertByWidthRatio(335), height: 98)
     }
     
     // ContentInset: Cell에서 Content 외부에 존재하는 Inset의 크기를 결정
@@ -152,6 +154,6 @@ extension DetailClipViewController: UICollectionViewDelegateFlowLayout {
     
     // referenceSizeForHeaderInSection: 각 섹션의 헤더 뷰 크기를 CGSize 형태로 return
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 50)
+        return CGSize(width: collectionView.frame.width, height: 30)
     }
 }
