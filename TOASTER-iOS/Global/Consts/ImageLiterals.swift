@@ -15,6 +15,9 @@ enum ImageLiterals {
         static var check: UIImage { .load(systemName: "checkmark.circle.fill") }
         static var exclamation: UIImage { .load(systemName: "exclamationmark.circle.fill") }
         static var close: UIImage { .load(name: "ic_close_24") }
+        static var arrowLeft: UIImage { .load(name: "ic_arrow_left_24") }
+        static var setting: UIImage { .load(name: "ic_settings_24") }
+        static var plus: UIImage { .load(name: "ic_plus_24") }
     }
     
     enum TabBar {
@@ -32,6 +35,10 @@ enum ImageLiterals {
         static var meatballs: UIImage { .load(name: "ic_meatballs_24") }
         static var clipEmpty: UIImage { .load(name: "clip_empty") }
         static var detailClipEmpty: UIImage { .load(name: "detail_clip_empty") }
+    }
+    
+    enum Logo {
+        static var wordmark: UIImage { .load(name: "wordmark") }
     }
 }
 
