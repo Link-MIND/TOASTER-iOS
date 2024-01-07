@@ -28,6 +28,15 @@ enum ImageLiterals {
         static var my: UIImage { .load(name: "ic_my_24") }
     }
     
+    enum Clip {
+        static var rightarrow: UIImage { .load(name: "ic_arrow_18") }
+        static var searchbar: UIImage {.load(name: "search_bar") }
+        static var orangeplus: UIImage { .load(name: "ic_plus_18_orange") }
+        static var meatballs: UIImage { .load(name: "ic_meatballs_24") }
+        static var clipEmpty: UIImage { .load(name: "clip_empty") }
+        static var detailClipEmpty: UIImage { .load(name: "detail_clip_empty") }
+    }
+    
     enum Logo {
         static var wordmark: UIImage { .load(name: "wordmark") }
     }
