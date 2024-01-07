@@ -22,6 +22,11 @@
 		39BC5B162B410EF3004024E6 /* SUIT-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B112B410EF3004024E6 /* SUIT-ExtraBold.otf */; };
 		39BC5B172B410EF3004024E6 /* SUIT-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B122B410EF3004024E6 /* SUIT-Regular.otf */; };
 		39BC5B192B411037004024E6 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BC5B182B411037004024E6 /* FontLiterals.swift */; };
+		39BE4BB42B4ABA80002B471D /* DetailClipListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BE4BB32B4ABA80002B471D /* DetailClipListModel.swift */; };
+		39BE4BB62B4ABA97002B471D /* DetailClipListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BE4BB52B4ABA97002B471D /* DetailClipListCollectionViewCell.swift */; };
+		39BE4BBE2B4ABB7C002B471D /* DetailClipSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BE4BBD2B4ABB7C002B471D /* DetailClipSegmentedControlView.swift */; };
+		39BE4BC02B4ABB9E002B471D /* DetailClipEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BE4BBF2B4ABB9E002B471D /* DetailClipEmptyView.swift */; };
+		39BE4BC22B4ABBB0002B471D /* DeleteLinkBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BE4BC12B4ABBB0002B471D /* DeleteLinkBottomSheetView.swift */; };
 		39C3926B2B491F47005B2B0F /* NSObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C3926A2B491F47005B2B0F /* NSObject+.swift */; };
 		39E794F62B479A1C00F16A38 /* ClipListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E794F52B479A1C00F16A38 /* ClipListModel.swift */; };
 		39E794F92B479C8600F16A38 /* ClipEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E794F82B479C8600F16A38 /* ClipEmptyView.swift */; };
@@ -81,6 +86,11 @@
 		39BC5B112B410EF3004024E6 /* SUIT-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-ExtraBold.otf"; sourceTree = "<group>"; };
 		39BC5B122B410EF3004024E6 /* SUIT-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Regular.otf"; sourceTree = "<group>"; };
 		39BC5B182B411037004024E6 /* FontLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLiterals.swift; sourceTree = "<group>"; };
+		39BE4BB32B4ABA80002B471D /* DetailClipListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClipListModel.swift; sourceTree = "<group>"; };
+		39BE4BB52B4ABA97002B471D /* DetailClipListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClipListCollectionViewCell.swift; sourceTree = "<group>"; };
+		39BE4BBD2B4ABB7C002B471D /* DetailClipSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClipSegmentedControlView.swift; sourceTree = "<group>"; };
+		39BE4BBF2B4ABB9E002B471D /* DetailClipEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClipEmptyView.swift; sourceTree = "<group>"; };
+		39BE4BC12B4ABBB0002B471D /* DeleteLinkBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteLinkBottomSheetView.swift; sourceTree = "<group>"; };
 		39C3926A2B491F47005B2B0F /* NSObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+.swift"; sourceTree = "<group>"; };
 		39E794F52B479A1C00F16A38 /* ClipListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipListModel.swift; sourceTree = "<group>"; };
 		39E794F82B479C8600F16A38 /* ClipEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipEmptyView.swift; sourceTree = "<group>"; };
@@ -164,6 +174,33 @@
 				39E794F82B479C8600F16A38 /* ClipEmptyView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		39BE4BB02B4ABA6A002B471D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6B6AE68F2B3FF59C000E2366 /* DetailClipViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		39BE4BB12B4ABA70002B471D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				39BE4BB52B4ABA97002B471D /* DetailClipListCollectionViewCell.swift */,
+				39BE4BBD2B4ABB7C002B471D /* DetailClipSegmentedControlView.swift */,
+				39BE4BBF2B4ABB9E002B471D /* DetailClipEmptyView.swift */,
+				39BE4BC12B4ABBB0002B471D /* DeleteLinkBottomSheetView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		39BE4BB22B4ABA73002B471D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				39BE4BB32B4ABA80002B471D /* DetailClipListModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		39E794F42B479A0500F16A38 /* Model */ = {
@@ -355,7 +392,9 @@
 		6B6AE68E2B3FF590000E2366 /* DetailClip */ = {
 			isa = PBXGroup;
 			children = (
-				6B6AE68F2B3FF59C000E2366 /* DetailClipViewController.swift */,
+				39BE4BB22B4ABA73002B471D /* Model */,
+				39BE4BB12B4ABA70002B471D /* View */,
+				39BE4BB02B4ABA6A002B471D /* ViewController */,
 			);
 			path = DetailClip;
 			sourceTree = "<group>";
@@ -551,6 +590,7 @@
 				398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */,
 				39BC5B192B411037004024E6 /* FontLiterals.swift in Sources */,
 				39E794F92B479C8600F16A38 /* ClipEmptyView.swift in Sources */,
+				39BE4BC02B4ABB9E002B471D /* DetailClipEmptyView.swift in Sources */,
 				6B6AE6532B3FF101000E2366 /* ViewController.swift in Sources */,
 				6B6AE6902B3FF59C000E2366 /* DetailClipViewController.swift in Sources */,
 				6B6AE6A62B3FF6BD000E2366 /* UIView+.swift in Sources */,
@@ -559,15 +599,19 @@
 				6B6AE6932B3FF5A9000E2366 /* ClipViewController.swift in Sources */,
 				830517632B42D871009FFB60 /* TabBarItem.swift in Sources */,
 				830517652B42D996009FFB60 /* StringLiterals.swift in Sources */,
+				39BE4BC22B4ABBB0002B471D /* DeleteLinkBottomSheetView.swift in Sources */,
 				6BC4936C2B48633700544249 /* ToasterNavigationType.swift in Sources */,
 				6B6AE6992B3FF5C1000E2366 /* SearchViewController.swift in Sources */,
 				398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */,
 				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
 				6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */,
+				39BE4BB42B4ABA80002B471D /* DetailClipListModel.swift in Sources */,
 				6BC4935E2B4414B400544249 /* ToasterPopupViewController.swift in Sources */,
+				39BE4BBE2B4ABB7C002B471D /* DetailClipSegmentedControlView.swift in Sources */,
 				6B6AE6A82B3FF6D5000E2366 /* UITextField+.swift in Sources */,
 				39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */,
 				398BE7FE2B46C164001595E0 /* AddClipBottomSheetView.swift in Sources */,
+				39BE4BB62B4ABA97002B471D /* DetailClipListCollectionViewCell.swift in Sources */,
 				6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */,
 				6B6AE6AC2B3FF6F7000E2366 /* UIColor+.swift in Sources */,
 				6BC493682B45D7B100544249 /* ToasterNavigationController.swift in Sources */,

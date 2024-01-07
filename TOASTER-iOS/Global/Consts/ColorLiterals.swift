@@ -128,4 +128,8 @@ extension UIColor {
     static var toaster100: UIColor {
         return UIColor(hex: "#FCDED7")
     }
+    
+    static var toaster50: UIColor {
+        return UIColor(hex: "#FFF4F1")
+    }
 }
