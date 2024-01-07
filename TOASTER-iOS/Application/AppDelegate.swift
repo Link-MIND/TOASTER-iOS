@@ -7,13 +7,43 @@
 
 import UIKit
 
+import KakaoSDKAuth
+import KakaoSDKCommon
+import KakaoSDKUser
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
+    var isLogin = false
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
+        
+        if (AuthApi.hasToken()) {
+            UserApi.shared.accessTokenInfo { [weak self] (_, error) in
+                if let error = error {
+                    if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true  {
+                        // 로그인 필요
+                        self?.isLogin = false
+                        print("토큰 만료, 카카오 로그인 필요")
+                    } else {
+                        // 기타 에러
+                        self?.isLogin = false
+                    }
+                } else {
+                    // 토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
+                    self?.isLogin = true
+                    print("카카오 토큰 유효성 체크 성공")
+                }
+            }
+        } else {
+            // 카카오 토큰 없음, 로그인 필요
+            print("발급받은 토큰 없음, 카카오 로그인 필요")
+            isLogin = false
+        }
+        
         return true
     }
 
