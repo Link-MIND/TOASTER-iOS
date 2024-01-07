@@ -32,8 +32,14 @@ private extension SocialLoginButtonView {
     func setupSocialButton(type: SocialLoginType) {
         var configuration = UIButton.Configuration.filled()
         
-        configuration.title = type.title
-        configuration.cornerStyle = .capsule
+        var titleAttr = AttributedString.init("\(type.title)")
+        titleAttr.font = .suitBold(size: 16)
+        configuration.attributedTitle = titleAttr
+        
+        configuration.image = type.logoImage
+        configuration.imagePadding = 4
+        
+        configuration.background.cornerRadius = 12
         configuration.baseForegroundColor = type.titleColor
         configuration.baseBackgroundColor = type.backgroundColor
         
