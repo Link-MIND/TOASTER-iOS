@@ -13,13 +13,13 @@ import Then
 final class ClipViewController: UIViewController {
     
     // MARK: - Properties
-        
+    
     // MARK: - UI Properties
     
     private let clipEmptyView = ClipEmptyView()
     private let addClipBottomSheetView = AddClipBottomSheetView()
     private let clipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -36,14 +36,7 @@ final class ClipViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupEmptyView()
-    }
-}
-
-// MARK: - Networks
-
-extension ClipViewController {
-    func fetchMain() {
-        
+        setupNavigationBar()
     }
 }
 
@@ -51,7 +44,6 @@ extension ClipViewController {
 
 private extension ClipViewController {
     func setupStyle() {
-        hideNavigationBar()
         clipListCollectionView.backgroundColor = .toasterBackground
     }
     
@@ -65,7 +57,8 @@ private extension ClipViewController {
         }
         
         clipEmptyView.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(self.view.convertByHeightRatio(280))
         }
     }
     
@@ -86,6 +79,22 @@ private extension ClipViewController {
         } else {
             clipEmptyView.isHidden = false
         }
+    }
+    
+    func setupNavigationBar() {
+        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
+                                                                hasRightButton: true,
+                                                                mainTitle: StringOrImageType.string(StringLiterals.Tabbar.Title.clip),
+                                                                rightButton: StringOrImageType.string(StringLiterals.Clip.Title.edit),
+                                                                rightButtonAction: editButtonTapped)
+        
+        if let navigationController = navigationController as? ToasterNavigationController {
+            navigationController.setupNavigationBar(forType: type)
+        }
+    }
+    
+    func editButtonTapped() {
+        // 편집 버튼 클릭 시 로직
     }
 }
 

@@ -61,7 +61,7 @@ private extension TabBarController {
     }
     
     func createTabNavigationController(title: String, image: UIImage, selectedImage: UIImage, viewController: UIViewController?, inset: UIEdgeInsets? ) -> UINavigationController {
-        let tabNavigationController = UINavigationController()
+        let tabNavigationController = ToasterNavigationController()
         
         let tabbarItem = UITabBarItem(
             title: title,

@@ -14,7 +14,7 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
     
     // MARK: - UI Components
     
-    private let searchBar = UIButton()
+    private let searchBar = UIImageView()
     private let clipCountLabel = UILabel()
     private let addClipButton = UIButton()
     
@@ -42,7 +42,9 @@ private extension ClipCollectionHeaderView {
         backgroundColor = .toasterBackground
         
         searchBar.do {
-            $0.setImage(ImageLiterals.Clip.searchbar, for: .normal)
+            $0.image = ImageLiterals.Clip.searchbar 
+            $0.contentMode = .scaleAspectFill
+            $0.clipsToBounds = true
         }
         
         clipCountLabel.do {

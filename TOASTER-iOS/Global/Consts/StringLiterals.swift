@@ -31,6 +31,7 @@ enum StringLiterals {
         enum Title {
             static let addClip = "클립 추가"
             static let emptyLabel = "클립을 추가해 \n 링크를 정리해보세요!"
+            static let edit = "편집"
         }
     }
 }

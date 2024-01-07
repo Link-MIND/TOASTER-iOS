@@ -75,7 +75,7 @@ private extension ToasterNavigationController {
     
     func setupStyle() {
         customNavigationBar.do {
-            $0.backgroundColor = .toasterWhite
+            $0.backgroundColor = .toasterBackground
         }
         
         safeAreaView.do {

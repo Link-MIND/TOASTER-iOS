@@ -59,7 +59,7 @@ private extension ClipEmptyView {
     func setupLayout() {
         emptyImage.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.size.equalTo(200)
+            $0.size.equalTo(convertByWidthRatio(200))
         }
         
         emptyLabel.snp.makeConstraints {
