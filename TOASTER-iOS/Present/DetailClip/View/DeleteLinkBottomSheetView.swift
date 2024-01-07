@@ -44,13 +44,18 @@ private extension DeleteLinkBottomSheetView {
         backgroundColor = .toasterBackground
         
         deleteButton.do {
-            $0.setTitle(StringLiterals.BottomSheet.Button.delete, for: .normal)
-            $0.backgroundColor = .toasterWhite
-            $0.setTitleColor(.toasterPrimary, for: .normal)
-            $0.titleLabel?.font = .suitMedium(size: 16)
-            $0.contentHorizontalAlignment = .left
-            $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+            var configuration = UIButton.Configuration.filled()
+            configuration.baseBackgroundColor = .toasterWhite
+            configuration.baseForegroundColor = .toasterPrimary
+            configuration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
+            
+            var titleContainer = AttributeContainer()
+            titleContainer.font = UIFont.suitMedium(size: 16)
+            configuration.attributedTitle = AttributedString(StringLiterals.BottomSheet.Button.delete, attributes: titleContainer)
+            
+            $0.configuration = configuration
             $0.makeRounded(radius: 12)
+            $0.contentHorizontalAlignment = .leading
         }
     }
     

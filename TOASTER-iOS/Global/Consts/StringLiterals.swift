@@ -28,7 +28,6 @@ enum StringLiterals {
         }
     }
 
-    
     // MARK: - 바텀시트와 관련된 String
 
     enum BottomSheet {
