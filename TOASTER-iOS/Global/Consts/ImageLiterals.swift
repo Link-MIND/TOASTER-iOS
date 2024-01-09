@@ -41,6 +41,11 @@ enum ImageLiterals {
     enum Logo {
         static var wordmark: UIImage { .load(name: "wordmark") }
     }
+    
+    enum Login {
+        static var kakaoLogo: UIImage { .load(name: "ic_kakao_login_24") }
+        static var appleLogo: UIImage { .load(name: "ic_apple_login_24") }
+    }
 }
 
 extension UIImage {
