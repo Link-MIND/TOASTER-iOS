@@ -43,16 +43,16 @@ extension AppleAuthenticateAdapter: ASAuthorizationControllerDelegate {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             let userIdentifier = appleIDCredential.user
             let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
-            let idToken = appleIDCredential.identityToken!
-            let tokenString = String(data: idToken, encoding: .utf8)
-            
-            print("User ID : \(userIdentifier)")
-            print("User Email : \(email ?? "")")
-            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
-            print("token : \(String(describing: tokenString))")
-            
-            authorizationContinuation?.resume(returning: SocialLoginTokenModel(accessToken: nil, refreshToken: nil, identityToken: tokenString))
+            let idToken = appleIDCredential.identityToken ?? Data()
+            if let tokenString = String(data: idToken, encoding: .utf8) {
+                print("User ID : \(userIdentifier)")
+                print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
+                print("token : \(tokenString)")
+                authorizationContinuation?.resume(returning: SocialLoginTokenModel(accessToken: nil, refreshToken: nil, identityToken: tokenString))
+            } else {
+                authorizationContinuation?.resume(throwing: LoginError.failedReceiveToken)
+            }
+
             authorizationContinuation = nil
             
         default:
@@ -69,7 +69,7 @@ extension AppleAuthenticateAdapter: ASAuthorizationControllerDelegate {
 
 extension AppleAuthenticateAdapter: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        // 필요한 window 반환. 대부분의 경우 현재 앱의 메인 window를 반환합니다.
+        // 필요한 window 반환, 대부분의 경우 현재 앱의 메인 window를 반환
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             return windowScene.windows.first ?? UIWindow()
         }
