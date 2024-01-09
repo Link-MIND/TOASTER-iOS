@@ -11,9 +11,7 @@ import SnapKit
 import Then
 
 final class ClipViewController: UIViewController {
-    
-    // MARK: - Properties
-    
+        
     // MARK: - UI Properties
     
     private let clipEmptyView = ClipEmptyView()
@@ -37,6 +35,17 @@ final class ClipViewController: UIViewController {
         
         setupEmptyView()
         setupNavigationBar()
+    }
+}
+
+// MARK: - Extensions
+
+extension ClipViewController {
+    func showBottom() {
+        let view = AddClipBottomSheetView()
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 500, insertView: view)
+        exampleBottom.modalPresentationStyle = .overFullScreen  // 애니메이션을 위해 필수 지정
+        self.present(exampleBottom, animated: false)  // 애니메이션을 위해 필수 지정
     }
 }
 
@@ -100,7 +109,12 @@ private extension ClipViewController {
 
 // MARK: - CollectionView Delegate
 
-extension ClipViewController: UICollectionViewDelegate {}
+extension ClipViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let nextVC = DetailClipViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+}
 
 // MARK: - CollectionView DataSource
 
@@ -122,6 +136,7 @@ extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
+            headerView.isDetailClipView(isHidden: false)
             return headerView
         }
         return UICollectionReusableView()
@@ -133,7 +148,7 @@ extension ClipViewController: UICollectionViewDataSource {
 extension ClipViewController: UICollectionViewDelegateFlowLayout {
     // sizeForItemAt: 각 Cell의 크기를 CGSize 형태로 return
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.convertByWidthRatio(335), height: collectionView.convertByHeightRatio(52))
+        return CGSize(width: collectionView.convertByWidthRatio(335), height: 52)
     }
     
     // ContentInset: Cell에서 Content 외부에 존재하는 Inset의 크기를 결정

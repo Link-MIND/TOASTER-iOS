@@ -46,6 +46,7 @@ enum ImageLiterals {
         static var meatballs: UIImage { .load(name: "ic_meatballs_24") }
         static var clipEmpty: UIImage { .load(name: "clip_empty") }
         static var detailClipEmpty: UIImage { .load(name: "detail_clip_empty") }
+        static var thumb: UIImage { .load(name: "img_thumbnail") }
     }
     
     // MARK: - EmptyView
