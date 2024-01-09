@@ -34,6 +34,7 @@
 		3F2FA17D2B4928B700EDBF95 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FA17C2B4928B700EDBF95 /* LoginUseCase.swift */; };
 		3F2FA17F2B4A31E900EDBF95 /* SocialLoginTokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FA17E2B4A31E900EDBF95 /* SocialLoginTokenModel.swift */; };
 		3F2FA1812B4A32A200EDBF95 /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FA1802B4A32A200EDBF95 /* LogoutUseCase.swift */; };
+		3FBFDEC02B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBFDEBF2B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift */; };
 		6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE64E2B3FF101000E2366 /* AppDelegate.swift */; };
 		6B6AE6512B3FF101000E2366 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6502B3FF101000E2366 /* SceneDelegate.swift */; };
 		6B6AE6532B3FF101000E2366 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6522B3FF101000E2366 /* ViewController.swift */; };
@@ -101,6 +102,8 @@
 		3F2FA17C2B4928B700EDBF95 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		3F2FA17E2B4A31E900EDBF95 /* SocialLoginTokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginTokenModel.swift; sourceTree = "<group>"; };
 		3F2FA1802B4A32A200EDBF95 /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
+		3FBFDEBF2B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthenticateAdapter.swift; sourceTree = "<group>"; };
+		3FBFDEC12B4D3BBD00C58393 /* TOASTER-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TOASTER-iOS.entitlements"; sourceTree = "<group>"; };
 		6B6AE64B2B3FF101000E2366 /* TOASTER-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TOASTER-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B6AE64E2B3FF101000E2366 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B6AE6502B3FF101000E2366 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -218,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				3F2FA1782B45C46F00EDBF95 /* KakaoAuthenticateAdapter.swift */,
+				3FBFDEBF2B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift */,
 			);
 			path = Adapter;
 			sourceTree = "<group>";
@@ -250,6 +254,7 @@
 		6B6AE64D2B3FF101000E2366 /* TOASTER-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				3FBFDEC12B4D3BBD00C58393 /* TOASTER-iOS.entitlements */,
 				6B6AE67D2B3FF4EA000E2366 /* Application */,
 				6B6AE67E2B3FF4F5000E2366 /* Global */,
 				6B6AE6862B3FF556000E2366 /* Network */,
@@ -631,6 +636,7 @@
 				39C3926B2B491F47005B2B0F /* NSObject+.swift in Sources */,
 				6B6AE6512B3FF101000E2366 /* SceneDelegate.swift in Sources */,
 				3F2FA1812B4A32A200EDBF95 /* LogoutUseCase.swift in Sources */,
+				3FBFDEC02B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift in Sources */,
 				398BE7FA2B467E4B001595E0 /* ClipListCollectionViewCell.swift in Sources */,
 				6B6AE6AE2B3FF721000E2366 /* ImageLiterals.swift in Sources */,
 				6B6AE6A42B3FF6B0000E2366 /* UIViewController+.swift in Sources */,
@@ -782,6 +788,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TOASTER-iOS/TOASTER-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -813,6 +820,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TOASTER-iOS/TOASTER-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";

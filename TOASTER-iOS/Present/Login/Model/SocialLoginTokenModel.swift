@@ -10,4 +10,5 @@ import Foundation
 struct SocialLoginTokenModel {
     let accessToken: String?
     let refreshToken: String?
+    let identityToken: String?
 }
