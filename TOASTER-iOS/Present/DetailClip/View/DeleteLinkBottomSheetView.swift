@@ -14,7 +14,7 @@ final class DeleteLinkBottomSheetView: UIView {
     
     // MARK: - Properties
     
-    var deleteLinkBottomSheetViewButtonAction: (() -> Void)?
+    private var deleteLinkBottomSheetViewButtonAction: (() -> Void)?
     
     // MARK: - UI Components
     
@@ -34,6 +34,14 @@ final class DeleteLinkBottomSheetView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Extensions
+
+extension DeleteLinkBottomSheetView {
+    func setupDeleteLinkBottomSheetButtonAction(_ action: (() -> Void)?) {
+        deleteLinkBottomSheetViewButtonAction = action
     }
 }
 

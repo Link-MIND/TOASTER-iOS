@@ -114,7 +114,7 @@ extension DetailClipViewController: UICollectionViewDataSource {
             self.bottom.modalPresentationStyle = .overFullScreen
             self.present(self.bottom, animated: false)
         }
-        deleteLinkBottomSheetView.deleteLinkBottomSheetViewButtonAction = {
+        deleteLinkBottomSheetView.setupDeleteLinkBottomSheetButtonAction {
             self.bottom.hideBottomSheet()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.showToastMessage(width: 152, status: .check, message: StringLiterals.Toast.Message.completeDeleteLink)
@@ -125,7 +125,7 @@ extension DetailClipViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
-        headerView.isDetailClipView()
+        headerView.isDetailClipView(isHidden: true)
         headerView.setupDataBind(count: dummyDetailClipList.count)
         return headerView
     }
