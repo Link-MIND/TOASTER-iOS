@@ -14,10 +14,11 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var isSearchButtonHidden: Bool = false {
+    private var isSearching: Bool = true {
         didSet {
-            searchButton.isHidden = isSearchButtonHidden
-            clearButton.isHidden = !isSearchButtonHidden
+            searchButton.isHidden = !isSearching
+            clearButton.isHidden = isSearching
+            searchResultCollectionView.isHidden = isSearching
         }
     }
     
@@ -30,16 +31,18 @@ final class SearchViewController: UIViewController {
     private let clearButton: UIButton = UIButton()
     
     private let emptyView: SearchEmptyResultView = SearchEmptyResultView()
-        
+    private let searchResultCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
     // MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         hideKeyboard()
         setupStyle()
         setupHierarchy()
         setupLayout()
+        setupDelegate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,8 +59,11 @@ final class SearchViewController: UIViewController {
     }
 }
 
+// MARK: - Private Extensions
+
 private extension SearchViewController {
     func setupStyle() {
+        isSearching = true
         view.backgroundColor = .toasterBackground
         
         navigationBar.do {
@@ -76,7 +82,6 @@ private extension SearchViewController {
         clearButton.do {
             $0.setImage(ImageLiterals.Search.searchCancle, for: .normal)
             $0.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
-            $0.isHidden = true
         }
         
         searchTextField.do {
@@ -84,12 +89,22 @@ private extension SearchViewController {
             $0.addPadding(left: 12, right: 44)
             $0.backgroundColor = .gray50
             $0.placeholder = "검색어를 입력해주세요"
-            $0.delegate = self
+        }
+        
+        emptyView.do {
+            $0.isHidden = true
+        }
+        
+        searchResultCollectionView.do {
+            $0.register(ClipListCollectionViewCell.self, forCellWithReuseIdentifier: ClipListCollectionViewCell.className)
+            $0.register(DetailClipListCollectionViewCell.self, forCellWithReuseIdentifier: DetailClipListCollectionViewCell.className)
+            $0.backgroundColor = .clear
+            $0.showsVerticalScrollIndicator = false
         }
     }
     
     func setupHierarchy() {
-        view.addSubviews(navigationBar, emptyView)
+        view.addSubviews(navigationBar, emptyView, searchResultCollectionView)
         navigationBar.addSubviews(backButton, searchTextField)
         searchTextField.addSubviews(searchButton, clearButton)
     }
@@ -126,6 +141,18 @@ private extension SearchViewController {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(navigationBar.snp.bottom).offset(view.convertByHeightRatio(176))
         }
+        
+        searchResultCollectionView.snp.makeConstraints {
+            $0.top.equalTo(navigationBar.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    func setupDelegate() {
+        searchTextField.delegate = self
+        searchResultCollectionView.delegate = self
+        searchResultCollectionView.dataSource = self
     }
     
     func setupEmptyView(isHidden: Bool) {
@@ -133,11 +160,11 @@ private extension SearchViewController {
     }
     
     func fetchSearchResult() {
-        isSearchButtonHidden = true
+        isSearching = false
         view.endEditing(true)
         
         // TODO: - API 호출
-
+        
     }
     
     @objc func searchButtonTapped() {
@@ -145,15 +172,75 @@ private extension SearchViewController {
     }
     
     @objc func clearButtonTapped() {
+        isSearching = true
         searchTextField.text = nil
-        isSearchButtonHidden = false
         searchTextField.becomeFirstResponder()
     }
 }
+
+// MARK: - UITextFieldDelegate
 
 extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         fetchSearchResult()
         return true
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension SearchViewController: UICollectionViewDelegate { }
+
+// MARK: - UICollectionViewDataSource
+
+extension SearchViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 5
+        case 1:
+            return 5
+        default:
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.section {
+        case 0:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell else { return UICollectionViewCell() }
+            return cell
+        case 1:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell else { return UICollectionViewCell() }
+            return cell
+        default:
+            return UICollectionViewCell()
+        }
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch indexPath.section {
+        case 0:
+            return CGSize(width: collectionView.convertByWidthRatio(335), height: 98)
+        case 1:
+            return CGSize(width: collectionView.convertByWidthRatio(335), height: 52)
+        default:
+            return .zero
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 6, left: 20, bottom: 6, right: 20)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 12
     }
 }
