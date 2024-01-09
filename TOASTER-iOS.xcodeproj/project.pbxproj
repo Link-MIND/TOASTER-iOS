@@ -89,6 +89,7 @@
 		830517AA2B4D95E9009FFB60 /* MainFooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517A92B4D95E9009FFB60 /* MainFooterCollectionReusableView.swift */; };
 		830517AC2B4D9776009FFB60 /* UserClipFooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AB2B4D9776009FFB60 /* UserClipFooterCollectionReusableView.swift */; };
 		830517AE2B4D978D009FFB60 /* WeeklyLinkFooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AD2B4D978D009FFB60 /* WeeklyLinkFooterCollectionReusableView.swift */; };
+		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -166,6 +167,7 @@
 		830517A92B4D95E9009FFB60 /* MainFooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFooterCollectionReusableView.swift; sourceTree = "<group>"; };
 		830517AB2B4D9776009FFB60 /* UserClipFooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClipFooterCollectionReusableView.swift; sourceTree = "<group>"; };
 		830517AD2B4D978D009FFB60 /* WeeklyLinkFooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyLinkFooterCollectionReusableView.swift; sourceTree = "<group>"; };
+		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -374,6 +376,7 @@
 				6B6AE6A52B3FF6BD000E2366 /* UIView+.swift */,
 				6B6AE6A32B3FF6B0000E2366 /* UIViewController+.swift */,
 				39C3926A2B491F47005B2B0F /* NSObject+.swift */,
+				830517AF2B4D9A3B009FFB60 /* UILabel+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -780,6 +783,7 @@
 				830517AC2B4D9776009FFB60 /* UserClipFooterCollectionReusableView.swift in Sources */,
 				3F2FA1812B4A32A200EDBF95 /* LogoutUseCase.swift in Sources */,
 				398BE7FA2B467E4B001595E0 /* ClipListCollectionViewCell.swift in Sources */,
+				830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */,
 				6B6AE6AE2B3FF721000E2366 /* ImageLiterals.swift in Sources */,
 				6B6AE6A42B3FF6B0000E2366 /* UIViewController+.swift in Sources */,
 				6B6AE6A22B3FF5F7000E2366 /* TabBarController.swift in Sources */,
@@ -947,7 +951,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "TeamToaster.TOASTER-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "TeamLinkMIND.TOASTER-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -978,7 +982,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "TeamToaster.TOASTER-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "TeamLinkMIND.TOASTER-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
