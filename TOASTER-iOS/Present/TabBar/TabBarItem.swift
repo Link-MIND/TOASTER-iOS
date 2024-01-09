@@ -58,7 +58,7 @@ enum TabBarItem: CaseIterable {
     var targetViewController: UIViewController? {
         switch self {
         case .home: return ViewController()
-        case .clip: return nil
+        case .clip: return ClipViewController()
         case .plus: return nil
         case .timer: return nil
         case .my: return nil
