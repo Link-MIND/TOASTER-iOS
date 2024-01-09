@@ -93,6 +93,7 @@ extension ToasterBottomSheetViewController {
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut, animations: {
                 self.dimmedBackView.backgroundColor = .clear
                 self.view.layoutIfNeeded()
+                self.view.endEditing(true)
             }, completion: { _ in
                 if self.presentingViewController != nil {
                     self.dismiss(animated: false, completion: nil)
