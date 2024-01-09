@@ -52,7 +52,6 @@ extension AppleAuthenticateAdapter: ASAuthorizationControllerDelegate {
             } else {
                 authorizationContinuation?.resume(throwing: LoginError.failedReceiveToken)
             }
-
             authorizationContinuation = nil
             
         default:
