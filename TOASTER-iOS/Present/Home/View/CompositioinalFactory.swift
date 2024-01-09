@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - Compositional Layout
 
 enum CompositionalFactory {
     static func create() -> UICollectionViewCompositionalLayout {
@@ -83,7 +84,7 @@ enum CompositionalFactory {
     // MARK: - Weekly Link 에 대한 Layout
     
     static func createWeeklyLinkSection() -> NSCollectionLayoutSection {
-        let itemFractionalWidthFraction = 1.0 / 1.0 
+        let itemFractionalWidthFraction = 1.0 / 1.0
         let itemInset: CGFloat = 3
         
         // Item
