@@ -30,6 +30,13 @@ enum ImageLiterals {
         static var my: UIImage { .load(name: "ic_my_24") }
     }
     
+    // MARK: - Search
+    
+    enum Search {
+        static var searchIcon: UIImage { .load(name: "ic_search_20") }
+        static var searchCancle: UIImage { .load(name: "ic_search_cancle") }
+    }
+
     // MARK: - Clip
     
     enum Clip {
