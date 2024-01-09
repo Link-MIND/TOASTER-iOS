@@ -124,7 +124,7 @@ private extension ClipCollectionHeaderView {
     func buttonTapped() {
         guard let viewController = findViewController() else { return }
         let view = AddClipBottomSheetView()        
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: keyboardLayoutGuide.layoutFrame.height-137+(keyboardLayoutGuide.owningView?.frame.height ?? 0), insertView: view)
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: view)
         exampleBottom.modalPresentationStyle = .overFullScreen
         viewController.present(exampleBottom, animated: false)
     }

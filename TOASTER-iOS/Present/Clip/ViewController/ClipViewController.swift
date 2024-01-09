@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 final class ClipViewController: UIViewController {
-        
+    
     // MARK: - UI Properties
     
     private let clipEmptyView = ClipEmptyView()
@@ -41,11 +41,11 @@ final class ClipViewController: UIViewController {
 // MARK: - Extensions
 
 extension ClipViewController {
-    func showBottom() {
+    func showBottomshowBottom() {
         let view = AddClipBottomSheetView()
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 500, insertView: view)
-        exampleBottom.modalPresentationStyle = .overFullScreen  // 애니메이션을 위해 필수 지정
-        self.present(exampleBottom, animated: false)  // 애니메이션을 위해 필수 지정
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 0, insertView: view)
+        exampleBottom.modalPresentationStyle = .overFullScreen
+        self.present(exampleBottom, animated: false)
     }
 }
 
@@ -79,7 +79,6 @@ private extension ClipViewController {
     func setupDelegate() {
         clipListCollectionView.delegate = self
         clipListCollectionView.dataSource = self
-        addClipBottomSheetView.addClipBottomSheetDelegate = self
     }
     
     func setupEmptyView() {
@@ -126,9 +125,9 @@ extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell else { return UICollectionViewCell() }
         if indexPath.row == 0 {
-            cell.configureCell(forModel: ClipListModel(categoryID: 0, categoryTitle: "전체클립", toastNum: 100))
+            cell.configureCell(forModel: ClipListModel(categoryID: 0, categoryTitle: "전체클립", toastNum: 100), icon: ImageLiterals.TabBar.allClip.withTintColor(.black900))
         } else {
-            cell.configureCell(forModel: dummyClipList[indexPath.row-1])
+            cell.configureCell(forModel: dummyClipList[indexPath.row-1], icon: ImageLiterals.TabBar.clip.withTintColor(.black900))
         }
         return cell
     }
@@ -164,11 +163,5 @@ extension ClipViewController: UICollectionViewDelegateFlowLayout {
     // referenceSizeForHeaderInSection: 각 섹션의 헤더 뷰 크기를 CGSize 형태로 return
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 90)
-    }
-}
-
-extension ClipViewController: AddClipBottomSheetDelegate {
-    func addClipButtonTapped() {
-        
     }
 }

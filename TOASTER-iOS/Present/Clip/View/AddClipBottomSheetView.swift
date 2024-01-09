@@ -10,20 +10,13 @@ import UIKit
 import SnapKit
 import Then
 
-protocol AddClipBottomSheetDelegate: AnyObject {
-    func addClipButtonTapped()
-}
-
 final class AddClipBottomSheetView: UIView {
-    
-    // MARK: - Properties
-    
-    weak var addClipBottomSheetDelegate: AddClipBottomSheetDelegate?
     
     // MARK: - UI Components
     
     private let addClipTextField = UITextField()
     private let addClipButton = UIButton()
+    private let errorMessage = UILabel()
     
     // MARK: - Life Cycles
     
@@ -50,10 +43,14 @@ private extension AddClipBottomSheetView {
         
         addClipTextField.do {
             $0.becomeFirstResponder()
-            $0.placeholder = StringLiterals.BottomSheet.Placeholder.addClip
+            $0.attributedPlaceholder = NSAttributedString(string: StringLiterals.BottomSheet.Placeholder.addClip,
+                                                          attributes: [.foregroundColor: UIColor.gray400,
+                                                                       .font: UIFont.suitRegular(size: 16)])
             $0.addPadding(left: 14, right: 14)
             $0.backgroundColor = .gray50
+            $0.textColor = .black900
             $0.makeRounded(radius: 12)
+            $0.delegate = self
         }
         
         addClipButton.do {
@@ -61,6 +58,12 @@ private extension AddClipBottomSheetView {
             $0.setTitle(StringLiterals.BottomSheet.Button.complete, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
+        }
+        
+        errorMessage.do {
+            $0.font = .suitMedium(size: 12)
+            $0.textColor = .toasterError
+            $0.text = "클립의 이름은 최대 15자까지 입력 가능해요"
         }
     }
     
@@ -82,14 +85,40 @@ private extension AddClipBottomSheetView {
             $0.height.equalTo(56)
             $0.bottom.equalTo(keyboardLayoutGuide.snp.top)
         }
+        
+//        errorMessage.snp.makeConstraints {
+//            $0.top.equalTo(addClipTextField.snp.bottom).offset(6)
+//            $0.leading.trailing.equalToSuperview().inset(20)
+//        }
     }
-
+    
     func setupAddTarget() {
+        addClipTextField.addTarget(self, action: #selector(addClipTextFieldDidChange), for: .editingChanged)
         addClipButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
+    
+    func errorTestField() {
+        addClipTextField.layer.borderWidth = 1.0
+        addClipTextField.layer.borderColor = UIColor.toasterError.cgColor
+
+    }
+    
+    @objc
+    func addClipTextFieldDidChange() {
+        if let textFieldLength: Int = addClipTextField.text?.count {
+            if textFieldLength > 15 { errorTestField() }
+        }
     }
     
     @objc
     func buttonTapped() {
-        addClipBottomSheetDelegate?.addClipButtonTapped()
     }
+}
+
+extension AddClipBottomSheetView: UITextFieldDelegate {
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        let currentText = textField.text ?? ""
+//        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+//        return newText.count <= 15
+//    }
 }

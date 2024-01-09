@@ -15,23 +15,15 @@ final class ToasterBottomSheetViewController: UIViewController {
     // MARK: - Properties
     
     private var bottomHeight: CGFloat = 100
+    private var keyboardHeight: CGFloat = 100
     
     // MARK: - UI Properties
     private var insertView = UIView()
     private let dimmedBackView = UIView()
-    private let bottomSheetView = UIView().then {
-        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        $0.makeRounded(radius: 20)
-    }
+    private let bottomSheetView = UIView()
     
-    private let titleLabel = UILabel().then {
-        $0.font = .suitBold(size: 18)
-        $0.textColor = .toasterBlack
-    }
-    
-    private let closeButton = UIButton().then {
-        $0.setImage(ImageLiterals.Common.close, for: .normal)
-    }
+    private let titleLabel = UILabel()
+    private let closeButton = UIButton()
     
     // MARK: - Life Cycle
     
@@ -55,6 +47,7 @@ final class ToasterBottomSheetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupStyle()
         setupHierarchy()
         setupLayout()
         setupDismissAction()
@@ -73,10 +66,7 @@ extension ToasterBottomSheetViewController {
     /// 바텀 시트 표출
     func showBottomSheet() {
         DispatchQueue.main.async {
-            self.bottomSheetView.snp.remakeConstraints {
-                $0.bottom.leading.trailing.equalToSuperview()
-                $0.top.equalToSuperview().inset(self.view.frame.height-self.bottomHeight)
-            }
+            self.updateBottomSheetLayout()
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut, animations: {
                 self.dimmedBackView.backgroundColor = .black900.withAlphaComponent(0.5)
                 self.view.layoutIfNeeded()
@@ -107,6 +97,24 @@ extension ToasterBottomSheetViewController {
 
 private extension ToasterBottomSheetViewController {
     
+    func setupStyle() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        bottomSheetView.do {
+            $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            $0.makeRounded(radius: 20)
+        }
+        
+        titleLabel.do {
+            $0.font = .suitBold(size: 18)
+            $0.textColor = .toasterBlack
+        }
+        
+        closeButton.do {
+            $0.setImage(ImageLiterals.Common.close, for: .normal)
+        }
+    }
+    
     func setupHierarchy() {
         view.addSubviews(dimmedBackView, bottomSheetView)
         bottomSheetView.addSubviews(titleLabel, closeButton, insertView)
@@ -119,6 +127,7 @@ private extension ToasterBottomSheetViewController {
         
         bottomSheetView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalTo(self.view.snp.bottom)
         }
         
         insertView.snp.makeConstraints {
@@ -150,8 +159,23 @@ private extension ToasterBottomSheetViewController {
         view.addGestureRecognizer(swipeGesture)
     }
     
+    func updateBottomSheetLayout() {
+        bottomSheetView.snp.remakeConstraints {
+            $0.bottom.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().inset(self.view.frame.height - self.keyboardHeight - self.bottomHeight)
+        }
+    }
+    
     @objc
     func hideBottomSheetAction() {
         hideBottomSheet()
+    }
+    
+    @objc
+    func keyboardWillShow(_ notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            keyboardHeight = keyboardSize.height
+            updateBottomSheetLayout()
+        }
     }
 }
