@@ -198,6 +198,11 @@ extension SearchViewController: UITextFieldDelegate {
         fetchSearchResult()
         return true
     }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        isSearching = true
+        return true
+    }
 }
 
 // MARK: - UICollectionViewDelegate
