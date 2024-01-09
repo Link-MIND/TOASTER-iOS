@@ -78,8 +78,6 @@ private extension LoginViewController {
     // MARK: - @objc
     
     @objc func kakaoButtonTapped() {
-        print("kakaoButton 눌림")
-        
         loginUseCase = LoginUseCase(adapter: KakaoAuthenticateAdapter())
         
         Task {
