@@ -65,7 +65,7 @@ final class KakaoAuthenticateAdapter: NSObject, AuthenticationAdapterProtocol {
                     let accessToken = oauthToken?.accessToken
                     let refreshToken = oauthToken?.refreshToken
                     
-                    continuation.resume(returning: SocialLoginTokenModel(accessToken: accessToken, refreshToken: refreshToken))
+                    continuation.resume(returning: SocialLoginTokenModel(accessToken: accessToken, refreshToken: refreshToken, identityToken: nil))
                 }
             }
         }
@@ -85,7 +85,7 @@ final class KakaoAuthenticateAdapter: NSObject, AuthenticationAdapterProtocol {
                     let accessToken = oauthToken?.accessToken
                     let refreshToken = oauthToken?.refreshToken
                     
-                    continuation.resume(returning: SocialLoginTokenModel(accessToken: accessToken, refreshToken: refreshToken))
+                    continuation.resume(returning: SocialLoginTokenModel(accessToken: accessToken, refreshToken: refreshToken, identityToken: nil))
                 }
             }
         }

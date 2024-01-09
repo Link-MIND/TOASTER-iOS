@@ -98,6 +98,20 @@ private extension LoginViewController {
     }
     
     @objc func appleButtonTapped() {
-        print("appleButton 눌림")
+        loginUseCase = LoginUseCase(adapter: AppleAuthenticateAdapter())
+        
+        Task {
+            do {
+                let result = try await attemptLogin()
+                
+                if let unwrappedToken = result.identityToken {
+                    print("전달받은 identityToken: \(unwrappedToken)")
+                } else {
+                    print("Apple Login Error:", LoginError.failedReceiveToken)
+                }
+            } catch let error {
+                print("Apple Login Error:", error)
+            }
+        }
     }
 }
