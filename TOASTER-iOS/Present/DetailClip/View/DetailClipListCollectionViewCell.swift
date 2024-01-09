@@ -55,9 +55,10 @@ extension DetailClipListCollectionViewCell {
         isClipNameLabelHidden = forModel.isRead
     }
     
-    func configureCell(forModel: SearchResultDetailClipModel) {
+    func configureCell(forModel: SearchResultDetailClipModel, forText: String) {
         modifiedButton.isHidden = true
         linkTitleLabel.text = forModel.title
+        linkTitleLabel.asFont(targetString: forText, font: .suitBold(size: 16))
         linkLabel.text = forModel.link
         if let clipTitle = forModel.clipTitle {
             isClipNameLabelHidden = false

@@ -66,7 +66,7 @@ private extension SearchViewController {
     func setupStyle() {
         isSearching = true
         hideKeyboard()
-
+        
         view.backgroundColor = .toasterBackground
         
         navigationBar.do {
@@ -233,12 +233,15 @@ extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell else { return UICollectionViewCell() }
-            cell.configureCell(forModel: viewModel.searchResultData.detailClipList[indexPath.row])
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell, 
+                    let text = searchTextField.text else { return UICollectionViewCell() }
+            cell.configureCell(forModel: viewModel.searchResultData.detailClipList[indexPath.row], forText: text)
             return cell
         case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell else { return UICollectionViewCell() }
-            cell.configureCell(forModel: viewModel.searchResultData.clipList[indexPath.row])
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell,
+                  let text = searchTextField.text
+            else { return UICollectionViewCell() }
+            cell.configureCell(forModel: viewModel.searchResultData.clipList[indexPath.row], forText: text)
             return cell
         default:
             return UICollectionViewCell()

@@ -42,8 +42,9 @@ extension ClipListCollectionViewCell {
         countLabel.text = "\(forModel.toastNum)개"
     }
     
-    func configureCell(forModel: SearchResultClipModel) {
+    func configureCell(forModel: SearchResultClipModel, forText: String) {
         clipNameLabel.text = forModel.title
+        clipNameLabel.asFont(targetString: forText, font: .suitBold(size: 16))
         countLabel.text = "\(forModel.numberOfDetailClip)개"
     }
 }
