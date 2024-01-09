@@ -63,6 +63,7 @@
 		830517902B4D1FC7009FFB60 /* UserClipCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305178F2B4D1FC7009FFB60 /* UserClipCollectionReusableView.swift */; };
 		830517922B4D1FD3009FFB60 /* WeeklyLinkCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517912B4D1FD3009FFB60 /* WeeklyLinkCollectionReusableView.swift */; };
 		830517942B4D1FE1009FFB60 /* WeeklyRecommendCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517932B4D1FE1009FFB60 /* WeeklyRecommendCollectionReusableView.swift */; };
+		830517962B4D21BB009FFB60 /* CompositioinalFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517952B4D21BB009FFB60 /* CompositioinalFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +114,7 @@
 		8305178F2B4D1FC7009FFB60 /* UserClipCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClipCollectionReusableView.swift; sourceTree = "<group>"; };
 		830517912B4D1FD3009FFB60 /* WeeklyLinkCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyLinkCollectionReusableView.swift; sourceTree = "<group>"; };
 		830517932B4D1FE1009FFB60 /* WeeklyRecommendCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyRecommendCollectionReusableView.swift; sourceTree = "<group>"; };
+		830517952B4D21BB009FFB60 /* CompositioinalFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositioinalFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,6 +363,7 @@
 			children = (
 				6B6AE69B2B3FF5CC000E2366 /* HomeViewController.swift */,
 				830517832B4D1D73009FFB60 /* View */,
+				830517952B4D21BB009FFB60 /* CompositioinalFactory.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 				830517652B42D996009FFB60 /* StringLiterals.swift in Sources */,
 				8305178C2B4D1E64009FFB60 /* WeeklyLinkCollectionViewCell.swift in Sources */,
 				6B6AE6992B3FF5C1000E2366 /* SearchViewController.swift in Sources */,
+				830517962B4D21BB009FFB60 /* CompositioinalFactory.swift in Sources */,
 				398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */,
 				830517882B4D1DF6009FFB60 /* MainCollectionViewCell.swift in Sources */,
 				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
