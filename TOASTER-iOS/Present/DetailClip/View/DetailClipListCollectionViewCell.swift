@@ -16,7 +16,11 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
     
     lazy var isClipNameLabelHidden: Bool = clipNameLabel.isHidden {
         didSet {
-            setupLayout()
+            clipNameLabel.isHidden = isClipNameLabelHidden
+            clipNameLabel.snp.makeConstraints {
+                $0.width.equalTo(clipNameLabel.intrinsicContentSize.width+16)
+            }
+            setupHiddenLayout(forHidden: isClipNameLabelHidden)
         }
     }
     var detailClipListCollectionViewCellButtonAction: (() -> Void)?
@@ -61,10 +65,10 @@ extension DetailClipListCollectionViewCell {
         linkTitleLabel.asFont(targetString: forText, font: .suitBold(size: 16))
         linkLabel.text = forModel.link
         if let clipTitle = forModel.clipTitle {
-            clipNameLabel.isHidden = false
             clipNameLabel.text = clipTitle
+            isClipNameLabelHidden = false
         } else {
-            clipNameLabel.isHidden = true
+            isClipNameLabelHidden = true
         }
     }
 }
@@ -138,11 +142,17 @@ private extension DetailClipListCollectionViewCell {
             $0.top.equalTo(clipNameLabel.snp.bottom).offset(6)
             $0.leading.equalTo(linkImage.snp.trailing).offset(12)
         }
-        
-        if isClipNameLabelHidden {
-            clipNameLabel.isHidden = true
+    }
+    
+    func setupHiddenLayout(forHidden: Bool) {
+        if forHidden {
             linkTitleLabel.snp.remakeConstraints {
                 $0.top.equalToSuperview().inset(12)
+                $0.leading.equalTo(linkImage.snp.trailing).offset(12)
+            }
+        } else {
+            linkTitleLabel.snp.remakeConstraints {
+                $0.top.equalTo(clipNameLabel.snp.bottom).offset(6)
                 $0.leading.equalTo(linkImage.snp.trailing).offset(12)
             }
         }
