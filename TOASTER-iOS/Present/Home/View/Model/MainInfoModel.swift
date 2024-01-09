@@ -12,7 +12,7 @@ struct MainInfoModel: Codable {
     let readToastNum: Int
     let allToastNum: Int
     let mainCategoryListDto: [CategoryList]
-    let toastListDto: [ToastList]
+    let toastInfoListDto: [ToastInfoList]
 }
 
 struct CategoryList: Codable {
@@ -21,7 +21,7 @@ struct CategoryList: Codable {
     let toastNum: Int
 }
 
-struct ToastList: Codable {
+struct ToastInfoList: Codable {
     let toastId: Int
     let toastTitle: String
     let toastLink: String
