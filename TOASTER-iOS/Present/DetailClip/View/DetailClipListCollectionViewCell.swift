@@ -61,10 +61,10 @@ extension DetailClipListCollectionViewCell {
         linkTitleLabel.asFont(targetString: forText, font: .suitBold(size: 16))
         linkLabel.text = forModel.link
         if let clipTitle = forModel.clipTitle {
-            isClipNameLabelHidden = false
+            clipNameLabel.isHidden = false
             clipNameLabel.text = clipTitle
         } else {
-            isClipNameLabelHidden = true
+            clipNameLabel.isHidden = true
         }
     }
 }
