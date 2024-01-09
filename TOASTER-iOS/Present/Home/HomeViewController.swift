@@ -13,7 +13,6 @@ import Then
 final class HomeViewController: UIViewController {
 
 
-    private let searchButton = UIButton()
     
     
     override func viewDidLoad() {
