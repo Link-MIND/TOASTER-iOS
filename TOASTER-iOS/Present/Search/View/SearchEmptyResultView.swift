@@ -41,6 +41,7 @@ private extension SearchEmptyResultView {
         }
         
         emptyLabel.do {
+            $0.numberOfLines = 0
             $0.textColor = .gray500
             $0.textAlignment = .center
             $0.font = .suitRegular(size: 16)
