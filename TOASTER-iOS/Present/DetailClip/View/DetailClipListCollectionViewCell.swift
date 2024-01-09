@@ -53,6 +53,12 @@ extension DetailClipListCollectionViewCell {
         linkLabel.text = forModel.linkURL
         isClipNameLabelHidden = forModel.isRead
     }
+    
+    func configureCell(forModel: SearchResultDetailClipModel) {
+        linkTitleLabel.text = forModel.title
+        linkLabel.text = forModel.link
+        isClipNameLabelHidden = forModel.isClipExist
+    }
 }
 
 // MARK: - Private Extensions

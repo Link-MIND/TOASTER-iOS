@@ -14,6 +14,8 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Properties
     
+    private let viewModel = SearchViewModel()
+    
     private var isSearching: Bool = true {
         didSet {
             searchButton.isHidden = !isSearching
@@ -43,13 +45,13 @@ final class SearchViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupDelegate()
+        setupViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         hideNavigationBar()
-        setupEmptyView(isHidden: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -155,8 +157,19 @@ private extension SearchViewController {
         searchResultCollectionView.dataSource = self
     }
     
-    func setupEmptyView(isHidden: Bool) {
-        emptyView.isHidden = isHidden
+    func setupViewModel() {
+        viewModel.setupDataChangeAction(changeAction: reloadCollectionView,
+                                        emptyAction: reloadEmptyView)
+    }
+    
+    func reloadCollectionView() {
+        emptyView.isHidden = true
+        searchResultCollectionView.reloadData()
+    }
+    
+    func reloadEmptyView() {
+        emptyView.isHidden = false
+        searchResultCollectionView.reloadData()
     }
     
     func fetchSearchResult() {
@@ -202,9 +215,9 @@ extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 5
+            return viewModel.searchResultData.detailClipList.count
         case 1:
-            return 5
+            return viewModel.searchResultData.clipList.count
         default:
             return 0
         }
@@ -214,9 +227,11 @@ extension SearchViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell else { return UICollectionViewCell() }
+            cell.configureCell(forModel: viewModel.searchResultData.detailClipList[indexPath.row])
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell else { return UICollectionViewCell() }
+            cell.configureCell(forModel: viewModel.searchResultData.clipList[indexPath.row])
             return cell
         default:
             return UICollectionViewCell()
