@@ -167,11 +167,13 @@ private extension SearchViewController {
     func reloadCollectionView() {
         emptyView.isHidden = true
         searchResultCollectionView.reloadData()
+        searchResultCollectionView.setContentOffset(CGPoint.zero, animated: true)
     }
     
     func reloadEmptyView() {
         emptyView.isHidden = false
         searchResultCollectionView.reloadData()
+        searchResultCollectionView.setContentOffset(CGPoint.zero, animated: true)
     }
     
     func fetchSearchResult() {

@@ -17,7 +17,7 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
     lazy var isClipNameLabelHidden: Bool = clipNameLabel.isHidden {
         didSet {
             clipNameLabel.isHidden = isClipNameLabelHidden
-            clipNameLabel.snp.makeConstraints {
+            clipNameLabel.snp.updateConstraints {
                 $0.width.equalTo(clipNameLabel.intrinsicContentSize.width+16)
             }
             setupHiddenLayout(forHidden: isClipNameLabelHidden)
