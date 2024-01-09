@@ -35,6 +35,26 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
     }
 }
 
+// MARK: - Extensions
+
+extension ClipCollectionHeaderView {
+    func isDetailClipView(isHidden: Bool) {
+        searchBar.isHidden = isHidden
+        addClipButton.isHidden = isHidden
+        
+        if isHidden {
+            clipCountLabel.snp.remakeConstraints {
+                $0.top.equalToSuperview()
+                $0.leading.equalToSuperview().inset(20)
+            }
+        }
+    }
+    
+    func setupDataBind(count: Int) {
+        clipCountLabel.text = "전체 (\(count))"
+    }
+}
+
 // MARK: - Private Extensions
 
 private extension ClipCollectionHeaderView {
