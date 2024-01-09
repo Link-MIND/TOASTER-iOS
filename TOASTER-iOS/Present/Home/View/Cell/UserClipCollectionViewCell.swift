@@ -48,7 +48,7 @@ private extension UserClipCollectionViewCell {
     func setupStyle() {
         contentView.backgroundColor = .toasterBackground
         clipImage.do {
-            $0.image = UIImage(systemName: "folder")?.withTintColor(.black)
+            $0.image = ImageLiterals.Home.clipFull
         }
         
         titleLabel.do {

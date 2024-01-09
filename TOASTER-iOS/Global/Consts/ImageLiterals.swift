@@ -46,6 +46,13 @@ enum ImageLiterals {
         static var kakaoLogo: UIImage { .load(name: "ic_kakao_login_24") }
         static var appleLogo: UIImage { .load(name: "ic_apple_login_24") }
     }
+    
+    enum Home {
+        static var clipDefault: UIImage { .load(name: "ic_clip_default_24") }
+        static var clipFull: UIImage { .load(name: "ic_clip_full_24") }
+        static var linkThumbNail: UIImage { .load(name: "img_thumbnail") }
+        static var siteThumbNail: UIImage { .load(name: "img_bmsite") }
+    }
 }
 
 extension UIImage {
