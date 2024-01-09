@@ -40,7 +40,6 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        hideKeyboard()
         setupStyle()
         setupHierarchy()
         setupLayout()
@@ -66,6 +65,8 @@ final class SearchViewController: UIViewController {
 private extension SearchViewController {
     func setupStyle() {
         isSearching = true
+        hideKeyboard()
+
         view.backgroundColor = .toasterBackground
         
         navigationBar.do {
@@ -102,6 +103,7 @@ private extension SearchViewController {
             $0.register(DetailClipListCollectionViewCell.self, forCellWithReuseIdentifier: DetailClipListCollectionViewCell.className)
             $0.backgroundColor = .clear
             $0.showsVerticalScrollIndicator = false
+            $0.clipsToBounds = true
         }
     }
     
@@ -243,6 +245,8 @@ extension SearchViewController: UICollectionViewDataSource {
         }
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension SearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

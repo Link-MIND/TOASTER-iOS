@@ -49,15 +49,22 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
 
 extension DetailClipListCollectionViewCell {
     func configureCell(forModel: ToastList) {
+        modifiedButton.isHidden = false
         linkTitleLabel.text = forModel.toastTitle
         linkLabel.text = forModel.linkURL
         isClipNameLabelHidden = forModel.isRead
     }
     
     func configureCell(forModel: SearchResultDetailClipModel) {
+        modifiedButton.isHidden = true
         linkTitleLabel.text = forModel.title
         linkLabel.text = forModel.link
-        isClipNameLabelHidden = forModel.isClipExist
+        if let clipTitle = forModel.clipTitle {
+            isClipNameLabelHidden = false
+            clipNameLabel.text = clipTitle
+        } else {
+            isClipNameLabelHidden = true
+        }
     }
 }
 

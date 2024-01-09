@@ -9,10 +9,14 @@ import Foundation
 
 final class SearchViewModel: NSObject {
     
+    // MARK: - Properties
+
     typealias DataChangeAction = () -> Void
     private var dataChangeAction: DataChangeAction?
     private var dataEmptyAction: DataChangeAction?
     
+    // MARK: - Data
+
     var searchResultData: SearchResultModel = SearchResultModel.fetchDummyData() {
         didSet {
             if searchResultData.clipList.count == 0 && 
@@ -25,6 +29,8 @@ final class SearchViewModel: NSObject {
     }
     
 }
+
+// MARK: - extension
 
 extension SearchViewModel {
     func setupDataChangeAction(changeAction: @escaping DataChangeAction,
