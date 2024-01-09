@@ -162,6 +162,31 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		3F2FA1822B4CFC8C00EDBF95 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				3F2FA17C2B4928B700EDBF95 /* LoginUseCase.swift */,
+				3F2FA1802B4A32A200EDBF95 /* LogoutUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		3F2FA1832B4CFCA400EDBF95 /* Adapter */ = {
+			isa = PBXGroup;
+			children = (
+				3F2FA1782B45C46F00EDBF95 /* KakaoAuthenticateAdapter.swift */,
+			);
+			path = Adapter;
+			sourceTree = "<group>";
+		};
+		3F2FA1842B4CFCBC00EDBF95 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3F2FA17E2B4A31E900EDBF95 /* SocialLoginTokenModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		6B6AE6422B3FF101000E2366 = {
 			isa = PBXGroup;
 			children = (
@@ -368,14 +393,13 @@
 		6B6AE69D2B3FF5CF000E2366 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				3F2FA1842B4CFCBC00EDBF95 /* Model */,
+				3F2FA1832B4CFCA400EDBF95 /* Adapter */,
+				3F2FA1822B4CFC8C00EDBF95 /* UseCase */,
+				3F2BFAC72B4036E200DA76B7 /* View */,
 				6B6AE69E2B3FF5D7000E2366 /* LoginViewController.swift */,
 				3F2BFACA2B40373C00DA76B7 /* SocialLoginType.swift */,
-				3F2FA1782B45C46F00EDBF95 /* KakaoAuthenticateAdapter.swift */,
 				3F2FA17A2B4928A200EDBF95 /* LoginError.swift */,
-				3F2FA17C2B4928B700EDBF95 /* LoginUseCase.swift */,
-				3F2FA1802B4A32A200EDBF95 /* LogoutUseCase.swift */,
-				3F2FA17E2B4A31E900EDBF95 /* SocialLoginTokenModel.swift */,
-				3F2BFAC72B4036E200DA76B7 /* View */,
 			);
 			path = Login;
 			sourceTree = "<group>";
