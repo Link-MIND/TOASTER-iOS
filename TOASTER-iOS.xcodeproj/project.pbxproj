@@ -85,7 +85,6 @@
 		830517942B4D1FE1009FFB60 /* WeeklyRecommendHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517932B4D1FE1009FFB60 /* WeeklyRecommendHeaderCollectionReusableView.swift */; };
 		830517962B4D21BB009FFB60 /* CompositioinalFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517952B4D21BB009FFB60 /* CompositioinalFactory.swift */; };
 		8305179D2B4D3701009FFB60 /* MainInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305179C2B4D3701009FFB60 /* MainInfoModel.swift */; };
-		8305179F2B4D3AC5009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305179E2B4D3AC5009FFB60 /* UILabel+.swift */; };
 		830517A72B4D7225009FFB60 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517A62B4D7225009FFB60 /* HomeView.swift */; };
 		830517AA2B4D95E9009FFB60 /* MainFooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517A92B4D95E9009FFB60 /* MainFooterCollectionReusableView.swift */; };
 		830517AC2B4D9776009FFB60 /* UserClipFooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AB2B4D9776009FFB60 /* UserClipFooterCollectionReusableView.swift */; };
@@ -163,7 +162,6 @@
 		830517932B4D1FE1009FFB60 /* WeeklyRecommendHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyRecommendHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		830517952B4D21BB009FFB60 /* CompositioinalFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositioinalFactory.swift; sourceTree = "<group>"; };
 		8305179C2B4D3701009FFB60 /* MainInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfoModel.swift; sourceTree = "<group>"; };
-		8305179E2B4D3AC5009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		830517A62B4D7225009FFB60 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		830517A92B4D95E9009FFB60 /* MainFooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFooterCollectionReusableView.swift; sourceTree = "<group>"; };
 		830517AB2B4D9776009FFB60 /* UserClipFooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClipFooterCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -375,7 +373,6 @@
 				6B6AE6A72B3FF6D5000E2366 /* UITextField+.swift */,
 				6B6AE6A52B3FF6BD000E2366 /* UIView+.swift */,
 				6B6AE6A32B3FF6B0000E2366 /* UIViewController+.swift */,
-				8305179E2B4D3AC5009FFB60 /* UILabel+.swift */,
 				39C3926A2B491F47005B2B0F /* NSObject+.swift */,
 			);
 			path = Extensions;
@@ -730,7 +727,6 @@
 				8305179D2B4D3701009FFB60 /* MainInfoModel.swift in Sources */,
 				3F2FA1792B45C46F00EDBF95 /* KakaoAuthenticateAdapter.swift in Sources */,
 				398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */,
-				8305179F2B4D3AC5009FFB60 /* UILabel+.swift in Sources */,
 				3F2FA1772B45C3E000EDBF95 /* AuthenticationAdapterProtocol.swift in Sources */,
 				39BC5B192B411037004024E6 /* FontLiterals.swift in Sources */,
 				39E794F92B479C8600F16A38 /* ClipEmptyView.swift in Sources */,
