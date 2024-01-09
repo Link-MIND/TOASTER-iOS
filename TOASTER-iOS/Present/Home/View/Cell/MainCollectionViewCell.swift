@@ -48,6 +48,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
     }
 }
 
+// MARK: - Private Extensions
 
 private extension MainCollectionViewCell {
     
@@ -88,7 +89,7 @@ private extension MainCollectionViewCell {
             $0.trackTintColor = .gray100
             $0.progressTintColor = .toasterPrimary
             $0.progress = Float(readToastNum)/Float(allToastNum)
-            $0.layer.cornerRadius = 8
+            $0.makeRounded(radius: 8)
             $0.clipsToBounds = true
         }
     }
@@ -101,13 +102,11 @@ private extension MainCollectionViewCell {
         searchButton.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(20)
-            //$0.width.equalTo(335)
             $0.height.equalTo(42)
-            $0.centerX.equalToSuperview()
         }
         
         userLabel.snp.makeConstraints {
-            $0.top.equalTo(searchButton.snp.bottom).offset(12)
+            $0.top.equalTo(searchButton.snp.bottom).offset(18)
             $0.leading.equalToSuperview().inset(20)
         }
         

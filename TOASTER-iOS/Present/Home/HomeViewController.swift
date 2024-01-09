@@ -67,19 +67,42 @@ extension HomeViewController: UICollectionViewDataSource {
         }
     }
     
-    // Header
+    // Header, Footer
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch indexPath.section {
+        case 0:
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: MainFooterCollectionReusableView.className, for: indexPath) as? MainFooterCollectionReusableView
+            else { return MainFooterCollectionReusableView() }
+            footer.configure()
+            return footer
         case 1:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserClipHeaderCollectionReusableView.className, for: indexPath) as? UserClipHeaderCollectionReusableView
-            else { return UserClipHeaderCollectionReusableView() }
-            header.configure()
-            return header
+            if kind == UICollectionView.elementKindSectionHeader {
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserClipHeaderCollectionReusableView.className, for: indexPath) as? UserClipHeaderCollectionReusableView else {
+                    return UserClipHeaderCollectionReusableView()
+                }
+                header.configure()
+                return header
+            } else {
+                guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: UserClipFooterCollectionReusableView.className, for: indexPath) as? UserClipFooterCollectionReusableView else {
+                    return UserClipFooterCollectionReusableView()
+                }
+                footer.configure()
+                return footer
+            }
         case 2:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeeklyLinkHeaderCollectionReusableView.className, for: indexPath) as? WeeklyLinkHeaderCollectionReusableView
-            else { return WeeklyLinkHeaderCollectionReusableView() }
-            header.configure()
-            return header
+            if kind == UICollectionView.elementKindSectionHeader {
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeeklyLinkHeaderCollectionReusableView.className, for: indexPath) as? WeeklyLinkHeaderCollectionReusableView else {
+                    return WeeklyLinkHeaderCollectionReusableView()
+                }
+                header.configure()
+                return header
+            } else {
+                guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: WeeklyLinkFooterCollectionReusableView.className, for: indexPath) as? WeeklyLinkFooterCollectionReusableView else {
+                    return WeeklyLinkFooterCollectionReusableView()
+                }
+                footer.configure()
+                return footer
+            }
         case 3:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeeklyRecommendHeaderCollectionReusableView.className, for: indexPath) as? WeeklyRecommendHeaderCollectionReusableView
             else { return WeeklyRecommendHeaderCollectionReusableView() }
@@ -101,8 +124,20 @@ extension HomeViewController: UICollectionViewDataSource {
             return CGSize(width: 300, height: 40)
         }
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize {
+        switch section {
+        case 0:
+            return CGSize(width: 335, height: 4)
+        case 1:
+            return CGSize(width: 335, height: 4)
+        default:
+            return CGSize(width: 335, height: 4)
+        }
+    }
 }
 
+// MARK: - Private Extensions
 
 private extension HomeViewController {
     
@@ -111,7 +146,7 @@ private extension HomeViewController {
     }
     
     func setupLayout() {
-        homeView.collectionView.snp.makeConstraints{
+        homeView.collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
@@ -143,6 +178,18 @@ private extension HomeViewController {
         homeCollectionView.register(WeeklyRecommendHeaderCollectionReusableView.self,
                           forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                           withReuseIdentifier: WeeklyRecommendHeaderCollectionReusableView.className)
+        
+        // Footer register
+        homeCollectionView.register(MainFooterCollectionReusableView.self,
+                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                    withReuseIdentifier: MainFooterCollectionReusableView.className)
+        homeCollectionView.register(UserClipFooterCollectionReusableView.self,
+                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                    withReuseIdentifier: UserClipFooterCollectionReusableView.className)
+        homeCollectionView.register(WeeklyLinkFooterCollectionReusableView.self,
+                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                    withReuseIdentifier: WeeklyLinkFooterCollectionReusableView.className)
+        
         
         homeCollectionView.delegate = self
         homeCollectionView.dataSource = self

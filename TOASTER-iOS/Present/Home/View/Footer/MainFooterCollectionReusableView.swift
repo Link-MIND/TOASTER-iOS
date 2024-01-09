@@ -10,9 +10,15 @@ import UIKit
 import SnapKit
 import Then
 
+// MARK: - Main footer
+
 final class MainFooterCollectionReusableView: UICollectionReusableView {
 
+    // MARK: - Properties
+    
     private let divideView = UIView()
+    
+    // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,19 +35,27 @@ final class MainFooterCollectionReusableView: UICollectionReusableView {
         setupLayout()
     }
     
+    // MARK: - set up Style
+    
     private func setupStyle() {
         divideView.do {
             $0.backgroundColor = .gray50
         }
     }
     
+    // MARK: - set up Hierarchy
+    
     private func setupHierarchy() {
         addSubview(divideView)
     }
     
+    // MARK: - set up Layout
+    
     private func setupLayout() {
         divideView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(7)
+            $0.width.equalToSuperview()
+            $0.height.equalTo(4)
         }
     }
 }

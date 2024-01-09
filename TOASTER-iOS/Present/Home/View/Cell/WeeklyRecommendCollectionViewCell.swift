@@ -20,7 +20,6 @@ final class WeeklyRecommendCollectionViewCell: UICollectionViewCell {
     private let titleLabel = UILabel()
     private let subLabel = UILabel()
     
-    
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -41,6 +40,8 @@ final class WeeklyRecommendCollectionViewCell: UICollectionViewCell {
         setupLayout()
     }
 }
+
+// MARK: - Private Extensions
 
 private extension WeeklyRecommendCollectionViewCell {
     
@@ -85,6 +86,5 @@ private extension WeeklyRecommendCollectionViewCell {
             $0.bottom.equalToSuperview().inset(12)
             $0.centerX.equalToSuperview()
         }
-        
     }
 }

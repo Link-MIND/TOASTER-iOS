@@ -14,7 +14,11 @@ import Then
 
 final class WeeklyRecommendHeaderCollectionReusableView: UICollectionReusableView {
     
+    // MARK: - Properties
+    
     private let titleLabel = UILabel()
+    
+    // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,12 +30,12 @@ final class WeeklyRecommendHeaderCollectionReusableView: UICollectionReusableVie
     }
     
     func configure() {
-
-        
         setupStyle()
         setupHierarchy()
         setupLayout()
     }
+    
+    // MARK: - set up Style
     
     private func setupStyle() {
         titleLabel.do {
@@ -41,14 +45,18 @@ final class WeeklyRecommendHeaderCollectionReusableView: UICollectionReusableVie
         }
     }
     
+    // MARK: - set up Hierarchy
+    
     private func setupHierarchy() {
         addSubview(titleLabel)
     }
     
+    // MARK: - set up Layout
+    
     private func setupLayout() {
         titleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(10)
-            $0.centerY.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(5)
         }
     }
 }

@@ -32,7 +32,7 @@ enum CompositionalFactory {
     
     static func createMainSection() -> NSCollectionLayoutSection {
         let itemFractionalWidthFraction = 1.0
-        let itemInset: CGFloat = 3
+        let itemInset: CGFloat = 1
         
         // item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalWidthFraction),
@@ -46,8 +46,11 @@ enum CompositionalFactory {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-        //section.orthogonalScrollingBehavior = .none
+        section.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
+      
+        section.boundarySupplementaryItems = [
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(12)), elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
+        ]
         
         return section
     }
@@ -55,8 +58,8 @@ enum CompositionalFactory {
     // MARK: - User Clip 에 대한 Layout
     
     static func createUserClipSection() -> NSCollectionLayoutSection {
-        let itemFractionalWidthFraction = 1.0 / 2.0 // horizontal 2개의 셀
-        let itemInset: CGFloat = 5
+        let itemFractionalWidthFraction = 1.0 / 2.0 
+        let itemInset: CGFloat = 7
         
         // item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalWidthFraction),
@@ -73,7 +76,8 @@ enum CompositionalFactory {
         section.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
         
         section.boundarySupplementaryItems = [
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top),
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(20)), elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
         ]
         return section
     }
@@ -82,7 +86,7 @@ enum CompositionalFactory {
     
     static func createWeeklyLinkSection() -> NSCollectionLayoutSection {
         let itemFractionalWidthFraction = 1.0 / 1.0
-        let itemInset: CGFloat = 5
+        let itemInset: CGFloat = 7
         
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalWidthFraction),
@@ -102,7 +106,8 @@ enum CompositionalFactory {
         section.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
         
         section.boundarySupplementaryItems = [
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top),
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(20)), elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
         ]
         return section
     }
@@ -110,9 +115,8 @@ enum CompositionalFactory {
     // MARK: - Weekly Recommend 에 대한 Layout
     
     static func createWeeklyRecommendSection() -> NSCollectionLayoutSection {
-        let itemFractionalWidthFraction = 1.0 / 3.0 // horizontal 3개의 셀
-        
-        let itemInset: CGFloat = 5
+        let itemFractionalWidthFraction = 1.0 / 3.0
+        let itemInset: CGFloat = 7
         
         // Item
         let itemSize = NSCollectionLayoutSize(

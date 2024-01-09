@@ -20,7 +20,6 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
     private let titleLabel = UILabel()
     private let countLabel = UILabel()
     
-    
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -46,10 +45,10 @@ extension UserClipCollectionViewCell {
     func configureCell(forModel: ToastList) {
         titleLabel.text = forModel.toastTitle
         countLabel.text = forModel.linkURL
-        //isClipNameLabelHidden = forModel.isRead
     }
 }
 
+// MARK: - Private Extensions
 
 private extension UserClipCollectionViewCell {
     
