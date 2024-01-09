@@ -27,7 +27,6 @@ extension UILabel {
         attributedText = attributedString
     }
     
-    
     /// font, color 둘 다 변경
     func asFontColor(targetString: String, font: UIFont, color: UIColor) {
         let originText = text ?? ""
@@ -36,5 +35,4 @@ extension UILabel {
         attributedString.addAttributes([.font: font as Any, .foregroundColor: color as Any], range: range)
         attributedText = attributedString
     }
-    
 }
