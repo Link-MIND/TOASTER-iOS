@@ -128,4 +128,10 @@ extension UIColor {
     static var toaster100: UIColor {
         return UIColor(hex: "#FCDED7")
     }
+    
+    // MARK: - Login Colors
+    
+    static var loginKakao: UIColor {
+        return UIColor(hex: "#FEE500")
+    }
 }
