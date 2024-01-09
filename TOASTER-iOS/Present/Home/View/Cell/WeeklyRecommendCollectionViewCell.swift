@@ -47,14 +47,43 @@ final class WeeklyRecommendCollectionViewCell: UICollectionViewCell {
 private extension WeeklyRecommendCollectionViewCell {
     
     func setupStyle() {
-
+        brandImage.do {
+            $0.image = ImageLiterals.Home.siteThumbNail
+        }
+        
+        titleLabel.do {
+            $0.text = "Title"
+            $0.font = .suitBold(size: 12)
+            $0.textColor = .gray800
+        }
+        
+        subLabel.do {
+            $0.text = "sub"
+            $0.font = .suitMedium(size: 10)
+            $0.textColor = .gray400
+        }
     }
     
     func setupHierarchy() {
-        
+        addSubviews(brandImage, titleLabel, subLabel)
     }
     
     func setupLayout() {
+        brandImage.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(12)
+            $0.centerX.equalToSuperview()
+            $0.size.equalTo(40)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(brandImage.snp.bottom).offset(5)
+            $0.centerX.equalToSuperview()
+        }
+        
+        subLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(12)
+            $0.centerX.equalToSuperview()
+        }
         
     }
 }
