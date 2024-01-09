@@ -56,6 +56,7 @@ private extension MainCollectionViewCell {
             $0.backgroundColor = .gray50
             $0.setTitle("검색어를 입력해주세요.", for: .normal)
             $0.setTitleColor(.gray400, for: .normal)
+            $0.contentHorizontalAlignment = .left
             $0.layer.cornerRadius = 12
         }
         
@@ -99,13 +100,14 @@ private extension MainCollectionViewCell {
     func setupLayout() {
         searchButton.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.width.equalTo(335)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            //$0.width.equalTo(335)
             $0.height.equalTo(42)
             $0.centerX.equalToSuperview()
         }
         
         userLabel.snp.makeConstraints {
-            $0.top.equalTo(searchButton.snp.bottom).offset(42)
+            $0.top.equalTo(searchButton.snp.bottom).offset(12)
             $0.leading.equalToSuperview().inset(20)
         }
         

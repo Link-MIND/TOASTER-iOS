@@ -7,14 +7,40 @@
 
 import UIKit
 
-class HomeView: UIView {
+import SnapKit
+import Then
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+final class HomeView: UIView {
+
+    // MARK: - Properties
+
+    private let collectionViewLayout = CompositionalFactory.create()
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+    
+    // MARK: - Life Cycle
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setHierarchy()
+        setLayout()
     }
-    */
-
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - set Hierachy
+    
+    private func setHierarchy() {
+        self.addSubview(collectionView)
+    }
+    
+    // MARK: - set Layout
+    
+    private func setLayout() {
+        collectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
 }

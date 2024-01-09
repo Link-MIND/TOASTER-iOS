@@ -40,13 +40,15 @@ final class WeeklyRecommendCollectionViewCell: UICollectionViewCell {
         setupHierarchy()
         setupLayout()
     }
-    
 }
 
 
 private extension WeeklyRecommendCollectionViewCell {
     
     func setupStyle() {
+        backgroundColor = .toasterWhite
+        self.makeRounded(radius: 8)
+        
         brandImage.do {
             $0.image = ImageLiterals.Home.siteThumbNail
         }

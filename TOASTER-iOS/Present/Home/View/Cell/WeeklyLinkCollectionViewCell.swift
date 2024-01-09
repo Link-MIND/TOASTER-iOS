@@ -48,7 +48,8 @@ final class WeeklyLinkCollectionViewCell: UICollectionViewCell {
 private extension WeeklyLinkCollectionViewCell {
 
     func setupStyle() {
-        contentView.backgroundColor = .toasterBackground
+        backgroundColor = .toasterWhite
+        self.makeRounded(radius: 12)
         
         linkImage.do {
             $0.makeRounded(radius: 8)

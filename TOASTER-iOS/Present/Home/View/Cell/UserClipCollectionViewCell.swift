@@ -42,11 +42,21 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
     }
 }
 
+extension UserClipCollectionViewCell {
+    func configureCell(forModel: ToastList) {
+        titleLabel.text = forModel.toastTitle
+        countLabel.text = forModel.linkURL
+        //isClipNameLabelHidden = forModel.isRead
+    }
+}
+
 
 private extension UserClipCollectionViewCell {
     
     func setupStyle() {
-        contentView.backgroundColor = .toasterBackground
+        backgroundColor = .toasterWhite
+        self.makeRounded(radius: 12)
+        
         clipImage.do {
             $0.image = ImageLiterals.Home.clipFull
         }
