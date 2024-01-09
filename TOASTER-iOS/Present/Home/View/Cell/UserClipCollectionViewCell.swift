@@ -20,7 +20,6 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
     private let titleLabel = UILabel()
     private let countLabel = UILabel()
     
-    private let clipStackView = UIStackView()
     
     // MARK: - Life Cycle
     
@@ -47,34 +46,41 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
 private extension UserClipCollectionViewCell {
     
     func setupStyle() {
-        contentView.backgroundColor = .lightGray
+        contentView.backgroundColor = .toasterBackground
         clipImage.do {
             $0.image = UIImage(systemName: "folder")?.withTintColor(.black)
         }
         
         titleLabel.do {
             $0.text = "전체 클립"
-            $0.font = .boldSystemFont(ofSize: 16)
-            $0.textColor = .black
+            $0.font = .suitSemiBold(size: 16)
+            $0.textColor = .black900
         }
         
         countLabel.do {
             $0.text = "n개"
-            $0.font = .boldSystemFont(ofSize: 14)
-        }
-        
-        clipStackView.do {
-            $0.distribution = .equalSpacing
-            $0.axis = .vertical
+            $0.font = .suitBold(size: 14)
+            $0.textColor = .gray700
         }
     }
     
     func setupHierarchy() {
-        
-        
+        addSubviews(clipImage, titleLabel, countLabel)
     }
     
     func setupLayout() {
+        clipImage.snp.makeConstraints {
+            $0.top.leading.equalToSuperview().inset(12)
+            $0.size.equalTo(24)
+        }
         
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(clipImage.snp.bottom).offset(12)
+            $0.leading.equalToSuperview().inset(12)
+        }
+        
+        countLabel.snp.makeConstraints {
+            $0.bottom.leading.equalToSuperview().inset(12)
+        }
     }
 }

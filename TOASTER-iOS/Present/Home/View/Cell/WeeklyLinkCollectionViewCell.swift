@@ -52,8 +52,8 @@ private extension WeeklyLinkCollectionViewCell {
         
         linkImage.do {
             $0.makeRounded(radius: 8)
-            $0.image = UIImage(systemName: "folder") // 이따 바꾸렴
-            //$0.image = ImageLiterals.Clip.thumb
+            //$0.image = UIImage(systemName: "folder") // 이따 바꾸렴
+            $0.image = ImageLiterals.Clip.thumb
         }
         
         linkTitleLabel.do {
