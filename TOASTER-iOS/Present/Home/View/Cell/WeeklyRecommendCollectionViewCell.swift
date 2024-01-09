@@ -42,7 +42,6 @@ final class WeeklyRecommendCollectionViewCell: UICollectionViewCell {
     }
 }
 
-
 private extension WeeklyRecommendCollectionViewCell {
     
     func setupStyle() {

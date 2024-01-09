@@ -16,11 +16,14 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         homeView.backgroundColor = .toasterBackground
+        setView()
+    }
+    
+    private func setView() {
         setupNavigationBar()
         setupHierarchy()
         setupLayout()
         createCollectionView()
-        
     }
 }
 
@@ -65,39 +68,39 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     // Header
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        switch indexPath.section {
-//        case 1:
-//            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserClipCollectionReusableView.className, for: indexPath) as? UserClipCollectionReusableView
-//            else { return UserClipCollectionReusableView() }
-//            //header.configure()
-//            return header
-//        case 2:
-//            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeeklyLinkCollectionReusableView.className, for: indexPath) as? WeeklyLinkCollectionReusableView
-//            else { return WeeklyLinkCollectionReusableView() }
-//            //header.configure()
-//            return header
-//        case 3:
-//            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeeklyRecommendCollectionReusableView.className, for: indexPath) as? WeeklyRecommendCollectionReusableView
-//            else { return WeeklyRecommendCollectionReusableView() }
-//            //header.configure()
-//            return header
-//        default:
-//            return UserClipCollectionReusableView()
-//        }
-//    }
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch indexPath.section {
+        case 1:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserClipHeaderCollectionReusableView.className, for: indexPath) as? UserClipHeaderCollectionReusableView
+            else { return UserClipHeaderCollectionReusableView() }
+            header.configure()
+            return header
+        case 2:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeeklyLinkHeaderCollectionReusableView.className, for: indexPath) as? WeeklyLinkHeaderCollectionReusableView
+            else { return WeeklyLinkHeaderCollectionReusableView() }
+            header.configure()
+            return header
+        case 3:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeeklyRecommendHeaderCollectionReusableView.className, for: indexPath) as? WeeklyRecommendHeaderCollectionReusableView
+            else { return WeeklyRecommendHeaderCollectionReusableView() }
+            header.configure()
+            return header
+        default:
+            return UserClipHeaderCollectionReusableView()
+        }
+    }
     
     // Header 크기 지정
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        switch section {
-//        case 0:
-//            return CGSize(width: 300, height: 40)
-//        case 1:
-//            return CGSize(width: 300, height: 40)
-//        default:
-//            return CGSize(width: 300, height: 40)
-//        }
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        switch section {
+        case 0:
+            return CGSize(width: 300, height: 40)
+        case 1:
+            return CGSize(width: 300, height: 40)
+        default:
+            return CGSize(width: 300, height: 40)
+        }
+    }
 }
 
 
@@ -129,17 +132,17 @@ private extension HomeViewController {
                           forCellWithReuseIdentifier: WeeklyRecommendCollectionViewCell.className)
         
         // Header register
-        homeCollectionView.register(UserClipCollectionReusableView.self,
+        homeCollectionView.register(UserClipHeaderCollectionReusableView.self,
                           forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                          withReuseIdentifier: UserClipCollectionReusableView.className)
+                          withReuseIdentifier: UserClipHeaderCollectionReusableView.className)
         
-        homeCollectionView.register(WeeklyLinkCollectionReusableView.self,
+        homeCollectionView.register(WeeklyLinkHeaderCollectionReusableView.self,
                           forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                          withReuseIdentifier: WeeklyLinkCollectionReusableView.className)
+                          withReuseIdentifier: WeeklyLinkHeaderCollectionReusableView.className)
         
-        homeCollectionView.register(WeeklyRecommendCollectionReusableView.self,
+        homeCollectionView.register(WeeklyRecommendHeaderCollectionReusableView.self,
                           forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                          withReuseIdentifier: WeeklyRecommendCollectionReusableView.className)
+                          withReuseIdentifier: WeeklyRecommendHeaderCollectionReusableView.className)
         
         homeCollectionView.delegate = self
         homeCollectionView.dataSource = self
