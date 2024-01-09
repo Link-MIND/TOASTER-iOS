@@ -46,6 +46,12 @@ enum ImageLiterals {
         static var kakaoLogo: UIImage { .load(name: "ic_kakao_login_24") }
         static var appleLogo: UIImage { .load(name: "ic_apple_login_24") }
     }
+    
+    enum Remind {
+        static var alarmOff: UIImage { .load(name: "img_alarm_ios") }
+        static var timerEmpty: UIImage { .load(name: "img_timer") }
+
+    }
 }
 
 extension UIImage {
