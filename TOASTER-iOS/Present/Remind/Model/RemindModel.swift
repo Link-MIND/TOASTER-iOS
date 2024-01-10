@@ -32,14 +32,7 @@ extension RemindModel {
     // TODO: - 더미 데이터 (삭제 예정)
     
     static func fetchDummyModel() -> RemindModel {
-        let complete = [CompleteTimerModel(id: 0,
-                                           remindDay: "일요일",
-                                           remindTime: "오전 10:00",
-                                           clipName: "주말 나들이"),
-                        CompleteTimerModel(id: 1,
-                                           remindDay: "월요일",
-                                           remindTime: "오전 11:00",
-                                           clipName: "점심 뭐먹지")]
+        let complete: [CompleteTimerModel] = []
         let wait = [WaitTimerModel(id: 0,
                                    clipName: "월요병 퇴치",
                                    remindDay: "월",

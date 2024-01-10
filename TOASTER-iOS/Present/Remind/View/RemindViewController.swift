@@ -49,6 +49,7 @@ private extension RemindViewController {
             $0.backgroundColor = .toasterBackground
             
             $0.register(CompleteTimerCollectionViewCell.self, forCellWithReuseIdentifier: CompleteTimerCollectionViewCell.className)
+            $0.register(CompleteTimerEmptyCollectionViewCell.self, forCellWithReuseIdentifier: CompleteTimerEmptyCollectionViewCell.className)
             $0.register(WaitTimerCollectionViewCell.self, forCellWithReuseIdentifier: WaitTimerCollectionViewCell.className)
             
             $0.register(RemindCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: RemindCollectionHeaderView.className)
@@ -154,7 +155,7 @@ extension RemindViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return viewModel.timerData.completeTimerModelList.count
+        case 0: return max(viewModel.timerData.completeTimerModelList.count, 1)
         case 1: return viewModel.timerData.waitTimerModelList.count
         default: return 0
         }
@@ -163,9 +164,14 @@ extension RemindViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CompleteTimerCollectionViewCell.className, for: indexPath) as? CompleteTimerCollectionViewCell else { return UICollectionViewCell() }
-            cell.configureCell(forModel: viewModel.timerData.completeTimerModelList[indexPath.item])
-            return cell
+            if viewModel.timerData.completeTimerModelList.count == 0 {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CompleteTimerEmptyCollectionViewCell.className, for: indexPath) as? CompleteTimerEmptyCollectionViewCell else { return UICollectionViewCell() }
+                return cell
+            } else {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CompleteTimerCollectionViewCell.className, for: indexPath) as? CompleteTimerCollectionViewCell else { return UICollectionViewCell() }
+                cell.configureCell(forModel: viewModel.timerData.completeTimerModelList[indexPath.item])
+                return cell
+            }
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaitTimerCollectionViewCell.className, for: indexPath) as? WaitTimerCollectionViewCell else { return UICollectionViewCell() }
             cell.configureCell(forModel: viewModel.timerData.waitTimerModelList[indexPath.item],
