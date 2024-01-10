@@ -66,4 +66,12 @@ enum StringLiterals {
             static let unread = "미열람"
         }
     }
+    
+    // MARK: - 로그인 뷰에서 사용되는 String
+    
+    enum Login {
+        enum Title {
+            static let subTitle = "더 이상 링크를 태우지 마세요\n토스트 먹듯이 간편하게,"
+        }
+    }
 }
