@@ -16,9 +16,12 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
+    private let cellButton = UIButton()
     private let clipImage = UIImageView()
     private let titleLabel = UILabel()
     private let countLabel = UILabel()
+    
+    private var sectionCellCount = 1
     
     // MARK: - Life Cycle
     
@@ -32,6 +35,18 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+//    override var isSelected: Bool {
+//        didSet{
+//            if isSelected {
+//                //bottom Sheet 올리기
+//                print("Cell Selected")
+//            }
+//            else {
+//                print("Fail....")
+//            }
+//        }
+//    }
+    
     // MARK: - Make View
     
     func setView() {
@@ -39,12 +54,14 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
         setupHierarchy()
         setupLayout()
     }
+
+
 }
 
 extension UserClipCollectionViewCell {
-    func configureCell(forModel: ToastList) {
-        titleLabel.text = forModel.toastTitle
-        countLabel.text = forModel.linkURL
+    func configureCell(forModel: CategoryList) {
+        titleLabel.text = forModel.categroyTitle
+        countLabel.text = String(forModel.toastNum)
     }
 }
 
@@ -61,13 +78,13 @@ private extension UserClipCollectionViewCell {
         }
         
         titleLabel.do {
-            $0.text = "전체 클립"
+//            $0.text = "전체 클립"
             $0.font = .suitSemiBold(size: 16)
             $0.textColor = .black900
         }
         
         countLabel.do {
-            $0.text = "n개"
+//            $0.text = "n개"
             $0.font = .suitBold(size: 14)
             $0.textColor = .gray700
         }
@@ -80,7 +97,8 @@ private extension UserClipCollectionViewCell {
     func setupLayout() {
         clipImage.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(12)
-            $0.size.equalTo(24)
+            $0.width.equalTo(24)
+            $0.height.equalTo(24)
         }
         
         titleLabel.snp.makeConstraints {
@@ -92,4 +110,6 @@ private extension UserClipCollectionViewCell {
             $0.bottom.leading.equalToSuperview().inset(12)
         }
     }
+    
+    
 }

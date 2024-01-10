@@ -11,7 +11,9 @@ import SnapKit
 import Then
 
 final class HomeViewController: UIViewController {
+    
     private let homeView = HomeView()
+    var clipCellData = dummyCategoryInfo
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +57,11 @@ extension HomeViewController: UICollectionViewDataSource {
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
+            if indexPath.row == 0 {
+                cell.configureCell(forModel: CategoryList(categoryId: 0, categroyTitle: "전체클립", toastNum: 100))
+            } else {
+                cell.configureCell(forModel: dummyCategoryInfo[indexPath.row])
+            }
             return cell
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyLinkCollectionViewCell.className, for: indexPath) as? WeeklyLinkCollectionViewCell
