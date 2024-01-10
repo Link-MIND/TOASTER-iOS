@@ -20,6 +20,17 @@ final class AddClipBottomSheetView: UIView {
     
     weak var addClipBottomSheetViewDelegate: AddClipBottomSheetViewDelegate?
     
+    private var isButtonClicked: Bool = false {
+        didSet {
+            setupButtonColor()
+        }
+    }
+    private var isBorderColor: Bool = false {
+        didSet {
+            setupTextFieldBorder()
+        }
+    }
+    
     // MARK: - UI Components
     
     private let addClipTextField = UITextField()
@@ -61,10 +72,12 @@ private extension AddClipBottomSheetView {
             $0.backgroundColor = .gray50
             $0.textColor = .black900
             $0.makeRounded(radius: 12)
+            $0.borderStyle = .none
+            $0.delegate = self
         }
         
         addClipButton.do {
-            $0.backgroundColor = .toasterPrimary
+            isButtonClicked = false
             $0.setTitle(StringLiterals.BottomSheet.Button.complete, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
@@ -102,8 +115,47 @@ private extension AddClipBottomSheetView {
         }
     }
     
+    func setupButtonColor() {
+        if isButtonClicked {
+            addClipButton.isEnabled = true
+            addClipButton.backgroundColor = .toasterPrimary
+        } else {
+            addClipButton.isEnabled = false
+            addClipButton.backgroundColor = .gray200
+        }
+    }
+    
+    func setupTextFieldBorder() {
+        if isBorderColor {
+            addClipTextField.layer.borderColor = UIColor.toasterError.cgColor
+            addClipTextField.layer.borderWidth = 1.0
+        } else {
+            addClipTextField.layer.borderColor = UIColor.clear.cgColor
+            addClipTextField.layer.borderWidth = 0.0
+        }
+    }
+    
     @objc
     func buttonTapped() {
         addClipBottomSheetViewDelegate?.dismissButtonTapped()
+    }
+}
+
+// MARK: - UITextField Delegate
+
+extension AddClipBottomSheetView: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        let currentText = textField.text ?? ""
+        if currentText.isEmpty {
+            isButtonClicked = false
+            isBorderColor = false
+        } else if currentText.count > 15 {
+            isButtonClicked = false
+            isBorderColor = true
+            // 경고 메시지도 추가해줘야 함
+        } else {
+            isButtonClicked = true
+            isBorderColor = false
+        }
     }
 }
