@@ -66,4 +66,12 @@ enum StringLiterals {
             static let unread = "미열람"
         }
     }
+    
+    // MARK: - 마이 뷰에서 사용되는 String
+    
+    enum Mypage {
+        enum Title {
+            static let bottomTitle = "지금까지 읽은 링크 수"
+        }
+    }
 }

@@ -61,7 +61,7 @@ enum TabBarItem: CaseIterable {
         case .clip: return ClipViewController()
         case .plus: return nil
         case .timer: return nil
-        case .my: return nil
+        case .my: return MypageViewController()
         }
     }
     
