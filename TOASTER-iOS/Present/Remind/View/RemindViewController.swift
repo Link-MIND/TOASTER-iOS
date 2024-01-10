@@ -92,7 +92,45 @@ private extension RemindViewController {
 
     func plusButtonTapped() {
          // plusButtonTapped
-     }
+    }
+    
+    func setupBottomSheet() {
+        let editView = RemindTimerEditView()
+        editView.setupDelegate(forDelegate: self)
+        
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 226, insertView: editView)
+        exampleBottom.modalPresentationStyle = .overFullScreen
+        
+        present(exampleBottom, animated: false)
+    }
+    
+    func deleteButtonTapped() {
+        
+        // TODO: - Delete API 연결
+        
+        dismiss(animated: false)
+        showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension RemindViewController: RemindEditViewDelegate {
+    func editTimer() {
+
+        // TODO: - Edit 로직
+        
+        dismiss(animated: false)
+    }
+    
+    func deleteTimer() {
+        dismiss(animated: false)
+        showPopup(forMainText: "타이머를 삭제하시겠어요?",
+                  forSubText: "더 이상 해당 클립의 리마인드를 \n받을 수 없어요",
+                  forLeftButtonTitle: "취소",
+                  forRightButtonTitle: "삭제",
+                  forRightButtonHandler: deleteButtonTapped)
+    }
 }
 
 // MARK: - UICollectionViewDelegate
@@ -122,7 +160,8 @@ extension RemindViewController: UICollectionViewDataSource {
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaitTimerCollectionViewCell.className, for: indexPath) as? WaitTimerCollectionViewCell else { return UICollectionViewCell() }
-            cell.configureCell(forModel: viewModel.timerData.waitTimerModelList[indexPath.item])
+            cell.configureCell(forModel: viewModel.timerData.waitTimerModelList[indexPath.item],
+                               forAction: setupBottomSheet)
             return cell
         default:
             return UICollectionViewCell()
@@ -162,6 +201,8 @@ extension RemindViewController: UICollectionViewDataSource {
         }
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension RemindViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

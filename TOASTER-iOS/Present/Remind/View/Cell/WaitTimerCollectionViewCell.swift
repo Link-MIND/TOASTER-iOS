@@ -12,6 +12,11 @@ import Then
 
 final class WaitTimerCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
+    typealias EditButtonAction = () -> Void
+    private var editButtonAction: EditButtonAction?
+
     // MARK: - UI Properties
         
     private let infoStackView: UIStackView = UIStackView()
@@ -41,10 +46,12 @@ final class WaitTimerCollectionViewCell: UICollectionViewCell {
 // MARK: - Extension
 
 extension WaitTimerCollectionViewCell {
-    func configureCell(forModel: WaitTimerModel) {
+    func configureCell(forModel: WaitTimerModel,
+                       forAction: @escaping EditButtonAction) {
         clipLabel.text = "\(forModel.clipName)"
         timeLabel.text = "매주 \(forModel.remindDay) \(forModel.remindTime)마다"
         toggleSwitch.isOn = forModel.isEnable
+        editButtonAction = forAction
     }
 }
 
@@ -82,6 +89,7 @@ private extension WaitTimerCollectionViewCell {
         
         editButton.do {
             $0.setImage(ImageLiterals.Common.more, for: .normal)
+            $0.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -110,5 +118,9 @@ private extension WaitTimerCollectionViewCell {
             $0.trailing.equalToSuperview().inset(14)
             $0.bottom.equalToSuperview().inset(6)
         }
+    }
+    
+    @objc func editButtonTapped() {
+        editButtonAction?()
     }
 }
