@@ -15,7 +15,7 @@ final class CompleteTimerCollectionViewCell: UICollectionViewCell {
     // MARK: - UI Properties
         
     private let timeStackView: UIStackView = UIStackView()
-    private let alarmIcon: UIImageView = UIImageView(image: ImageLiterals.Remind.alarmDisabled)
+    private let alarmIcon: UIImageView = UIImageView(image: ImageLiterals.Remind.alarmAbled)
     private let timeLabel: UILabel = UILabel()
     
     private let toReadView: UIView = UIView()

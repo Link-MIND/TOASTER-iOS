@@ -71,7 +71,7 @@ private extension WaitTimerCollectionViewCell {
         }
         
         editButton.do {
-            $0.setImage(ImageLiterals.Clip.meatballs, for: .normal)
+            $0.setImage(ImageLiterals.Common.more, for: .normal)
         }
     }
     
