@@ -11,17 +11,18 @@ import SnapKit
 import Then
 
 protocol RemindEditViewDelegate: AnyObject{
-    func editTimer()
-    func deleteTimer()
+    func editTimer(forID: Int?)
+    func deleteTimer(forID: Int?)
 }
 
 final class RemindTimerEditView: UIView {
 
-    // MARK: - Components
+    // MARK: - Properties
 
     private weak var delegate: RemindEditViewDelegate?
+    private var editTimerID: Int?
     
-    // MARK: - UI Components
+    // MARK: - UI Properties
     
     private let editButton: UIButton = UIButton()
     private let deleteButton: UIButton = UIButton()
@@ -44,8 +45,10 @@ final class RemindTimerEditView: UIView {
 // MARK: - Private Extension
 
 extension RemindTimerEditView {
-    func setupDelegate(forDelegate: RemindEditViewDelegate) {
+    func setupEditView(forDelegate: RemindEditViewDelegate,
+                       forID: Int?) {
         delegate = forDelegate
+        editTimerID = forID
     }
 }
 
@@ -95,10 +98,10 @@ private extension RemindTimerEditView {
     }
     
     @objc func editButtonTapped() {
-        delegate?.editTimer()
+        delegate?.editTimer(forID: editTimerID)
     }
     
     @objc func deleteButtonTapped() {
-        delegate?.deleteTimer()
+        delegate?.deleteTimer(forID: editTimerID)
     }
 }

@@ -14,8 +14,9 @@ final class WaitTimerCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
-    typealias EditButtonAction = () -> Void
+    typealias EditButtonAction = (Int?) -> Void
     private var editButtonAction: EditButtonAction?
+    private var editTimerID: Int?
 
     // MARK: - UI Properties
         
@@ -52,6 +53,7 @@ extension WaitTimerCollectionViewCell {
         timeLabel.text = "매주 \(forModel.remindDay) \(forModel.remindTime)마다"
         toggleSwitch.isOn = forModel.isEnable
         editButtonAction = forAction
+        editTimerID = forModel.id
     }
 }
 
@@ -121,6 +123,6 @@ private extension WaitTimerCollectionViewCell {
     }
     
     @objc func editButtonTapped() {
-        editButtonAction?()
+        editButtonAction?(editTimerID)
     }
 }

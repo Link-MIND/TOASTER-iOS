@@ -94,9 +94,10 @@ private extension RemindViewController {
          // plusButtonTapped
     }
     
-    func setupBottomSheet() {
+    func setupBottomSheet(forID: Int?) {
         let editView = RemindTimerEditView()
-        editView.setupDelegate(forDelegate: self)
+        editView.setupEditView(forDelegate: self, 
+                               forID: forID)
         
         let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 226, insertView: editView)
         exampleBottom.modalPresentationStyle = .overFullScreen
@@ -116,14 +117,14 @@ private extension RemindViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension RemindViewController: RemindEditViewDelegate {
-    func editTimer() {
-
+    func editTimer(forID: Int?) {
+        
         // TODO: - Edit 로직
         
         dismiss(animated: false)
     }
     
-    func deleteTimer() {
+    func deleteTimer(forID: Int?) {
         dismiss(animated: false)
         showPopup(forMainText: "타이머를 삭제하시겠어요?",
                   forSubText: "더 이상 해당 클립의 리마인드를 \n받을 수 없어요",
