@@ -20,6 +20,9 @@ final class LoginViewController: UIViewController {
     
     private let kakaoSocialLoginButtonView = SocialLoginButtonView(type: .kakao)
     private let appleSocialLoginButtonView = SocialLoginButtonView(type: .apple)
+    private let titleLogoImageView = UIImageView()
+    private let titleLabel = UILabel()
+    private let loginImageView = UIImageView()
     
     // MARK: - Life Cycle
 
@@ -38,21 +41,60 @@ final class LoginViewController: UIViewController {
 private extension LoginViewController {
     func setupStyle() {
         view.backgroundColor = .white
+        hideNavigationBar()
+        
+        titleLogoImageView.do {
+            $0.image = ImageLiterals.Logo.wordmark
+            $0.contentMode = .scaleAspectFit
+        }
+        
+        titleLabel.do {
+            $0.text = StringLiterals.Login.Title.subTitle
+            $0.textColor = .black900
+            $0.font = .suitBold(size: 18)
+            $0.numberOfLines = 0
+        }
+        
+        loginImageView.do {
+            $0.image = ImageLiterals.Login.loginLogo
+            $0.contentMode = .scaleAspectFit
+        }
     }
     
     func setupHierarchy() {
-        view.addSubviews(kakaoSocialLoginButtonView, appleSocialLoginButtonView)
+        view.addSubviews(titleLogoImageView, titleLabel, loginImageView, kakaoSocialLoginButtonView, appleSocialLoginButtonView)
     }
     
     func setupLayout() {
-        kakaoSocialLoginButtonView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(30)
-            $0.bottom.equalTo(appleSocialLoginButtonView.snp.top).offset(-15)
+        titleLogoImageView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(view.convertByHeightRatio(115))
+            $0.leading.equalToSuperview().offset(32)
+            $0.height.equalTo(39)
+            $0.width.equalTo(215)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLogoImageView.snp.bottom).offset(view.convertByReverseHeightRatio(20))
+            $0.leading.equalToSuperview().offset(32)
+        }
+        
+        loginImageView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(view.convertByHeightRatio(50))
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(loginImageView.snp.height).multipliedBy(304/294)
+            $0.width.equalTo(view.convertByWidthRatio(294))
         }
         
         appleSocialLoginButtonView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(30)
-            $0.bottom.equalToSuperview().offset(-100)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.bottom.equalTo(kakaoSocialLoginButtonView.snp.top).inset(view.convertByHeightRatio(-12))
+            $0.height.equalTo(62)
+        }
+        
+        kakaoSocialLoginButtonView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(view.convertByHeightRatio(79))
+            $0.height.equalTo(62)
         }
     }
     
