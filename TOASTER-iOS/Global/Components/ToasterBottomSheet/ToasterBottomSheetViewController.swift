@@ -127,7 +127,7 @@ private extension ToasterBottomSheetViewController {
         
         bottomSheetView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.top.equalTo(self.view.snp.bottom)
+            $0.top.equalTo(view.snp.bottom)
         }
         
         insertView.snp.makeConstraints {

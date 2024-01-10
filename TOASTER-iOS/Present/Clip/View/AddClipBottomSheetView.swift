@@ -25,16 +25,19 @@ final class AddClipBottomSheetView: UIView {
             setupButtonColor()
         }
     }
+    
     private var isBorderColor: Bool = false {
         didSet {
             setupTextFieldBorder()
         }
     }
+    
     private var isError: Bool = false {
         didSet {
             setupErrorMessage()
         }
     }
+    
     private var isClearButtonShow: Bool = true {
         didSet {
             setupClearButton()
@@ -211,23 +214,21 @@ extension AddClipBottomSheetView: UITextFieldDelegate {
         return newText.count <= maxLength
     }
     
+    func changeTextField(addButton: Bool, border: Bool, error: Bool, clearButton: Bool) {
+        isButtonClicked = addButton
+        isBorderColor = border
+        isError = error
+        isClearButtonShow = clearButton
+    }
+    
     func textFieldDidChangeSelection(_ textField: UITextField) {
         let currentText = textField.text ?? ""
         if currentText.isEmpty {
-            isButtonClicked = false
-            isBorderColor = false
-            isError = false
-            isClearButtonShow = false
+            changeTextField(addButton: false, border: false, error: false, clearButton: false)
         } else if currentText.count > 15 {
-            isButtonClicked = false
-            isBorderColor = true
-            isError = true
-            isClearButtonShow = true
+            changeTextField(addButton: false, border: true, error: true, clearButton: true)
         } else {
-            isButtonClicked = true
-            isBorderColor = false
-            isError = false
-            isClearButtonShow = true
+            changeTextField(addButton: true, border: false, error: false, clearButton: true)
         }
     }
 }
