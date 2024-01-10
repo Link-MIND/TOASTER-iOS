@@ -16,6 +16,12 @@ final class RemindSelectClipViewController: UIViewController {
     
     private let viewModel = RemindSelectClipViewModel()
     
+    private var selectedID: Int? {
+        didSet {
+            nextButton.backgroundColor = .toasterBlack
+        }
+    }
+    
     // MARK: - UI Properties
     
     private let clipSelectCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -57,6 +63,7 @@ private extension RemindSelectClipViewController {
             $0.setTitle("다음", for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
+            $0.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -100,9 +107,13 @@ private extension RemindSelectClipViewController {
             navigationController.setupNavigationBar(forType: type)
         }
     }
-    
+        
     func closeButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func nextButtonTapped() {
+        print(selectedID)
     }
 }
 
@@ -121,6 +132,10 @@ extension RemindSelectClipViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RemindSelectClipCollectionViewCell.className, for: indexPath) as? RemindSelectClipCollectionViewCell else { return UICollectionViewCell() }
         cell.configureCell(forModel: viewModel.clipData[indexPath.item])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedID = viewModel.clipData[indexPath.item].id
     }
 }
 
