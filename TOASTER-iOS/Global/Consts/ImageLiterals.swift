@@ -19,6 +19,7 @@ enum ImageLiterals {
         static var setting: UIImage { .load(name: "ic_settings_24") }
         static var plus: UIImage { .load(name: "ic_plus_24") }
         static var rightArrow20: UIImage { .load(name: "ic_arrow_20") }
+        static var more: UIImage { .load(name: "ic_more_24") }
     }
     
     // MARK: - TabBar
@@ -73,6 +74,7 @@ enum ImageLiterals {
         static var alarmOff: UIImage { .load(name: "img_alarm_ios") }
         static var timerEmpty: UIImage { .load(name: "img_timer") }
         static var alarmDisabled: UIImage { .load(name: "alarm_disabled_20") }
+        static var alarmAbled: UIImage { .load(name: "ic_alarm_24") }
     }
 }
 
