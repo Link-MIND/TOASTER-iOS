@@ -27,7 +27,6 @@ final class SearchViewModel: NSObject {
             }
         }
     }
-    
 }
 
 // MARK: - extension
