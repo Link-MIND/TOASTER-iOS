@@ -11,27 +11,27 @@ import SnapKit
 import Then
 
 final class RemindViewController: UIViewController {
-
+    
     // MARK: - Properties
-
+    
     private let viewModel = RemindViewModel()
     
     // MARK: - UI Properties
-
+    
     private let timerCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupStyle()
         setupHierarchy()
         setupLayout()
         setupDelegate()
         setupViewModel()
     }
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -79,24 +79,20 @@ private extension RemindViewController {
     }
     
     func setupNavigationBar() {
-         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
-                                                                 hasRightButton: true,
-                                                                 mainTitle: StringOrImageType.string("TIMER"),
-                                                                 rightButton: StringOrImageType.image(ImageLiterals.Common.plus),
-                                                                 rightButtonAction: plusButtonTapped)
-                                                                 
+        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
+                                                                hasRightButton: true,
+                                                                mainTitle: StringOrImageType.string("TIMER"),
+                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.plus),
+                                                                rightButtonAction: plusButtonTapped)
+        
         if let navigationController = navigationController as? ToasterNavigationController {
-              navigationController.setupNavigationBar(forType: type)
+            navigationController.setupNavigationBar(forType: type)
         }
-     }
-
-    func plusButtonTapped() {
-         // plusButtonTapped
     }
     
     func setupBottomSheet(forID: Int?) {
         let editView = RemindTimerEditView()
-        editView.setupEditView(forDelegate: self, 
+        editView.setupEditView(forDelegate: self,
                                forID: forID)
         
         let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 226, insertView: editView)
@@ -105,12 +101,23 @@ private extension RemindViewController {
         present(exampleBottom, animated: false)
     }
     
+    func plusButtonTapped() {
+        // plusButtonTapped
+    }
+    
     func deleteButtonTapped() {
         
         // TODO: - Delete API 연결
         
         dismiss(animated: false)
         showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
+    }
+    
+    func toggleAction(forEnable: Bool) {
+        
+        // TODO: - Timer OnOff API 연결
+        
+        print(forEnable)
     }
 }
 
@@ -162,7 +169,8 @@ extension RemindViewController: UICollectionViewDataSource {
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaitTimerCollectionViewCell.className, for: indexPath) as? WaitTimerCollectionViewCell else { return UICollectionViewCell() }
             cell.configureCell(forModel: viewModel.timerData.waitTimerModelList[indexPath.item],
-                               forAction: setupBottomSheet)
+                               forEditAction: setupBottomSheet,
+                               forToggleAction: toggleAction)
             return cell
         default:
             return UICollectionViewCell()
@@ -171,7 +179,7 @@ extension RemindViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
-        // header
+            // header
         case UICollectionView.elementKindSectionHeader:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RemindCollectionHeaderView.className, for: indexPath) as? RemindCollectionHeaderView else { return UICollectionReusableView() }
             switch indexPath.section {
@@ -183,7 +191,7 @@ extension RemindViewController: UICollectionViewDataSource {
             default: break
             }
             return header
-        // footer
+            // footer
         case UICollectionView.elementKindSectionFooter:
             guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RemindCollectionFooterView.className, for: indexPath) as? RemindCollectionFooterView else { return UICollectionReusableView() }
             return footer

@@ -15,8 +15,15 @@ final class WaitTimerCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     
     typealias EditButtonAction = (Int?) -> Void
+    typealias ToggleButtonAction = (Bool) -> Void
     private var editButtonAction: EditButtonAction?
+    private var toggleButtonAction: ToggleButtonAction?
     private var editTimerID: Int?
+    private lazy var toggleEnable: Bool = toggleSwitch.isOn {
+        didSet {
+            toggleButtonAction?(toggleEnable)
+        }
+    }
 
     // MARK: - UI Properties
         
@@ -48,12 +55,14 @@ final class WaitTimerCollectionViewCell: UICollectionViewCell {
 
 extension WaitTimerCollectionViewCell {
     func configureCell(forModel: WaitTimerModel,
-                       forAction: @escaping EditButtonAction) {
+                       forEditAction: @escaping EditButtonAction,
+                       forToggleAction: @escaping ToggleButtonAction) {
         clipLabel.text = "\(forModel.clipName)"
         timeLabel.text = "매주 \(forModel.remindDay) \(forModel.remindTime)마다"
         toggleSwitch.isOn = forModel.isEnable
-        editButtonAction = forAction
         editTimerID = forModel.id
+        editButtonAction = forEditAction
+        toggleButtonAction = forToggleAction
     }
 }
 
@@ -83,6 +92,7 @@ private extension WaitTimerCollectionViewCell {
         
         toggleSwitch.do {
             $0.onTintColor = .toasterPrimary
+            $0.addTarget(self, action: #selector(toggleSwitchTapped), for: .valueChanged)
         }
         
         divideLine.do {
@@ -124,5 +134,9 @@ private extension WaitTimerCollectionViewCell {
     
     @objc func editButtonTapped() {
         editButtonAction?(editTimerID)
+    }
+    
+    @objc func toggleSwitchTapped() {
+        toggleEnable = toggleSwitch.isOn
     }
 }
