@@ -72,6 +72,9 @@ enum StringLiterals {
     enum Mypage {
         enum Title {
             static let bottomTitle = "지금까지 읽은 링크 수"
+            static let unit = "개"
+            static let openLink = "이번주 열람한 링크"
+            static let saveLink = "이번주 저장한 링크"
         }
     }
 }
