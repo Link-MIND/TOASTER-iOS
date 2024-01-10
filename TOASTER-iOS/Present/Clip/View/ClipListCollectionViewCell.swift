@@ -42,6 +42,12 @@ extension ClipListCollectionViewCell {
         countLabel.text = "\(forModel.toastNum)개"
         clipImage.image = icon
     }
+    
+    func configureCell(forModel: SearchResultClipModel, forText: String) {
+        clipNameLabel.text = forModel.title
+        clipNameLabel.asFont(targetString: forText, font: .suitBold(size: 16))
+        countLabel.text = "\(forModel.numberOfDetailClip)개"
+    }
 }
 
 // MARK: - Private Extensions
