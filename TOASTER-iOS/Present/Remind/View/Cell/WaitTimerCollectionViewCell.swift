@@ -97,7 +97,8 @@ private extension WaitTimerCollectionViewCell {
         
         editButton.snp.makeConstraints {
             $0.top.equalTo(divideLine.snp.bottom).offset(6)
-            $0.trailing.bottom.equalToSuperview().inset(14)
+            $0.trailing.equalToSuperview().inset(14)
+            $0.bottom.equalToSuperview().inset(6)
         }
     }
 }

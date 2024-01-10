@@ -16,6 +16,7 @@ final class RemindCollectionHeaderView: UICollectionReusableView {
     
     private var timerCount: Int = 0 {
         didSet {
+            countLabel.text = "\(timerCount)"
             if timerCount == 0 {
                 setupCountLabelZero()
             } else {
@@ -49,8 +50,12 @@ final class RemindCollectionHeaderView: UICollectionReusableView {
 // MARK: - Extension
 
 extension RemindCollectionHeaderView {
-    func isCountLabelHidden(forHidden: Bool) {
-        countView.isHidden = forHidden
+    func configureHeader(forTitle: String, 
+                         forTimerCount: Int? = nil,
+                         forCountLabelHidden: Bool) {
+        titleLabel.text = forTitle
+        if let count = forTimerCount { timerCount = count }
+        countView.isHidden = forCountLabelHidden
     }
 }
 
@@ -84,6 +89,7 @@ private extension RemindCollectionHeaderView {
     }
     
     func setupHierarchy() {
+        addSubviews(mainStackView)
         mainStackView.addArrangedSubviews(titleLabel, countView)
         countView.addSubview(countLabel)
     }

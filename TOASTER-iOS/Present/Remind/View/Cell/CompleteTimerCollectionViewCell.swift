@@ -71,6 +71,7 @@ private extension CompleteTimerCollectionViewCell {
             $0.text = "링크들을 \n읽기 딱 좋은 시간이에요!"
             $0.font = .suitRegular(size: 16)
             $0.textColor = .gray600
+            $0.numberOfLines = 0
         }
     }
     
@@ -94,6 +95,10 @@ private extension CompleteTimerCollectionViewCell {
             $0.width.equalTo(86)
             $0.height.equalTo(25)
             $0.top.trailing.equalToSuperview().inset(14)
+        }
+        
+        toReadLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 }
