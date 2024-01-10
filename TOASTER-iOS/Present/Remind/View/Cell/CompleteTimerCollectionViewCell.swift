@@ -40,6 +40,15 @@ final class CompleteTimerCollectionViewCell: UICollectionViewCell {
 
 // MARK: - Private Extension
 
+extension CompleteTimerCollectionViewCell {
+    func configureCell(forModel: CompleteTimerModel) {
+        timeLabel.text = "\(forModel.remindDay) \(forModel.remindTime)"
+        subLabel.text = "\(forModel.clipName) 링크들을 \n읽기 딱 좋은 시간이에요!"
+    }
+}
+
+// MARK: - Private Extension
+
 private extension CompleteTimerCollectionViewCell {
     func setupStyle() {
         backgroundColor = .toasterWhite

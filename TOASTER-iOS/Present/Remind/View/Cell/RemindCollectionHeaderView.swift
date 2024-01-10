@@ -51,11 +51,15 @@ final class RemindCollectionHeaderView: UICollectionReusableView {
 
 extension RemindCollectionHeaderView {
     func configureHeader(forTitle: String, 
-                         forTimerCount: Int? = nil,
-                         forCountLabelHidden: Bool) {
+                         forTimerCount: Int? = nil) {
         titleLabel.text = forTitle
-        if let count = forTimerCount { timerCount = count }
-        countView.isHidden = forCountLabelHidden
+        if let count = forTimerCount {
+            timerCount = count
+            countView.isHidden = false
+        }
+        else {
+            countView.isHidden = true
+        }
     }
 }
 

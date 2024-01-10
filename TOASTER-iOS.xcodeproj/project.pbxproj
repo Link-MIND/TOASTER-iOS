@@ -86,6 +86,8 @@
 		6BE6D9E42B4EA125008B06FA /* WaitTimerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9E32B4EA125008B06FA /* WaitTimerCollectionViewCell.swift */; };
 		6BE6D9E62B4EA499008B06FA /* RemindCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9E52B4EA499008B06FA /* RemindCollectionHeaderView.swift */; };
 		6BE6D9E82B4EA773008B06FA /* RemindCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9E72B4EA773008B06FA /* RemindCollectionFooterView.swift */; };
+		6BE6D9EF2B4EE98D008B06FA /* RemindModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9EE2B4EE98D008B06FA /* RemindModel.swift */; };
+		6BE6D9F22B4EEBC3008B06FA /* RemindViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9F12B4EEBC3008B06FA /* RemindViewModel.swift */; };
 		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
 		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
@@ -163,6 +165,8 @@
 		6BE6D9E32B4EA125008B06FA /* WaitTimerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitTimerCollectionViewCell.swift; sourceTree = "<group>"; };
 		6BE6D9E52B4EA499008B06FA /* RemindCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindCollectionHeaderView.swift; sourceTree = "<group>"; };
 		6BE6D9E72B4EA773008B06FA /* RemindCollectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindCollectionFooterView.swift; sourceTree = "<group>"; };
+		6BE6D9EE2B4EE98D008B06FA /* RemindModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindModel.swift; sourceTree = "<group>"; };
+		6BE6D9F12B4EEBC3008B06FA /* RemindViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindViewModel.swift; sourceTree = "<group>"; };
 		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -458,8 +462,9 @@
 		6B6AE68B2B3FF585000E2366 /* Remind */ = {
 			isa = PBXGroup;
 			children = (
+				6BE6D9E92B4EE93F008B06FA /* Model */,
 				6BE6D9D22B4DE463008B06FA /* View */,
-				6B6AE68C2B3FF58D000E2366 /* RemindViewController.swift */,
+				6BE6D9F02B4EEBAE008B06FA /* ViewModel */,
 			);
 			path = Remind;
 			sourceTree = "<group>";
@@ -578,6 +583,7 @@
 		6BE6D9D22B4DE463008B06FA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6B6AE68C2B3FF58D000E2366 /* RemindViewController.swift */,
 				6BE6D9E02B4E9B36008B06FA /* Component */,
 				6BE6D9DF2B4E9B2D008B06FA /* Cell */,
 			);
@@ -604,6 +610,22 @@
 				6BE6D9D72B4E8A03008B06FA /* RemindAlarmOffViewType.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		6BE6D9E92B4EE93F008B06FA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6D9EE2B4EE98D008B06FA /* RemindModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6BE6D9F02B4EEBAE008B06FA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6D9F12B4EEBC3008B06FA /* RemindViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -752,6 +774,7 @@
 				6BE6D9E42B4EA125008B06FA /* WaitTimerCollectionViewCell.swift in Sources */,
 				6BE6D9D42B4DE479008B06FA /* RemindTimerEmptyView.swift in Sources */,
 				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
+				6BE6D9F22B4EEBC3008B06FA /* RemindViewModel.swift in Sources */,
 				6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */,
 				39BE4BB42B4ABA80002B471D /* DetailClipListModel.swift in Sources */,
 				6BC4935E2B4414B400544249 /* ToasterPopupViewController.swift in Sources */,
@@ -763,6 +786,7 @@
 				39BE4BB62B4ABA97002B471D /* DetailClipListCollectionViewCell.swift in Sources */,
 				6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */,
 				3F2FA17D2B4928B700EDBF95 /* LoginUseCase.swift in Sources */,
+				6BE6D9EF2B4EE98D008B06FA /* RemindModel.swift in Sources */,
 				3F2FA1752B45C0AF00EDBF95 /* Config.swift in Sources */,
 				6B6AE6AC2B3FF6F7000E2366 /* UIColor+.swift in Sources */,
 				6BC493682B45D7B100544249 /* ToasterNavigationController.swift in Sources */,

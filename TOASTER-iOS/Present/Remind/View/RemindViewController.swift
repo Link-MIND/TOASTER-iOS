@@ -12,6 +12,10 @@ import Then
 
 final class RemindViewController: UIViewController {
 
+    // MARK: - Properties
+
+    private let viewModel = RemindViewModel()
+    
     // MARK: - UI Properties
 
     private let timerCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -25,6 +29,7 @@ final class RemindViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupDelegate()
+        setupViewModel()
     }
         
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +72,12 @@ private extension RemindViewController {
         timerCollectionView.dataSource = self
     }
     
+    func setupViewModel() {
+        viewModel.setupDataChangeAction {
+            self.timerCollectionView.reloadData()
+        }
+    }
+    
     func setupNavigationBar() {
          let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                  hasRightButton: true,
@@ -96,16 +107,22 @@ extension RemindViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        switch section {
+        case 0: return viewModel.timerData.completeTimerModelList.count
+        case 1: return viewModel.timerData.waitTimerModelList.count
+        default: return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CompleteTimerCollectionViewCell.className, for: indexPath) as? CompleteTimerCollectionViewCell else { return UICollectionViewCell() }
+            cell.configureCell(forModel: viewModel.timerData.completeTimerModelList[indexPath.item])
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaitTimerCollectionViewCell.className, for: indexPath) as? WaitTimerCollectionViewCell else { return UICollectionViewCell() }
+            cell.configureCell(forModel: viewModel.timerData.waitTimerModelList[indexPath.item])
             return cell
         default:
             return UICollectionViewCell()
@@ -113,27 +130,24 @@ extension RemindViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch indexPath.section {
-        case 0:
-            if kind == UICollectionView.elementKindSectionHeader {
-                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RemindCollectionHeaderView.className, for: indexPath) as? RemindCollectionHeaderView else { return UICollectionReusableView() }
+        switch kind {
+        // header
+        case UICollectionView.elementKindSectionHeader:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RemindCollectionHeaderView.className, for: indexPath) as? RemindCollectionHeaderView else { return UICollectionReusableView() }
+            switch indexPath.section {
+            case 0:
                 header.configureHeader(forTitle: "완료된 타이머",
-                                       forTimerCount: 5,
-                                       forCountLabelHidden: false)
-                return header
-            } else {
-                guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RemindCollectionFooterView.className, for: indexPath) as? RemindCollectionFooterView else { return UICollectionReusableView() }
-                return footer
+                                       forTimerCount: viewModel.timerData.completeTimerModelList.count)
+            case 1:
+                header.configureHeader(forTitle: "타이머 대기 중..")
+            default: break
             }
-        case 1:
-            if kind == UICollectionView.elementKindSectionHeader {
-                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RemindCollectionHeaderView.className, for: indexPath) as? RemindCollectionHeaderView else { return UICollectionReusableView() }
-                header.configureHeader(forTitle: "타이머 대기 중..",
-                                       forCountLabelHidden: true)
-                return header
-            } else { return UICollectionReusableView() }
-        default:
-            return UICollectionReusableView()
+            return header
+        // footer
+        case UICollectionView.elementKindSectionFooter:
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RemindCollectionFooterView.className, for: indexPath) as? RemindCollectionFooterView else { return UICollectionReusableView() }
+            return footer
+        default: return UICollectionReusableView()
         }
     }
     
@@ -152,12 +166,9 @@ extension RemindViewController: UICollectionViewDataSource {
 extension RemindViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.section {
-        case 0:
-            return CGSize(width: collectionView.convertByWidthRatio(335), height: 100)
-        case 1:
-            return CGSize(width: collectionView.convertByWidthRatio(335), height: 109)
-        default:
-            return .zero
+        case 0: return CGSize(width: collectionView.convertByWidthRatio(335), height: 100)
+        case 1: return CGSize(width: collectionView.convertByWidthRatio(335), height: 109)
+        default: return .zero
         }
     }
     
@@ -167,8 +178,8 @@ extension RemindViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         switch section {
-        case 0: return 12
-        case 1: return 18
+        case 0: return 18
+        case 1: return 12
         default: return 0
         }
     }

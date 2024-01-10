@@ -38,6 +38,16 @@ final class WaitTimerCollectionViewCell: UICollectionViewCell {
     }
 }
 
+// MARK: - Extension
+
+extension WaitTimerCollectionViewCell {
+    func configureCell(forModel: WaitTimerModel) {
+        clipLabel.text = "\(forModel.clipName)"
+        timeLabel.text = "매주 \(forModel.remindDay) \(forModel.remindTime)마다"
+        toggleSwitch.isOn = forModel.isEnable
+    }
+}
+
 // MARK: - Private Extension
 
 private extension WaitTimerCollectionViewCell {
