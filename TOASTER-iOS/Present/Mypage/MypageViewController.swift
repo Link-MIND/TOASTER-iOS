@@ -11,13 +11,10 @@ import SnapKit
 import Then
 
 final class MypageViewController: UIViewController {
-    
-    // MARK: - Properties
-    
-    
-    
-    // MARK: - UI Properties
 
+    // MARK: - UI Properties
+    
+    private let mypageHeaderView = MypageHeaderView()
     
     // MARK: - Life Cycle
     
@@ -26,8 +23,9 @@ final class MypageViewController: UIViewController {
         
         setupStyle()
         setupHierarchy()
-//        setupLayout()
-//        setupDelegate()
+        setupLayout()
+        
+        mypageHeaderView.bindModel(model: MypageUserModel(nickname: "홍길동", profile: nil, allReadToast: 5, thisWeekendRead: 3, thisWeekendSaved: 7))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,13 +34,7 @@ final class MypageViewController: UIViewController {
         setupNavigationBar()
     }
 }
-//// MARK: - Networks
-//
-//extension MypageViewController {
-//    func fetchMain() {
-//        <#code#>
-//    }
-//}
+
 // MARK: - Private Extensions
 
 private extension MypageViewController {
@@ -51,17 +43,16 @@ private extension MypageViewController {
     }
     
     func setupHierarchy() {
-        view.addSubviews()
+        view.addSubviews(mypageHeaderView)
     }
     
     func setupLayout() {
-        <#code#>
+        mypageHeaderView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+        }
     }
-    
-    func setupDelegate() {
-        <#code#>
-    }
-    
+
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                 hasRightButton: true,

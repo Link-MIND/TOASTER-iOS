@@ -454,9 +454,9 @@
 		6B6AE6882B3FF575000E2366 /* Mypage */ = {
 			isa = PBXGroup;
 			children = (
+				6B6AE6892B3FF582000E2366 /* MypageViewController.swift */,
 				3F617CB62B4ECB4600956E69 /* Model */,
 				3F617CB32B4EC2B500956E69 /* View */,
-				6B6AE6892B3FF582000E2366 /* MypageViewController.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
