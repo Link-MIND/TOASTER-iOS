@@ -40,6 +40,11 @@ final class AddClipBottomSheetView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setupKeyboard()
+    }
 }
 
 // MARK: - Private Extensions
@@ -49,7 +54,6 @@ private extension AddClipBottomSheetView {
         backgroundColor = .toasterWhite
         
         addClipTextField.do {
-            $0.becomeFirstResponder()
             $0.attributedPlaceholder = NSAttributedString(string: StringLiterals.BottomSheet.Placeholder.addClip,
                                                           attributes: [.foregroundColor: UIColor.gray400,
                                                                        .font: UIFont.suitRegular(size: 16)])
@@ -91,7 +95,13 @@ private extension AddClipBottomSheetView {
             $0.bottom.equalTo(keyboardLayoutGuide.snp.top)
         }
     }
- 
+    
+    func setupKeyboard() {
+        if !addClipTextField.isFirstResponder {
+            addClipTextField.becomeFirstResponder()
+        }
+    }
+    
     @objc
     func buttonTapped() {
         addClipBottomSheetViewDelegate?.dismissButtonTapped()
