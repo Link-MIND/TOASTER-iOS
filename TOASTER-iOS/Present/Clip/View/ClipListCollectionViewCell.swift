@@ -37,9 +37,16 @@ final class ClipListCollectionViewCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension ClipListCollectionViewCell {
-    func configureCell(forModel: ClipListModel) {
+    func configureCell(forModel: ClipListModel, icon: UIImage) {
         clipNameLabel.text = forModel.categoryTitle
         countLabel.text = "\(forModel.toastNum)개"
+        clipImage.image = icon
+    }
+    
+    func configureCell(forModel: SearchResultClipModel, forText: String) {
+        clipNameLabel.text = forModel.title
+        clipNameLabel.asFont(targetString: forText, font: .suitBold(size: 16))
+        countLabel.text = "\(forModel.numberOfDetailClip)개"
     }
 }
 
@@ -49,10 +56,6 @@ private extension ClipListCollectionViewCell {
     func setupStyle() {
         self.backgroundColor = .toasterWhite
         self.makeRounded(radius: 12)
-        
-        clipImage.do {
-            $0.image = ImageLiterals.TabBar.clip.withTintColor(.black900)
-        }
         
         clipNameLabel.do {
             $0.font = .suitSemiBold(size: 16)

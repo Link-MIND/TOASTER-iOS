@@ -9,7 +9,7 @@ import UIKit
 
 enum ImageLiterals {
     
-    // MARK: - Normal Icon
+    // MARK: - Common
     
     enum Common {
         static var check: UIImage { .load(systemName: "checkmark.circle.fill") }
@@ -20,13 +20,25 @@ enum ImageLiterals {
         static var plus: UIImage { .load(name: "ic_plus_24") }
     }
     
+    // MARK: - TabBar
+
     enum TabBar {
         static var home: UIImage { .load(name: "ic_home_24") }
+        static var allClip: UIImage { .load(name: "ic_all_clip_24") }
         static var clip: UIImage { .load(name: "ic_clip_24") }
         static var plus: UIImage { .load(name: "fab_plus") }
         static var timer: UIImage { .load(name: "ic_timer_24") }
         static var my: UIImage { .load(name: "ic_my_24") }
     }
+    
+    // MARK: - Search
+    
+    enum Search {
+        static var searchIcon: UIImage { .load(name: "ic_search_20") }
+        static var searchCancle: UIImage { .load(name: "ic_search_cancle") }
+    }
+
+    // MARK: - Clip
     
     enum Clip {
         static var rightarrow: UIImage { .load(name: "ic_arrow_18") }
@@ -38,10 +50,20 @@ enum ImageLiterals {
         static var thumb: UIImage { .load(name: "img_thumbnail") }
     }
     
+    // MARK: - EmptyView
+
+    enum EmptyView {
+        static var searchEmpty: UIImage { .load(name: "img_search") }
+    }
+    
+    // MARK: - Logo
+
     enum Logo {
         static var wordmark: UIImage { .load(name: "wordmark") }
     }
     
+    // MARK: - Login
+
     enum Login {
         static var kakaoLogo: UIImage { .load(name: "ic_kakao_login_24") }
         static var appleLogo: UIImage { .load(name: "ic_apple_login_24") }
