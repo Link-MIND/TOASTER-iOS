@@ -82,6 +82,8 @@
 		6BE6D9D62B4E8935008B06FA /* RemindAlarmOffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9D52B4E8935008B06FA /* RemindAlarmOffView.swift */; };
 		6BE6D9D82B4E8A03008B06FA /* RemindAlarmOffViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9D72B4E8A03008B06FA /* RemindAlarmOffViewType.swift */; };
 		6BE6D9DE2B4E9054008B06FA /* AlarmOffStateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9DD2B4E9054008B06FA /* AlarmOffStateButton.swift */; };
+		6BE6D9E22B4E9B58008B06FA /* CompleteTimerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9E12B4E9B58008B06FA /* CompleteTimerCollectionViewCell.swift */; };
+		6BE6D9E42B4EA125008B06FA /* WaitTimerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9E32B4EA125008B06FA /* WaitTimerCollectionViewCell.swift */; };
 		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
 		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
@@ -155,6 +157,8 @@
 		6BE6D9D52B4E8935008B06FA /* RemindAlarmOffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindAlarmOffView.swift; sourceTree = "<group>"; };
 		6BE6D9D72B4E8A03008B06FA /* RemindAlarmOffViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindAlarmOffViewType.swift; sourceTree = "<group>"; };
 		6BE6D9DD2B4E9054008B06FA /* AlarmOffStateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmOffStateButton.swift; sourceTree = "<group>"; };
+		6BE6D9E12B4E9B58008B06FA /* CompleteTimerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteTimerCollectionViewCell.swift; sourceTree = "<group>"; };
+		6BE6D9E32B4EA125008B06FA /* WaitTimerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitTimerCollectionViewCell.swift; sourceTree = "<group>"; };
 		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -570,12 +574,30 @@
 		6BE6D9D22B4DE463008B06FA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6BE6D9E02B4E9B36008B06FA /* Component */,
+				6BE6D9DF2B4E9B2D008B06FA /* Cell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6BE6D9DF2B4E9B2D008B06FA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6D9E12B4E9B58008B06FA /* CompleteTimerCollectionViewCell.swift */,
+				6BE6D9E32B4EA125008B06FA /* WaitTimerCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		6BE6D9E02B4E9B36008B06FA /* Component */ = {
+			isa = PBXGroup;
+			children = (
 				6BE6D9DD2B4E9054008B06FA /* AlarmOffStateButton.swift */,
 				6BE6D9D32B4DE479008B06FA /* RemindTimerEmptyView.swift */,
 				6BE6D9D52B4E8935008B06FA /* RemindAlarmOffView.swift */,
 				6BE6D9D72B4E8A03008B06FA /* RemindAlarmOffViewType.swift */,
 			);
-			path = View;
+			path = Component;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -697,6 +719,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BE6D9E22B4E9B58008B06FA /* CompleteTimerCollectionViewCell.swift in Sources */,
 				3F2FA1792B45C46F00EDBF95 /* KakaoAuthenticateAdapter.swift in Sources */,
 				6BE6D9D82B4E8A03008B06FA /* RemindAlarmOffViewType.swift in Sources */,
 				398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */,
@@ -719,6 +742,7 @@
 				6BC4936C2B48633700544249 /* ToasterNavigationType.swift in Sources */,
 				6B6AE6992B3FF5C1000E2366 /* SearchViewController.swift in Sources */,
 				398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */,
+				6BE6D9E42B4EA125008B06FA /* WaitTimerCollectionViewCell.swift in Sources */,
 				6BE6D9D42B4DE479008B06FA /* RemindTimerEmptyView.swift in Sources */,
 				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
 				6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */,
