@@ -10,7 +10,15 @@ import UIKit
 import SnapKit
 import Then
 
+protocol ClipCollectionHeaderViewDelegate: AnyObject {
+    func addClipButtonTapped()
+}
+
 final class ClipCollectionHeaderView: UICollectionReusableView {
+    
+    // MARK: - Properties
+    
+    weak var clipCollectionHeaderViewDelegate: ClipCollectionHeaderViewDelegate?
     
     // MARK: - UI Components
     
@@ -26,7 +34,6 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
         setupStyle()
         setupHierarchy()
         setupLayout()
-        setupAddTarget()
     }
     
     @available(*, unavailable)
@@ -78,6 +85,7 @@ private extension ClipCollectionHeaderView {
             $0.setTitle(StringLiterals.Clip.Title.addClip, for: .normal)
             $0.setTitleColor(.toasterPrimary, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 12)
+            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
     }
     
@@ -102,30 +110,9 @@ private extension ClipCollectionHeaderView {
             $0.trailing.equalToSuperview().inset(20)
         }
     }
-    
-    func setupAddTarget() {
-        addClipButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-    }
-    
-    /// 뷰 컨트롤러 찾기
-    /// UICollectionReusableView는 뷰컨 윈도우 계층에 직접적으로 속해있지 않기 때문에 present를 못함. present할 뷰컨의 속성을 찾기 위한 함수
-    func findViewController() -> UIViewController? {
-        var responder: UIResponder? = self
-        while let nextResponder = responder?.next {
-            if let viewController = nextResponder as? UIViewController {
-                return viewController
-            }
-            responder = nextResponder
-        }
-        return nil
-    }
-    
+
     @objc
     func buttonTapped() {
-        guard let viewController = findViewController() else { return }
-        let view = AddClipBottomSheetView()        
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: view)
-        exampleBottom.modalPresentationStyle = .overFullScreen
-        viewController.present(exampleBottom, animated: false)
+        clipCollectionHeaderViewDelegate?.addClipButtonTapped()
     }
 }

@@ -10,7 +10,15 @@ import UIKit
 import SnapKit
 import Then
 
+protocol AddClipBottomSheetViewDelegate: AnyObject {
+    func dismissButtonTapped()
+}
+
 final class AddClipBottomSheetView: UIView {
+    
+    // MARK: - Properties
+    
+    weak var addClipBottomSheetViewDelegate: AddClipBottomSheetViewDelegate?
     
     // MARK: - UI Components
     
@@ -26,7 +34,6 @@ final class AddClipBottomSheetView: UIView {
         setupStyle()
         setupHierarchy()
         setupLayout()
-        setupAddTarget()
     }
     
     @available(*, unavailable)
@@ -50,7 +57,6 @@ private extension AddClipBottomSheetView {
             $0.backgroundColor = .gray50
             $0.textColor = .black900
             $0.makeRounded(radius: 12)
-            $0.delegate = self
         }
         
         addClipButton.do {
@@ -58,6 +64,7 @@ private extension AddClipBottomSheetView {
             $0.setTitle(StringLiterals.BottomSheet.Button.complete, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
+            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
         
         errorMessage.do {
@@ -79,46 +86,14 @@ private extension AddClipBottomSheetView {
         }
         
         addClipButton.snp.makeConstraints {
-            // TODO: - 바텀시트 수정후 지정해줘야 하는 부분 (from. 민재)
-            // $0.top.equalTo(addClipTextField.snp.bottom).offset(24)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(56)
             $0.bottom.equalTo(keyboardLayoutGuide.snp.top)
         }
-        
-//        errorMessage.snp.makeConstraints {
-//            $0.top.equalTo(addClipTextField.snp.bottom).offset(6)
-//            $0.leading.trailing.equalToSuperview().inset(20)
-//        }
     }
-    
-    func setupAddTarget() {
-        addClipTextField.addTarget(self, action: #selector(addClipTextFieldDidChange), for: .editingChanged)
-        addClipButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-    }
-    
-    func errorTestField() {
-        addClipTextField.layer.borderWidth = 1.0
-        addClipTextField.layer.borderColor = UIColor.toasterError.cgColor
-
-    }
-    
-    @objc
-    func addClipTextFieldDidChange() {
-        if let textFieldLength: Int = addClipTextField.text?.count {
-            if textFieldLength > 15 { errorTestField() }
-        }
-    }
-    
+ 
     @objc
     func buttonTapped() {
+        addClipBottomSheetViewDelegate?.dismissButtonTapped()
     }
-}
-
-extension AddClipBottomSheetView: UITextFieldDelegate {
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        let currentText = textField.text ?? ""
-//        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
-//        return newText.count <= 15
-//    }
 }

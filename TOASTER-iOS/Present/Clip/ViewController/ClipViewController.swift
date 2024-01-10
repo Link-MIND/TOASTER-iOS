@@ -16,6 +16,7 @@ final class ClipViewController: UIViewController {
     
     private let clipEmptyView = ClipEmptyView()
     private let addClipBottomSheetView = AddClipBottomSheetView()
+    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
     private let clipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Life Cycle
@@ -35,17 +36,6 @@ final class ClipViewController: UIViewController {
         
         setupEmptyView()
         setupNavigationBar()
-    }
-}
-
-// MARK: - Extensions
-
-extension ClipViewController {
-    func showBottomshowBottom() {
-        let view = AddClipBottomSheetView()
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 0, insertView: view)
-        exampleBottom.modalPresentationStyle = .overFullScreen
-        self.present(exampleBottom, animated: false)
     }
 }
 
@@ -79,6 +69,7 @@ private extension ClipViewController {
     func setupDelegate() {
         clipListCollectionView.delegate = self
         clipListCollectionView.dataSource = self
+        addClipBottomSheetView.addClipBottomSheetViewDelegate = self
     }
     
     func setupEmptyView() {
@@ -136,6 +127,7 @@ extension ClipViewController: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
             headerView.isDetailClipView(isHidden: false)
+            headerView.clipCollectionHeaderViewDelegate = self
             return headerView
         }
         return UICollectionReusableView()
@@ -163,5 +155,21 @@ extension ClipViewController: UICollectionViewDelegateFlowLayout {
     // referenceSizeForHeaderInSection: 각 섹션의 헤더 뷰 크기를 CGSize 형태로 return
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 90)
+    }
+}
+
+extension ClipViewController: ClipCollectionHeaderViewDelegate {
+    func addClipButtonTapped() {
+        addClipBottom.modalPresentationStyle = .overFullScreen
+        self.present(addClipBottom, animated: false)
+    }
+}
+
+extension ClipViewController: AddClipBottomSheetViewDelegate {
+    func dismissButtonTapped() {
+        addClipBottom.hideBottomSheet()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
+        }
     }
 }
