@@ -33,6 +33,8 @@ final class RemindTimerEmptyView: UIView {
     }
 }
 
+// MARK: - Private Extension
+
 private extension RemindTimerEmptyView {
     func setupStyle() {
         backgroundColor = .clear
@@ -59,7 +61,7 @@ private extension RemindTimerEmptyView {
     }
     
     func setupHierarchy() {
-        addSubviews(emptyImageView, emptyLabel)
+        addSubviews(emptyImageView, emptyLabel, settingTimerButton)
     }
     
     func setupLayout() {
@@ -70,13 +72,13 @@ private extension RemindTimerEmptyView {
         
         emptyLabel.snp.makeConstraints {
             $0.top.equalTo(emptyImageView.snp.bottom).offset(4)
-            $0.bottom.horizontalEdges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
         }
         
         settingTimerButton.snp.makeConstraints {
             $0.width.equalTo(142)
             $0.height.equalTo(44)
-            $0.centerX.equalToSuperview()
+            $0.centerX.bottom.equalToSuperview()
             $0.top.equalTo(emptyLabel.snp.bottom).offset(12)
         }
     }
