@@ -33,6 +33,15 @@ final class RemindSelectClipCollectionViewCell: UICollectionViewCell {
     }
 }
 
+// MARK: - Extension
+
+extension RemindSelectClipCollectionViewCell {
+    func configureCell(forModel: RemindClipModel) {
+        clipTitleLabel.text = forModel.title
+        clipCountLabel.text = "\(forModel.clipCount)개"
+    }
+}
+
 // MARK: - Private Extension
 
 private extension RemindSelectClipCollectionViewCell {

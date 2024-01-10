@@ -14,6 +14,7 @@ final class RemindSelectClipViewController: UIViewController {
 
     // MARK: - Properties
     
+    private let viewModel = RemindSelectClipViewModel()
     
     // MARK: - UI Properties
     
@@ -29,6 +30,7 @@ final class RemindSelectClipViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupDelegate()
+        setupViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +83,12 @@ private extension RemindSelectClipViewController {
         clipSelectCollectionView.dataSource = self
     }
     
+    func setupViewModel() {
+        viewModel.setupDataChangeAction {
+            self.clipSelectCollectionView.reloadData()
+        }
+    }
+    
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                 hasRightButton: true,
@@ -106,11 +114,12 @@ extension RemindSelectClipViewController: UICollectionViewDelegate { }
 
 extension RemindSelectClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return viewModel.clipData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RemindSelectClipCollectionViewCell.className, for: indexPath) as? RemindSelectClipCollectionViewCell else { return UICollectionViewCell() }
+        cell.configureCell(forModel: viewModel.clipData[indexPath.item])
         return cell
     }
 }
