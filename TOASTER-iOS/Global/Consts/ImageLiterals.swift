@@ -48,7 +48,7 @@ enum ImageLiterals {
         static var clipEmpty: UIImage { .load(name: "clip_empty") }
         static var detailClipEmpty: UIImage { .load(name: "detail_clip_empty") }
         static var thumb: UIImage { .load(name: "img_thumbnail") }
-        static var clipIcon: UIImage { .load(name: "ic_clip_24") }
+        static var clipIcon: UIImage { .load(name: "ic_clip_24_black") }
     }
     
     // MARK: - EmptyView
