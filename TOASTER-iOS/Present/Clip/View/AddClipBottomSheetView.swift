@@ -30,12 +30,23 @@ final class AddClipBottomSheetView: UIView {
             setupTextFieldBorder()
         }
     }
+    private var isError: Bool = false {
+        didSet {
+            setupErrorMessage()
+        }
+    }
+    private var isClearButtonShow: Bool = true {
+        didSet {
+            setupClearButton()
+        }
+    }
     
     // MARK: - UI Components
     
     private let addClipTextField = UITextField()
     private let addClipButton = UIButton()
     private let errorMessage = UILabel()
+    private let clearButton = UIButton()
     
     // MARK: - Life Cycles
     
@@ -60,6 +71,15 @@ final class AddClipBottomSheetView: UIView {
 
 // MARK: - Private Extensions
 
+extension AddClipBottomSheetView {
+    func resetTextField() {
+        addClipTextField.text = nil
+        addClipTextField.becomeFirstResponder()
+    }
+}
+
+// MARK: - Private Extensions
+
 private extension AddClipBottomSheetView {
     func setupStyle() {
         backgroundColor = .toasterWhite
@@ -68,11 +88,12 @@ private extension AddClipBottomSheetView {
             $0.attributedPlaceholder = NSAttributedString(string: StringLiterals.BottomSheet.Placeholder.addClip,
                                                           attributes: [.foregroundColor: UIColor.gray400,
                                                                        .font: UIFont.suitRegular(size: 16)])
-            $0.addPadding(left: 14, right: 14)
+            $0.addPadding(left: 14, right: 44)
             $0.backgroundColor = .gray50
             $0.textColor = .black900
             $0.makeRounded(radius: 12)
             $0.borderStyle = .none
+            $0.isUserInteractionEnabled = true
             $0.delegate = self
         }
         
@@ -85,14 +106,22 @@ private extension AddClipBottomSheetView {
         }
         
         errorMessage.do {
+            $0.isHidden = true
             $0.font = .suitMedium(size: 12)
             $0.textColor = .toasterError
             $0.text = "클립의 이름은 최대 15자까지 입력 가능해요"
         }
+        
+        clearButton.do {
+            $0.isHidden = true
+            $0.setImage(ImageLiterals.Search.searchCancle, for: .normal)
+            $0.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
+        }
     }
     
     func setupHierarchy() {
-        addSubviews(addClipTextField, addClipButton)
+        addSubviews(addClipTextField, addClipButton, errorMessage)
+        addClipTextField.addSubview(clearButton)
     }
     
     func setupLayout() {
@@ -102,10 +131,21 @@ private extension AddClipBottomSheetView {
             $0.height.equalTo(54)
         }
         
+        errorMessage.snp.makeConstraints {
+            $0.top.equalTo(addClipTextField.snp.bottom).offset(6)
+            $0.leading.equalTo(addClipTextField)
+        }
+        
         addClipButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(56)
             $0.bottom.equalTo(keyboardLayoutGuide.snp.top)
+        }
+        
+        clearButton.snp.makeConstraints {
+            $0.size.equalTo(20)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(12)
         }
     }
     
@@ -135,27 +175,59 @@ private extension AddClipBottomSheetView {
         }
     }
     
+    func setupErrorMessage() {
+        if isError {
+            errorMessage.isHidden = false
+        } else {
+            errorMessage.isHidden = true
+        }
+    }
+    
+    func setupClearButton() {
+        if isClearButtonShow {
+            clearButton.isHidden = false
+        } else {
+            clearButton.isHidden = true
+        }
+    }
+    
     @objc
     func buttonTapped() {
         addClipBottomSheetViewDelegate?.dismissButtonTapped()
+    }
+    
+    @objc
+    func clearButtonTapped() {
+        resetTextField()
     }
 }
 
 // MARK: - UITextField Delegate
 
 extension AddClipBottomSheetView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let newText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string
+        let maxLength = 16
+        return newText.count <= maxLength
+    }
+    
     func textFieldDidChangeSelection(_ textField: UITextField) {
         let currentText = textField.text ?? ""
         if currentText.isEmpty {
             isButtonClicked = false
             isBorderColor = false
+            isError = false
+            isClearButtonShow = false
         } else if currentText.count > 15 {
             isButtonClicked = false
             isBorderColor = true
-            // 경고 메시지도 추가해줘야 함
+            isError = true
+            isClearButtonShow = true
         } else {
             isButtonClicked = true
             isBorderColor = false
+            isError = false
+            isClearButtonShow = true
         }
     }
 }
