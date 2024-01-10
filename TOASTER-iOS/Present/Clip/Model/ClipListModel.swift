@@ -14,5 +14,5 @@ struct ClipListModel: Codable {
 }
 
 // TODO: - 테스트용 더미 데이터, 서버 연결 후 지울 것!
-// var dummyClipList: [ClipListModel] = [.init(categoryID: 1, categoryTitle: "제목", toastNum: 50)]
- var dummyClipList: [ClipListModel] = []
+ var dummyClipList: [ClipListModel] = [.init(categoryID: 1, categoryTitle: "제목", toastNum: 50)]
+// var dummyClipList: [ClipListModel] = []
