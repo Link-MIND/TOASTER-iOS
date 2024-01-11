@@ -56,8 +56,7 @@ extension RemindCollectionHeaderView {
         if let count = forTimerCount {
             timerCount = count
             countView.isHidden = false
-        }
-        else {
+        } else {
             countView.isHidden = true
         }
     }
