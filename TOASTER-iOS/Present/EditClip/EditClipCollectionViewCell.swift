@@ -11,6 +11,11 @@ import SnapKit
 import Then
 
 final class EditClipCollectionViewCell: UICollectionViewCell {
+    
+    // MARK: - Properties
+    
+    private var leadingButtonAction: (() -> Void)?
+    private var changeTitleButtonAction: (() -> Void)?
         
     // MARK: - UI Components
     
@@ -42,6 +47,14 @@ extension EditClipCollectionViewCell {
         leadingButton.setImage(icon, for: .normal)
         changeTitleButton.isHidden = isFirst
     }
+    
+    func leadingButtonTapped(_ action: @escaping () -> Void) {
+        leadingButtonAction = action
+    }
+    
+    func changeTitleButtonTapped(_ action: @escaping () -> Void) {
+        changeTitleButtonAction = action
+    }
 }
 
 // MARK: - Private Extensions
@@ -49,6 +62,10 @@ extension EditClipCollectionViewCell {
 private extension EditClipCollectionViewCell {
     func setupStyle() {
         backgroundColor = .toasterBackground
+        
+        leadingButton.do {
+            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        }
         
         cellBackgroundView.do {
             $0.makeRounded(radius: 12)
@@ -64,6 +81,7 @@ private extension EditClipCollectionViewCell {
         
         changeTitleButton.do {
             $0.setImage(ImageLiterals.Clip.edit, for: .normal)
+            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
     }
     
@@ -93,6 +111,18 @@ private extension EditClipCollectionViewCell {
             $0.size.equalTo(24)
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(14)
+        }
+    }
+    
+    @objc 
+    func buttonTapped(_ sender: UIButton) {
+        switch sender {
+        case leadingButton:
+            leadingButtonAction?()
+        case changeTitleButton:
+            changeTitleButtonAction?()
+        default:
+            break
         }
     }
 }

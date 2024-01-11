@@ -90,6 +90,14 @@ extension EditClipViewController: UICollectionViewDataSource {
             cell.configureCell(forModel: dummyClipList[indexPath.row-1], 
                                icon: ImageLiterals.Clip.delete,
                                isFirst: false)
+            
+            cell.leadingButtonTapped {
+                
+            }
+            
+            cell.changeTitleButtonTapped {
+                
+            }
         }
         return cell
     }
