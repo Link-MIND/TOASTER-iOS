@@ -1,8 +1,8 @@
 //
-//  MainFooterCollectionReusableView.swift
+//  UserClipFooterCollectionReusableView.swift
 //  TOASTER-iOS
 //
-//  Created by Gahyun Kim on 2024/01/09.
+//  Created by Gahyun Kim on 2024/01/10.
 //
 
 import UIKit
@@ -10,10 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
-// MARK: - Main footer
+// MARK: - 시용자 클립 footer
 
-final class MainFooterCollectionReusableView: UICollectionReusableView {
-
+final class UserClipFooterCollectionView: UICollectionReusableView {
+    
     // MARK: - Properties
     
     private let divideView = UIView()
@@ -53,7 +53,7 @@ final class MainFooterCollectionReusableView: UICollectionReusableView {
     
     private func setupLayout() {
         divideView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(7)
+            $0.bottom.equalToSuperview().inset(2)
             $0.width.equalToSuperview()
             $0.height.equalTo(4)
         }

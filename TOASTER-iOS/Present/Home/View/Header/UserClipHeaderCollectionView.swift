@@ -1,5 +1,5 @@
 //
-//  WeeklyLinkCollectionReusableView.swift
+//  UserClipCollectionReusableView.swift
 //  TOASTER-iOS
 //
 //  Created by Gahyun Kim on 2024/01/09.
@@ -10,18 +10,20 @@ import UIKit
 import SnapKit
 import Then
 
-// MARK: - 이주의 링크 header
+// MARK: - 사용자 클립 header
 
-final class WeeklyLinkHeaderCollectionReusableView: UICollectionReusableView {
-    
+final class UserClipHeaderCollectionView: UICollectionReusableView {
+        
     // MARK: - Properties
     
+    private var nickname: String = "김가현" // 서버 통신 이후 수정
     private let titleLabel = UILabel()
     
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         self.backgroundColor = .clear
     }
     
@@ -41,7 +43,8 @@ final class WeeklyLinkHeaderCollectionReusableView: UICollectionReusableView {
         titleLabel.do {
             $0.textColor = .black900
             $0.font = .suitMedium(size: 18)
-            $0.text = StringLiterals.Home.WeeklyLinkHeader.weeklyLinkLabel
+            $0.text = nickname + StringLiterals.Home.UserClipHeader.titleLabel
+            $0.asFont(targetString: nickname, font: .suitBold(size: 18))
         }
     }
     

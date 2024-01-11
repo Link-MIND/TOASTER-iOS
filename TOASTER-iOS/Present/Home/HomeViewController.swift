@@ -94,45 +94,45 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch indexPath.section {
         case 0:
-            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: MainFooterCollectionReusableView.className, for: indexPath) as? MainFooterCollectionReusableView
-            else { return MainFooterCollectionReusableView() }
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: MainFooterCollectionView.className, for: indexPath) as? MainFooterCollectionView
+            else { return MainFooterCollectionView() }
             footer.configure()
             return footer
         case 1:
             if kind == UICollectionView.elementKindSectionHeader {
-                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserClipHeaderCollectionReusableView.className, for: indexPath) as? UserClipHeaderCollectionReusableView else {
-                    return UserClipHeaderCollectionReusableView()
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserClipHeaderCollectionView.className, for: indexPath) as? UserClipHeaderCollectionView else {
+                    return UserClipHeaderCollectionView()
                 }
                 header.configure()
                 return header
             } else {
-                guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: UserClipFooterCollectionReusableView.className, for: indexPath) as? UserClipFooterCollectionReusableView else {
-                    return UserClipFooterCollectionReusableView()
+                guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: UserClipFooterCollectionView.className, for: indexPath) as? UserClipFooterCollectionView else {
+                    return UserClipFooterCollectionView()
                 }
                 footer.configure()
                 return footer
             }
         case 2:
             if kind == UICollectionView.elementKindSectionHeader {
-                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeeklyLinkHeaderCollectionReusableView.className, for: indexPath) as? WeeklyLinkHeaderCollectionReusableView else {
-                    return WeeklyLinkHeaderCollectionReusableView()
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeeklyLinkHeaderCollectionView.className, for: indexPath) as? WeeklyLinkHeaderCollectionView else {
+                    return WeeklyLinkHeaderCollectionView()
                 }
                 header.configure()
                 return header
             } else {
-                guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: WeeklyLinkFooterCollectionReusableView.className, for: indexPath) as? WeeklyLinkFooterCollectionReusableView else {
-                    return WeeklyLinkFooterCollectionReusableView()
+                guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: WeeklyLinkFooterCollectionView.className, for: indexPath) as? WeeklyLinkFooterCollectionView else {
+                    return WeeklyLinkFooterCollectionView()
                 }
                 footer.configure()
                 return footer
             }
         case 3:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeeklyRecommendHeaderCollectionReusableView.className, for: indexPath) as? WeeklyRecommendHeaderCollectionReusableView
-            else { return WeeklyRecommendHeaderCollectionReusableView() }
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: WeeklyRecommendHeaderCollectionView.className, for: indexPath) as? WeeklyRecommendHeaderCollectionView
+            else { return WeeklyRecommendHeaderCollectionView() }
             header.configure()
             return header
         default:
-            return UserClipHeaderCollectionReusableView()
+            return UserClipHeaderCollectionView()
         }
     }
     
@@ -177,28 +177,28 @@ private extension HomeViewController {
         homeCollectionView.register(UserClipEmptyCollectionViewCell.self,forCellWithReuseIdentifier: UserClipEmptyCollectionViewCell.className)
         
         // Header register
-        homeCollectionView.register(UserClipHeaderCollectionReusableView.self,
+        homeCollectionView.register(UserClipHeaderCollectionView.self,
                                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                    withReuseIdentifier: UserClipHeaderCollectionReusableView.className)
+                                    withReuseIdentifier: UserClipHeaderCollectionView.className)
         
-        homeCollectionView.register(WeeklyLinkHeaderCollectionReusableView.self,
+        homeCollectionView.register(WeeklyLinkHeaderCollectionView.self,
                                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                    withReuseIdentifier: WeeklyLinkHeaderCollectionReusableView.className)
+                                    withReuseIdentifier: WeeklyLinkHeaderCollectionView.className)
         
-        homeCollectionView.register(WeeklyRecommendHeaderCollectionReusableView.self,
+        homeCollectionView.register(WeeklyRecommendHeaderCollectionView.self,
                                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                    withReuseIdentifier: WeeklyRecommendHeaderCollectionReusableView.className)
+                                    withReuseIdentifier: WeeklyRecommendHeaderCollectionView.className)
         
         // Footer register
-        homeCollectionView.register(MainFooterCollectionReusableView.self,
+        homeCollectionView.register(MainFooterCollectionView.self,
                                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                                    withReuseIdentifier: MainFooterCollectionReusableView.className)
-        homeCollectionView.register(UserClipFooterCollectionReusableView.self,
+                                    withReuseIdentifier: MainFooterCollectionView.className)
+        homeCollectionView.register(UserClipFooterCollectionView.self,
                                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                                    withReuseIdentifier: UserClipFooterCollectionReusableView.className)
-        homeCollectionView.register(WeeklyLinkFooterCollectionReusableView.self,
+                                    withReuseIdentifier: UserClipFooterCollectionView.className)
+        homeCollectionView.register(WeeklyLinkFooterCollectionView.self,
                                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                                    withReuseIdentifier: WeeklyLinkFooterCollectionReusableView.className)
+                                    withReuseIdentifier: WeeklyLinkFooterCollectionView.className)
         
         homeCollectionView.delegate = self
         homeCollectionView.dataSource = self

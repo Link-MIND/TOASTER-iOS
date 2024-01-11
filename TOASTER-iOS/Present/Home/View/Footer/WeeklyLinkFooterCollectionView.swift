@@ -12,7 +12,7 @@ import Then
 
 // MARK: - 이주의 추천 사이트 footer
 
-final class WeeklyLinkFooterCollectionReusableView: UICollectionReusableView {
+final class WeeklyLinkFooterCollectionView: UICollectionReusableView {
     
     // MARK: - Properties
     

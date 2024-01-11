@@ -12,7 +12,7 @@ import Then
 
 // MARK: - 이주의 추천 사이트 header
 
-final class WeeklyRecommendHeaderCollectionReusableView: UICollectionReusableView {
+final class WeeklyRecommendHeaderCollectionView: UICollectionReusableView {
     
     // MARK: - Properties
     
@@ -22,6 +22,7 @@ final class WeeklyRecommendHeaderCollectionReusableView: UICollectionReusableVie
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         self.backgroundColor = .clear
     }
     

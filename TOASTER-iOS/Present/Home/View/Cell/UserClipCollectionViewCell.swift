@@ -33,6 +33,7 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         setView()
     }
     
