@@ -82,6 +82,7 @@
 		6BE6DA042B4F2AF5008B06FA /* RemindSelectClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA032B4F2AF5008B06FA /* RemindSelectClipCollectionViewCell.swift */; };
 		6BE6DA072B4F2FC5008B06FA /* RemindClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA062B4F2FC5008B06FA /* RemindClipModel.swift */; };
 		6BE6DA0B2B4F3063008B06FA /* RemindSelectClipVViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA0A2B4F3063008B06FA /* RemindSelectClipVViewModel.swift */; };
+		6BE6DA0F2B4F3716008B06FA /* RemindTimerAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA0E2B4F3716008B06FA /* RemindTimerAddViewController.swift */; };
 		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
 		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
@@ -155,6 +156,7 @@
 		6BE6DA032B4F2AF5008B06FA /* RemindSelectClipCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindSelectClipCollectionViewCell.swift; sourceTree = "<group>"; };
 		6BE6DA062B4F2FC5008B06FA /* RemindClipModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindClipModel.swift; sourceTree = "<group>"; };
 		6BE6DA0A2B4F3063008B06FA /* RemindSelectClipVViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindSelectClipVViewModel.swift; sourceTree = "<group>"; };
+		6BE6DA0E2B4F3716008B06FA /* RemindTimerAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindTimerAddViewController.swift; sourceTree = "<group>"; };
 		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -570,9 +572,8 @@
 		6BE6D9FF2B4F2A91008B06FA /* RemindAdd */ = {
 			isa = PBXGroup;
 			children = (
-				6BE6DA052B4F2FB8008B06FA /* Model */,
-				6BE6DA022B4F2AE1008B06FA /* View */,
-				6BE6DA082B4F303C008B06FA /* ViewModel */,
+				6BE6DA0C2B4F36C1008B06FA /* ClipAdd */,
+				6BE6DA0D2B4F36E5008B06FA /* TimerAdd */,
 			);
 			path = RemindAdd;
 			sourceTree = "<group>";
@@ -608,6 +609,32 @@
 				6BE6DA032B4F2AF5008B06FA /* RemindSelectClipCollectionViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		6BE6DA0C2B4F36C1008B06FA /* ClipAdd */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DA052B4F2FB8008B06FA /* Model */,
+				6BE6DA022B4F2AE1008B06FA /* View */,
+				6BE6DA082B4F303C008B06FA /* ViewModel */,
+			);
+			path = ClipAdd;
+			sourceTree = "<group>";
+		};
+		6BE6DA0D2B4F36E5008B06FA /* TimerAdd */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DA102B4F574B008B06FA /* View */,
+				6BE6DA0E2B4F3716008B06FA /* RemindTimerAddViewController.swift */,
+			);
+			path = TimerAdd;
+			sourceTree = "<group>";
+		};
+		6BE6DA102B4F574B008B06FA /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -774,6 +801,7 @@
 				6B6AE6962B3FF5B5000E2366 /* AddLinkViewController.swift in Sources */,
 				6B6AE68D2B3FF58D000E2366 /* RemindViewController.swift in Sources */,
 				39C3926B2B491F47005B2B0F /* NSObject+.swift in Sources */,
+				6BE6DA0F2B4F3716008B06FA /* RemindTimerAddViewController.swift in Sources */,
 				6B6AE6512B3FF101000E2366 /* SceneDelegate.swift in Sources */,
 				3F2FA1812B4A32A200EDBF95 /* LogoutUseCase.swift in Sources */,
 				3FBFDEC02B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift in Sources */,
