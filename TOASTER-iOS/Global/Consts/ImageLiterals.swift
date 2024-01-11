@@ -77,7 +77,7 @@ enum ImageLiterals {
         static var alarmDisabled: UIImage { .load(name: "alarm_disabled_20") }
         static var alarmAbled: UIImage { .load(name: "ic_alarm_24") }
     }
-    
+
     // MARK: - Web
 
     enum Web {
