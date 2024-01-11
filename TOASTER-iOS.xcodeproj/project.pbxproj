@@ -107,6 +107,7 @@
 		6BE6DA432B50A999008B06FA /* PostRefreshTokenResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA422B50A999008B06FA /* PostRefreshTokenResponseDTO.swift */; };
 		6BE6DA452B50AA8A008B06FA /* PostLogoutResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA442B50AA8A008B06FA /* PostLogoutResponseDTO.swift */; };
 		6BE6DA472B50AB54008B06FA /* DeleteWithdrawResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA462B50AB54008B06FA /* DeleteWithdrawResponseDTO.swift */; };
+		6BE6DA492B50ADC2008B06FA /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA482B50ADC2008B06FA /* NetworkService.swift */; };
 		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
 		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
@@ -205,6 +206,7 @@
 		6BE6DA422B50A999008B06FA /* PostRefreshTokenResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenResponseDTO.swift; sourceTree = "<group>"; };
 		6BE6DA442B50AA8A008B06FA /* PostLogoutResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLogoutResponseDTO.swift; sourceTree = "<group>"; };
 		6BE6DA462B50AB54008B06FA /* DeleteWithdrawResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteWithdrawResponseDTO.swift; sourceTree = "<group>"; };
+		6BE6DA482B50ADC2008B06FA /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -732,6 +734,7 @@
 				6BE6DA382B50636B008B06FA /* BaseAPIService.swift */,
 				6BE6DA332B50594B008B06FA /* MoyaPlugin.swift */,
 				6BE6DA352B5059CE008B06FA /* NetworkResult.swift */,
+				6BE6DA482B50ADC2008B06FA /* NetworkService.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -947,6 +950,7 @@
 				3F2FA1752B45C0AF00EDBF95 /* Config.swift in Sources */,
 				6B6AE6AC2B3FF6F7000E2366 /* UIColor+.swift in Sources */,
 				6BC493682B45D7B100544249 /* ToasterNavigationController.swift in Sources */,
+				6BE6DA492B50ADC2008B06FA /* NetworkService.swift in Sources */,
 				6B6AE69C2B3FF5CC000E2366 /* HomeViewController.swift in Sources */,
 				6BC493832B4D8B5900544249 /* SearchResultModel.swift in Sources */,
 				3F2BFACB2B40373C00DA76B7 /* SocialLoginType.swift in Sources */,
