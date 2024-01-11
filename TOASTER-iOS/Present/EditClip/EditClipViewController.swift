@@ -70,6 +70,13 @@ private extension EditClipViewController {
             navigationController.setupNavigationBar(forType: type)
         }
     }
+    
+    func popupDeleteButtonTapped() {
+        // 삭제 서버 통신 붙일 부분
+        dismiss(animated: false) {
+            self.showToastMessage(width: 152, status: .check, message: "클립 삭제 완료")
+        }
+    }
 }
 
 // MARK: - CollectionView DataSource
@@ -92,11 +99,15 @@ extension EditClipViewController: UICollectionViewDataSource {
                                isFirst: false)
             
             cell.leadingButtonTapped {
-                
+                self.showPopup(forMainText: "‘\(dummyClipList[indexPath.row-1].categoryTitle)’ 클립을 삭제하시겠어요?",
+                               forSubText: "지금까지 저장된 모든 링크가 사라져요",
+                               forLeftButtonTitle: "닫기",
+                               forRightButtonTitle: "삭제",
+                               forRightButtonHandler: self.popupDeleteButtonTapped)
             }
             
             cell.changeTitleButtonTapped {
-                
+                print("edit!")
             }
         }
         return cell
