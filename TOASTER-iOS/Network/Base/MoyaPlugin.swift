@@ -20,7 +20,7 @@ final class MoyaPlugin: PluginType {
         }
         let url = httpRequest.description
         let method = httpRequest.httpMethod ?? "unknown method"
-        var log = "===========================\n🍞1️⃣🍞[\(method)] \(url)\n===========================\n"
+        var log = "=======================================================\n🍞1️⃣🍞[\(method)] \(url)\n=======================================================\n"
         log.append("🍞2️⃣🍞API: \(target)\n")
         if let headers = httpRequest.allHTTPHeaderFields, !headers.isEmpty {
             log.append("header: \(headers)\n")
@@ -28,7 +28,7 @@ final class MoyaPlugin: PluginType {
         if let body = httpRequest.httpBody, let bodyString = String(bytes: body, encoding: String.Encoding.utf8) {
             log.append("\(bodyString)\n")
         }
-        log.append("=========================== 🍞END \(method) ===========================")
+        log.append("========================= 🍞END \(method) =========================")
         print(log)
     }
 
@@ -48,13 +48,13 @@ final class MoyaPlugin: PluginType {
         let request = response.request
         let url = request?.url?.absoluteString ?? "nil"
         let statusCode = response.statusCode
-        var log = "=========================== 🍞 네트워크 통신 성공했을까요? 🍞 ==========================="
-        log.append("\n🍞3️⃣🍞[\(statusCode)] \(url)\n======================================================\n")
+        var log = "=============== 🍞 네트워크 통신 성공했을까요? 🍞 ==============="
+        log.append("\n🍞3️⃣🍞[\(statusCode)] \(url)\n==========================================================\n")
         log.append("response: \n")
         if let reString = String(bytes: response.data, encoding: String.Encoding.utf8) {
             log.append("🍞4️⃣🍞\(reString)\n")
         }
-        log.append("=========================== 🍞 END HTTP 🍞 ===========================")
+        log.append("===================== 🍞 END HTTP 🍞 =====================")
         print(log)
     }
 
