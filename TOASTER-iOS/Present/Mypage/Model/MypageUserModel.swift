@@ -9,7 +9,7 @@ import Foundation
 
 struct MypageUserModel: Codable {
     let nickname: String
-    let profile: URL?
+    let profile: String?
     let allReadToast: Int
     let thisWeekendRead: Int
     let thisWeekendSaved: Int
