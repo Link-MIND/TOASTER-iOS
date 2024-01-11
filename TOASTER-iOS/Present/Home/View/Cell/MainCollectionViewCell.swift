@@ -55,10 +55,15 @@ private extension MainCollectionViewCell {
     func setupStyle() {
         searchButton.do {
             $0.backgroundColor = .gray50
+            $0.setImage(ImageLiterals.Home.searchIcon, for: .normal)
             $0.setTitle(StringLiterals.Home.Main.searchPlaceHolder, for: .normal)
             $0.setTitleColor(.gray400, for: .normal)
             $0.contentHorizontalAlignment = .left
-            $0.layer.cornerRadius = 12
+            $0.makeRounded(radius: 12)
+            $0.imageView?.contentMode = .scaleAspectFit
+            $0.semanticContentAttribute = .forceLeftToRight
+            $0.imageEdgeInsets = .init(top: 0, left: 12, bottom: 0, right: 0)
+            $0.titleEdgeInsets = .init(top: 0, left: 20, bottom: 0, right: 0)
         }
         
         userLabel.do {
