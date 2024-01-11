@@ -22,16 +22,16 @@ enum NetworkResult<T> {
     
     var stateDescription: String {
         switch self {
-        case .success(_): return "SUCCESS"
+        case .success(_): return "🍞🔥 SUCCESS 🔥🍞"
 
-        case .networkFail: return "NETWORK FAIL"
-        case .decodeErr: return "DECODED_ERROR"
+        case .networkFail: return "🍞🔥 NETWORK FAIL 🔥🍞"
+        case .decodeErr: return "🍞🔥 DECODED_ERROR 🔥🍞"
             
-        case .badRequest: return "BAD REQUEST EXCEPTION"
-        case .unAuthorized: return "UNAUTHORIZED EXCEPTION"
-        case .notFound: return "NOT FOUND"
-        case .unProcessable: return "UNPROCESSABLE ENTITY"
-        case .serverErr: return "INTERNAL SERVER_ERROR"
+        case .badRequest: return "🍞🔥 BAD REQUEST EXCEPTION 🔥🍞"
+        case .unAuthorized: return "🍞🔥 UNAUTHORIZED EXCEPTION 🔥🍞"
+        case .notFound: return "🍞🔥 NOT FOUND 🔥🍞"
+        case .unProcessable: return "🍞🔥 UNPROCESSABLE ENTITY 🔥🍞"
+        case .serverErr: return "🍞🔥 INTERNAL SERVER_ERROR 🔥🍞"
         }
     }
 }
