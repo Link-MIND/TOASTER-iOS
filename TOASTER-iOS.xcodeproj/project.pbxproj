@@ -108,6 +108,13 @@
 		6BE6DA452B50AA8A008B06FA /* PostLogoutResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA442B50AA8A008B06FA /* PostLogoutResponseDTO.swift */; };
 		6BE6DA472B50AB54008B06FA /* DeleteWithdrawResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA462B50AB54008B06FA /* DeleteWithdrawResponseDTO.swift */; };
 		6BE6DA492B50ADC2008B06FA /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA482B50ADC2008B06FA /* NetworkService.swift */; };
+		6BE6DA4D2B50B1EB008B06FA /* UserTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA4C2B50B1EB008B06FA /* UserTargetType.swift */; };
+		6BE6DA512B50B309008B06FA /* PatchPushAlarmRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA502B50B309008B06FA /* PatchPushAlarmRequestDTO.swift */; };
+		6BE6DA532B50B3C3008B06FA /* UserAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA522B50B3C3008B06FA /* UserAPIService.swift */; };
+		6BE6DA552B50B43E008B06FA /* GetSettingPageResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA542B50B43E008B06FA /* GetSettingPageResponseDTO.swift */; };
+		6BE6DA572B50B44F008B06FA /* GetMyPageResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA562B50B44F008B06FA /* GetMyPageResponseDTO.swift */; };
+		6BE6DA592B50B45E008B06FA /* PatchPushAlarmResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA582B50B45E008B06FA /* PatchPushAlarmResponseDTO.swift */; };
+		6BE6DA5B2B50B46F008B06FA /* GetMainPageResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA5A2B50B46F008B06FA /* GetMainPageResponseDTO.swift */; };
 		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
 		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
@@ -207,6 +214,13 @@
 		6BE6DA442B50AA8A008B06FA /* PostLogoutResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLogoutResponseDTO.swift; sourceTree = "<group>"; };
 		6BE6DA462B50AB54008B06FA /* DeleteWithdrawResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteWithdrawResponseDTO.swift; sourceTree = "<group>"; };
 		6BE6DA482B50ADC2008B06FA /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		6BE6DA4C2B50B1EB008B06FA /* UserTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTargetType.swift; sourceTree = "<group>"; };
+		6BE6DA502B50B309008B06FA /* PatchPushAlarmRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchPushAlarmRequestDTO.swift; sourceTree = "<group>"; };
+		6BE6DA522B50B3C3008B06FA /* UserAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPIService.swift; sourceTree = "<group>"; };
+		6BE6DA542B50B43E008B06FA /* GetSettingPageResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSettingPageResponseDTO.swift; sourceTree = "<group>"; };
+		6BE6DA562B50B44F008B06FA /* GetMyPageResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMyPageResponseDTO.swift; sourceTree = "<group>"; };
+		6BE6DA582B50B45E008B06FA /* PatchPushAlarmResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchPushAlarmResponseDTO.swift; sourceTree = "<group>"; };
+		6BE6DA5A2B50B46F008B06FA /* GetMainPageResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMainPageResponseDTO.swift; sourceTree = "<group>"; };
 		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -523,6 +537,7 @@
 			children = (
 				6BE6DA1E2B5026B8008B06FA /* Base */,
 				6BE6DA272B505426008B06FA /* Auth */,
+				6BE6DA4A2B50B1C5008B06FA /* User */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -777,6 +792,44 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
+		6BE6DA4A2B50B1C5008B06FA /* User */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DA4B2B50B1D6008B06FA /* DTO */,
+				6BE6DA4C2B50B1EB008B06FA /* UserTargetType.swift */,
+				6BE6DA522B50B3C3008B06FA /* UserAPIService.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		6BE6DA4B2B50B1D6008B06FA /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DA4E2B50B2EF008B06FA /* Request */,
+				6BE6DA4F2B50B2F5008B06FA /* Response */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		6BE6DA4E2B50B2EF008B06FA /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DA502B50B309008B06FA /* PatchPushAlarmRequestDTO.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		6BE6DA4F2B50B2F5008B06FA /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DA542B50B43E008B06FA /* GetSettingPageResponseDTO.swift */,
+				6BE6DA562B50B44F008B06FA /* GetMyPageResponseDTO.swift */,
+				6BE6DA582B50B45E008B06FA /* PatchPushAlarmResponseDTO.swift */,
+				6BE6DA5A2B50B46F008B06FA /* GetMainPageResponseDTO.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -901,6 +954,7 @@
 				6BE6DA342B50594B008B06FA /* MoyaPlugin.swift in Sources */,
 				6BE6D9D82B4E8A03008B06FA /* RemindAlarmOffViewType.swift in Sources */,
 				398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */,
+				6BE6DA5B2B50B46F008B06FA /* GetMainPageResponseDTO.swift in Sources */,
 				3F2FA1772B45C3E000EDBF95 /* AuthenticationAdapterProtocol.swift in Sources */,
 				6BC493792B4D6FB300544249 /* SearchEmptyResultView.swift in Sources */,
 				39BC5B192B411037004024E6 /* FontLiterals.swift in Sources */,
@@ -915,6 +969,7 @@
 				6BE6DA452B50AA8A008B06FA /* PostLogoutResponseDTO.swift in Sources */,
 				39049C8D2B43EEF400C9196E /* ToastStatus.swift in Sources */,
 				3F2FA17F2B4A31E900EDBF95 /* SocialLoginTokenModel.swift in Sources */,
+				6BE6DA4D2B50B1EB008B06FA /* UserTargetType.swift in Sources */,
 				6B6AE6932B3FF5A9000E2366 /* ClipViewController.swift in Sources */,
 				830517632B42D871009FFB60 /* TabBarItem.swift in Sources */,
 				830517652B42D996009FFB60 /* StringLiterals.swift in Sources */,
@@ -924,6 +979,7 @@
 				6BC4936C2B48633700544249 /* ToasterNavigationType.swift in Sources */,
 				6B6AE6992B3FF5C1000E2366 /* SearchViewController.swift in Sources */,
 				6BE6DA3B2B5064BC008B06FA /* AuthAPIService.swift in Sources */,
+				6BE6DA512B50B309008B06FA /* PatchPushAlarmRequestDTO.swift in Sources */,
 				6BE6D9E82B4EA773008B06FA /* RemindCollectionFooterView.swift in Sources */,
 				6BE6D9F42B4EF568008B06FA /* RemindTimerEditBottomSheetView.swift in Sources */,
 				6BE6DA3D2B5067CA008B06FA /* PostSocialLoginResponseDTO.swift in Sources */,
@@ -932,6 +988,7 @@
 				6BE6D9E42B4EA125008B06FA /* WaitTimerCollectionViewCell.swift in Sources */,
 				6BE6D9D42B4DE479008B06FA /* RemindTimerEmptyView.swift in Sources */,
 				6BE6DA392B50636B008B06FA /* BaseAPIService.swift in Sources */,
+				6BE6DA572B50B44F008B06FA /* GetMyPageResponseDTO.swift in Sources */,
 				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
 				6BE6D9F22B4EEBC3008B06FA /* RemindViewModel.swift in Sources */,
 				6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */,
@@ -942,6 +999,7 @@
 				6BE6D9DE2B4E9054008B06FA /* AlarmOffStateButton.swift in Sources */,
 				39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */,
 				398BE7FE2B46C164001595E0 /* AddClipBottomSheetView.swift in Sources */,
+				6BE6DA592B50B45E008B06FA /* PatchPushAlarmResponseDTO.swift in Sources */,
 				39BE4BB62B4ABA97002B471D /* DetailClipListCollectionViewCell.swift in Sources */,
 				3F617CB52B4EC2EE00956E69 /* MypageHeaderView.swift in Sources */,
 				6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */,
@@ -953,6 +1011,7 @@
 				6BE6DA492B50ADC2008B06FA /* NetworkService.swift in Sources */,
 				6B6AE69C2B3FF5CC000E2366 /* HomeViewController.swift in Sources */,
 				6BC493832B4D8B5900544249 /* SearchResultModel.swift in Sources */,
+				6BE6DA532B50B3C3008B06FA /* UserAPIService.swift in Sources */,
 				3F2BFACB2B40373C00DA76B7 /* SocialLoginType.swift in Sources */,
 				6BE6D9F62B4F0F26008B06FA /* CompleteTimerEmptyCollectionViewCell.swift in Sources */,
 				6BE6D9E62B4EA499008B06FA /* RemindCollectionHeaderView.swift in Sources */,
@@ -968,6 +1027,7 @@
 				3FBFDEC02B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift in Sources */,
 				390925CB2B4F049800487AA3 /* LinkWebNavigationView.swift in Sources */,
 				398BE7FA2B467E4B001595E0 /* ClipListCollectionViewCell.swift in Sources */,
+				6BE6DA552B50B43E008B06FA /* GetSettingPageResponseDTO.swift in Sources */,
 				830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */,
 				390925C42B4EF64100487AA3 /* LinkWebViewController.swift in Sources */,
 				6B6AE6AE2B3FF721000E2366 /* ImageLiterals.swift in Sources */,
