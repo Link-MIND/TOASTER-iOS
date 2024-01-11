@@ -75,6 +75,7 @@ enum ImageLiterals {
         static var linkThumbNail: UIImage { .load(name: "img_thumbnail") }
         static var siteThumbNail: UIImage { .load(name: "img_bmsite") }
         static var addBtn: UIImage { .load(name: "btn_plus") }
+        static var searchIcon: UIImage { .load(name: "ic_search_20") }
     }
 }
 
