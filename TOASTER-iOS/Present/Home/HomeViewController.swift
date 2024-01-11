@@ -142,7 +142,6 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     // Footer 크기 지정
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.width, height: 4)
     }

@@ -127,7 +127,6 @@ enum CompositionalFactory {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(itemFractionalWidthFraction),
             heightDimension: .fractionalHeight(1)
-            
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
