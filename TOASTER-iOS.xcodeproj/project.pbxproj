@@ -95,6 +95,7 @@
 		830517AC2B4D9776009FFB60 /* UserClipFooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AB2B4D9776009FFB60 /* UserClipFooterCollectionReusableView.swift */; };
 		830517AE2B4D978D009FFB60 /* WeeklyLinkFooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AD2B4D978D009FFB60 /* WeeklyLinkFooterCollectionReusableView.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
+		8315CD842B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -178,6 +179,7 @@
 		830517AB2B4D9776009FFB60 /* UserClipFooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClipFooterCollectionReusableView.swift; sourceTree = "<group>"; };
 		830517AD2B4D978D009FFB60 /* WeeklyLinkFooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyLinkFooterCollectionReusableView.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClipEmptyCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -624,6 +626,7 @@
 			children = (
 				830517872B4D1DF6009FFB60 /* MainCollectionViewCell.swift */,
 				830517892B4D1E09009FFB60 /* UserClipCollectionViewCell.swift */,
+				8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */,
 				8305178B2B4D1E64009FFB60 /* WeeklyLinkCollectionViewCell.swift */,
 				8305178D2B4D1EF8009FFB60 /* WeeklyRecommendCollectionViewCell.swift */,
 			);
@@ -790,6 +793,7 @@
 				830517632B42D871009FFB60 /* TabBarItem.swift in Sources */,
 				830517652B42D996009FFB60 /* StringLiterals.swift in Sources */,
 				8305178C2B4D1E64009FFB60 /* WeeklyLinkCollectionViewCell.swift in Sources */,
+				8315CD842B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift in Sources */,
 				6BC493812B4D88E200544249 /* SearchViewModel.swift in Sources */,
 				39BE4BC22B4ABBB0002B471D /* DeleteLinkBottomSheetView.swift in Sources */,
 				6BC4936C2B48633700544249 /* ToasterNavigationType.swift in Sources */,

@@ -174,8 +174,7 @@ private extension HomeViewController {
                                     forCellWithReuseIdentifier: WeeklyLinkCollectionViewCell.className)
         homeCollectionView.register(WeeklyRecommendCollectionViewCell.self,
                                     forCellWithReuseIdentifier: WeeklyRecommendCollectionViewCell.className)
-        homeCollectionView.register(UserClipEmptyCollectionViewCell.self,
-                                    forCellWithReuseIdentifier: UserClipEmptyCollectionViewCell.className)
+        homeCollectionView.register(UserClipEmptyCollectionViewCell.self,forCellWithReuseIdentifier: UserClipEmptyCollectionViewCell.className)
         
         // Header register
         homeCollectionView.register(UserClipHeaderCollectionReusableView.self,
