@@ -11,7 +11,7 @@ import Moya
 
 ///  헤더에 들어가는 토큰의 상태에 따른 Type
 enum HeaderType {
-    case nonHeader
+    case nonTokenHeader
     case accessTokenHeader
     case refreshTokenHeader
 }

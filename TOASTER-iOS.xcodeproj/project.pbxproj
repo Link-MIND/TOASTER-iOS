@@ -97,6 +97,8 @@
 		6BE6D9F62B4F0F26008B06FA /* CompleteTimerEmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9F52B4F0F26008B06FA /* CompleteTimerEmptyCollectionViewCell.swift */; };
 		6BE6DA142B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA132B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift */; };
 		6BE6DA202B504433008B06FA /* BaseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA1F2B504433008B06FA /* BaseTargetType.swift */; };
+		6BE6DA292B505433008B06FA /* AuthTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA282B505433008B06FA /* AuthTargetType.swift */; };
+		6BE6DA302B5054F6008B06FA /* PostSocialLoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA2F2B5054F6008B06FA /* PostSocialLoginRequestDTO.swift */; };
 		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
 		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
@@ -185,6 +187,8 @@
 		6BE6D9F52B4F0F26008B06FA /* CompleteTimerEmptyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteTimerEmptyCollectionViewCell.swift; sourceTree = "<group>"; };
 		6BE6DA132B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindAlarmOffBottomSheetView.swift; sourceTree = "<group>"; };
 		6BE6DA1F2B504433008B06FA /* BaseTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTargetType.swift; sourceTree = "<group>"; };
+		6BE6DA282B505433008B06FA /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
+		6BE6DA2F2B5054F6008B06FA /* PostSocialLoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSocialLoginRequestDTO.swift; sourceTree = "<group>"; };
 		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -500,6 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				6BE6DA1E2B5026B8008B06FA /* Base */,
+				6BE6DA272B505426008B06FA /* Auth */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -712,6 +717,39 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		6BE6DA272B505426008B06FA /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DA2A2B5054B8008B06FA /* DTO */,
+				6BE6DA282B505433008B06FA /* AuthTargetType.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		6BE6DA2A2B5054B8008B06FA /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DA2B2B5054C2008B06FA /* Request */,
+				6BE6DA2C2B5054C8008B06FA /* Response */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		6BE6DA2B2B5054C2008B06FA /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DA2F2B5054F6008B06FA /* PostSocialLoginRequestDTO.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		6BE6DA2C2B5054C8008B06FA /* Response */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -853,11 +891,13 @@
 				830517652B42D996009FFB60 /* StringLiterals.swift in Sources */,
 				6BC493812B4D88E200544249 /* SearchViewModel.swift in Sources */,
 				39BE4BC22B4ABBB0002B471D /* DeleteLinkBottomSheetView.swift in Sources */,
+				6BE6DA292B505433008B06FA /* AuthTargetType.swift in Sources */,
 				6BC4936C2B48633700544249 /* ToasterNavigationType.swift in Sources */,
 				6B6AE6992B3FF5C1000E2366 /* SearchViewController.swift in Sources */,
 				6BE6D9E82B4EA773008B06FA /* RemindCollectionFooterView.swift in Sources */,
 				6BE6D9F42B4EF568008B06FA /* RemindTimerEditBottomSheetView.swift in Sources */,
 				398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */,
+				6BE6DA302B5054F6008B06FA /* PostSocialLoginRequestDTO.swift in Sources */,
 				6BE6D9E42B4EA125008B06FA /* WaitTimerCollectionViewCell.swift in Sources */,
 				6BE6D9D42B4DE479008B06FA /* RemindTimerEmptyView.swift in Sources */,
 				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
