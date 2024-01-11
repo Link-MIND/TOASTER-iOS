@@ -11,12 +11,11 @@ import SnapKit
 import Then
 
 final class EditClipViewController: UIViewController {
-    
-    // MARK: - Properties
-    
+        
     // MARK: - UI Properties
     
     private let editClipNoticeView = EditClipNoticeView()
+    private let editClipCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Life Cycle
     
@@ -26,7 +25,6 @@ final class EditClipViewController: UIViewController {
         setupStyle()
         setupHierarchy()
         setupLayout()
-        setupDelegate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,23 +34,20 @@ final class EditClipViewController: UIViewController {
     
 }
 
-// MARK: - Networks
-
-extension EditClipViewController {
-    func fetchMain() {
-        
-    }
-}
-
 // MARK: - Private Extensions
 
 private extension EditClipViewController {
     func setupStyle() {
-        
+        editClipCollectionView.do {
+            $0.backgroundColor = .toasterBackground
+            $0.delegate = self
+            $0.dataSource = self
+            $0.register(EditClipCollectionViewCell.self, forCellWithReuseIdentifier: EditClipCollectionViewCell.className)
+        }
     }
     
     func setupHierarchy() {
-        view.addSubviews(editClipNoticeView)
+        view.addSubviews(editClipNoticeView, editClipCollectionView)
     }
     
     func setupLayout() {
@@ -61,10 +56,11 @@ private extension EditClipViewController {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(66)
         }
-    }
-    
-    func setupDelegate() {
         
+        editClipCollectionView.snp.makeConstraints {
+            $0.top.equalTo(editClipNoticeView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
     }
     
     func setupNavigationBar() {
@@ -76,3 +72,48 @@ private extension EditClipViewController {
     }
 }
 
+// MARK: - CollectionView DataSource
+
+extension EditClipViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dummyClipList.count + 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EditClipCollectionViewCell.className, for: indexPath) as? EditClipCollectionViewCell else { return UICollectionViewCell() }
+        if indexPath.row == 0 {
+            cell.configureCell(forModel: ClipListModel(categoryID: 0, categoryTitle: "전체클립",
+                                                       toastNum: 100), 
+                               icon: ImageLiterals.Clip.pin,
+                               isFirst: true)
+        } else {
+            cell.configureCell(forModel: dummyClipList[indexPath.row-1], 
+                               icon: ImageLiterals.Clip.delete,
+                               isFirst: false)
+        }
+        return cell
+    }
+}
+
+// MARK: - CollectionView Delegate
+
+extension EditClipViewController: UICollectionViewDelegate {}
+
+// MARK: - CollectionView Delegate Flow Layout
+
+extension EditClipViewController: UICollectionViewDelegateFlowLayout {
+    // sizeForItemAt: 각 Cell의 크기를 CGSize 형태로 return
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.convertByWidthRatio(335), height: 54)
+    }
+    
+    // ContentInset: Cell에서 Content 외부에 존재하는 Inset의 크기를 결정
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+    }
+    
+    // minimumLineSpacing: Cell 들의 위, 아래 간격 지정
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+}
