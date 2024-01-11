@@ -12,14 +12,24 @@ import Then
 
 final class HomeViewController: UIViewController {
     
+    // MARK: - Properties
+    
     private let homeView = HomeView()
+    
     var clipCellData = dummyCategoryInfo
+    
+    private let addClipBottomSheetView = AddClipBottomSheetView()
+    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 219, insertView: addClipBottomSheetView)
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         homeView.backgroundColor = .toasterBackground
         setView()
     }
+    
+    // MARK: - set View
     
     private func setView() {
         setupNavigationBar()
@@ -40,7 +50,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            return 4
+            return clipCellData.count
         case 2:
             return 3
         case 3:
@@ -71,6 +81,12 @@ extension HomeViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyRecommendCollectionViewCell.className, for: indexPath) as? WeeklyRecommendCollectionViewCell
             else { return UICollectionViewCell() }
             return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == clipCellData.count - 1 {
+            addClipCellTapped()
         }
     }
     
@@ -122,32 +138,19 @@ extension HomeViewController: UICollectionViewDataSource {
     
     // Header 크기 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        switch section {
-        case 0:
-            return CGSize(width: 300, height: 40)
-        case 1:
-            return CGSize(width: 300, height: 40)
-        default:
-            return CGSize(width: 300, height: 40)
-        }
+        return CGSize(width: 335, height: 40)
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForFooterInSection section: Int) -> CGSize {
-        switch section {
-        case 0:
-            return CGSize(width: 335, height: 4)
-        case 1:
-            return CGSize(width: 335, height: 4)
-        default:
-            return CGSize(width: 335, height: 4)
-        }
+    
+    // Footer 크기 지정
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.width, height: 4)
     }
 }
 
 // MARK: - Private Extensions
 
 private extension HomeViewController {
-    
     func setupHierarchy() {
         view.addSubview(homeView.collectionView)
     }
@@ -165,26 +168,28 @@ private extension HomeViewController {
         
         // Cell register
         homeCollectionView.register(MainCollectionViewCell.self,
-                          forCellWithReuseIdentifier: MainCollectionViewCell.className)
+                                    forCellWithReuseIdentifier: MainCollectionViewCell.className)
         homeCollectionView.register(UserClipCollectionViewCell.self,
-                          forCellWithReuseIdentifier: UserClipCollectionViewCell.className)
+                                    forCellWithReuseIdentifier: UserClipCollectionViewCell.className)
         homeCollectionView.register(WeeklyLinkCollectionViewCell.self,
-                          forCellWithReuseIdentifier: WeeklyLinkCollectionViewCell.className)
+                                    forCellWithReuseIdentifier: WeeklyLinkCollectionViewCell.className)
         homeCollectionView.register(WeeklyRecommendCollectionViewCell.self,
-                          forCellWithReuseIdentifier: WeeklyRecommendCollectionViewCell.className)
+                                    forCellWithReuseIdentifier: WeeklyRecommendCollectionViewCell.className)
+        homeCollectionView.register(UserClipEmptyCollectionViewCell.self,
+                                    forCellWithReuseIdentifier: UserClipEmptyCollectionViewCell.className)
         
         // Header register
         homeCollectionView.register(UserClipHeaderCollectionReusableView.self,
-                          forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                          withReuseIdentifier: UserClipHeaderCollectionReusableView.className)
+                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                    withReuseIdentifier: UserClipHeaderCollectionReusableView.className)
         
         homeCollectionView.register(WeeklyLinkHeaderCollectionReusableView.self,
-                          forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                          withReuseIdentifier: WeeklyLinkHeaderCollectionReusableView.className)
+                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                    withReuseIdentifier: WeeklyLinkHeaderCollectionReusableView.className)
         
         homeCollectionView.register(WeeklyRecommendHeaderCollectionReusableView.self,
-                          forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                          withReuseIdentifier: WeeklyRecommendHeaderCollectionReusableView.className)
+                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                    withReuseIdentifier: WeeklyRecommendHeaderCollectionReusableView.className)
         
         // Footer register
         homeCollectionView.register(MainFooterCollectionReusableView.self,
@@ -197,25 +202,42 @@ private extension HomeViewController {
                                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                     withReuseIdentifier: WeeklyLinkFooterCollectionReusableView.className)
         
-        
         homeCollectionView.delegate = self
         homeCollectionView.dataSource = self
+        addClipBottomSheetView.addClipBottomSheetViewDelegate = self
     }
     
     func setupNavigationBar() {
-         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
-                                                                 hasRightButton: true,
-                                                                 mainTitle: StringOrImageType.image(ImageLiterals.Logo.wordmark),
-                                                                 rightButton: StringOrImageType.image(ImageLiterals.Common.setting),
-                                                                 rightButtonAction: rightButtonTapped)
-                                                                 
+        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
+                                                                hasRightButton: true,
+                                                                mainTitle: StringOrImageType.image(ImageLiterals.Logo.wordmark),
+                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.setting),
+                                                                rightButtonAction: rightButtonTapped)
+        
         if let navigationController = navigationController as? ToasterNavigationController {
-              navigationController.setupNavigationBar(forType: type)
+            navigationController.setupNavigationBar(forType: type)
         }
-     }
+    }
     
     func rightButtonTapped() {
-         // rightButtonAction
+        // rightButtonAction - 환경설정 화면 구현 완료 이후 수정할 예정
         print("환경설정")
-     }
+    }
+}
+
+extension HomeViewController: AddClipBottomSheetViewDelegate {
+    func dismissButtonTapped() {
+        addClipBottom.hideBottomSheet()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
+            self.addClipBottomSheetView.resetTextField()
+        }
+    }
+}
+
+extension HomeViewController: UserClipCollectionViewCellDelegate {
+    func addClipCellTapped() {
+        addClipBottom.modalPresentationStyle = .overFullScreen
+        self.present(addClipBottom, animated: false)
+    }
 }

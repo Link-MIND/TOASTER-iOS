@@ -10,9 +10,17 @@ import UIKit
 import SnapKit
 import Then
 
+protocol UserClipCollectionViewCellDelegate: AnyObject {
+    func addClipCellTapped()
+}
+
 // MARK: - 사용자의 클립
 
 final class UserClipCollectionViewCell: UICollectionViewCell {
+    
+    // MARK: - Properties
+    
+    weak var userClipCollectionViewCellDelegate: UserClipCollectionViewCellDelegate?
     
     // MARK: - UI Components
     
@@ -20,8 +28,6 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
     private let clipImage = UIImageView()
     private let titleLabel = UILabel()
     private let countLabel = UILabel()
-    
-    private var sectionCellCount = 1
     
     // MARK: - Life Cycle
     
@@ -35,17 +41,13 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override var isSelected: Bool {
-//        didSet{
-//            if isSelected {
-//                //bottom Sheet 올리기
-//                print("Cell Selected")
-//            }
-//            else {
-//                print("Fail....")
-//            }
-//        }
-//    }
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                cellTapped()
+            }
+        }
+    }
     
     // MARK: - Make View
     
@@ -54,8 +56,6 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
         setupHierarchy()
         setupLayout()
     }
-
-
 }
 
 extension UserClipCollectionViewCell {
@@ -68,7 +68,6 @@ extension UserClipCollectionViewCell {
 // MARK: - Private Extensions
 
 private extension UserClipCollectionViewCell {
-    
     func setupStyle() {
         backgroundColor = .toasterWhite
         self.makeRounded(radius: 12)
@@ -78,13 +77,11 @@ private extension UserClipCollectionViewCell {
         }
         
         titleLabel.do {
-//            $0.text = "전체 클립"
             $0.font = .suitSemiBold(size: 16)
             $0.textColor = .black900
         }
         
         countLabel.do {
-//            $0.text = "n개"
             $0.font = .suitBold(size: 14)
             $0.textColor = .gray700
         }
@@ -97,8 +94,8 @@ private extension UserClipCollectionViewCell {
     func setupLayout() {
         clipImage.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(12)
-            $0.width.equalTo(24)
-            $0.height.equalTo(24)
+            $0.width.height.equalTo(24)
+            
         }
         
         titleLabel.snp.makeConstraints {
@@ -111,5 +108,7 @@ private extension UserClipCollectionViewCell {
         }
     }
     
-    
+    @objc func cellTapped() {
+        userClipCollectionViewCellDelegate?.addClipCellTapped()
+    }
 }
