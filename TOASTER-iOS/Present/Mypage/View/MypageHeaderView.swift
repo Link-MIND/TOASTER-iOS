@@ -147,8 +147,7 @@ private extension MypageHeaderView {
     
     func setupLayout() {
         profileImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
+            $0.top.leading.equalToSuperview()
             $0.size.equalTo(48)
         }
         
