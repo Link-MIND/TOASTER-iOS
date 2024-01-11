@@ -13,12 +13,34 @@ import Then
 
 final class LinkWebViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    private var canGoBack: Bool = false {
+        didSet {
+            backButton.isEnabled = canGoBack
+            backButton.tintColor = canGoBack ? .gray700 : .gray150
+        }
+    }
+    
+    private var canGoForward: Bool = false {
+        didSet {
+            forwardButton.isEnabled = canGoForward
+            forwardButton.tintColor = canGoForward ? .gray700 : .gray150
+        }
+    }
+    
     // MARK: - UI Properties
     
     private let navigationView = LinkWebNavigationView()
     private let progressView = UIProgressView()
     private let webView = WKWebView()
     private let toolBar = UIToolbar()
+    
+    private let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+    private lazy var backButton = UIBarButtonItem(image: ImageLiterals.Web.backArrow, style: .plain, target: self, action: #selector(goBackInWeb))
+    private lazy var forwardButton = UIBarButtonItem(image: ImageLiterals.Web.forwardArrow, style: .plain, target: self, action: #selector(goForwardInWeb))
+    private lazy var readLinkCheckButton = UIBarButtonItem(image: ImageLiterals.Web.document, style: .plain, target: self, action: #selector(checkReadInWeb))
+    private lazy var safariButton = UIBarButtonItem(image: ImageLiterals.Web.safari, style: .plain, target: self, action: #selector(openInSafari))
     
     // MARK: - Life Cycle
     
@@ -29,7 +51,6 @@ final class LinkWebViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupNavigationBarAction()
-        setupToolBar()
     }
 }
 
@@ -67,6 +88,11 @@ private extension LinkWebViewController {
             $0.backgroundColor = .toasterWhite
             $0.setBackgroundImage(UIImage(), forToolbarPosition: .bottom, barMetrics: .default)
             $0.setShadowImage(UIImage(), forToolbarPosition: .bottom)
+            $0.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, readLinkCheckButton, flexibleSpace, safariButton], animated: false)
+        }
+        
+        [backButton, forwardButton, readLinkCheckButton, safariButton].forEach {
+            $0.tintColor = .gray700
         }
     }
     
@@ -113,16 +139,6 @@ private extension LinkWebViewController {
         }
     }
     
-    func setupToolBar() {
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let backButton = UIBarButtonItem(image: ImageLiterals.Web.backArrow, style: .plain, target: LinkWebViewController.self, action: #selector(goBackInWeb))
-        let forwardButton = UIBarButtonItem(image: ImageLiterals.Web.forwardArrow, style: .plain, target: LinkWebViewController.self, action: #selector(goForwardInWeb))
-        let readLinkCheckButton = UIBarButtonItem(image: ImageLiterals.Web.document, style: .plain, target: LinkWebViewController.self, action: #selector(checkReadInWeb))
-        let safariButton = UIBarButtonItem(image: ImageLiterals.Web.safari, style: .plain, target: LinkWebViewController.self, action: #selector(openInSafari))
-        
-        toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, readLinkCheckButton, flexibleSpace, safariButton], animated: false)
-    }
-    
     /// 툴바 뒤로가기 버튼 클릭 시
     @objc func goBackInWeb() {
         if webView.canGoBack {
@@ -156,6 +172,8 @@ extension LinkWebViewController: WKNavigationDelegate {
         if let url = webView.url?.absoluteString {
             navigationView.setupLinkAddress(link: url)
         }
+        canGoBack = webView.canGoBack
+        canGoForward = webView.canGoForward
     }
     
     /// 웹 페이지 로딩이 완료되었을 때 호출
