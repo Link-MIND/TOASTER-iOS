@@ -96,6 +96,7 @@
 		6BE6D9F42B4EF568008B06FA /* RemindTimerEditBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9F32B4EF568008B06FA /* RemindTimerEditBottomSheetView.swift */; };
 		6BE6D9F62B4F0F26008B06FA /* CompleteTimerEmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6D9F52B4F0F26008B06FA /* CompleteTimerEmptyCollectionViewCell.swift */; };
 		6BE6DA142B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA132B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift */; };
+		6BE6DA202B504433008B06FA /* BaseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA1F2B504433008B06FA /* BaseTargetType.swift */; };
 		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
 		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
@@ -183,6 +184,7 @@
 		6BE6D9F32B4EF568008B06FA /* RemindTimerEditBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindTimerEditBottomSheetView.swift; sourceTree = "<group>"; };
 		6BE6D9F52B4F0F26008B06FA /* CompleteTimerEmptyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteTimerEmptyCollectionViewCell.swift; sourceTree = "<group>"; };
 		6BE6DA132B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindAlarmOffBottomSheetView.swift; sourceTree = "<group>"; };
+		6BE6DA1F2B504433008B06FA /* BaseTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTargetType.swift; sourceTree = "<group>"; };
 		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -497,6 +499,7 @@
 		6B6AE6862B3FF556000E2366 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				6BE6DA1E2B5026B8008B06FA /* Base */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -701,6 +704,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		6BE6DA1E2B5026B8008B06FA /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DA1F2B504433008B06FA /* BaseTargetType.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -831,6 +842,7 @@
 				39BE4BC02B4ABB9E002B471D /* DetailClipEmptyView.swift in Sources */,
 				6B6AE6532B3FF101000E2366 /* ViewController.swift in Sources */,
 				6B6AE6902B3FF59C000E2366 /* DetailClipViewController.swift in Sources */,
+				6BE6DA202B504433008B06FA /* BaseTargetType.swift in Sources */,
 				6B6AE6A62B3FF6BD000E2366 /* UIView+.swift in Sources */,
 				398BE7FC2B468F80001595E0 /* ClipCollectionHeaderView.swift in Sources */,
 				3F617CB82B4ECB6000956E69 /* MypageUserModel.swift in Sources */,
