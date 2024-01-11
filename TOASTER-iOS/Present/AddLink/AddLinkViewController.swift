@@ -7,30 +7,10 @@
 
 import UIKit
 
-import SnapKit
-import Then
-
-final class AddLinkViewController: UIViewController {
-    
-    // MARK: - UI Properties
-    
-    private var addLinkView: AddLinkView?
-    
-    // MARK: - Life Cycle
+class AddLinkViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setAddLinkVew()
-        hideKeyboard()
     }
-    
-    // MARK: - set up Add Link View
-    
-    private func setAddLinkVew() {
-        addLinkView = AddLinkView(frame: view.bounds)
-        if let resultView = addLinkView {
-            view.addSubview(resultView)
-            resultView.setView()
-        }
-    }
+
 }
