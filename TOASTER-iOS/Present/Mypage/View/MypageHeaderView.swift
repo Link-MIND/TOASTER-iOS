@@ -128,16 +128,12 @@ private extension MypageHeaderView {
             $0.font = .suitMedium(size: 14)
         }
         
-        thisWeakOpenLinkCountLabel.do {
-            $0.textColor = .black900
-            $0.font = .suitBold(size: 24)
-            $0.text = "nn"
-        }
-        
-        thisWeakSaveLinkCountLabel.do {
-            $0.textColor = .black900
-            $0.font = .suitBold(size: 24)
-            $0.text = "nn"
+        [thisWeakOpenLinkCountLabel, thisWeakSaveLinkCountLabel].forEach {
+            $0.do {
+                $0.textColor = .black900
+                $0.font = .suitBold(size: 24)
+                $0.text = "nn"
+            }
         }
     }
     
