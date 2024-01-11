@@ -1,5 +1,5 @@
 //
-//  RemindTimerEditView.swift
+//  RemindTimerEditBottomSheetView.swift
 //  TOASTER-iOS
 //
 //  Created by 김다예 on 1/11/24.
@@ -15,7 +15,7 @@ protocol RemindEditViewDelegate: AnyObject{
     func deleteTimer(forID: Int?)
 }
 
-final class RemindTimerEditView: UIView {
+final class RemindTimerEditBottomSheetView: UIView {
 
     // MARK: - Properties
 
@@ -44,7 +44,7 @@ final class RemindTimerEditView: UIView {
 
 // MARK: - Private Extension
 
-extension RemindTimerEditView {
+extension RemindTimerEditBottomSheetView {
     func setupEditView(forDelegate: RemindEditViewDelegate,
                        forID: Int?) {
         delegate = forDelegate
@@ -54,7 +54,7 @@ extension RemindTimerEditView {
 
 // MARK: - Private Extension
 
-private extension RemindTimerEditView {
+private extension RemindTimerEditBottomSheetView {
     func setupStyle() {
         backgroundColor = .gray50
         

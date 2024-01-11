@@ -92,7 +92,7 @@ private extension RemindViewController {
     }
     
     func setupBottomSheet(forID: Int?) {
-        let editView = RemindTimerEditView()
+        let editView = RemindTimerEditBottomSheetView()
         editView.setupEditView(forDelegate: self,
                                forID: forID)
         
