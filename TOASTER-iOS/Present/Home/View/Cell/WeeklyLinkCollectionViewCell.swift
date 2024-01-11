@@ -40,7 +40,6 @@ final class WeeklyLinkCollectionViewCell: UICollectionViewCell {
         setupHierarchy()
         setupLayout()
     }
-    
 }
 
 // MARK: - Private extensions

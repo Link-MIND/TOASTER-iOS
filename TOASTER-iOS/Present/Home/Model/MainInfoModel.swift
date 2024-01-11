@@ -35,3 +35,5 @@ var dummyToastInfo: [ToastInfoList] = [ToastInfoList(toastId: 1, toastTitle: "To
                                        ToastInfoList(toastId: 3, toastTitle: "Toast 3", toastLink: "https://example.com/toast3"),
                                        ToastInfoList(toastId: 4, toastTitle: "Toast 4", toastLink: "https://example.com/toast4"),
                                        ToastInfoList(toastId: 5, toastTitle: "Toast 5", toastLink: "https://example.com/toast5")]
+
+var mainInfoModel: [MainInfoModel] = [MainInfoModel(nickname: "토스터", readToastNum: 10, allToastNum: 32, mainCategoryListDto: dummyCategoryInfo, toastInfoListDto: dummyToastInfo)]

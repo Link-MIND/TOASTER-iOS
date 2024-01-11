@@ -4,7 +4,6 @@
 //
 //  Created by Gahyun Kim on 2024/01/09.
 //
-
 import UIKit
 
 import SnapKit
@@ -14,10 +13,9 @@ import Then
 
 final class MainCollectionViewCell: UICollectionViewCell {
     
-    // 서버 통신 이후 수정
-    var nickName: String = "김가현"
-    var readToastNum: Int = 13
-    var allToastNum: Int = 47
+    private var nickName: String = String()
+    private var readToastNum: Int = Int()
+    private var allToastNum: Int = Int()
     
     // MARK: - UI Components
     
@@ -26,7 +24,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
     private let noticeLabel = UILabel()
     private let countToastLabel = UILabel()
     lazy var linkProgressView = UIProgressView()
-
+    
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -49,21 +47,31 @@ final class MainCollectionViewCell: UICollectionViewCell {
     }
 }
 
+extension MainCollectionViewCell {
+    func configureCell(forModel: MainInfoModel) {
+        nickName = forModel.nickname
+        readToastNum = forModel.readToastNum
+        allToastNum = forModel.allToastNum
+    }
+}
+
 // MARK: - Private Extensions
 
 private extension MainCollectionViewCell {
     func setupStyle() {
         searchButton.do {
-            $0.backgroundColor = .gray50
+            $0.makeRounded(radius: 12)
             $0.setImage(ImageLiterals.Home.searchIcon, for: .normal)
             $0.setTitle(StringLiterals.Home.Main.searchPlaceHolder, for: .normal)
             $0.setTitleColor(.gray400, for: .normal)
+            $0.titleLabel?.font = .suitRegular(size: 16)
             $0.contentHorizontalAlignment = .left
-            $0.makeRounded(radius: 12)
             $0.imageView?.contentMode = .scaleAspectFit
             $0.semanticContentAttribute = .forceLeftToRight
-            $0.imageEdgeInsets = .init(top: 0, left: 12, bottom: 0, right: 0)
-            $0.titleEdgeInsets = .init(top: 0, left: 20, bottom: 0, right: 0)
+            var configuration = UIButton.Configuration.filled()
+            configuration.imagePadding = 8
+            configuration.baseBackgroundColor = .gray50
+            $0.configuration = configuration
         }
         
         userLabel.do {
@@ -76,6 +84,7 @@ private extension MainCollectionViewCell {
         noticeLabel.do {
             $0.text = "토스터로 " + String(allToastNum) + "개의 링크를 \n잊지 않고 읽었어요!"
             $0.numberOfLines = 2
+            $0.setLineSpacing(spacing: 4)
             $0.textAlignment = .left
             $0.font = .suitRegular(size: 20)
             $0.textColor = .black900

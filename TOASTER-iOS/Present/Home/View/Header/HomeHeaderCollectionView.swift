@@ -4,16 +4,13 @@
 //
 //  Created by Gahyun Kim on 2024/01/09.
 //
-
 import UIKit
 
 import SnapKit
 import Then
 
-// MARK: - 사용자 클립 header
-
-final class UserClipHeaderCollectionView: UICollectionReusableView {
-        
+final class HomeHeaderCollectionView: UICollectionReusableView {
+    
     // MARK: - Properties
     
     private var nickname: String = "김가현" // 서버 통신 이후 수정
@@ -25,13 +22,14 @@ final class UserClipHeaderCollectionView: UICollectionReusableView {
         super.init(frame: frame)
         
         self.backgroundColor = .clear
+        setView()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    func configure() {
+    func setView() {
         setupStyle()
         setupHierarchy()
         setupLayout()
@@ -43,8 +41,6 @@ final class UserClipHeaderCollectionView: UICollectionReusableView {
         titleLabel.do {
             $0.textColor = .black900
             $0.font = .suitMedium(size: 18)
-            $0.text = nickname + StringLiterals.Home.UserClipHeader.titleLabel
-            $0.asFont(targetString: nickname, font: .suitBold(size: 18))
         }
     }
     
@@ -61,5 +57,12 @@ final class UserClipHeaderCollectionView: UICollectionReusableView {
             $0.leading.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview().inset(5)
         }
+    }
+}
+
+extension HomeHeaderCollectionView {
+    func configureHeader(forTitle: String) {
+        titleLabel.text = forTitle
+        titleLabel.asFont(targetString: nickname, font: .suitBold(size: 18))
     }
 }

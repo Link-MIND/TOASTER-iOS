@@ -73,5 +73,4 @@ private extension UserClipEmptyCollectionViewCell {
             $0.top.equalTo(addClipImage.snp.bottom).offset(1)
         }
     }
-    
 }

@@ -1,8 +1,8 @@
 //
-//  WeeklyLinkFooterCollectionReusableView.swift
+//  MainFooterCollectionReusableView.swift
 //  TOASTER-iOS
 //
-//  Created by Gahyun Kim on 2024/01/10.
+//  Created by Gahyun Kim on 2024/01/09.
 //
 
 import UIKit
@@ -10,9 +10,9 @@ import UIKit
 import SnapKit
 import Then
 
-// MARK: - 이주의 추천 사이트 footer
+// MARK: - Home footer
 
-final class WeeklyLinkFooterCollectionView: UICollectionReusableView {
+final class HomeFooterCollectionView: UICollectionReusableView {
     
     // MARK: - Properties
     
@@ -22,14 +22,16 @@ final class WeeklyLinkFooterCollectionView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         self.backgroundColor = .clear
+        setView()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    func configure() {
+    func setView() {
         setupStyle()
         setupHierarchy()
         setupLayout()
@@ -53,7 +55,7 @@ final class WeeklyLinkFooterCollectionView: UICollectionReusableView {
     
     private func setupLayout() {
         divideView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(2)
+            $0.bottom.equalToSuperview().inset(7)
             $0.width.equalToSuperview()
             $0.height.equalTo(4)
         }
