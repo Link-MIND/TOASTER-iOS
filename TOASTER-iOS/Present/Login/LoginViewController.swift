@@ -56,7 +56,7 @@ private extension LoginViewController {
         }
         
         loginImageView.do {
-            $0.image = ImageLiterals.Login.loginLogo
+            $0.image = ImageLiterals.Login.loginLogo2
             $0.contentMode = .scaleAspectFit
         }
     }
@@ -74,26 +74,31 @@ private extension LoginViewController {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLogoImageView.snp.bottom).offset(view.convertByReverseHeightRatio(20))
+            $0.top.equalTo(titleLogoImageView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(32)
+            $0.trailing.equalToSuperview().inset(137)
         }
         
         loginImageView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(view.convertByHeightRatio(50))
+//            $0.top.equalTo(titleLabel.snp.bottom).offset(view.convertByHeightRatio(50))
+            $0.top.equalTo(titleLabel.snp.bottom)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(loginImageView.snp.height).multipliedBy(304/294)
-            $0.width.equalTo(view.convertByWidthRatio(294))
+            $0.height.equalTo(loginImageView.snp.height).multipliedBy(379/335)
+//            $0.height.equalTo(loginImageView.snp.height).multipliedBy(304/294)
+            $0.width.equalTo(335)
+            $0.bottom.equalTo(appleSocialLoginButtonView.snp.top)
         }
         
         appleSocialLoginButtonView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalTo(kakaoSocialLoginButtonView.snp.top).inset(view.convertByHeightRatio(-12))
+            $0.bottom.equalTo(kakaoSocialLoginButtonView.snp.top).inset(-12)
             $0.height.equalTo(62)
         }
         
         kakaoSocialLoginButtonView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(view.convertByHeightRatio(79))
+//            $0.bottom.equalToSuperview().inset(view.convertByHeightRatio(79))
+            $0.bottom.equalToSuperview().inset(34)
             $0.height.equalTo(62)
         }
     }
