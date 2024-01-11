@@ -42,7 +42,7 @@ private extension MypageViewController {
     }
     
     func setupHierarchy() {
-        view.addSubviews(mypageHeaderView)
+        view.addSubview(mypageHeaderView)
     }
     
     func setupLayout() {
