@@ -14,7 +14,7 @@ import Then
 final class LinkWebViewController: UIViewController {
     
     // MARK: - Properties
-    
+        
     private var canGoBack: Bool = false {
         didSet {
             backButton.isEnabled = canGoBack
@@ -26,6 +26,12 @@ final class LinkWebViewController: UIViewController {
         didSet {
             forwardButton.isEnabled = canGoForward
             forwardButton.tintColor = canGoForward ? .gray700 : .gray150
+        }
+    }
+    
+    private var isRead: Bool = false {
+        didSet {
+            readLinkCheckButton.tintColor = isRead ? .gray700 : .gray150
         }
     }
     
@@ -52,17 +58,31 @@ final class LinkWebViewController: UIViewController {
         setupLayout()
         setupNavigationBarAction()
     }
+    
+    deinit {
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+    }
 }
 
 // MARK: - Extensions
 
 extension LinkWebViewController {
-    /// URL 주소 받아와서 webView에다가 띄우는 함수
-    func setupURL(linkURL: String) {
+    func setupDataBind(linkURL: String, isRead: Bool) {
         if let url = URL(string: linkURL) {
             let request = URLRequest(url: url)
             webView.load(request)
         }
+        self.isRead = isRead
+    }
+    
+    /// KVO를 사용하여 estimatedProgress가 변경될 때 호출되는 메서드
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "estimatedProgress" {
+            if let newProgress = change?[.newKey] as? NSNumber {
+                let progress = Float(truncating: newProgress)
+                progressView.progress = progress
+            }
+        } 
     }
 }
 
@@ -91,7 +111,7 @@ private extension LinkWebViewController {
             $0.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, readLinkCheckButton, flexibleSpace, safariButton], animated: false)
         }
         
-        [backButton, forwardButton, readLinkCheckButton, safariButton].forEach {
+        [backButton, forwardButton, safariButton].forEach {
             $0.tintColor = .gray700
         }
     }
@@ -155,7 +175,11 @@ private extension LinkWebViewController {
     
     /// 툴바 링크 확인 완료 버튼 클릭 시
     @objc func checkReadInWeb() {
-        
+        if !isRead {
+            showToastMessage(width: 157, status: .check, message: "링크 확인 완료!")
+        }
+        isRead = !isRead
+        // TODO: - 서버 통신 추가해줘야 할 부분
     }
     
     /// 툴바 사파리 버튼 클릭 시
@@ -184,12 +208,5 @@ extension LinkWebViewController: WKNavigationDelegate {
     /// 웹 페이지 로딩이 시작할 때 호출
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         progressView.isHidden = false
-    }
-    
-    /// KVO를 사용하여 estimatedProgress가 변경될 때 호출되는 메서드
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "estimatedProgress" {
-            progressView.progress = Float(webView.estimatedProgress)
-        }
     }
 }

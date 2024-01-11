@@ -137,7 +137,8 @@ extension DetailClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = LinkWebViewController()
         nextVC.hidesBottomBarWhenPushed = true
-        nextVC.setupURL(linkURL: dummyDetailClipList[indexPath.row].toastListDto[0].linkURL)
+        nextVC.setupDataBind(linkURL: dummyDetailClipList[indexPath.row].toastListDto[0].linkURL,
+                             isRead: dummyDetailClipList[indexPath.row].toastListDto[0].isRead)
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
