@@ -69,6 +69,16 @@ enum ImageLiterals {
         static var appleLogo: UIImage { .load(name: "ic_apple_login_24") }
     }
     
+    // MARK: - Web
+
+    enum Web {
+        static var backArrow: UIImage { .load(systemName: "arrow.backward") }
+        static var forwardArrow: UIImage { .load(systemName: "arrow.forward") }
+        static var document: UIImage { .load(systemName: "doc.text.fill") }
+        static var safari: UIImage { .load(name: "ic_safari_24") }
+        static var reload: UIImage { .load(name: "ic_reload_24") }
+    }
+    
     // MARK: - Mypage
 
     enum Mypage {
