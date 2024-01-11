@@ -52,7 +52,11 @@ final class MypageHeaderView: UIView {
 
 extension MypageHeaderView {
     func bindModel(model: MypageUserModel) {
-        topSubTitleLabel.attributedText = changeFontColor(text: "\(model.nickname)님이")
+        
+        topSubTitleLabel.text = "\(model.nickname)님이"
+        
+        topSubTitleLabel.asFont(targetString: model.nickname, font: UIFont.suitBold(size: 18))
+        
         readLinkCountLabel.text = "\(model.allReadToast)"
         thisWeakOpenLinkCountLabel.text = "\(model.thisWeekendRead)"
         thisWeakSaveLinkCountLabel.text = "\(model.thisWeekendSaved)"
@@ -76,13 +80,13 @@ private extension MypageHeaderView {
         }
         
         topSubTitleLabel.do {
-            $0.font = .suitBold(size: 28)
-            $0.textColor = .toasterPrimary
+            $0.font = .suitRegular(size: 18)
+            $0.textColor = .black900
         }
         
         bottomSubTitleLabel.do {
             $0.text = StringLiterals.Mypage.Title.bottomTitle
-            $0.font = .suitMedium(size: 16)
+            $0.font = .suitRegular(size: 18)
             $0.textColor = .black900
         }
         
