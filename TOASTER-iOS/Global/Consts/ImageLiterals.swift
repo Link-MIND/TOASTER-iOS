@@ -68,6 +68,12 @@ enum ImageLiterals {
         static var kakaoLogo: UIImage { .load(name: "ic_kakao_login_24") }
         static var appleLogo: UIImage { .load(name: "ic_apple_login_24") }
     }
+    
+    // MARK: - Mypage
+
+    enum Mypage {
+        static var profile: UIImage { .load(name: "profile") }
+    }
 }
 
 extension UIImage {
