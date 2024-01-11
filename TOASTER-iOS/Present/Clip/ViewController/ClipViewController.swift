@@ -11,11 +11,12 @@ import SnapKit
 import Then
 
 final class ClipViewController: UIViewController {
-        
+    
     // MARK: - UI Properties
     
     private let clipEmptyView = ClipEmptyView()
     private let addClipBottomSheetView = AddClipBottomSheetView()
+    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 219, insertView: addClipBottomSheetView)
     private let clipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Life Cycle
@@ -35,17 +36,6 @@ final class ClipViewController: UIViewController {
         
         setupEmptyView()
         setupNavigationBar()
-    }
-}
-
-// MARK: - Extensions
-
-extension ClipViewController {
-    func showBottom() {
-        let view = AddClipBottomSheetView()
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 500, insertView: view)
-        exampleBottom.modalPresentationStyle = .overFullScreen  // 애니메이션을 위해 필수 지정
-        self.present(exampleBottom, animated: false)  // 애니메이션을 위해 필수 지정
     }
 }
 
@@ -79,7 +69,7 @@ private extension ClipViewController {
     func setupDelegate() {
         clipListCollectionView.delegate = self
         clipListCollectionView.dataSource = self
-        addClipBottomSheetView.addClipBottomSheetDelegate = self
+        addClipBottomSheetView.addClipBottomSheetViewDelegate = self
     }
     
     func setupEmptyView() {
@@ -126,9 +116,9 @@ extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell else { return UICollectionViewCell() }
         if indexPath.row == 0 {
-            cell.configureCell(forModel: ClipListModel(categoryID: 0, categoryTitle: "전체클립", toastNum: 100))
+            cell.configureCell(forModel: ClipListModel(categoryID: 0, categoryTitle: "전체클립", toastNum: 100), icon: ImageLiterals.TabBar.allClip.withTintColor(.black900))
         } else {
-            cell.configureCell(forModel: dummyClipList[indexPath.row-1])
+            cell.configureCell(forModel: dummyClipList[indexPath.row-1], icon: ImageLiterals.TabBar.clip.withTintColor(.black900))
         }
         return cell
     }
@@ -137,6 +127,7 @@ extension ClipViewController: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
             headerView.isDetailClipView(isHidden: false)
+            headerView.clipCollectionHeaderViewDelegate = self
             return headerView
         }
         return UICollectionReusableView()
@@ -167,8 +158,19 @@ extension ClipViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension ClipViewController: AddClipBottomSheetDelegate {
+extension ClipViewController: ClipCollectionHeaderViewDelegate {
     func addClipButtonTapped() {
-        
+        addClipBottom.modalPresentationStyle = .overFullScreen
+        self.present(addClipBottom, animated: false)
+    }
+}
+
+extension ClipViewController: AddClipBottomSheetViewDelegate {
+    func dismissButtonTapped() {
+        addClipBottom.hideBottomSheet()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
+            self.addClipBottomSheetView.resetTextField()
+        }
     }
 }
