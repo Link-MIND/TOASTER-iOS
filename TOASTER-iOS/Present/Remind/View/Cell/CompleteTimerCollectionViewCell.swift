@@ -38,7 +38,7 @@ final class CompleteTimerCollectionViewCell: UICollectionViewCell {
     }
 }
 
-// MARK: - Private Extension
+// MARK: - Extension
 
 extension CompleteTimerCollectionViewCell {
     func configureCell(forModel: CompleteTimerModel) {

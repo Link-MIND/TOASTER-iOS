@@ -34,7 +34,7 @@ final class RemindTimerEmptyView: UIView {
     }
 }
 
-// MARK: - Private Extension
+// MARK: - Extension
 
 extension RemindTimerEmptyView {
     func setupButtonEnable(forEnable: Bool) {

@@ -42,7 +42,7 @@ final class RemindTimerEditBottomSheetView: UIView {
     }
 }
 
-// MARK: - Private Extension
+// MARK: - Extension
 
 extension RemindTimerEditBottomSheetView {
     func setupEditView(forDelegate: RemindEditViewDelegate,
