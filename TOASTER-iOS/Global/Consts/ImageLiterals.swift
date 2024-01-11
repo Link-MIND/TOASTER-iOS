@@ -78,6 +78,12 @@ enum ImageLiterals {
         static var safari: UIImage { .load(name: "ic_safari_24") }
         static var reload: UIImage { .load(name: "ic_reload_24") }
     }
+    
+    // MARK: - Mypage
+
+    enum Mypage {
+        static var profile: UIImage { .load(name: "profile") }
+    }
 }
 
 extension UIImage {
