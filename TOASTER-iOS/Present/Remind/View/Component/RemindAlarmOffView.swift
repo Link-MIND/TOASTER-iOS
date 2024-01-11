@@ -82,9 +82,8 @@ private extension RemindAlarmOffView {
         }
         
         explainLabel.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview()
+            $0.horizontalEdges.bottom.equalToSuperview()
             $0.top.equalTo(alarmOffImageView.snp.bottom).offset(12)
-            $0.bottom.equalToSuperview()
         }
     }
 }

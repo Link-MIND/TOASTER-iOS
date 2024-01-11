@@ -93,7 +93,7 @@ private extension RemindCollectionHeaderView {
     }
     
     func setupHierarchy() {
-        addSubviews(mainStackView)
+        addSubview(mainStackView)
         mainStackView.addArrangedSubviews(titleLabel, countView)
         countView.addSubview(countLabel)
     }
