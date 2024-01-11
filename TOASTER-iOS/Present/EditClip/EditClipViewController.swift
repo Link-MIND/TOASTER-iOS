@@ -11,11 +11,17 @@ import SnapKit
 import Then
 
 final class EditClipViewController: UIViewController {
-        
+    
     // MARK: - UI Properties
     
     private let editClipNoticeView = EditClipNoticeView()
     private let editClipCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
+    private let editClipBottomSheetView = AddClipBottomSheetView()
+    private lazy var editClipBottom = ToasterBottomSheetViewController(bottomType: .white,
+                                                                       bottomTitle: "클립 이름 수정",
+                                                                       height: 219,
+                                                                       insertView: editClipBottomSheetView)
     
     // MARK: - Life Cycle
     
@@ -43,6 +49,10 @@ private extension EditClipViewController {
             $0.delegate = self
             $0.dataSource = self
             $0.register(EditClipCollectionViewCell.self, forCellWithReuseIdentifier: EditClipCollectionViewCell.className)
+        }
+        
+        editClipBottomSheetView.do {
+            $0.addClipBottomSheetViewDelegate = self
         }
     }
     
@@ -107,7 +117,8 @@ extension EditClipViewController: UICollectionViewDataSource {
             }
             
             cell.changeTitleButtonTapped {
-                print("edit!")
+                self.editClipBottom.modalPresentationStyle = .overFullScreen
+                self.present(self.editClipBottom, animated: false)
             }
         }
         return cell
@@ -134,5 +145,18 @@ extension EditClipViewController: UICollectionViewDelegateFlowLayout {
     // minimumLineSpacing: Cell 들의 위, 아래 간격 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
+    }
+}
+
+// MARK: - AddClipBottomSheetView Delegate
+
+extension EditClipViewController: AddClipBottomSheetViewDelegate {
+    func dismissButtonTapped() {
+        // 수정 서버 통신 붙일 부분
+        editClipBottom.hideBottomSheet()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.showToastMessage(width: 157, status: .check, message: "클립 수정 완료!")
+            self.editClipBottomSheetView.resetTextField()
+        }
     }
 }
