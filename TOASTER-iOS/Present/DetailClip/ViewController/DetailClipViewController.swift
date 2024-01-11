@@ -133,7 +133,14 @@ extension DetailClipViewController: UICollectionViewDataSource {
 
 // MARK: - CollectionView Delegate
 
-extension DetailClipViewController: UICollectionViewDelegate {}
+extension DetailClipViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let nextVC = LinkWebViewController()
+        nextVC.hidesBottomBarWhenPushed = true
+        nextVC.setupURL(linkURL: dummyDetailClipList[indexPath.row].toastListDto[0].linkURL)
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+}
 
 // MARK: - CollectionView Delegate Flow Layout
 extension DetailClipViewController: UICollectionViewDelegateFlowLayout {

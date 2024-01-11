@@ -14,6 +14,9 @@ final class LinkWebNavigationView: UIView {
     
     // MARK: - Properties
     
+    private var popButtonAction: (() -> Void)?
+    private var reloadButtonAction: (() -> Void)?
+    
     // MARK: - UI Components
     
     private let popButton = UIButton()
@@ -28,7 +31,6 @@ final class LinkWebNavigationView: UIView {
         setupStyle()
         setupHierarchy()
         setupLayout()
-        setupAddTarget()
     }
     
     @available(*, unavailable)
@@ -43,6 +45,14 @@ extension LinkWebNavigationView {
     func setupLinkAddress(link: String) {
         addressLabel.text = link
     }
+    
+    func popButtonTapped(_ action: @escaping () -> Void) {
+        popButtonAction = action
+    }
+    
+    func reloadButtonTapped(_ action: @escaping () -> Void) {
+        reloadButtonAction = action
+    }
 }
 
 // MARK: - Private Extensions
@@ -54,16 +64,19 @@ private extension LinkWebNavigationView {
         popButton.do {
             $0.tintColor = .gray800
             $0.setImage(ImageLiterals.Common.arrowLeft, for: .normal)
+            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
         
         addressLabel.do {
-            $0.font = .suitSemiBold(size: 16)
+            $0.font = .suitSemiBold(size: 14)
             $0.textColor = .black900
+            $0.textAlignment = .center
         }
 
         reloadButton.do {
             $0.tintColor = .gray800
             $0.setImage(ImageLiterals.Web.reload, for: .normal)
+            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
     }
     
@@ -81,6 +94,7 @@ private extension LinkWebNavigationView {
         addressLabel.snp.makeConstraints {
             $0.centerY.equalTo(popButton)
             $0.leading.equalTo(popButton.snp.trailing).offset(13)
+            $0.trailing.equalTo(reloadButton.snp.leading).inset(-13)
         }
         
         reloadButton.snp.makeConstraints {
@@ -90,12 +104,15 @@ private extension LinkWebNavigationView {
         }
     }
 
-    func setupAddTarget() {
-    
-    }
-    
     @objc
-    func buttonTapped() {
-        
+    func buttonTapped(_ sender: UIButton) {
+        switch sender {
+        case popButton:
+            popButtonAction?()
+        case reloadButton:
+            reloadButtonAction?()
+        default:
+            break
+        }
     }
 }
