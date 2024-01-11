@@ -190,6 +190,8 @@ private extension LinkWebViewController {
     }
 }
 
+// MARK: - WKNavigationDelegate Extensions
+
 extension LinkWebViewController: WKNavigationDelegate {
     /// 현재 웹 페이지 링크를 받아오는 함수
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
