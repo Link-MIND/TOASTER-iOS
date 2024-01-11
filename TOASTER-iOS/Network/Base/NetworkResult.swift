@@ -20,7 +20,7 @@ enum NetworkResult<T> {
     case unProcessable      // UNPROCESSABLE_ENTITY (422)
     case serverErr          // INTERNAL_SERVER_ERROR (500번대)
     
-    var stateDescription: String? {
+    var stateDescription: String {
         switch self {
         case .success(_): return "SUCCESS"
 

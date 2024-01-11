@@ -20,7 +20,7 @@ extension AuthTargetType: BaseTargetType {
     
     var headerType: HeaderType {
         switch self {
-        case .postSocialLogin(let requestBody): return .nonTokenHeader
+        case .postSocialLogin(_): return .nonTokenHeader
         case .postRefreshToken: return .refreshTokenHeader
         default: return .accessTokenHeader
         }
@@ -39,7 +39,7 @@ extension AuthTargetType: BaseTargetType {
     
     var path: String {
         switch self {
-        case .postSocialLogin(let requestBody): return utilPath.rawValue
+        case .postSocialLogin(_): return utilPath.rawValue
         case .postRefreshToken: return utilPath.rawValue + "/token"
         case .postLogout: return utilPath.rawValue + "/sign-out"
         case .deleteWithdraw: return utilPath.rawValue + "/withdraw"
@@ -48,7 +48,7 @@ extension AuthTargetType: BaseTargetType {
     
     var method: Moya.Method {
         switch self {
-        case .postSocialLogin(let requestBody): return .post
+        case .postSocialLogin(_): return .post
         case .postRefreshToken: return .post
         case .postLogout: return .post
         case .deleteWithdraw: return .delete
