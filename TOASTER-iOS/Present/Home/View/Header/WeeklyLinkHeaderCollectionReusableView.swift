@@ -41,7 +41,7 @@ final class WeeklyLinkHeaderCollectionReusableView: UICollectionReusableView {
         titleLabel.do {
             $0.textColor = .black900
             $0.font = .suitMedium(size: 18)
-            $0.text = "이주의 링크"
+            $0.text = StringLiterals.Home.WeeklyLinkHeader.weeklyLinkLabel
         }
     }
     

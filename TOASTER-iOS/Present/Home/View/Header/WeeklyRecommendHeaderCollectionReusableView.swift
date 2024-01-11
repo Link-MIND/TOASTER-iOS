@@ -41,7 +41,7 @@ final class WeeklyRecommendHeaderCollectionReusableView: UICollectionReusableVie
         titleLabel.do {
             $0.textColor = .black900
             $0.font = .suitMedium(size: 18)
-            $0.text = "이주의 추천 사이트"
+            $0.text = StringLiterals.Home.WeeklyRecommendHeader.weeklyRecommendLabel
         }
     }
     

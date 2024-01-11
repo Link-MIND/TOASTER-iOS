@@ -14,6 +14,7 @@ import Then
 
 final class MainCollectionViewCell: UICollectionViewCell {
     
+    // 서버 통신 이후 수정
     var nickName: String = "김가현"
     var readToastNum: Int = 13
     var allToastNum: Int = 47
@@ -51,21 +52,20 @@ final class MainCollectionViewCell: UICollectionViewCell {
 // MARK: - Private Extensions
 
 private extension MainCollectionViewCell {
-    
     func setupStyle() {
         searchButton.do {
             $0.backgroundColor = .gray50
-            $0.setTitle("검색어를 입력해주세요.", for: .normal)
+            $0.setTitle(StringLiterals.Home.Main.searchPlaceHolder, for: .normal)
             $0.setTitleColor(.gray400, for: .normal)
             $0.contentHorizontalAlignment = .left
             $0.layer.cornerRadius = 12
         }
         
         userLabel.do {
-            $0.text = nickName + "님"
+            $0.text = nickName + StringLiterals.Home.Main.subNickName
             $0.font = .suitBold(size: 20)
             $0.textColor = .black900
-            $0.asFont(targetString: "님", font: .suitRegular(size: 20))
+            $0.asFont(targetString: StringLiterals.Home.Main.subNickName, font: .suitRegular(size: 20))
         }
         
         noticeLabel.do {
@@ -78,7 +78,7 @@ private extension MainCollectionViewCell {
         }
         
         countToastLabel.do {
-            $0.text = String(readToastNum) + "/" + String(allToastNum)
+            $0.text = String(readToastNum) + " / " + String(allToastNum)
             $0.font = .suitRegular(size: 16)
             $0.textColor = .gray300
             $0.asColor(targetString: String(readToastNum), color: .red)

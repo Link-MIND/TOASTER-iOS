@@ -16,7 +16,7 @@ final class UserClipHeaderCollectionReusableView: UICollectionReusableView {
         
     // MARK: - Properties
     
-    private var nickname: String = "김가현"
+    private var nickname: String = "김가현" //서버 통신 이후 수정
     private let titleLabel = UILabel()
     
     // MARK: - Life Cycle
@@ -42,7 +42,7 @@ final class UserClipHeaderCollectionReusableView: UICollectionReusableView {
         titleLabel.do {
             $0.textColor = .black900
             $0.font = .suitMedium(size: 18)
-            $0.text = nickname + "님의 클립"
+            $0.text = nickname + StringLiterals.Home.UserClipHeader.titleLabel
             $0.asFont(targetString: nickname, font: .suitBold(size: 18))
         }
     }

@@ -21,8 +21,8 @@ final class HomeView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setHierarchy()
-        setLayout()
+        setupHierarchy()
+        setupLayout()
     }
     
     @available(*, unavailable)
@@ -30,15 +30,15 @@ final class HomeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - set Hierachy
+    // MARK: - set Hierarchy
     
-    private func setHierarchy() {
+    private func setupHierarchy() {
         self.addSubview(collectionView)
     }
     
     // MARK: - set Layout
     
-    private func setLayout() {
+    private func setupLayout() {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
