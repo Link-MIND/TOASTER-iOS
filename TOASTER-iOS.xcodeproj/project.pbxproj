@@ -490,7 +490,6 @@
 				6B6AE6812B3FF50A000E2366 /* Extensions */,
 				6B6AE6802B3FF505000E2366 /* Resources */,
 				6B6AE67F2B3FF4FE000E2366 /* Supporting Files */,
-				3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -787,6 +786,7 @@
 		6BE6DA1E2B5026B8008B06FA /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */,
 				6BE6DA1F2B504433008B06FA /* BaseTargetType.swift */,
 				6BE6DA382B50636B008B06FA /* BaseAPIService.swift */,
 				6BE6DA332B50594B008B06FA /* MoyaPlugin.swift */,
@@ -1326,7 +1326,6 @@
 		};
 		6B6AE6602B3FF103000E2366 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6BC493742B4D40F200544249 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1359,7 +1358,6 @@
 		};
 		6B6AE6612B3FF103000E2366 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6BC493742B4D40F200544249 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
