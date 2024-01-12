@@ -16,7 +16,7 @@ final class RemindSelectClipViewController: UIViewController {
     
     private let viewModel = RemindSelectClipViewModel()
     
-    private var selectedID: Int? {
+    private var selectedClip: RemindClipModel? {
         didSet {
             nextButton.backgroundColor = .toasterBlack
         }
@@ -113,7 +113,9 @@ private extension RemindSelectClipViewController {
     }
     
     @objc func nextButtonTapped() {
-        print(selectedID)
+        let nextViewController = RemindTimerAddViewController()
+        nextViewController.configureView(forModel: selectedClip)
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 }
 
@@ -135,7 +137,7 @@ extension RemindSelectClipViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedID = viewModel.clipData[indexPath.item].id
+        selectedClip = viewModel.clipData[indexPath.item]
     }
 }
 

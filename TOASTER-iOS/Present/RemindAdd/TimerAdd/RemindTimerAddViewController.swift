@@ -14,6 +14,9 @@ final class RemindTimerAddViewController: UIViewController {
     
     // MARK: - Properties
     
+    private let dateformatter = DateFormatter()
+    private var categoryID: Int?
+    
     // MARK: - UI Properties
     
     private lazy var verticalStackView: UIStackView = createStackView(forAxis: .vertical, forSpacing: 18)
@@ -30,7 +33,7 @@ final class RemindTimerAddViewController: UIViewController {
     private let firstDividingView: UIView = UIView()
     private let datePickerView: UIDatePicker = UIDatePicker()
     private let secondDividingView: UIView = UIView()
-        
+    
     private lazy var repeatStackView: UIStackView = createStackView(forAxis: .vertical, forSpacing: 12)
     private let repeatLabel: UILabel = UILabel()
     private let setupRepeatButton: UIButton = UIButton()
@@ -38,7 +41,7 @@ final class RemindTimerAddViewController: UIViewController {
     private let repeatButtonImageView: UIImageView = UIImageView(image: ImageLiterals.Clip.rightarrow)
     
     private let completeButton: UIButton = UIButton()
-
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -56,14 +59,31 @@ final class RemindTimerAddViewController: UIViewController {
     }
 }
 
+// MARK: - Extension
+
+extension RemindTimerAddViewController {
+    func configureView(forModel: RemindClipModel?) {
+        if let model = forModel {
+            mainLabel.text = "\(model.title)을"
+            mainLabel.asFont(targetString: model.title,
+                             font: .suitSemiBold(size: 18))
+            categoryID = forModel?.id
+        }
+    }
+}
+
 // MARK: - Private Extension
 
 private extension RemindTimerAddViewController {
     func setupStyle() {
         view.backgroundColor = .toasterBackground
         
+        dateformatter.do {
+            $0.dateFormat = "a hh시 mm분"
+            $0.locale = Locale(identifier: "ko_KR")
+        }
+        
         mainLabel.do {
-            $0.text = "을"
             $0.font = .suitMedium(size: 18)
             $0.textColor = .toasterBlack
         }
@@ -76,6 +96,7 @@ private extension RemindTimerAddViewController {
         timerLabel.do {
             $0.font = .suitBold(size: 18)
             $0.textColor = .toasterPrimary
+            $0.text = dateformatter.string(from: Date())
         }
         
         subLabel.do {
@@ -94,6 +115,7 @@ private extension RemindTimerAddViewController {
             $0.datePickerMode = .time
             $0.preferredDatePickerStyle = .wheels
             $0.locale = Locale(identifier: "ko_KR")
+            $0.addTarget(self, action: #selector(pickerValueChanged), for: .valueChanged)
         }
         
         repeatLabel.do {
@@ -114,7 +136,7 @@ private extension RemindTimerAddViewController {
             $0.font = .suitBold(size: 16)
             $0.textColor = .black850
         }
-                
+        
         completeButton.do {
             $0.makeRounded(radius: 12)
             $0.setTitle("완료", for: .normal)
@@ -151,6 +173,11 @@ private extension RemindTimerAddViewController {
             $0.height.equalTo(62)
             $0.bottom.equalToSuperview().inset(34)
             $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        timerView.snp.makeConstraints {
+            $0.height.equalTo(30)
+            $0.width.equalTo(134)
         }
         
         timerLabel.snp.makeConstraints {
@@ -203,7 +230,21 @@ private extension RemindTimerAddViewController {
     }
     
     func closeButtonTapped() {
-        // closeButtonTapped
+        showPopup(forMainText: "타이머 만들기를 취소할까요?",
+                  forSubText: "지금까지 진행한 타이머 설정이\n사라져요",
+                  forLeftButtonTitle: "닫기",
+                  forRightButtonTitle: "취소",
+                  forRightButtonHandler: makeTimerCancle)
+    }
+    
+    func makeTimerCancle() {
+        dismiss(animated: false)
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc func pickerValueChanged() {
+        let date = dateformatter.string(from: datePickerView.date)
+        timerLabel.text = date
     }
     
     @objc func repeatButtonTapped() {

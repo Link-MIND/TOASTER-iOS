@@ -75,14 +75,14 @@ private extension TimerRepeatBottomSheetView {
     
     func setupLayout() {
         repeatCollectionView.snp.makeConstraints {
+            $0.height.equalTo(540)
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalTo(nextButton.snp.top).offset(-20)
         }
         
         nextButton.snp.makeConstraints {
             $0.height.equalTo(62)
-            $0.bottom.equalToSuperview().inset(34)
+            $0.top.equalTo(repeatCollectionView.snp.bottom).offset(20)
             $0.horizontalEdges.equalToSuperview().inset(20)
         }
     }
