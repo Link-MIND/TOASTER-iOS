@@ -45,6 +45,7 @@
 		3F617CB52B4EC2EE00956E69 /* MypageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F617CB42B4EC2EE00956E69 /* MypageHeaderView.swift */; };
 		3F617CB82B4ECB6000956E69 /* MypageUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F617CB72B4ECB6000956E69 /* MypageUserModel.swift */; };
 		3FACF9B82B4FE306007E5A8F /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */; };
+		3FACF9BA2B50FEB4007E5A8F /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */; };
 		3FBFDEC02B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBFDEBF2B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift */; };
 		6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE64E2B3FF101000E2366 /* AppDelegate.swift */; };
 		6B6AE6512B3FF101000E2366 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6502B3FF101000E2366 /* SceneDelegate.swift */; };
@@ -80,7 +81,6 @@
 		6BC4935E2B4414B400544249 /* ToasterPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC4935D2B4414B400544249 /* ToasterPopupViewController.swift */; };
 		6BC493682B45D7B100544249 /* ToasterNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC493672B45D7B100544249 /* ToasterNavigationController.swift */; };
 		6BC4936C2B48633700544249 /* ToasterNavigationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC4936B2B48633700544249 /* ToasterNavigationType.swift */; };
-		6BC493752B4D40F300544249 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6BC493742B4D40F200544249 /* Config.xcconfig */; };
 		6BC493792B4D6FB300544249 /* SearchEmptyResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC493782B4D6FB300544249 /* SearchEmptyResultView.swift */; };
 		6BC493812B4D88E200544249 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC493802B4D88E200544249 /* SearchViewModel.swift */; };
 		6BC493832B4D8B5900544249 /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC493822B4D8B5900544249 /* SearchResultModel.swift */; };
@@ -128,6 +128,7 @@
 		3F617CB42B4EC2EE00956E69 /* MypageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageHeaderView.swift; sourceTree = "<group>"; };
 		3F617CB72B4ECB6000956E69 /* MypageUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageUserModel.swift; sourceTree = "<group>"; };
 		3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
+		3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		3FBFDEBF2B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthenticateAdapter.swift; sourceTree = "<group>"; };
 		3FBFDEC12B4D3BBD00C58393 /* TOASTER-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TOASTER-iOS.entitlements"; sourceTree = "<group>"; };
 		6B6AE64B2B3FF101000E2366 /* TOASTER-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TOASTER-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,7 +156,6 @@
 		6BC4935D2B4414B400544249 /* ToasterPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterPopupViewController.swift; sourceTree = "<group>"; };
 		6BC493672B45D7B100544249 /* ToasterNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterNavigationController.swift; sourceTree = "<group>"; };
 		6BC4936B2B48633700544249 /* ToasterNavigationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterNavigationType.swift; sourceTree = "<group>"; };
-		6BC493742B4D40F200544249 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		6BC493782B4D6FB300544249 /* SearchEmptyResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEmptyResultView.swift; sourceTree = "<group>"; };
 		6BC493802B4D88E200544249 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		6BC493822B4D8B5900544249 /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
@@ -409,7 +409,7 @@
 				6B6AE6852B3FF534000E2366 /* Fonts */,
 				6B6AE6572B3FF103000E2366 /* Assets.xcassets */,
 				6B6AE6592B3FF103000E2366 /* LaunchScreen.storyboard */,
-				6BC493742B4D40F200544249 /* Config.xcconfig */,
+				3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */,
 				3F2FA1742B45C0AF00EDBF95 /* Config.swift */,
 			);
 			path = Resources;
@@ -708,7 +708,7 @@
 				6B6AE65B2B3FF103000E2366 /* LaunchScreen.storyboard in Resources */,
 				39BC5B142B410EF3004024E6 /* SUIT-Medium.otf in Resources */,
 				39BC5B172B410EF3004024E6 /* SUIT-Regular.otf in Resources */,
-				6BC493752B4D40F300544249 /* Config.xcconfig in Resources */,
+				3FACF9BA2B50FEB4007E5A8F /* Config.xcconfig in Resources */,
 				39BC5B152B410EF3004024E6 /* SUIT-SemiBold.otf in Resources */,
 				6B6AE6582B3FF103000E2366 /* Assets.xcassets in Resources */,
 				39BC5B162B410EF3004024E6 /* SUIT-ExtraBold.otf in Resources */,
