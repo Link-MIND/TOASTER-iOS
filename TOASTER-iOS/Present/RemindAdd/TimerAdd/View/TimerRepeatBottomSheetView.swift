@@ -15,7 +15,7 @@ protocol TimerRepeatBottomSheetDelegate: AnyObject {
 }
 
 final class TimerRepeatBottomSheetView: UIView {
-
+    
     // MARK: - Components
     
     private let repeatTime: [TimerRepeatDate] = [.everyDay,
@@ -30,23 +30,23 @@ final class TimerRepeatBottomSheetView: UIView {
                                                  .sun]
     private var selectedList: Set<Int> = []
     private weak var delegate: TimerRepeatBottomSheetDelegate?
-
+    
     // MARK: - UI Components
-
+    
     private lazy var repeatCollectionView: UICollectionView = createCollectionView()
     private let nextButton: UIButton = UIButton()
     
     // MARK: - Life Cycles
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         setupStyle()
         setupHierarchy()
         setupLayout()
         setupDelegate()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -57,6 +57,16 @@ final class TimerRepeatBottomSheetView: UIView {
 extension TimerRepeatBottomSheetView {
     func setupDelegate(forDelegate: TimerRepeatBottomSheetDelegate) {
         delegate = forDelegate
+    }
+    
+    func setupSelectedIndex(forIndexList: Set<Int>) {
+        selectedList = []
+        forIndexList.forEach {
+            if let date = TimerRepeatDate(rawValue: $0),
+               let index = repeatTime.firstIndex(of: date) {
+                selectedList.insert(index)
+            }
+        }
     }
 }
 
