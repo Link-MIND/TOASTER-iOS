@@ -12,6 +12,8 @@ import Then
 
 protocol AddClipBottomSheetViewDelegate: AnyObject {
     func dismissButtonTapped()
+    func addHeightBottom()
+    func minusHeightBottom()
 }
 
 final class AddClipBottomSheetView: UIView {
@@ -180,6 +182,7 @@ private extension AddClipBottomSheetView {
     
     func setupErrorMessage() {
         if isError {
+            addClipBottomSheetViewDelegate?.addHeightBottom()
             errorMessage.isHidden = false
         } else {
             errorMessage.isHidden = true
@@ -210,7 +213,12 @@ private extension AddClipBottomSheetView {
 extension AddClipBottomSheetView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let newText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string
+        let currentText = textField.text ?? ""
         let maxLength = 16
+        
+        if currentText.count == maxLength && newText.count == 15 {
+            addClipBottomSheetViewDelegate?.minusHeightBottom()
+        }
         return newText.count <= maxLength
     }
     

@@ -16,7 +16,7 @@ final class ClipViewController: UIViewController {
     
     private let clipEmptyView = ClipEmptyView()
     private let addClipBottomSheetView = AddClipBottomSheetView()
-    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 219, insertView: addClipBottomSheetView)
+    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
     private let clipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Life Cycle
@@ -175,6 +175,14 @@ extension ClipViewController: ClipCollectionHeaderViewDelegate {
 }
 
 extension ClipViewController: AddClipBottomSheetViewDelegate {
+    func addHeightBottom() {
+        addClipBottom.changeHeightBottomSheet(height: 219)
+    }
+    
+    func minusHeightBottom() {
+        addClipBottom.changeHeightBottomSheet(height: 198)
+    }
+    
     func dismissButtonTapped() {
         addClipBottom.hideBottomSheet()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
