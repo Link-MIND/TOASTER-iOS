@@ -6,6 +6,8 @@
 	<string>$(ACCESS_TOKEN_KEY)</string>
 	<key>APPLE_LOGIN</key>
 	<string>$(APPLE_LOGIN)</string>
+	<key>APPLE_USER_ID</key>
+	<string>$(APPLE_USER_ID)</string>
 	<key>BASE_URL</key>
 	<string>$(BASE_URL)</string>
 	<key>CFBundleURLTypes</key>

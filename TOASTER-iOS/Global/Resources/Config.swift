@@ -17,6 +17,7 @@ enum Config {
             static let loginType = "LOGIN_TYPE"
             static let appleLogin = "APPLE_LOGIN"
             static let kakaoLogin = "KAKAO_LOGIN"
+            static let appleUserID =  "APPLE_USER_ID"
         }
     }
     
@@ -77,4 +78,12 @@ extension Config {
         }
         return key
     }()
+    
+    static let appleUserID: String = {
+        guard let key = Config.infoDictionary[Keys.Plist.appleUserID] as? String else {
+            fatalError("APPLE_USER_ID is not set in plist for this configuration")
+        }
+        return key
+    }()
+    
 }
