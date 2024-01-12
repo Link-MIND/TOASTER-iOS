@@ -102,6 +102,7 @@ private extension ClipViewController {
 extension ClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = DetailClipViewController()
+        nextVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
