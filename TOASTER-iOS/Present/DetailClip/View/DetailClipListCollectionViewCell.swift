@@ -14,6 +14,13 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    private var isReadDimmedView: Bool = false {
+        didSet {
+            dimmedView.isHidden = !isReadDimmedView
+            readLabel.isHidden = !isReadDimmedView
+        }
+    }
+    
     lazy var isClipNameLabelHidden: Bool = clipNameLabel.isHidden {
         didSet {
             clipNameLabel.isHidden = isClipNameLabelHidden
@@ -32,6 +39,8 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
     private let linkTitleLabel = UILabel()
     private let linkLabel = UILabel()
     private let modifiedButton = UIButton()
+    private let dimmedView = UIView()
+    private let readLabel = UILabel()
     
     // MARK: - Life Cycles
     
@@ -54,9 +63,11 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
 extension DetailClipListCollectionViewCell {
     func configureCell(forModel: ToastList) {
         modifiedButton.isHidden = false
+        clipNameLabel.text = forModel.categoryTitle
         linkTitleLabel.text = forModel.toastTitle
         linkLabel.text = forModel.linkURL
         isClipNameLabelHidden = forModel.isRead
+        isReadDimmedView = forModel.isRead
     }
     
     func configureCell(forModel: SearchResultDetailClipModel, forText: String) {
@@ -64,6 +75,7 @@ extension DetailClipListCollectionViewCell {
         linkTitleLabel.text = forModel.title
         linkTitleLabel.asFont(targetString: forText, font: .suitBold(size: 16))
         linkLabel.text = forModel.link
+        
         if let clipTitle = forModel.clipTitle {
             clipNameLabel.text = clipTitle
             isClipNameLabelHidden = false
@@ -107,10 +119,22 @@ private extension DetailClipListCollectionViewCell {
         modifiedButton.do {
             $0.setImage(ImageLiterals.Clip.meatballs, for: .normal)
         }
+        
+        dimmedView.do {
+            $0.backgroundColor = .black900.withAlphaComponent(0.5)
+            $0.makeRounded(radius: 8)
+        }
+        
+        readLabel.do {
+            $0.text = "열람"
+            $0.font = .suitMedium(size: 12)
+            $0.textColor = .gray100
+        }
     }
     
     func setupHierarchy() {
         addSubviews(linkImage, clipNameLabel, linkTitleLabel, linkLabel, modifiedButton)
+        linkImage.addSubviews(dimmedView, readLabel)
     }
     
     func setupLayout() {
@@ -127,8 +151,8 @@ private extension DetailClipListCollectionViewCell {
         
         modifiedButton.snp.makeConstraints {
             $0.size.equalTo(24)
-            $0.trailing.equalToSuperview().inset(4)
-            $0.top.equalToSuperview().inset(4)
+            $0.trailing.equalToSuperview().inset(8)
+            $0.top.equalToSuperview().inset(8)
         }
         
         clipNameLabel.snp.makeConstraints {
@@ -141,6 +165,14 @@ private extension DetailClipListCollectionViewCell {
         linkTitleLabel.snp.makeConstraints {
             $0.top.equalTo(clipNameLabel.snp.bottom).offset(6)
             $0.leading.equalTo(linkImage.snp.trailing).offset(12)
+        }
+        
+        dimmedView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        readLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
     
