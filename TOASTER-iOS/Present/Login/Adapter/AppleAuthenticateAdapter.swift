@@ -49,7 +49,7 @@ extension AppleAuthenticateAdapter: ASAuthorizationControllerDelegate {
                 print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
                 print("token : \(tokenString)")
                 
-                UserDefaults.standard.set(userIdentifier, forKey: StringLiterals.UserDefaultsKey.appleUserID)
+                UserDefaults.standard.set(userIdentifier, forKey: Config.appleUserID)
                 
                 authorizationContinuation?.resume(returning: SocialLoginTokenModel(accessToken: nil, refreshToken: nil, identityToken: tokenString))
             } else {

@@ -93,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func checkAppleLogin(completion: @escaping (Bool) -> Void) {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
-        appleIDProvider.getCredentialState(forUserID: UserDefaults.standard.string(forKey: StringLiterals.UserDefaultsKey.appleUserID) ?? "") { (credentialState, error) in
+        appleIDProvider.getCredentialState(forUserID: UserDefaults.standard.string(forKey: Config.appleUserID) ?? "") { (credentialState, error) in
             switch credentialState {
             case .authorized:
                 print("해당 ID는 연동되어있습니다.")
