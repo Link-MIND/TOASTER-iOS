@@ -10,6 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
+protocol TimerRepeatBottomSheetDelegate: AnyObject {
+    func nextButtonTapped(selectedList: Set<Int>)
+}
+
 final class TimerRepeatBottomSheetView: UIView {
 
     // MARK: - Components
@@ -25,6 +29,7 @@ final class TimerRepeatBottomSheetView: UIView {
                                                  .sat,
                                                  .sun]
     private var selectedList: Set<Int> = []
+    private weak var delegate: TimerRepeatBottomSheetDelegate?
 
     // MARK: - UI Components
 
@@ -47,6 +52,14 @@ final class TimerRepeatBottomSheetView: UIView {
     }
 }
 
+// MARK: - Extension
+
+extension TimerRepeatBottomSheetView {
+    func setupDelegate(forDelegate: TimerRepeatBottomSheetDelegate) {
+        delegate = forDelegate
+    }
+}
+
 // MARK: - Private Extension
 
 private extension TimerRepeatBottomSheetView {
@@ -66,6 +79,7 @@ private extension TimerRepeatBottomSheetView {
             $0.setTitle("다음", for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
+            $0.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -99,6 +113,10 @@ private extension TimerRepeatBottomSheetView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return collectionView
     }
+    
+    @objc func nextButtonTapped() {
+        delegate?.nextButtonTapped(selectedList: selectedList)
+    }
 }
 
 // MARK: - UICollectionViewDelegate
@@ -106,11 +124,11 @@ private extension TimerRepeatBottomSheetView {
 extension TimerRepeatBottomSheetView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? TimerRepeatCollectionViewCell else { return }
-        
-        cell.cellSelected(forSelect: selectedList.contains(indexPath.item))
-        if selectedList.contains(indexPath.item) {
-            selectedList.remove(indexPath.item)
-        } else { selectedList.insert(indexPath.item) }
+        let dateValue = repeatTime[indexPath.item].rawValue
+        cell.cellSelected(forSelect: !selectedList.contains(dateValue))
+        if selectedList.contains(dateValue) {
+            selectedList.remove(dateValue)
+        } else { selectedList.insert(dateValue) }
     }
 }
 

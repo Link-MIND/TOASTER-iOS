@@ -16,6 +16,12 @@ final class RemindTimerAddViewController: UIViewController {
     
     private let dateformatter = DateFormatter()
     private var categoryID: Int?
+    private var selectedIndex: Set<Int> = [] {
+        didSet {
+            repeatButtonLabel.text = selectedIndex.fetchDaysString()
+            repeatButtonLabel.textColor = .toasterPrimary
+        }
+    }
     
     // MARK: - UI Properties
     
@@ -143,6 +149,7 @@ private extension RemindTimerAddViewController {
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitSemiBold(size: 16)
             $0.backgroundColor = .toasterBlack
+            $0.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -242,6 +249,17 @@ private extension RemindTimerAddViewController {
         navigationController?.popToRootViewController(animated: true)
     }
     
+    func setSelectedIndex(contains: Int,
+                          deleteFirst: Int,
+                          deleteSecond: Int) {
+        if selectedIndex.contains(contains) {
+            for i in deleteFirst...deleteSecond {
+                self.selectedIndex.insert(i)
+            }
+            selectedIndex.remove(contains)
+        }
+    }
+    
     @objc func pickerValueChanged() {
         let date = dateformatter.string(from: datePickerView.date)
         timerLabel.text = date
@@ -249,8 +267,26 @@ private extension RemindTimerAddViewController {
     
     @objc func repeatButtonTapped() {
         let repeatView = TimerRepeatBottomSheetView()
+        repeatView.setupDelegate(forDelegate: self)
         let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "반복설정", height: 622, insertView: repeatView)
         exampleBottom.modalPresentationStyle = .overFullScreen
         self.present(exampleBottom, animated: false)
+    }
+    
+    @objc func completeButtonTapped() {
+        // TODO: - API 호출
+    }
+}
+
+// MARK: - TimerRepeatBottomSheetDelegate
+
+extension RemindTimerAddViewController: TimerRepeatBottomSheetDelegate {
+    func nextButtonTapped(selectedList: Set<Int>) {
+        selectedIndex = selectedList
+        setSelectedIndex(contains: 8, deleteFirst: 1, deleteSecond: 7)
+        setSelectedIndex(contains: 9, deleteFirst: 1, deleteSecond: 5)
+        setSelectedIndex(contains: 10, deleteFirst: 6, deleteSecond: 7)
+        
+        dismiss(animated: false)
     }
 }

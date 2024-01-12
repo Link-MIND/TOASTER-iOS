@@ -7,9 +7,17 @@
 
 import Foundation
 
-enum TimerRepeatDate {
-    case everyDay, everyWeekDay, everyWeekend
-    case mon, tue, wed, thu, fri, sat, sun
+enum TimerRepeatDate: Int {
+    case mon = 1
+    case tue = 2
+    case wed = 3
+    case thu = 4
+    case fri = 5
+    case sat = 6
+    case sun = 7
+    case everyDay = 8
+    case everyWeekDay = 9
+    case everyWeekend = 10
     
     var name: String {
         switch self {
@@ -18,7 +26,7 @@ enum TimerRepeatDate {
         case .everyWeekDay:
             return "주중마다 (월~금)"
         case .everyWeekend:
-            return "주중마다 (토~일)"
+            return "주말마다 (토~일)"
         case .mon:
             return "월요일마다"
         case .tue:
@@ -33,6 +41,19 @@ enum TimerRepeatDate {
             return "토요일마다"
         case .sun:
             return "일요일마다"
+        }
+    }
+    
+    var days: String {
+        switch self {
+        case .mon: return "월"
+        case .tue: return "화"
+        case .wed: return "수"
+        case .thu: return "목"
+        case .fri: return "금"
+        case .sat: return "토"
+        case .sun: return "일"
+        default: return ""
         }
     }
     
@@ -60,5 +81,23 @@ enum TimerRepeatDate {
         case .sun:
             return [7]
         }
+    }
+}
+
+extension Set<Int> {
+    func fetchDaysString() -> String {
+        var text = ""
+        var setList = Array(self)
+        setList.sort()
+        for i in 0..<setList.count {
+            if let date = TimerRepeatDate(rawValue: setList[i]) {
+                if i == setList.count - 1 {
+                    text = text + date.days + "요일 마다"
+                } else {
+                    text = text + date.days + ", "
+                }
+            }
+        }
+        return text
     }
 }
