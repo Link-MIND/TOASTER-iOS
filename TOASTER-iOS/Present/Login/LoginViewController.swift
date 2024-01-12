@@ -86,7 +86,7 @@ private extension LoginViewController {
                 
                 // 서버로 accessToken 전달
                 
-                UserDefaults.standard.set("\(StringLiterals.UserDefaultsKey.kakao)", forKey: StringLiterals.UserDefaultsKey.LoginType)
+                UserDefaults.standard.set("\(Config.kakaoLogin)", forKey: Config.loginType)
             } catch {
                 guard let error = error as? LoginError else { return }
                 switch error {
@@ -110,7 +110,7 @@ private extension LoginViewController {
                     
                     // 서버로 identity Token 전달
                     
-                    UserDefaults.standard.set("\(StringLiterals.UserDefaultsKey.apple)", forKey: StringLiterals.UserDefaultsKey.LoginType)
+                    UserDefaults.standard.set(Config.appleLogin, forKey: Config.loginType)
                 } else {
                     print("Apple Login Error:", LoginError.failedReceiveToken)
                 }
