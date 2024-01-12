@@ -13,6 +13,12 @@ enum Config {
             static let kakaoNativeAppKey = "KakaoNativeAppKey"
             static let baseURL = "BASE_URL"
             static let tempToken = "TEMP_ACCESS_TOKEN"
+            static let accessTokenKey = "ACCESS_TOKEN_KEY"
+            static let refreshTokenKey = "REFRESH_TOKEN_KEY"
+            static let loginType = "LOGIN_TYPE"
+            static let appleLogin = "APPLE_LOGIN"
+            static let kakaoLogin = "KAKAO_LOGIN"
+            static let appleUserID =  "APPLE_USER_ID"
         }
     }
     
@@ -45,4 +51,47 @@ extension Config {
         }
         return key
     }()
+    
+    static let accessTokenKey: String = {
+        guard let key = Config.infoDictionary[Keys.Plist.accessTokenKey] as? String else {
+            fatalError("ACCESS_TOKEN_KEY is not set in plist for this configuration")
+        }
+        return key
+    }()
+    
+    static let refreshTokenKey: String = {
+        guard let key = Config.infoDictionary[Keys.Plist.refreshTokenKey] as? String else {
+            fatalError("REFRESH_TOKEN_KEY is not set in plist for this configuration")
+        }
+        return key
+    }()
+    
+    static let loginType: String = {
+        guard let key = Config.infoDictionary[Keys.Plist.loginType] as? String else {
+            fatalError("LOGIN_TYPE is not set in plist for this configuration")
+        }
+        return key
+    }()
+    
+    static let appleLogin: String = {
+        guard let key = Config.infoDictionary[Keys.Plist.appleLogin] as? String else {
+            fatalError("APPLE_LOGIN is not set in plist for this configuration")
+        }
+        return key
+    }()
+    
+    static let kakaoLogin: String = {
+        guard let key = Config.infoDictionary[Keys.Plist.kakaoLogin] as? String else {
+            fatalError("KAKAO_LOGIN is not set in plist for this configuration")
+        }
+        return key
+    }()
+    
+    static let appleUserID: String = {
+        guard let key = Config.infoDictionary[Keys.Plist.appleUserID] as? String else {
+            fatalError("APPLE_USER_ID is not set in plist for this configuration")
+        }
+        return key
+    }()
+    
 }

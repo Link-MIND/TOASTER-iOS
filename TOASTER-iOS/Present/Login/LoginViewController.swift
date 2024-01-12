@@ -83,8 +83,10 @@ private extension LoginViewController {
         Task {
             do {
                 let result = try await attemptLogin()
-                print("전달받은 액세스 토큰: \(String(describing: result.accessToken))")
-                print("전달받은 리프레쉬 토큰:\(String(describing: result.refreshToken))")
+                
+                // 서버로 accessToken 전달
+                
+                UserDefaults.standard.set("\(Config.kakaoLogin)", forKey: Config.loginType)
             } catch {
                 guard let error = error as? LoginError else { return }
                 switch error {
@@ -105,7 +107,10 @@ private extension LoginViewController {
                 let result = try await attemptLogin()
                 
                 if let unwrappedToken = result.identityToken {
-                    print("전달받은 identityToken: \(unwrappedToken)")
+                    
+                    // 서버로 identity Token 전달
+                    
+                    UserDefaults.standard.set(Config.appleLogin, forKey: Config.loginType)
                 } else {
                     print("Apple Login Error:", LoginError.failedReceiveToken)
                 }

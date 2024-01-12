@@ -4,6 +4,12 @@
 <dict>
 	<key>TEMP_ACCESS_TOKEN</key>
 	<string>$(TEMP_ACCESS_TOKEN)</string>
+	<key>ACCESS_TOKEN_KEY</key>
+	<string>$(ACCESS_TOKEN_KEY)</string>
+	<key>APPLE_LOGIN</key>
+	<string>$(APPLE_LOGIN)</string>
+	<key>APPLE_USER_ID</key>
+	<string>$(APPLE_USER_ID)</string>
 	<key>BASE_URL</key>
 	<string>$(BASE_URL)</string>
 	<key>CFBundleURLTypes</key>
@@ -17,8 +23,12 @@
 			</array>
 		</dict>
 	</array>
+	<key>KAKAO_LOGIN</key>
+	<string>$(KAKAO_LOGIN)</string>
 	<key>KakaoNativeAppKey</key>
 	<string>$(KAKAO_NATIVE_APP_KEY)</string>
+	<key>LOGIN_TYPE</key>
+	<string>$(LOGIN_TYPE)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>kakaokompassauth</string>
@@ -29,6 +39,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>REFRESH_TOKEN_KEY</key>
+	<string>$(REFRESH_TOKEN_KEY)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SUIT-ExtraBold.otf</string>
