@@ -11,19 +11,19 @@ import Moya
 
 protocol ClipAPIServiceProtocol {
     func postAddCategory(requestBody: PostAddCategoryRequestDTO,
-                         completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ())
+                         completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
     func getDetailCategory(categoryID: Int,
                            filter: DetailCategoryFilter,
-                           completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> ())
+                           completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> Void)
     func getDetailAllCategory(filter: DetailCategoryFilter,
-                              ompletion: @escaping (NetworkResult<GetDetailAllCategoryResponseDTO>) -> ())
+                              ompletion: @escaping (NetworkResult<GetDetailAllCategoryResponseDTO>) -> Void)
     func deleteCategory(requestBody: DeleteCategoryRequestDTO,
-                        completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ())
+                        completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
     func patchEditCategory(requestBody: PatchPushAlarmRequestDTO,
-                           completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ())
-    func getAllCategory(completion: @escaping (NetworkResult<GetAllCategoryResponseDTO>) -> ())
+                           completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
+    func getAllCategory(completion: @escaping (NetworkResult<GetAllCategoryResponseDTO>) -> Void)
     func getCheckCategory(categoryTitle: String,
-                          completion: @escaping (NetworkResult<GetCheckCategoryResponseDTO>) -> ())
+                          completion: @escaping (NetworkResult<GetCheckCategoryResponseDTO>) -> Void)
 }
 
 final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
@@ -31,7 +31,7 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
     private let provider = MoyaProvider<ClipTargetType>(plugins: [MoyaPlugin()])
 
     func postAddCategory(requestBody: PostAddCategoryRequestDTO,
-                         completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ()) {
+                         completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
         provider.request(.postAddCategory(requestBody: requestBody)) { result in
             switch result {
             case .success(let response):
@@ -47,7 +47,7 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
     
     func getDetailCategory(categoryID: Int, 
                            filter: DetailCategoryFilter,
-                           completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> ()) {
+                           completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> Void) {
         provider.request(.getDetailCategory(categoryID: categoryID,
                                             filter: filter)) { result in
             switch result {
@@ -63,7 +63,7 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
     }
     
     func getDetailAllCategory(filter: DetailCategoryFilter,
-                              ompletion completion: @escaping (NetworkResult<GetDetailAllCategoryResponseDTO>) -> ()) {
+                              ompletion completion: @escaping (NetworkResult<GetDetailAllCategoryResponseDTO>) -> Void) {
         provider.request(.getDetailCategory(categoryID: 0,
                                             filter: filter)) { result in
             switch result {
@@ -79,7 +79,7 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
     }
     
     func deleteCategory(requestBody: DeleteCategoryRequestDTO, 
-                        completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ()) {
+                        completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
         provider.request(.deleteCategory(requestBody: requestBody)) { result in
             switch result {
             case .success(let response):
@@ -94,7 +94,7 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
     }
     
     func patchEditCategory(requestBody: PatchPushAlarmRequestDTO, 
-                           completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ()) {
+                           completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
         provider.request(.patchEditCategory(requestBody: requestBody)) { result in
             switch result {
             case .success(let response):
@@ -108,7 +108,7 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
         }
     }
     
-    func getAllCategory(completion: @escaping (NetworkResult<GetAllCategoryResponseDTO>) -> ()) {
+    func getAllCategory(completion: @escaping (NetworkResult<GetAllCategoryResponseDTO>) -> Void) {
         provider.request(.getAllCategory) { result in
             switch result {
             case .success(let response):
@@ -123,7 +123,7 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
     }
     
     func getCheckCategory(categoryTitle: String, 
-                          completion: @escaping (NetworkResult<GetCheckCategoryResponseDTO>) -> ()) {
+                          completion: @escaping (NetworkResult<GetCheckCategoryResponseDTO>) -> Void) {
         provider.request(.getCheckCategory(categoryTitle: categoryTitle)) { result in
             switch result {
             case .success(let response):

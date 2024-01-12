@@ -28,7 +28,7 @@ extension AuthTargetType: BaseTargetType {
     
     var utilPath: UtilPath { return .auth }
     var pathParameter: String? { return .none }
-    var queryParameter: [String : Any]? { return .none }
+    var queryParameter: [String: Any]? { return .none }
     
     var requestBodyParameter: Codable? {
         switch self {

@@ -21,7 +21,7 @@ extension UserTargetType: BaseTargetType {
     var headerType: HeaderType { return .accessTokenHeader }
     var utilPath: UtilPath { return .user }
     var pathParameter: String? { return .none }
-    var queryParameter: [String : Any]? { return .none }
+    var queryParameter: [String: Any]? { return .none }
     
     var requestBodyParameter: Codable? {
         switch self {

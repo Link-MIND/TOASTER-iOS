@@ -43,7 +43,6 @@ final class MoyaPlugin: PluginType {
         }
     }
 
-
     func onSucceed(_ response: Response) {
         let request = response.request
         let url = request?.url?.absoluteString ?? "nil"

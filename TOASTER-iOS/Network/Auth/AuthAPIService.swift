@@ -11,10 +11,10 @@ import Moya
 
 protocol AuthAPIServiceProtocol {
     func postSocialLogin(requestBody: PostSocialLoginRequestDTO,
-                         completion: @escaping (NetworkResult<PostSocialLoginResponseDTO>) -> ())
-    func postRefreshToken(completion: @escaping (NetworkResult<PostRefreshTokenResponseDTO>) -> ())
-    func postLogout(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ())
-    func deleteWithdraw(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ())
+                         completion: @escaping (NetworkResult<PostSocialLoginResponseDTO>) -> Void)
+    func postRefreshToken(completion: @escaping (NetworkResult<PostRefreshTokenResponseDTO>) -> Void)
+    func postLogout(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
+    func deleteWithdraw(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
 }
 
 final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
@@ -22,7 +22,7 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
     private let provider = MoyaProvider<AuthTargetType>(plugins: [MoyaPlugin()])
     
     func postSocialLogin(requestBody: PostSocialLoginRequestDTO, 
-                         completion: @escaping (NetworkResult<PostSocialLoginResponseDTO>) -> ()) {
+                         completion: @escaping (NetworkResult<PostSocialLoginResponseDTO>) -> Void) {
         provider.request(.postSocialLogin(requestBody: requestBody)) { result in
             switch result {
             case .success(let response):
@@ -36,7 +36,7 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
         }
     }
     
-    func postRefreshToken(completion: @escaping (NetworkResult<PostRefreshTokenResponseDTO>) -> ()) {
+    func postRefreshToken(completion: @escaping (NetworkResult<PostRefreshTokenResponseDTO>) -> Void) {
         provider.request(.postRefreshToken) { result in
             switch result {
             case .success(let response):
@@ -50,7 +50,7 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
         }
     }
     
-    func postLogout(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ()) {
+    func postLogout(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
         provider.request(.postLogout) { result in
             switch result {
             case .success(let response):
@@ -64,7 +64,7 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
         }
     }
     
-    func deleteWithdraw(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ()) {
+    func deleteWithdraw(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
         provider.request(.deleteWithdraw) { result in
             switch result {
             case .success(let response):

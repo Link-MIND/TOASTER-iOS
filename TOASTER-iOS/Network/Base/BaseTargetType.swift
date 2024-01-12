@@ -30,7 +30,7 @@ protocol BaseTargetType: TargetType {
     var headerType: HeaderType { get }
     var utilPath: UtilPath { get }
     var pathParameter: String? { get }
-    var queryParameter: [String : Any]? { get }
+    var queryParameter: [String: Any]? { get }
     var requestBodyParameter: Codable? { get }
 }
 
@@ -45,7 +45,7 @@ extension BaseTargetType {
     
     // TODO: - 로그인 API 부착 후 토큰 로직 변경
     
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         var header = ["Content-Type": "application/json"]
         
         switch headerType {

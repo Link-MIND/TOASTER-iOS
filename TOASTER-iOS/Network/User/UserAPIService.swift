@@ -10,18 +10,18 @@ import Foundation
 import Moya
 
 protocol UserAPIServiceProtocol {
-    func getSettingPage(completion: @escaping (NetworkResult<GetSettingPageResponseDTO>) -> ())
-    func getMyPage(completion: @escaping (NetworkResult<GetMyPageResponseDTO>) -> ())
+    func getSettingPage(completion: @escaping (NetworkResult<GetSettingPageResponseDTO>) -> Void)
+    func getMyPage(completion: @escaping (NetworkResult<GetMyPageResponseDTO>) -> Void)
     func patchPushAlarm(requestBody: PatchPushAlarmRequestDTO,
-                        completion: @escaping (NetworkResult<PatchPushAlarmResponseDTO>) -> ())
-    func getMainPage(completion: @escaping (NetworkResult<GetMainPageResponseDTO>) -> ())
+                        completion: @escaping (NetworkResult<PatchPushAlarmResponseDTO>) -> Void)
+    func getMainPage(completion: @escaping (NetworkResult<GetMainPageResponseDTO>) -> Void)
 }
 
 final class UserAPIService: BaseAPIService, UserAPIServiceProtocol {
     
     private let provider = MoyaProvider<UserTargetType>(plugins: [MoyaPlugin()])
 
-    func getSettingPage(completion: @escaping (NetworkResult<GetSettingPageResponseDTO>) -> ()) {
+    func getSettingPage(completion: @escaping (NetworkResult<GetSettingPageResponseDTO>) -> Void) {
         provider.request(.getSettingPage) { result in
             switch result {
             case .success(let response):
@@ -35,7 +35,7 @@ final class UserAPIService: BaseAPIService, UserAPIServiceProtocol {
         }
     }
     
-    func getMyPage(completion: @escaping (NetworkResult<GetMyPageResponseDTO>) -> ()) {
+    func getMyPage(completion: @escaping (NetworkResult<GetMyPageResponseDTO>) -> Void) {
         provider.request(.getMyPage) { result in
             switch result {
             case .success(let response):
@@ -50,7 +50,7 @@ final class UserAPIService: BaseAPIService, UserAPIServiceProtocol {
     }
     
     func patchPushAlarm(requestBody: PatchPushAlarmRequestDTO, 
-                        completion: @escaping (NetworkResult<PatchPushAlarmResponseDTO>) -> ()) {
+                        completion: @escaping (NetworkResult<PatchPushAlarmResponseDTO>) -> Void) {
         provider.request(.patchPushAlarm(requestBody: requestBody)) { result in
             switch result {
             case .success(let response):
@@ -64,7 +64,7 @@ final class UserAPIService: BaseAPIService, UserAPIServiceProtocol {
         }
     }
     
-    func getMainPage(completion: @escaping (NetworkResult<GetMainPageResponseDTO>) -> ()) {
+    func getMainPage(completion: @escaping (NetworkResult<GetMainPageResponseDTO>) -> Void) {
         provider.request(.getMainPage) { result in
             switch result {
             case .success(let response):

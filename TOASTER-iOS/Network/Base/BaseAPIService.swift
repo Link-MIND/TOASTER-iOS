@@ -42,7 +42,7 @@ class BaseAPIService {
     func fetchDecodeData<T: Decodable>(data: Data, responseType: T.Type) -> T? {
         let decoder = JSONDecoder()
         
-        if let decodedData = try? decoder.decode(responseType, from: data){
+        if let decodedData = try? decoder.decode(responseType, from: data) {
             return decodedData
         } else { return nil }
     }

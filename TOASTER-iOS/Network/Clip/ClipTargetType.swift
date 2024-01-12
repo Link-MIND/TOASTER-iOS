@@ -35,12 +35,12 @@ extension ClipTargetType: BaseTargetType {
         }
     }
     
-    var queryParameter: [String : Any]? {
+    var queryParameter: [String: Any]? {
         switch self {
         case .getDetailCategory(_, let filter):
-            return ["filter" : filter.rawValue]
+            return ["filter": filter.rawValue]
         case .getCheckCategory(let categoryTitle):
-            return ["title" : categoryTitle]
+            return ["title": categoryTitle]
         default: return .none
         }
     }
