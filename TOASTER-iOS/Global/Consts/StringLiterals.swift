@@ -77,20 +77,4 @@ enum StringLiterals {
             static let saveLink = "이번주 저장한 링크"
         }
     }
-    
-    // MARK: - KeyChain 에서 key 값으로 사용되는 String
-    
-    enum KeyChainForKey {
-        static let accessToken = "serverAccessToken"
-        static let refreshToken = "serverRefreshToken"
-    }
-    
-    // MARK: - UserDefault 에서 key 값으로 사용되는 String
-    
-    enum UserDefaultsKey {
-        static let LoginType = "LoginType"
-        static let apple = "apple"
-        static let kakao = "kakao"
-        static let appleUserID = "appleUserID"
-    }
 }
