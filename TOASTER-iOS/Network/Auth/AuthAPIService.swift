@@ -13,8 +13,8 @@ protocol AuthAPIServiceProtocol {
     func postSocialLogin(requestBody: PostSocialLoginRequestDTO,
                          completion: @escaping (NetworkResult<PostSocialLoginResponseDTO>) -> ())
     func postRefreshToken(completion: @escaping (NetworkResult<PostRefreshTokenResponseDTO>) -> ())
-    func postLogout(completion: @escaping (NetworkResult<PostLogoutResponseDTO>) -> ())
-    func deleteWithdraw(completion: @escaping (NetworkResult<DeleteWithdrawResponseDTO>) -> ())
+    func postLogout(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ())
+    func deleteWithdraw(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ())
 }
 
 final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
@@ -50,11 +50,11 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
         }
     }
     
-    func postLogout(completion: @escaping (NetworkResult<PostLogoutResponseDTO>) -> ()) {
+    func postLogout(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ()) {
         provider.request(.postLogout) { result in
             switch result {
             case .success(let response):
-                let networkResult: NetworkResult<PostLogoutResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
@@ -64,11 +64,11 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
         }
     }
     
-    func deleteWithdraw(completion: @escaping (NetworkResult<DeleteWithdrawResponseDTO>) -> ()) {
+    func deleteWithdraw(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> ()) {
         provider.request(.deleteWithdraw) { result in
             switch result {
             case .success(let response):
-                let networkResult: NetworkResult<DeleteWithdrawResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
