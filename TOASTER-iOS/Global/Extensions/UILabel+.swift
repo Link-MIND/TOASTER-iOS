@@ -35,4 +35,17 @@ extension UILabel {
         attributedString.addAttributes([.font: font as Any, .foregroundColor: color as Any], range: range)
         attributedText = attributedString
     }
+    
+    /// UILabel 간격 조정
+    func setLineSpacing(spacing: CGFloat) {
+        guard let text = text else { return }
+        
+        let attributeString = NSMutableAttributedString(string: text)
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = spacing
+        attributeString.addAttribute(.paragraphStyle,
+                                     value: style,
+                                     range: NSRange(location: 0, length: attributeString.length))
+        attributedText = attributeString
+    }
 }
