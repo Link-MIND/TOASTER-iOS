@@ -162,6 +162,12 @@ extension ClipViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension ClipViewController: ClipCollectionHeaderViewDelegate {
+    func searchBarButtonTapped() {
+        let searchVC = SearchViewController()
+        searchVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(searchVC, animated: true)
+    }
+    
     func addClipButtonTapped() {
         addClipBottom.modalPresentationStyle = .overFullScreen
         self.present(addClipBottom, animated: false)
