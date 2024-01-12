@@ -37,7 +37,6 @@ final class EditClipViewController: UIViewController {
         super.viewWillAppear(animated)
         setupNavigationBar()
     }
-    
 }
 
 // MARK: - Private Extensions
