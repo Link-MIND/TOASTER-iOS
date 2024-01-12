@@ -77,4 +77,20 @@ enum StringLiterals {
             static let saveLink = "이번주 저장한 링크"
         }
     }
+    
+    enum Home {
+        enum Main {
+            static let searchPlaceHolder = "검색어를 입력해주세요."
+            static let subNickName = "님"
+        }
+        enum UserClipHeader {
+            static let titleLabel = "님의 클립"
+        }
+        enum WeeklyLinkHeader {
+            static let weeklyLinkLabel = "이주의 링크"
+        }
+        enum WeeklyRecommendHeader {
+            static let weeklyRecommendLabel = "이주의 추천 사이트"
+        }
+    }
 }
