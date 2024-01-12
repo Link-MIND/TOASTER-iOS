@@ -98,7 +98,17 @@
 		6BE6DA142B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA132B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift */; };
 		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
 		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
+		830517882B4D1DF6009FFB60 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517872B4D1DF6009FFB60 /* MainCollectionViewCell.swift */; };
+		8305178A2B4D1E09009FFB60 /* UserClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517892B4D1E09009FFB60 /* UserClipCollectionViewCell.swift */; };
+		8305178C2B4D1E64009FFB60 /* WeeklyLinkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305178B2B4D1E64009FFB60 /* WeeklyLinkCollectionViewCell.swift */; };
+		8305178E2B4D1EF8009FFB60 /* WeeklyRecommendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305178D2B4D1EF8009FFB60 /* WeeklyRecommendCollectionViewCell.swift */; };
+		830517902B4D1FC7009FFB60 /* HomeHeaderCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305178F2B4D1FC7009FFB60 /* HomeHeaderCollectionView.swift */; };
+		830517962B4D21BB009FFB60 /* CompositioinalFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517952B4D21BB009FFB60 /* CompositioinalFactory.swift */; };
+		8305179D2B4D3701009FFB60 /* MainInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305179C2B4D3701009FFB60 /* MainInfoModel.swift */; };
+		830517A72B4D7225009FFB60 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517A62B4D7225009FFB60 /* HomeView.swift */; };
+		830517AA2B4D95E9009FFB60 /* HomeFooterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517A92B4D95E9009FFB60 /* HomeFooterCollectionView.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
+		8315CD842B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -185,7 +195,17 @@
 		6BE6DA132B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindAlarmOffBottomSheetView.swift; sourceTree = "<group>"; };
 		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
+		830517872B4D1DF6009FFB60 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
+		830517892B4D1E09009FFB60 /* UserClipCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClipCollectionViewCell.swift; sourceTree = "<group>"; };
+		8305178B2B4D1E64009FFB60 /* WeeklyLinkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyLinkCollectionViewCell.swift; sourceTree = "<group>"; };
+		8305178D2B4D1EF8009FFB60 /* WeeklyRecommendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyRecommendCollectionViewCell.swift; sourceTree = "<group>"; };
+		8305178F2B4D1FC7009FFB60 /* HomeHeaderCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderCollectionView.swift; sourceTree = "<group>"; };
+		830517952B4D21BB009FFB60 /* CompositioinalFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositioinalFactory.swift; sourceTree = "<group>"; };
+		8305179C2B4D3701009FFB60 /* MainInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfoModel.swift; sourceTree = "<group>"; };
+		830517A62B4D7225009FFB60 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		830517A92B4D95E9009FFB60 /* HomeFooterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFooterCollectionView.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClipEmptyCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -580,7 +600,9 @@
 		6B6AE69A2B3FF5C3000E2366 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				830517992B4D331A009FFB60 /* Model */,
 				6B6AE69B2B3FF5CC000E2366 /* HomeViewController.swift */,
+				830517832B4D1D73009FFB60 /* View */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -699,6 +721,54 @@
 				6BE6D9F12B4EEBC3008B06FA /* RemindViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		830517832B4D1D73009FFB60 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				830517A62B4D7225009FFB60 /* HomeView.swift */,
+				830517952B4D21BB009FFB60 /* CompositioinalFactory.swift */,
+				830517852B4D1DB8009FFB60 /* Cell */,
+				830517842B4D1DB2009FFB60 /* Header */,
+				830517A82B4D95B4009FFB60 /* Footer */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		830517842B4D1DB2009FFB60 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				8305178F2B4D1FC7009FFB60 /* HomeHeaderCollectionView.swift */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		830517852B4D1DB8009FFB60 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				830517872B4D1DF6009FFB60 /* MainCollectionViewCell.swift */,
+				830517892B4D1E09009FFB60 /* UserClipCollectionViewCell.swift */,
+				8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */,
+				8305178B2B4D1E64009FFB60 /* WeeklyLinkCollectionViewCell.swift */,
+				8305178D2B4D1EF8009FFB60 /* WeeklyRecommendCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		830517992B4D331A009FFB60 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8305179C2B4D3701009FFB60 /* MainInfoModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		830517A82B4D95B4009FFB60 /* Footer */ = {
+			isa = PBXGroup;
+			children = (
+				830517A92B4D95E9009FFB60 /* HomeFooterCollectionView.swift */,
+			);
+			path = Footer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -820,6 +890,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8305179D2B4D3701009FFB60 /* MainInfoModel.swift in Sources */,
 				6BE6D9E22B4E9B58008B06FA /* CompleteTimerCollectionViewCell.swift in Sources */,
 				3F2FA1792B45C46F00EDBF95 /* KakaoAuthenticateAdapter.swift in Sources */,
 				6BE6D9D82B4E8A03008B06FA /* RemindAlarmOffViewType.swift in Sources */,
@@ -834,18 +905,26 @@
 				6B6AE6A62B3FF6BD000E2366 /* UIView+.swift in Sources */,
 				398BE7FC2B468F80001595E0 /* ClipCollectionHeaderView.swift in Sources */,
 				3F617CB82B4ECB6000956E69 /* MypageUserModel.swift in Sources */,
+				830517AA2B4D95E9009FFB60 /* HomeFooterCollectionView.swift in Sources */,
 				39049C8D2B43EEF400C9196E /* ToastStatus.swift in Sources */,
+				8305178E2B4D1EF8009FFB60 /* WeeklyRecommendCollectionViewCell.swift in Sources */,
+				830517902B4D1FC7009FFB60 /* HomeHeaderCollectionView.swift in Sources */,
+				6B6AE6932B3FF5A9000E2366 /* ClipViewController.swift in Sources */,
 				3F2FA17F2B4A31E900EDBF95 /* SocialLoginTokenModel.swift in Sources */,
 				6B6AE6932B3FF5A9000E2366 /* ClipViewController.swift in Sources */,
 				830517632B42D871009FFB60 /* TabBarItem.swift in Sources */,
 				830517652B42D996009FFB60 /* StringLiterals.swift in Sources */,
+				8305178C2B4D1E64009FFB60 /* WeeklyLinkCollectionViewCell.swift in Sources */,
+				8315CD842B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift in Sources */,
 				6BC493812B4D88E200544249 /* SearchViewModel.swift in Sources */,
 				39BE4BC22B4ABBB0002B471D /* DeleteLinkBottomSheetView.swift in Sources */,
 				6BC4936C2B48633700544249 /* ToasterNavigationType.swift in Sources */,
 				6B6AE6992B3FF5C1000E2366 /* SearchViewController.swift in Sources */,
+				830517962B4D21BB009FFB60 /* CompositioinalFactory.swift in Sources */,
 				6BE6D9E82B4EA773008B06FA /* RemindCollectionFooterView.swift in Sources */,
 				6BE6D9F42B4EF568008B06FA /* RemindTimerEditBottomSheetView.swift in Sources */,
 				398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */,
+				830517882B4D1DF6009FFB60 /* MainCollectionViewCell.swift in Sources */,
 				6BE6D9E42B4EA125008B06FA /* WaitTimerCollectionViewCell.swift in Sources */,
 				6BE6D9D42B4DE479008B06FA /* RemindTimerEmptyView.swift in Sources */,
 				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
@@ -861,6 +940,7 @@
 				39BE4BB62B4ABA97002B471D /* DetailClipListCollectionViewCell.swift in Sources */,
 				3F617CB52B4EC2EE00956E69 /* MypageHeaderView.swift in Sources */,
 				6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */,
+				8305178A2B4D1E09009FFB60 /* UserClipCollectionViewCell.swift in Sources */,
 				3F2FA17D2B4928B700EDBF95 /* LoginUseCase.swift in Sources */,
 				6BE6D9EF2B4EE98D008B06FA /* RemindModel.swift in Sources */,
 				3F2FA1752B45C0AF00EDBF95 /* Config.swift in Sources */,
@@ -872,6 +952,7 @@
 				6BE6D9F62B4F0F26008B06FA /* CompleteTimerEmptyCollectionViewCell.swift in Sources */,
 				6BE6D9E62B4EA499008B06FA /* RemindCollectionHeaderView.swift in Sources */,
 				3F2FA17B2B4928A200EDBF95 /* LoginError.swift in Sources */,
+				830517A72B4D7225009FFB60 /* HomeView.swift in Sources */,
 				6B6AE6962B3FF5B5000E2366 /* AddLinkViewController.swift in Sources */,
 				6B6AE68D2B3FF58D000E2366 /* RemindViewController.swift in Sources */,
 				6BE6DA142B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift in Sources */,
