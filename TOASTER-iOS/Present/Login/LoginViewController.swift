@@ -76,16 +76,13 @@ private extension LoginViewController {
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(titleLogoImageView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(32)
-            $0.trailing.equalToSuperview().inset(137)
+            $0.height.equalTo(45)
         }
         
         loginImageView.snp.makeConstraints {
-//            $0.top.equalTo(titleLabel.snp.bottom).offset(view.convertByHeightRatio(50))
             $0.top.equalTo(titleLabel.snp.bottom)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(loginImageView.snp.height).multipliedBy(379/335)
-//            $0.height.equalTo(loginImageView.snp.height).multipliedBy(304/294)
-            $0.width.equalTo(335)
             $0.bottom.equalTo(appleSocialLoginButtonView.snp.top)
         }
         
@@ -97,7 +94,6 @@ private extension LoginViewController {
         
         kakaoSocialLoginButtonView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
-//            $0.bottom.equalToSuperview().inset(view.convertByHeightRatio(79))
             $0.bottom.equalToSuperview().inset(34)
             $0.height.equalTo(62)
         }
