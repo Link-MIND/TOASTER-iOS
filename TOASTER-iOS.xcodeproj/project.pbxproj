@@ -83,6 +83,9 @@
 		6BE6DA072B4F2FC5008B06FA /* RemindClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA062B4F2FC5008B06FA /* RemindClipModel.swift */; };
 		6BE6DA0B2B4F3063008B06FA /* RemindSelectClipVViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA0A2B4F3063008B06FA /* RemindSelectClipVViewModel.swift */; };
 		6BE6DA0F2B4F3716008B06FA /* RemindTimerAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA0E2B4F3716008B06FA /* RemindTimerAddViewController.swift */; };
+		6BE6DA182B4FF285008B06FA /* TimerRepeatDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA172B4FF285008B06FA /* TimerRepeatDate.swift */; };
+		6BE6DA1A2B4FF443008B06FA /* TimerRepeatBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA192B4FF443008B06FA /* TimerRepeatBottomSheetView.swift */; };
+		6BE6DA1D2B4FF5A4008B06FA /* TimerRepeatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA1C2B4FF5A4008B06FA /* TimerRepeatCollectionViewCell.swift */; };
 		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
 		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
@@ -157,6 +160,9 @@
 		6BE6DA062B4F2FC5008B06FA /* RemindClipModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindClipModel.swift; sourceTree = "<group>"; };
 		6BE6DA0A2B4F3063008B06FA /* RemindSelectClipVViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindSelectClipVViewModel.swift; sourceTree = "<group>"; };
 		6BE6DA0E2B4F3716008B06FA /* RemindTimerAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindTimerAddViewController.swift; sourceTree = "<group>"; };
+		6BE6DA172B4FF285008B06FA /* TimerRepeatDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerRepeatDate.swift; sourceTree = "<group>"; };
+		6BE6DA192B4FF443008B06FA /* TimerRepeatBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerRepeatBottomSheetView.swift; sourceTree = "<group>"; };
+		6BE6DA1C2B4FF5A4008B06FA /* TimerRepeatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerRepeatCollectionViewCell.swift; sourceTree = "<group>"; };
 		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -626,6 +632,7 @@
 			children = (
 				6BE6DA102B4F574B008B06FA /* View */,
 				6BE6DA0E2B4F3716008B06FA /* RemindTimerAddViewController.swift */,
+				6BE6DA172B4FF285008B06FA /* TimerRepeatDate.swift */,
 			);
 			path = TimerAdd;
 			sourceTree = "<group>";
@@ -633,8 +640,18 @@
 		6BE6DA102B4F574B008B06FA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6BE6DA1B2B4FF583008B06FA /* Cell */,
+				6BE6DA192B4FF443008B06FA /* TimerRepeatBottomSheetView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		6BE6DA1B2B4FF583008B06FA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DA1C2B4FF5A4008B06FA /* TimerRepeatCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -780,7 +797,9 @@
 				6B6AE6992B3FF5C1000E2366 /* SearchViewController.swift in Sources */,
 				398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */,
 				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
+				6BE6DA182B4FF285008B06FA /* TimerRepeatDate.swift in Sources */,
 				6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */,
+				6BE6DA1A2B4FF443008B06FA /* TimerRepeatBottomSheetView.swift in Sources */,
 				39BE4BB42B4ABA80002B471D /* DetailClipListModel.swift in Sources */,
 				6BC4935E2B4414B400544249 /* ToasterPopupViewController.swift in Sources */,
 				39BE4BBE2B4ABB7C002B471D /* DetailClipSegmentedControlView.swift in Sources */,
@@ -799,6 +818,7 @@
 				3F2BFACB2B40373C00DA76B7 /* SocialLoginType.swift in Sources */,
 				3F2FA17B2B4928A200EDBF95 /* LoginError.swift in Sources */,
 				6B6AE6962B3FF5B5000E2366 /* AddLinkViewController.swift in Sources */,
+				6BE6DA1D2B4FF5A4008B06FA /* TimerRepeatCollectionViewCell.swift in Sources */,
 				6B6AE68D2B3FF58D000E2366 /* RemindViewController.swift in Sources */,
 				39C3926B2B491F47005B2B0F /* NSObject+.swift in Sources */,
 				6BE6DA0F2B4F3716008B06FA /* RemindTimerAddViewController.swift in Sources */,

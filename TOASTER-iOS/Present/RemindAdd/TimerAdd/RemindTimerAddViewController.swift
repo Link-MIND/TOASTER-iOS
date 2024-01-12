@@ -93,6 +93,7 @@ private extension RemindTimerAddViewController {
         datePickerView.do {
             $0.datePickerMode = .time
             $0.preferredDatePickerStyle = .wheels
+            $0.locale = Locale(identifier: "ko_KR")
         }
         
         repeatLabel.do {
@@ -148,7 +149,7 @@ private extension RemindTimerAddViewController {
         
         completeButton.snp.makeConstraints {
             $0.height.equalTo(62)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview().inset(34)
             $0.horizontalEdges.equalToSuperview().inset(20)
         }
         
@@ -206,7 +207,8 @@ private extension RemindTimerAddViewController {
     }
     
     @objc func repeatButtonTapped() {
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "반복설정", height: 650, insertView: UIView())
+        let repeatView = TimerRepeatBottomSheetView()
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "반복설정", height: 622, insertView: repeatView)
         exampleBottom.modalPresentationStyle = .overFullScreen
         self.present(exampleBottom, animated: false)
     }
