@@ -12,6 +12,7 @@ final class TimerRepeatCollectionViewCell: UICollectionViewCell {
     // MARK: - UI Properties
     
     private let repeatLabel: UILabel = UILabel()
+    private let checkImageView: UIImageView = UIImageView(image: ImageLiterals.Common.checkRed18)
     
     // MARK: - Life Cycle
     
@@ -38,8 +39,10 @@ extension TimerRepeatCollectionViewCell {
     func cellSelected(forSelect: Bool) {
         if forSelect {
             repeatLabel.textColor = .toasterPrimary
+            checkImageView.isHidden = false
         } else {
             repeatLabel.textColor = .black900
+            checkImageView.isHidden = true
         }
     }
 }
@@ -54,16 +57,25 @@ private extension TimerRepeatCollectionViewCell {
             $0.textColor = .black900
             $0.font = .suitMedium(size: 16)
         }
+        
+        checkImageView.do {
+            $0.isHidden = true
+        }
     }
     
     func setupHierarchy() {
-        addSubview(repeatLabel)
+        addSubviews(repeatLabel, checkImageView)
     }
     
     func setupLayout() {
         repeatLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
+        }
+        
+        checkImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20)
         }
     }
 }

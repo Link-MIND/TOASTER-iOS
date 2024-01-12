@@ -18,6 +18,7 @@ enum ImageLiterals {
         static var arrowLeft: UIImage { .load(name: "ic_arrow_left_24") }
         static var setting: UIImage { .load(name: "ic_settings_24") }
         static var plus: UIImage { .load(name: "ic_plus_24") }
+        static var checkRed18: UIImage { .load(name: "ic_check_18") }
     }
     
     // MARK: - TabBar
