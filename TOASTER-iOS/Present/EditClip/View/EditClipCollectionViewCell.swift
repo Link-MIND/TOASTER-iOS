@@ -62,6 +62,7 @@ extension EditClipCollectionViewCell {
 private extension EditClipCollectionViewCell {
     func setupStyle() {
         backgroundColor = .toasterBackground
+        makeRounded(radius: 12)
         
         leadingButton.do {
             $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)

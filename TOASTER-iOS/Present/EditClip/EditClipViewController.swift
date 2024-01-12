@@ -46,9 +46,12 @@ private extension EditClipViewController {
     func setupStyle() {
         editClipCollectionView.do {
             $0.backgroundColor = .toasterBackground
+            $0.register(EditClipCollectionViewCell.self, forCellWithReuseIdentifier: EditClipCollectionViewCell.className)
             $0.delegate = self
             $0.dataSource = self
-            $0.register(EditClipCollectionViewCell.self, forCellWithReuseIdentifier: EditClipCollectionViewCell.className)
+            $0.dragDelegate = self
+            $0.dropDelegate = self
+            $0.dragInteractionEnabled = true
         }
         
         editClipBottomSheetView.do {
@@ -100,11 +103,11 @@ extension EditClipViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EditClipCollectionViewCell.className, for: indexPath) as? EditClipCollectionViewCell else { return UICollectionViewCell() }
         if indexPath.row == 0 {
             cell.configureCell(forModel: ClipListModel(categoryID: 0, categoryTitle: "전체클립",
-                                                       toastNum: 100), 
+                                                       toastNum: 100),
                                icon: ImageLiterals.Clip.pin,
                                isFirst: true)
         } else {
-            cell.configureCell(forModel: dummyClipList[indexPath.row-1], 
+            cell.configureCell(forModel: dummyClipList[indexPath.row-1],
                                icon: ImageLiterals.Clip.delete,
                                isFirst: false)
             
@@ -145,6 +148,54 @@ extension EditClipViewController: UICollectionViewDelegateFlowLayout {
     // minimumLineSpacing: Cell 들의 위, 아래 간격 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
+    }
+}
+
+// MARK: - CollectionView Drag Delegate
+
+extension EditClipViewController: UICollectionViewDragDelegate {
+    /// 처음 드래그가 시작될 때 호출되는 함수
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return indexPath.item != 0 ? [UIDragItem(itemProvider: NSItemProvider())] : []
+    }
+}
+
+// MARK: - CollectionView Drop Delegate
+
+extension EditClipViewController: UICollectionViewDropDelegate {
+    /// 드래그 하는 동안 호출되는 함수
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        guard collectionView.hasActiveDrag else { return UICollectionViewDropProposal(operation: .forbidden) }
+        if destinationIndexPath?.item != 0 {
+            return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        } else {
+            return UICollectionViewDropProposal(operation: .forbidden)
+        }
+    }
+    
+    /// 드래그가 끝나고 드랍할 때 호출되는 함수
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        var destinationIndexPath: IndexPath
+        if let indexPath = coordinator.destinationIndexPath {
+            destinationIndexPath = indexPath
+        } else {
+            let row = collectionView.numberOfItems(inSection: 0)
+            destinationIndexPath = IndexPath(item: row, section: 0)
+        }
+        // 0번째 인덱스 드랍이 아닌 경우, 배열과 컬뷰 아이템 삭제, 삽입, reload까지 진행
+        if destinationIndexPath.item != 0 {
+            guard let item = coordinator.items.first, let sourceIndexPath = item.sourceIndexPath else { return }
+            collectionView.performBatchUpdates {
+                let sourceItem = dummyClipList[sourceIndexPath.item-1]
+                dummyClipList.remove(at: sourceIndexPath.item-1)
+                dummyClipList.insert(sourceItem, at: destinationIndexPath.item-1)
+                collectionView.deleteItems(at: [sourceIndexPath])
+                collectionView.insertItems(at: [destinationIndexPath])
+                coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+            } completion: { _ in
+                collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+            }
+        }
     }
 }
 

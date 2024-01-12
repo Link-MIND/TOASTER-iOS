@@ -325,11 +325,19 @@
 		39EF95FD2B501BC400F301FC /* EditClip */ = {
 			isa = PBXGroup;
 			children = (
+				39F404EE2B510499008809E2 /* View */,
 				39EF95FE2B501BD600F301FC /* EditClipViewController.swift */,
-				39EF96002B501E8A00F301FC /* EditClipNoticeView.swift */,
-				39EF96032B5020D600F301FC /* EditClipCollectionViewCell.swift */,
 			);
 			path = EditClip;
+			sourceTree = "<group>";
+		};
+		39F404EE2B510499008809E2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				39EF96032B5020D600F301FC /* EditClipCollectionViewCell.swift */,
+				39EF96002B501E8A00F301FC /* EditClipNoticeView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		3F2BFAC72B4036E200DA76B7 /* View */ = {
