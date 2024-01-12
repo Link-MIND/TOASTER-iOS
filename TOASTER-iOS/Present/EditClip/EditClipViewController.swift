@@ -31,6 +31,7 @@ final class EditClipViewController: UIViewController {
         setupStyle()
         setupHierarchy()
         setupLayout()
+        setupDelegate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,10 +47,6 @@ private extension EditClipViewController {
         editClipCollectionView.do {
             $0.backgroundColor = .toasterBackground
             $0.register(EditClipCollectionViewCell.self, forCellWithReuseIdentifier: EditClipCollectionViewCell.className)
-            $0.delegate = self
-            $0.dataSource = self
-            $0.dragDelegate = self
-            $0.dropDelegate = self
             $0.dragInteractionEnabled = true
         }
         
@@ -81,6 +78,13 @@ private extension EditClipViewController {
         if let navigationController = navigationController as? ToasterNavigationController {
             navigationController.setupNavigationBar(forType: type)
         }
+    }
+    
+    func setupDelegate() {
+        editClipCollectionView.delegate = self
+        editClipCollectionView.dataSource = self
+        editClipCollectionView.dragDelegate = self
+        editClipCollectionView.dropDelegate = self
     }
     
     func popupDeleteButtonTapped() {
