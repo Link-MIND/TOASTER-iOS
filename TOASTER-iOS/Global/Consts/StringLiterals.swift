@@ -84,4 +84,13 @@ enum StringLiterals {
         static let accessToken = "serverAccessToken"
         static let refreshToken = "serverRefreshToken"
     }
+    
+    // MARK: - UserDefault 에서 key 값으로 사용되는 String
+    
+    enum UserDefaultsKey {
+        static let LoginType = "LoginType"
+        static let apple = "apple"
+        static let kakao = "kakao"
+        static let appleUserID = "appleUserID"
+    }
 }
