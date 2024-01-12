@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
         
-        let result = KeyChainService.loadTokens(accessKey: StringLiterals.KeyChainForKey.accessToken, refreshKey: StringLiterals.KeyChainForKey.refreshToken)
+        let result = KeyChainService.loadTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
         
         /// 서버에서 발급받은 토큰이 있는 경우
         if (result.access != nil) && (result.refresh != nil) {
