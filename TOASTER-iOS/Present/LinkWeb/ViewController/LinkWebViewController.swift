@@ -14,7 +14,7 @@ import Then
 final class LinkWebViewController: UIViewController {
     
     // MARK: - Properties
-        
+    
     private var canGoBack: Bool = false {
         didSet {
             backButton.isEnabled = canGoBack
@@ -57,6 +57,7 @@ final class LinkWebViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupNavigationBarAction()
+        setupSwipeGesture()
     }
     
     deinit {
@@ -82,7 +83,7 @@ extension LinkWebViewController {
                 let progress = Float(truncating: newProgress)
                 progressView.progress = progress
             }
-        } 
+        }
     }
 }
 
@@ -159,6 +160,21 @@ private extension LinkWebViewController {
         }
     }
     
+    func setupSwipeGesture() {
+        let swipeRecognizer = UISwipeGestureRecognizer().then {
+            $0.addTarget(self, action: #selector(swipeAction))
+            $0.direction = .right
+        }
+        view.addGestureRecognizer(swipeRecognizer)
+    }
+    
+    @objc func swipeAction(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            navigationController?.popViewController(animated: true)
+            self.showNavigationBar()
+        }
+    }
+    
     /// 툴바 뒤로가기 버튼 클릭 시
     @objc func goBackInWeb() {
         if webView.canGoBack {
@@ -176,7 +192,9 @@ private extension LinkWebViewController {
     /// 툴바 링크 확인 완료 버튼 클릭 시
     @objc func checkReadInWeb() {
         if !isRead {
-            showToastMessage(width: 157, status: .check, message: "링크 확인 완료!")
+            showToastMessage(width: 152, status: .check, message: "링크 확인 완료")
+        } else {
+            showToastMessage(width: 152, status: .check, message: "링크 열람 취소")
         }
         isRead = !isRead
         // TODO: - 서버 통신 추가해줘야 할 부분
