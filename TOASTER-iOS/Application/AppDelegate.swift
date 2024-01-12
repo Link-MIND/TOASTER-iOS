@@ -28,15 +28,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (result.access != nil) && (result.refresh != nil) {
             isLogin = true
         } else {
-            if let loginType = UserDefaults.standard.string(forKey: StringLiterals.UserDefaultsKey.LoginType) {
+            if let loginType = UserDefaults.standard.string(forKey: Config.loginType) {
                 print("Login Type: \(loginType)")
                 
                 switch loginType {
-                case StringLiterals.UserDefaultsKey.apple:
+                case Config.appleLogin:
                     checkAppleLogin { [weak self] result in
                         self?.isLogin = result
                     }
-                case StringLiterals.UserDefaultsKey.kakao:
+                case Config.kakaoLogin:
                     checkKakaoLogin { [weak self] result in
                         self?.isLogin = result
                     }
