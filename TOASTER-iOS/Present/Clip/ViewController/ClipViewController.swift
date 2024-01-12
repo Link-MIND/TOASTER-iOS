@@ -93,7 +93,9 @@ private extension ClipViewController {
     }
     
     func editButtonTapped() {
-        // 편집 버튼 클릭 시 로직
+        let editClipViewController = EditClipViewController()
+        editClipViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(editClipViewController, animated: false)
     }
 }
 
