@@ -151,8 +151,7 @@ private extension DetailClipListCollectionViewCell {
         
         modifiedButton.snp.makeConstraints {
             $0.size.equalTo(24)
-            $0.trailing.equalToSuperview().inset(8)
-            $0.top.equalToSuperview().inset(8)
+            $0.top.trailing.equalToSuperview().inset(8)
         }
         
         clipNameLabel.snp.makeConstraints {
