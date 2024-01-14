@@ -22,6 +22,12 @@ struct KeyChainService {
         return result
     }
     
+    static func saveTokens(accessKey: String, refreshKey: String) -> (accessResult: Bool, refreshResult: Bool) {
+        let accessResult = saveToken(token: accessKey, key: Config.accessTokenKey)
+        let refreshResult = saveToken(token: refreshKey, key: Config.refreshTokenKey)
+        return (accessResult: accessResult, refreshResult: refreshResult)
+    }
+    
     static func loadAccessToken(key: String) -> String? {
         let result = loadToken(key: key)
         return result
@@ -101,11 +107,20 @@ struct KeyChainService {
         
         if status == errSecSuccess, let tokenData = data as? Data,
             let token = String(data: tokenData, encoding: .utf8) {
-            print("KeyChain 불러오기 성공")
+            
+            if key == Config.accessTokenKey {
+                print("KeyChain - AccessToken 불러오기 성공")
+            } else {
+                print("KeyChain - RefreshToken 불러오기 성공")
+            }
             return token
         } else if status == errSecItemNotFound {
             // 해당 키에 대한 아이템이 없는 경우
-            print("KeyChain Key 존재하지 않음")
+            if key == Config.accessTokenKey {
+                print("KeyChain - AccessToken 존재하지 않음")
+            } else {
+                print("KeyChain - RefreshToken 존재하지 않음")
+            }
             return nil
         } else {
             // 다른 오류 발생
