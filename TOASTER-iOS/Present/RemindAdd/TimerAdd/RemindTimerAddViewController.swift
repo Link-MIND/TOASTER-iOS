@@ -35,12 +35,12 @@ final class RemindTimerAddViewController: UIViewController {
     private let timerView: UIView = UIView()
     private let timerLabel: UILabel = UILabel()
     
-    private lazy var pickerStackView: UIStackView = createStackView(forAxis: .vertical, forSpacing: 0)
+    private lazy var pickerStackView: UIStackView = createStackView(forAxis: .vertical, forSpacing: 0, forAlignment: .fill)
     private let firstDividingView: UIView = UIView()
     private let datePickerView: UIDatePicker = UIDatePicker()
     private let secondDividingView: UIView = UIView()
     
-    private lazy var repeatStackView: UIStackView = createStackView(forAxis: .vertical, forSpacing: 12)
+    private lazy var repeatStackView: UIStackView = createStackView(forAxis: .vertical, forSpacing: 12, forAlignment: .fill)
     private let repeatLabel: UILabel = UILabel()
     private let setupRepeatButton: UIButton = UIButton()
     private let repeatButtonLabel: UILabel = UILabel()
@@ -228,7 +228,7 @@ private extension RemindTimerAddViewController {
     
     func createStackView(forAxis: NSLayoutConstraint.Axis,
                          forSpacing: CGFloat,
-                         forAlignment: UIStackView.Alignment = .fill) -> UIStackView {
+                         forAlignment: UIStackView.Alignment = .center) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = forAxis
         stackView.spacing = forSpacing
