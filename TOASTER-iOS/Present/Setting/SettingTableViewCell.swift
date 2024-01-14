@@ -81,6 +81,7 @@ private extension SettingTableViewCell {
         settingSwitch.isHidden = true
         
         settingSwitch.do {
+            $0.onTintColor = .toasterPrimary
             $0.isOn = false
             $0.isUserInteractionEnabled = true
             $0.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
