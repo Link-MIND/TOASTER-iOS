@@ -11,7 +11,11 @@ import SnapKit
 import Then
 
 final class SettingTableViewCell: UITableViewCell {
-        
+    
+    // MARK: - Properties
+    
+    private var switchValueChangedHandler: ((Bool) -> Void)?
+    
     // MARK: - UI Components
     
     private let settingLabel = UILabel()
@@ -63,6 +67,10 @@ extension SettingTableViewCell {
     func showSwitch() {
         settingSwitch.isHidden = false
     }
+    
+    func setSwitchValueChangedHandler(_ handler: @escaping (Bool) -> Void) {
+        switchValueChangedHandler = handler
+    }
 }
 
 // MARK: - Private Extensions
@@ -71,10 +79,16 @@ private extension SettingTableViewCell {
     func setupStyle() {
         backgroundColor = .toasterBackground
         settingSwitch.isHidden = true
+        
+        settingSwitch.do {
+            $0.isOn = false
+            $0.isUserInteractionEnabled = true
+            $0.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
+        }
     }
     
     func setupHierarchy() {
-        addSubviews(settingLabel, settingSwitch)
+        contentView.addSubviews(settingLabel, settingSwitch)
     }
     
     func setupLayout() {
@@ -89,5 +103,10 @@ private extension SettingTableViewCell {
             $0.width.equalTo(40)
             $0.height.equalTo(24)
         }
+    }
+    
+    @objc
+    func switchValueChanged(_ sender: UISwitch) {
+        switchValueChangedHandler?(sender.isOn)
     }
 }

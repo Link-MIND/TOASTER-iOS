@@ -157,6 +157,26 @@ extension SettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            switch indexPath.row {
+            case 1:
+                // TODO: - 문의하기 기능 여기에다 붙입시다
+                print("문의하기 붙여")
+            case 2:
+                // TODO: - 이용약관 기능 여기에다 붙입시다
+                print("이용약관 붙여")
+            case 3:
+                // TODO: - 로그아웃 기능 여기에다 붙입시다
+                print("로그아웃 붙여")
+            default:
+                return
+            }
+        } else if indexPath.section == 2 {
+            print("탈퇴하기 붙여")
+        }
+    }
 }
 
 // MARK: - TableView DataSource
@@ -179,13 +199,20 @@ extension SettingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.className, for: indexPath) as? SettingTableViewCell else { return UITableViewCell() }
+        cell.selectionStyle = .none
         switch indexPath.section {
         case 0:
             // TODO: - 사용자 유저 이름 불러오는 것으로 수정 필요
             cell.configureCell(name: "홍길동", sectionNumber: indexPath.section)
         case 1:
             cell.configureCell(name: settingList[indexPath.row], sectionNumber: indexPath.section)
-            if indexPath.row == 0 { cell.showSwitch() }
+            if indexPath.row == 0 {
+                cell.showSwitch()
+                cell.setSwitchValueChangedHandler { isOn in
+                    self.isToggle = isOn
+                    // TODO: - 토글 상태에 따른 알림 설정 분기처리는 여기에서 하세요
+                }
+            }
         default:
             cell.configureCell(name: "탈퇴하기", sectionNumber: indexPath.section)
         }
