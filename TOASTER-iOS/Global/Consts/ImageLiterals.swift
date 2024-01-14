@@ -18,8 +18,10 @@ enum ImageLiterals {
         static var arrowLeft: UIImage { .load(name: "ic_arrow_left_24") }
         static var setting: UIImage { .load(name: "ic_settings_24") }
         static var plus: UIImage { .load(name: "ic_plus_24") }
+        static var checkRed18: UIImage { .load(name: "ic_check_18") }
         static var rightArrow20: UIImage { .load(name: "ic_arrow_20") }
         static var more: UIImage { .load(name: "ic_more_24") }
+        static var alert: UIImage { .load(name: "ic_alert_18_dark") } 
     }
     
     // MARK: - TabBar
@@ -50,6 +52,7 @@ enum ImageLiterals {
         static var clipEmpty: UIImage { .load(name: "clip_empty") }
         static var detailClipEmpty: UIImage { .load(name: "detail_clip_empty") }
         static var thumb: UIImage { .load(name: "img_thumbnail") }
+        static var clipIcon: UIImage { .load(name: "ic_clip_24_black") }
         static var delete: UIImage { .load(name: "ic_delete_28") }
         static var pin: UIImage { .load(name: "ic_pin_24") }
         static var edit: UIImage { .load(name: "ic_edit_24") }
