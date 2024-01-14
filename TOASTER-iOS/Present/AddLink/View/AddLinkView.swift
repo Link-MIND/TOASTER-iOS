@@ -159,7 +159,6 @@ private extension AddLinkView {
     func keyboardWillShow(_ notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             keyboardHeight = keyboardSize.height
-           // updateBottomSheetLayout()
         }
     }
 }

@@ -59,7 +59,7 @@ enum TabBarItem: CaseIterable {
         switch self {
         case .home: return HomeViewController()
         case .clip: return ClipViewController()
-        case .plus: return nil
+        case .plus: return AddLinkViewController()
         case .timer: return RemindViewController()
         case .my: return MypageViewController()
         }
