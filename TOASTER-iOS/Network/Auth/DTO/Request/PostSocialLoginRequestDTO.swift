@@ -8,5 +8,6 @@
 import Foundation
 
 struct PostSocialLoginRequestDTO: Codable {
-    
+    let socialType: String
+    let fcmToken: String?
 }

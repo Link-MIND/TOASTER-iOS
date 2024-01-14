@@ -27,7 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /// 서버에서 발급받은 토큰이 있는 경우
         if (result.access != nil) && (result.refresh != nil) {
             isLogin = true
+            print("Login 되어있음")
         } else {
+            /// 서버에서 발급 받은 토큰이 존재하지 않지만 한번이라도 로그인을 했을 경우 해당 소셜 로그인 유효성 체크
             if let loginType = UserDefaults.standard.string(forKey: Config.loginType) {
                 print("Login Type: \(loginType)")
                 
@@ -44,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     break
                 }
             } else {
-                // 값이 없다면, 기본값 또는 다른 처리를 수행
+                /// 단 한번도 로그인을 하지 않은 경우
                 print("Login Type이 설정되지 않았습니다.")
                 isLogin = false
             }
