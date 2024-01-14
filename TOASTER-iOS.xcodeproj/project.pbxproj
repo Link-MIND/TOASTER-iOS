@@ -150,6 +150,10 @@
 		6BE6DA9A2B54747B008B06FA /* TimerAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA992B54747B008B06FA /* TimerAPIService.swift */; };
 		6BE6DA9C2B54752B008B06FA /* GetTimerMainpageResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA9B2B54752B008B06FA /* GetTimerMainpageResponseDTO.swift */; };
 		6BE6DAA42B547579008B06FA /* GetDetailTimerResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DAA32B547579008B06FA /* GetDetailTimerResponseDTO.swift */; };
+		6BE6DAAD2B547A77008B06FA /* SearchTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DAAC2B547A77008B06FA /* SearchTargetType.swift */; };
+		6BE6DAAF2B547A81008B06FA /* SearchAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DAAE2B547A81008B06FA /* SearchAPIService.swift */; };
+		6BE6DAB12B547BE1008B06FA /* GetMainPageSearchResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DAB02B547BE1008B06FA /* GetMainPageSearchResponseDTO.swift */; };
+		6BE6DAB32B547BEF008B06FA /* GetRecommendSiteResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DAB22B547BEF008B06FA /* GetRecommendSiteResponseDTO.swift */; };
 		830517632B42D871009FFB60 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517622B42D871009FFB60 /* TabBarItem.swift */; };
 		830517652B42D996009FFB60 /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517642B42D996009FFB60 /* StringLiterals.swift */; };
 		830517882B4D1DF6009FFB60 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517872B4D1DF6009FFB60 /* MainCollectionViewCell.swift */; };
@@ -301,6 +305,10 @@
 		6BE6DA992B54747B008B06FA /* TimerAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerAPIService.swift; sourceTree = "<group>"; };
 		6BE6DA9B2B54752B008B06FA /* GetTimerMainpageResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTimerMainpageResponseDTO.swift; sourceTree = "<group>"; };
 		6BE6DAA32B547579008B06FA /* GetDetailTimerResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDetailTimerResponseDTO.swift; sourceTree = "<group>"; };
+		6BE6DAAC2B547A77008B06FA /* SearchTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTargetType.swift; sourceTree = "<group>"; };
+		6BE6DAAE2B547A81008B06FA /* SearchAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPIService.swift; sourceTree = "<group>"; };
+		6BE6DAB02B547BE1008B06FA /* GetMainPageSearchResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMainPageSearchResponseDTO.swift; sourceTree = "<group>"; };
+		6BE6DAB22B547BEF008B06FA /* GetRecommendSiteResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecommendSiteResponseDTO.swift; sourceTree = "<group>"; };
 		830517622B42D871009FFB60 /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		830517642B42D996009FFB60 /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		830517872B4D1DF6009FFB60 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -666,6 +674,7 @@
 				6BE6DA5C2B50B71D008B06FA /* Clip */,
 				6BE6DA792B5456FE008B06FA /* Toaster */,
 				6BE6DA8D2B546EE2008B06FA /* Timer */,
+				6BE6DAA92B547978008B06FA /* Search */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1165,6 +1174,25 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
+		6BE6DAA92B547978008B06FA /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DAAA2B547A61008B06FA /* DTO */,
+				6BE6DAAC2B547A77008B06FA /* SearchTargetType.swift */,
+				6BE6DAAE2B547A81008B06FA /* SearchAPIService.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		6BE6DAAA2B547A61008B06FA /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				6BE6DAB02B547BE1008B06FA /* GetMainPageSearchResponseDTO.swift */,
+				6BE6DAB22B547BEF008B06FA /* GetRecommendSiteResponseDTO.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
 		830517832B4D1D73009FFB60 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1347,6 +1375,7 @@
 				39E794F92B479C8600F16A38 /* ClipEmptyView.swift in Sources */,
 				39BE4BC02B4ABB9E002B471D /* DetailClipEmptyView.swift in Sources */,
 				6BE6DA6F2B50C163008B06FA /* GetDetailAllCategoryResponseDTO.swift in Sources */,
+				6BE6DAB32B547BEF008B06FA /* GetRecommendSiteResponseDTO.swift in Sources */,
 				6B6AE6532B3FF101000E2366 /* ViewController.swift in Sources */,
 				6B6AE6902B3FF59C000E2366 /* DetailClipViewController.swift in Sources */,
 				6BE6DA202B504433008B06FA /* BaseTargetType.swift in Sources */,
@@ -1364,6 +1393,7 @@
 				6BE6DA0B2B4F3063008B06FA /* RemindSelectClipVViewModel.swift in Sources */,
 				6BE6DA4D2B50B1EB008B06FA /* UserTargetType.swift in Sources */,
 				6B6AE6932B3FF5A9000E2366 /* ClipViewController.swift in Sources */,
+				6BE6DAAF2B547A81008B06FA /* SearchAPIService.swift in Sources */,
 				6BE6DA822B545786008B06FA /* PostSaveLinkRequestDTO.swift in Sources */,
 				830517632B42D871009FFB60 /* TabBarItem.swift in Sources */,
 				830517652B42D996009FFB60 /* StringLiterals.swift in Sources */,
@@ -1408,6 +1438,7 @@
 				6BE6DA652B50BA4F008B06FA /* PostAddCategoryRequestDTO.swift in Sources */,
 				6BE6D9DE2B4E9054008B06FA /* AlarmOffStateButton.swift in Sources */,
 				39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */,
+				6BE6DAB12B547BE1008B06FA /* GetMainPageSearchResponseDTO.swift in Sources */,
 				6BE6DA692B50BD4E008B06FA /* PatchEditCategoryRequestDTO.swift in Sources */,
 				398BE7FE2B46C164001595E0 /* AddClipBottomSheetView.swift in Sources */,
 				6BE6DA012B4F2ACA008B06FA /* RemindSelectClipViewController.swift in Sources */,
@@ -1446,6 +1477,7 @@
 				6BE6DA142B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift in Sources */,
 				39C3926B2B491F47005B2B0F /* NSObject+.swift in Sources */,
 				6BE6DA0F2B4F3716008B06FA /* RemindTimerAddViewController.swift in Sources */,
+				6BE6DAAD2B547A77008B06FA /* SearchTargetType.swift in Sources */,
 				6B6AE6512B3FF101000E2366 /* SceneDelegate.swift in Sources */,
 				3FACF9B82B4FE306007E5A8F /* KeyChainService.swift in Sources */,
 				3F2FA1812B4A32A200EDBF95 /* LogoutUseCase.swift in Sources */,
