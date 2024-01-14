@@ -94,7 +94,7 @@ private extension LoginViewController {
                     /// Decoding 하는 과정 중 생길 수 있는 오류
                     guard let serverAccessToken = response?.data.accessToken, let serverRefreshToken = response?.data.refreshToken else { return continuation.resume(throwing: LoginError.failedReceiveToken) }
                     
-                    let keyChainResult = KeyChainService.saveTokens(accessKey: serverAccessToken, refreshKey: serverRefreshToken)
+                    let keyChainResult = KeyChainService.saveTokens(accessKey: Config.tempToken, refreshKey: Config.tempToken)
                     
                     if keyChainResult.accessResult == true && keyChainResult.refreshResult == true {
                         print("Token 저장")
