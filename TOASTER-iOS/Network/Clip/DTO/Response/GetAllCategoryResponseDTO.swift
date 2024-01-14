@@ -18,4 +18,3 @@ struct GetAllCategoryResponseData: Codable {
     let categoryTitle: String
     let toastNum: Int
 }
-

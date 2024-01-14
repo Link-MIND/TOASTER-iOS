@@ -12,6 +12,17 @@ import Then
 
 final class ClipViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    private var clipList: GetAllCategoryResponseDTO? {
+        didSet {
+            clipListCollectionView.reloadData()
+        }
+    }
+    
+    private var clipCount: Int = 0          // 클립뷰 헤더에 표출되는 클립의 개수
+    private var allToasterCount: Int = 0    // 클립 컬뷰 상단에 고정으로 표출되는 전체클립의 개수
+    
     // MARK: - UI Properties
     
     private let clipEmptyView = ClipEmptyView()
@@ -34,6 +45,7 @@ final class ClipViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        getDetailCategoryAPI()
         setupEmptyView()
         setupNavigationBar()
     }
@@ -73,11 +85,7 @@ private extension ClipViewController {
     }
     
     func setupEmptyView() {
-        if dummyClipList.count > 0 {
-            clipEmptyView.isHidden = true
-        } else {
-            clipEmptyView.isHidden = false
-        }
+        clipEmptyView.isHidden = clipCount > 0 ? true : false
     }
     
     func setupNavigationBar() {
@@ -113,15 +121,18 @@ extension ClipViewController: UICollectionViewDelegate {
 
 extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyClipList.count + 1
+        guard let count = clipList?.data.count else { return 1 }
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell else { return UICollectionViewCell() }
         if indexPath.row == 0 {
-            cell.configureCell(forModel: ClipListModel(categoryID: 0, categoryTitle: "전체클립", toastNum: 100), icon: ImageLiterals.TabBar.allClip.withTintColor(.black900))
+            cell.configureCell(forModel: GetAllCategoryResponseData(categoryId: 0, categoryTitle: "전체클립", toastNum: allToasterCount), icon: ImageLiterals.TabBar.allClip.withTintColor(.black900))
         } else {
-            cell.configureCell(forModel: dummyClipList[indexPath.row-1], icon: ImageLiterals.TabBar.clip.withTintColor(.black900))
+            if let clips = clipList?.data[indexPath.row] {
+                cell.configureCell(forModel: clips, icon: ImageLiterals.TabBar.clip.withTintColor(.black900))
+            }
         }
         return cell
     }
@@ -130,6 +141,7 @@ extension ClipViewController: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
             headerView.isDetailClipView(isHidden: false)
+            headerView.setupDataBind(count: clipCount)
             headerView.clipCollectionHeaderViewDelegate = self
             return headerView
         }
@@ -188,6 +200,21 @@ extension ClipViewController: AddClipBottomSheetViewDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
             self.addClipBottomSheetView.resetTextField()
+        }
+    }
+}
+
+// MARK: - Network
+
+extension ClipViewController {
+    func getDetailCategoryAPI() {
+        NetworkService.shared.clipService.getAllCategory { result in
+            switch result {
+            case .success(let response):
+                self.clipList = response
+                if let data = response?.data { self.clipCount = data.count }
+            default: return
+            }
         }
     }
 }
