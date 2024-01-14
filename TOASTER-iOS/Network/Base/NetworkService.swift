@@ -15,8 +15,8 @@ final class NetworkService {
     
     let authService: AuthAPIServiceProtocol = AuthAPIService()
     let userService: UserAPIServiceProtocol = UserAPIService()
-//    let toastService: ToasterAPIServiceProtocol = ToasterAPIService()
+    let toastService: ToasterAPIServiceProtocol = ToasterAPIService()
     let clipService: ClipAPIServiceProtocol = ClipAPIService()
-//    let searchService: SearchAPIServiceProtocol = SearchAPIService()
-//    let timerService: TimerAPIServiceProtocol = TimerAPIService()
+    let searchService: SearchAPIServiceProtocol = SearchAPIService()
+    let timerService: TimerAPIServiceProtocol = TimerAPIService()
 }
