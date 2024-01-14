@@ -56,8 +56,8 @@ private extension LoginViewController {
         }
         
         loginImageView.do {
-            $0.image = ImageLiterals.Login.loginLogo2
-            $0.contentMode = .scaleAspectFit
+            $0.image = ImageLiterals.Login.loginLogo
+            $0.contentMode = .scaleAspectFit//.scaleAspectFit
         }
     }
     
@@ -80,10 +80,10 @@ private extension LoginViewController {
         }
         
         loginImageView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(view.convertByHeightRatio(60))
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(loginImageView.snp.height).multipliedBy(379/335)
-            $0.bottom.equalTo(appleSocialLoginButtonView.snp.top)
+            $0.height.equalTo(loginImageView.snp.height).multipliedBy(304/294)
+            $0.bottom.equalTo(appleSocialLoginButtonView.snp.top).inset(-10)
         }
         
         appleSocialLoginButtonView.snp.makeConstraints {
