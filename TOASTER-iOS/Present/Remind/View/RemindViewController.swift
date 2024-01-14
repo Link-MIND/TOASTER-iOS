@@ -103,7 +103,9 @@ private extension RemindViewController {
     }
     
     func plusButtonTapped() {
-        // plusButtonTapped
+        let clipAddViewController = RemindSelectClipViewController()
+        clipAddViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(clipAddViewController, animated: true)
     }
     
     func deleteButtonTapped() {

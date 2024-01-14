@@ -284,9 +284,12 @@ private extension RemindTimerAddViewController {
 extension RemindTimerAddViewController: TimerRepeatBottomSheetDelegate {
     func nextButtonTapped(selectedList: Set<Int>) {
         selectedIndex = selectedList
+        print(selectedIndex)
         setSelectedIndex(contains: 8, deleteFirst: 1, deleteSecond: 7)
         setSelectedIndex(contains: 9, deleteFirst: 1, deleteSecond: 5)
         setSelectedIndex(contains: 10, deleteFirst: 6, deleteSecond: 7)
+        print("🔥", selectedIndex)
+
         
         dismiss(animated: false)
     }

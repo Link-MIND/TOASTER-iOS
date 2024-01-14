@@ -60,13 +60,7 @@ extension TimerRepeatBottomSheetView {
     }
     
     func setupSelectedIndex(forIndexList: Set<Int>) {
-        selectedList = []
-        forIndexList.forEach {
-            if let date = TimerRepeatDate(rawValue: $0),
-               let index = repeatTime.firstIndex(of: date) {
-                selectedList.insert(index)
-            }
-        }
+        selectedList = forIndexList
     }
 }
 
@@ -151,8 +145,9 @@ extension TimerRepeatBottomSheetView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimerRepeatCollectionViewCell.className, for: indexPath) as? TimerRepeatCollectionViewCell else { return UICollectionViewCell() }
+        let dateValue = repeatTime[indexPath.item].rawValue
         cell.configureCell(forModel: repeatTime[indexPath.item])
-        cell.cellSelected(forSelect: selectedList.contains(indexPath.item))
+        cell.cellSelected(forSelect: selectedList.contains(dateValue))
         return cell
     }
 }
