@@ -51,26 +51,22 @@ final class AddLinkView: UIView, UITextFieldDelegate {
         setupLayout()
     }
     
-    // 다음 버튼
     @objc func tappedNextBottomButton() {
         nextBottomButton.backgroundColor = .black850
         let urlLink = linkEmbedTextField.text!
     }
     
-    // 키보드 위에 올라가는 nextTopButton
-    // textField is Empty -> ERROR
-    // else -> timer check 후 링크텍스트 가져오기
     @objc func tappedNextTopButton() {
         if (linkEmbedTextField.text?.count ?? 0) < 1 {
             emptyError()
         } else {
             // 클립 저장으로 이동
-            
         }
     }
     
-    // 확인 버튼 색상 변경
-    @objc func textFieldDidChange(_ sender: Any?) {
+    @objc func textFieldDidChange() {
+        nextBottomButton.backgroundColor = .black850
+        nextBottomButton.isEnabled = true
     }
 }
 
@@ -79,10 +75,10 @@ final class AddLinkView: UIView, UITextFieldDelegate {
 private extension AddLinkView {
     
     func setupStyle() {
-        self.backgroundColor = .white
+        self.backgroundColor = .toasterBackground
         
         descriptLabel.do {
-            $0.text = "링크를 입력하세요"
+            $0.text = "링크를 입력해주세요"
             $0.font = .suitMedium(size: 18)
         }
         
@@ -94,7 +90,7 @@ private extension AddLinkView {
             $0.inputAccessoryView = accessoryView
             $0.clearButtonMode = .always
             $0.addPadding(left: 15.0)
-            $0.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+            $0.addTarget(self, action: #selector(self.textFieldDidChange), for: .touchUpInside)
         }
         
         nextBottomButton.do {
@@ -143,14 +139,16 @@ private extension AddLinkView {
             $0.height.equalTo(62)
         }
         
-        // 키보드 위에 버튼 올리기 위한 Layout
+        // 키보드 위의 버튼
         nextTopButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(375)
+            $0.width.equalTo(UIScreen.main.bounds.width)
             $0.height.equalTo(56)
         }
     }
 }
+
+// MARK: - Extension
 
 extension AddLinkView {
     
@@ -158,7 +156,7 @@ extension AddLinkView {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         // 텍스트 필드에 입력이 시작될 때 호출되는 메서드
-        nextTopButton.backgroundColor = .black
+        nextTopButton.backgroundColor = .black850
         linkEmbedTextField.placeholder = nil
         // 여기서 타이머를 시작하고, 1.5초 후에 텍스트를 확인하고 테두리 색상을 변경합니다.
         if textField.text?.count ?? 0 > 1 {
@@ -198,14 +196,14 @@ extension AddLinkView {
     }
     
     func stopTimer() {
-        // 타이머를 정지하고 테두리를 초기화
+        // 타이머를 정지, 테두리 초기화
         timer?.invalidate()
         linkEmbedTextField.layer.borderColor = UIColor.clear.cgColor
-//        linkEmbedTextField.layer.borderWidth = 1.0
     }
-
+    
     // MARK: - URL 유효성 검사
     
+    // 화면 구현 완성하고 검사할게요
     func isValidURL(_ urlString: String?) -> Bool {
         guard let urlString = urlString else {
             return false
@@ -217,13 +215,14 @@ extension AddLinkView {
         
         return regex?.firstMatch(in: urlString, options: [], range: range) != nil
     }
-}
-
-extension AddLinkView {
+    
+    // MARK: - Text Field Error
+    
     // 링크를 입력하는 텍스트필드가 비어 있을 경우 error 처리
     func emptyError() {
         linkEmbedTextField.layer.borderColor = UIColor.toasterError.cgColor
         linkEmbedTextField.layer.borderWidth = 1
+        
         // Button 비활성화
         nextTopButton.backgroundColor = .gray200
         nextBottomButton.backgroundColor = .gray200
@@ -243,12 +242,19 @@ extension AddLinkView {
         linkEmbedTextField.layer.borderColor = UIColor.toasterError.cgColor
         linkEmbedTextField.layer.borderWidth = 1
         
+        // Button 비활성화
+        nextTopButton.backgroundColor = .gray200
+        nextBottomButton.backgroundColor = .gray200
+        nextTopButton.isEnabled = false
+        nextBottomButton.isEnabled = false
+        
         errorLabel.text = "유효하지 않은 형식의 링크입니다"
         addSubview(errorLabel)
         errorLabel.snp.makeConstraints {
             $0.top.equalTo(linkEmbedTextField.snp.bottom).offset(6)
             $0.leading.equalTo(linkEmbedTextField.snp.leading)
         }
+        errorLabel.isHidden = false
     }
     
     // 링크가 유효할 경우, error reset
