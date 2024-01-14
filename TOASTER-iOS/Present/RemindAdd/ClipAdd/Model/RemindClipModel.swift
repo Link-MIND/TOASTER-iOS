@@ -14,6 +14,9 @@ struct RemindClipModel {
 }
 
 extension RemindClipModel {
+    
+    // TODO: - 더미 데이터 삭제
+    
     static func fetchDummyData() -> [RemindClipModel] {
         return [RemindClipModel(id: 0,
                                 title: "주말 나들이",

@@ -249,6 +249,7 @@ private extension RemindTimerAddViewController {
         navigationController?.popToRootViewController(animated: true)
     }
     
+    /// 매일, 주중, 주말 -> 요일 값으로 바꿔주기 위한 함수
     func setSelectedIndex(contains: Int,
                           deleteFirst: Int,
                           deleteSecond: Int) {
@@ -276,6 +277,8 @@ private extension RemindTimerAddViewController {
     
     @objc func completeButtonTapped() {
         // TODO: - API 호출
+        
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 
@@ -284,12 +287,9 @@ private extension RemindTimerAddViewController {
 extension RemindTimerAddViewController: TimerRepeatBottomSheetDelegate {
     func nextButtonTapped(selectedList: Set<Int>) {
         selectedIndex = selectedList
-        print(selectedIndex)
         setSelectedIndex(contains: 8, deleteFirst: 1, deleteSecond: 7)
         setSelectedIndex(contains: 9, deleteFirst: 1, deleteSecond: 5)
         setSelectedIndex(contains: 10, deleteFirst: 6, deleteSecond: 7)
-        print("🔥", selectedIndex)
-
         
         dismiss(animated: false)
     }

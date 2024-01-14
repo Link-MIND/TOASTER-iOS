@@ -16,7 +16,7 @@ protocol TimerRepeatBottomSheetDelegate: AnyObject {
 
 final class TimerRepeatBottomSheetView: UIView {
     
-    // MARK: - Components
+    // MARK: - Properties
     
     private let repeatTime: [TimerRepeatDate] = [.everyDay,
                                                  .everyWeekDay,
@@ -31,7 +31,7 @@ final class TimerRepeatBottomSheetView: UIView {
     private var selectedList: Set<Int> = []
     private weak var delegate: TimerRepeatBottomSheetDelegate?
     
-    // MARK: - UI Components
+    // MARK: - UI Properties
     
     private lazy var repeatCollectionView: UICollectionView = createCollectionView()
     private let nextButton: UIButton = UIButton()

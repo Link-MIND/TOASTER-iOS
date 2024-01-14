@@ -7,6 +7,9 @@
 
 import Foundation
 
+/// Date 값에 대한 정의
+/// Date 값에 따라 보여줘야 할 String 값과,
+/// Date 값을 서버로 보낼 때의 ID 값 (Int)을 정의해둠
 enum TimerRepeatDate: Int {
     case mon = 1
     case tue = 2
@@ -85,6 +88,8 @@ enum TimerRepeatDate: Int {
 }
 
 extension Set<Int> {
+    
+    /// Date의 ID 값을 요일 String으로 바꿔주는 함수
     func fetchDaysString() -> String {
         var text = ""
         var setList = Array(self)
