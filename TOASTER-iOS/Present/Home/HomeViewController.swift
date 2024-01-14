@@ -27,6 +27,11 @@ final class HomeViewController: UIViewController {
         homeView.backgroundColor = .toasterBackground
         setView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
+    }
 }
 
 extension HomeViewController: UICollectionViewDelegate {}
@@ -179,12 +184,12 @@ private extension HomeViewController {
     }
     
     func rightButtonTapped() {
-        // rightButtonAction - 환경설정 화면 구현 완료 이후 수정할 예정
-        print("환경설정")
+        let settingVC = SettingViewController()
+        settingVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(settingVC, animated: true)
     }
     
     func setView() {
-        setupNavigationBar()
         setupHierarchy()
         setupLayout()
         createCollectionView()
