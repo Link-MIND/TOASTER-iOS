@@ -21,6 +21,8 @@ final class AddLinkViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .toasterBackground
+    
         setAddLinkVew()
         hideKeyboard()
     }

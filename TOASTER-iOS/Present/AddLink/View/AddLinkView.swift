@@ -14,7 +14,8 @@ final class AddLinkView: UIView, UITextFieldDelegate {
     
     // MARK: - Properties
     
-    var timer: Timer?
+    private var timer: Timer?
+    private var keyboardHeight: CGFloat = 100
     
     // MARK: - UI Components
     
@@ -24,7 +25,7 @@ final class AddLinkView: UIView, UITextFieldDelegate {
     private let nextBottomButton = UIButton()
     private let nextTopButton = UIButton()
     
-    lazy var accessoryView: UIView = { return UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 72.0)) }()
+    lazy var accessoryView: UIView = { return UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 56.0)) }()
     
     private let errorLabel = UILabel()
     
@@ -52,8 +53,12 @@ final class AddLinkView: UIView, UITextFieldDelegate {
     }
     
     @objc func tappedNextBottomButton() {
-        nextBottomButton.backgroundColor = .black850
-        let urlLink = linkEmbedTextField.text!
+        if (linkEmbedTextField.text?.count ?? 0) < 1 {
+            emptyError()
+        } else {
+            // 클립 저장으로 이동
+        }
+        
     }
     
     @objc func tappedNextTopButton() {
@@ -75,6 +80,9 @@ final class AddLinkView: UIView, UITextFieldDelegate {
 private extension AddLinkView {
     
     func setupStyle() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
         self.backgroundColor = .toasterBackground
         
         descriptLabel.do {
@@ -144,6 +152,17 @@ private extension AddLinkView {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(UIScreen.main.bounds.width)
             $0.height.equalTo(56)
+            //$0.bottom.equalTo(accessoryView.snp.top)
+           // $0.top.equalToSuperview().inset(UIScreen.main.bounds.height - keyboardHeight)
+            //$0.top.equalToSuperview().inset(self.frame.height - keyboardHeight)
+        }
+    }
+    
+    @objc
+    func keyboardWillShow(_ notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            keyboardHeight = keyboardSize.height
+           // updateBottomSheetLayout()
         }
     }
 }
@@ -168,7 +187,7 @@ extension AddLinkView {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // 입력이 발생할 때마다 호출되는 메서드
-        // 여기서 타이머를 재시작합니다.
+        // 여기서 타이머를 재시작
         restartTimer()
         return true
     }
@@ -235,6 +254,8 @@ extension AddLinkView {
             $0.top.equalTo(linkEmbedTextField.snp.bottom).offset(6)
             $0.leading.equalTo(linkEmbedTextField.snp.leading)
         }
+        
+        errorLabel.isHidden = false
     }
     
     // 링크가 유효하지 않을 경우 error 처리
