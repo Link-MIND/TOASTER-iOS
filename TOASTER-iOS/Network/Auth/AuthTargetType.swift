@@ -40,7 +40,7 @@ extension AuthTargetType: BaseTargetType {
     
     var path: String {
         switch self {
-        case .postSocialLogin(_, _): return utilPath.rawValue
+        case .postSocialLogin: return utilPath.rawValue
         case .postRefreshToken: return utilPath.rawValue + "/token"
         case .postLogout: return utilPath.rawValue + "/sign-out"
         case .deleteWithdraw: return utilPath.rawValue + "/withdraw"
@@ -49,7 +49,7 @@ extension AuthTargetType: BaseTargetType {
     
     var method: Moya.Method {
         switch self {
-        case .postSocialLogin(_, _): return .post
+        case .postSocialLogin: return .post
         case .postRefreshToken: return .post
         case .postLogout: return .post
         case .deleteWithdraw: return .delete
