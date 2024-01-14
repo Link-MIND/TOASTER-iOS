@@ -15,25 +15,23 @@ final class AddLinkViewController: UIViewController {
     // MARK: - UI Properties
     
     private var addLinkView = AddLinkView()
-     
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .toasterBackground
-
-        super.tabBarController?.tabBar.isHidden = true
         
         setAddLinkVew()
         hideKeyboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-         super.viewWillAppear(animated)
-         
-         setupNavigationBar()
-     }
+        super.viewWillAppear(animated)
+        
+        setupNavigationBar()
+    }
     
     // MARK: - set up Add Link View
     
@@ -62,8 +60,8 @@ private extension AddLinkViewController {
     }
     
     func closeButtonTapped() {
-        let closeAddLinkViewController = HomeViewController()
-        closeAddLinkViewController.hidesBottomBarWhenPushed = true
-        self.navigationController?.popViewController(animated: false)
+        if let tabBarController = self.tabBarController {
+            tabBarController.selectedIndex = 0
+        }
     }
 }

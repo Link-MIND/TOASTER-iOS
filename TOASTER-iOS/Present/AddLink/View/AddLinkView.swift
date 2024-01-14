@@ -189,7 +189,7 @@ extension AddLinkView: UITextFieldDelegate {
     
     func startTimer() {
         // 1.5초 후에 checkTextField 메서드 호출
-        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
             // URL 유효 여부 판단 후 처리
             if let urlText = self?.linkEmbedTextField.text {
                 if urlText.contains("http") {
