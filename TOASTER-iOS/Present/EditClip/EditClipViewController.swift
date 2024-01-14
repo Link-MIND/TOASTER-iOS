@@ -20,7 +20,7 @@ final class EditClipViewController: UIViewController {
     private let editClipBottomSheetView = AddClipBottomSheetView()
     private lazy var editClipBottom = ToasterBottomSheetViewController(bottomType: .white,
                                                                        bottomTitle: "클립 이름 수정",
-                                                                       height: 219,
+                                                                       height: 198,
                                                                        insertView: editClipBottomSheetView)
     
     // MARK: - Life Cycle
@@ -205,6 +205,14 @@ extension EditClipViewController: UICollectionViewDropDelegate {
 // MARK: - AddClipBottomSheetView Delegate
 
 extension EditClipViewController: AddClipBottomSheetViewDelegate {
+    func addHeightBottom() {
+        editClipBottom.changeHeightBottomSheet(height: 219)
+    }
+    
+    func minusHeightBottom() {
+        editClipBottom.changeHeightBottomSheet(height: 198)
+    }
+    
     func dismissButtonTapped() {
         // 수정 서버 통신 붙일 부분
         editClipBottom.hideBottomSheet()
