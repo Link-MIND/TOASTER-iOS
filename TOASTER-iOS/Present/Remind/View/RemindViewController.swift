@@ -10,15 +10,28 @@ import UIKit
 import SnapKit
 import Then
 
+enum RemindViewType {
+    case deviceOnAppOnExistData
+    case deviceOnAppOnNoneData
+    case deviceOffAppOn
+    case deviceOnAppOff
+    case deviceOffAppOff
+}
+
 final class RemindViewController: UIViewController {
     
     // MARK: - Properties
     
     private let viewModel = RemindViewModel()
+    private let defaults = UserDefaults.standard
     
     // MARK: - UI Properties
     
     private let timerCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let editAlarmButton: AlarmOffStateButton = AlarmOffStateButton()
+    private let emptyTimerView: RemindTimerEmptyView = RemindTimerEmptyView()
+    private let offAlarmView: RemindAlarmOffView = RemindAlarmOffView(frame: .zero,
+                                                                      type: .normal)
     
     // MARK: - Life Cycle
     
@@ -30,6 +43,7 @@ final class RemindViewController: UIViewController {
         setupLayout()
         setupDelegate()
         setupViewModel()
+        setupViewWithAlarm(forType: .deviceOnAppOnExistData)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,13 +72,28 @@ private extension RemindViewController {
     }
     
     func setupHierarchy() {
-        view.addSubview(timerCollectionView)
+        view.addSubviews(timerCollectionView,
+                         editAlarmButton,
+                         emptyTimerView,
+                         offAlarmView)
     }
     
     func setupLayout() {
         timerCollectionView.snp.makeConstraints {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview()
+        }
+        
+        editAlarmButton.snp.makeConstraints {
+            $0.height.equalTo(90)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        [emptyTimerView, offAlarmView].forEach {
+            $0.snp.makeConstraints {
+                $0.center.equalToSuperview()
+            }
         }
     }
     
@@ -74,9 +103,8 @@ private extension RemindViewController {
     }
     
     func setupViewModel() {
-        viewModel.setupDataChangeAction {
-            self.timerCollectionView.reloadData()
-        }
+        viewModel.setupDataChangeAction(changeAction: reloadCollectionViewWithData,
+                                        emptyAction: reloadCollectionViewWithNoneData)
     }
     
     func setupNavigationBar() {
@@ -91,6 +119,48 @@ private extension RemindViewController {
         }
     }
     
+    func setupViewWithAlarm(forType: RemindViewType) {
+        switch forType {
+        case .deviceOnAppOnExistData:
+            setupViewHidden(collectionViewHidden: false,
+                            buttonHidden: true,
+                            emptyViewHidden: true,
+                            nonAlarmViewHidden: true)
+        case .deviceOnAppOnNoneData:
+            setupViewHidden(collectionViewHidden: true,
+                            buttonHidden: true,
+                            emptyViewHidden: false,
+                            nonAlarmViewHidden: true)
+            emptyTimerView.setupButtonEnable(forEnable: true)
+        case .deviceOffAppOn:
+            setupViewHidden(collectionViewHidden: true,
+                            buttonHidden: true,
+                            emptyViewHidden: true,
+                            nonAlarmViewHidden: false)
+        case .deviceOnAppOff:
+            setupViewHidden(collectionViewHidden: true,
+                            buttonHidden: false,
+                            emptyViewHidden: false,
+                            nonAlarmViewHidden: true)
+            emptyTimerView.setupButtonEnable(forEnable: false)
+        case .deviceOffAppOff:
+            setupViewHidden(collectionViewHidden: true,
+                            buttonHidden: false,
+                            emptyViewHidden: true,
+                            nonAlarmViewHidden: false)
+        }
+    }
+    
+    func setupViewHidden(collectionViewHidden: Bool, 
+                         buttonHidden: Bool,
+                         emptyViewHidden: Bool,
+                         nonAlarmViewHidden: Bool) {
+        timerCollectionView.isHidden = collectionViewHidden
+        editAlarmButton.isHidden = buttonHidden
+        emptyTimerView.isHidden = emptyViewHidden
+        offAlarmView.isHidden = nonAlarmViewHidden
+    }
+    
     func setupBottomSheet(forID: Int?) {
         let editView = RemindTimerEditBottomSheetView()
         editView.setupEditView(forDelegate: self,
@@ -100,6 +170,16 @@ private extension RemindViewController {
         exampleBottom.modalPresentationStyle = .overFullScreen
         
         present(exampleBottom, animated: false)
+    }
+    
+    func reloadCollectionViewWithData() {
+        timerCollectionView.reloadData()
+        setupViewWithAlarm(forType: .deviceOnAppOnExistData)
+    }
+    
+    func reloadCollectionViewWithNoneData() {
+        timerCollectionView.reloadData()
+        setupViewWithAlarm(forType: .deviceOnAppOnNoneData)
     }
     
     func plusButtonTapped() {
