@@ -150,6 +150,9 @@
 		830517AA2B4D95E9009FFB60 /* HomeFooterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517A92B4D95E9009FFB60 /* HomeFooterCollectionView.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
 		8315CD842B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */; };
+		8315CD8A2B54781E0061F377 /* SelectClipViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD892B54781E0061F377 /* SelectClipViewCell.swift */; };
+		8315CD8C2B54782F0061F377 /* SelectClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */; };
+		8315CD8E2B547EE30061F377 /* SelectClipHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -288,6 +291,9 @@
 		830517A92B4D95E9009FFB60 /* HomeFooterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFooterCollectionView.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClipEmptyCollectionViewCell.swift; sourceTree = "<group>"; };
+		8315CD892B54781E0061F377 /* SelectClipViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipViewCell.swift; sourceTree = "<group>"; };
+		8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipViewController.swift; sourceTree = "<group>"; };
+		8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -706,6 +712,7 @@
 		6B6AE6942B3FF5AB000E2366 /* AddLink */ = {
 			isa = PBXGroup;
 			children = (
+				8315CD882B5478050061F377 /* SelectClip */,
 				6B6AE6952B3FF5B5000E2366 /* AddLinkViewController.swift */,
 			);
 			path = AddLink;
@@ -1110,6 +1117,16 @@
 			path = Footer;
 			sourceTree = "<group>";
 		};
+		8315CD882B5478050061F377 /* SelectClip */ = {
+			isa = PBXGroup;
+			children = (
+				8315CD892B54781E0061F377 /* SelectClipViewCell.swift */,
+				8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */,
+				8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */,
+			);
+			path = SelectClip;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1283,6 +1300,7 @@
 				6BE6D9E42B4EA125008B06FA /* WaitTimerCollectionViewCell.swift in Sources */,
 				6BE6D9D42B4DE479008B06FA /* RemindTimerEmptyView.swift in Sources */,
 				39B54E7A2B53D49900538DAE /* SettingTableViewCell.swift in Sources */,
+				8315CD8A2B54781E0061F377 /* SelectClipViewCell.swift in Sources */,
 				6BE6DA392B50636B008B06FA /* BaseAPIService.swift in Sources */,
 				6BE6DA572B50B44F008B06FA /* GetMyPageResponseDTO.swift in Sources */,
 				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
@@ -1300,6 +1318,7 @@
 				6BE6D9DE2B4E9054008B06FA /* AlarmOffStateButton.swift in Sources */,
 				39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */,
 				6BE6DA692B50BD4E008B06FA /* PatchEditCategoryRequestDTO.swift in Sources */,
+				8315CD8C2B54782F0061F377 /* SelectClipViewController.swift in Sources */,
 				398BE7FE2B46C164001595E0 /* AddClipBottomSheetView.swift in Sources */,
 				6BE6DA012B4F2ACA008B06FA /* RemindSelectClipViewController.swift in Sources */,
 				6BE6DA592B50B45E008B06FA /* PatchPushAlarmResponseDTO.swift in Sources */,
@@ -1344,6 +1363,7 @@
 				6B6AE6AE2B3FF721000E2366 /* ImageLiterals.swift in Sources */,
 				6B6AE6A42B3FF6B0000E2366 /* UIViewController+.swift in Sources */,
 				39EF96012B501E8A00F301FC /* EditClipNoticeView.swift in Sources */,
+				8315CD8E2B547EE30061F377 /* SelectClipHeaderView.swift in Sources */,
 				6B6AE6A22B3FF5F7000E2366 /* TabBarController.swift in Sources */,
 				3F2BFAC92B40370D00DA76B7 /* SocialLoginButtonView.swift in Sources */,
 				6B6AE68A2B3FF582000E2366 /* MypageViewController.swift in Sources */,
