@@ -165,3 +165,11 @@ extension DetailClipViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: collectionView.frame.width, height: 30)
     }
 }
+
+// MARK: - Network
+
+extension DetailClipViewController {
+    func getDetailAllCategoryAPI() {
+        
+    }
+}

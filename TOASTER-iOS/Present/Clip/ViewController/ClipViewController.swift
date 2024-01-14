@@ -46,7 +46,6 @@ final class ClipViewController: UIViewController {
         super.viewWillAppear(animated)
         
         getDetailCategoryAPI()
-        setupEmptyView()
         setupNavigationBar()
     }
 }
@@ -195,11 +194,13 @@ extension ClipViewController: AddClipBottomSheetViewDelegate {
         addClipBottom.changeHeightBottomSheet(height: 198)
     }
     
-    func dismissButtonTapped() {
+    func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
+        postAddCategoryAPI(requestBody: text)
         addClipBottom.hideBottomSheet()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
             self.addClipBottomSheetView.resetTextField()
+            self.clipListCollectionView.reloadData()
         }
     }
 }
@@ -212,9 +213,26 @@ extension ClipViewController {
             switch result {
             case .success(let response):
                 self.clipList = response
-                if let data = response?.data { self.clipCount = data.count }
+                if let data = response?.data {
+                    self.clipCount = data.count
+                    self.setupEmptyView()
+                }
             default: return
             }
         }
+    }
+    
+    func postAddCategoryAPI(requestBody: PostAddCategoryRequestDTO) {
+        NetworkService.shared.clipService.postAddCategory(requestBody: requestBody) { result in
+            switch result {
+            case .success:
+                self.clipListCollectionView.reloadData()
+            default: return
+            }
+        }
+    }
+    
+    func getCheckCategoryAPI() {
+        
     }
 }

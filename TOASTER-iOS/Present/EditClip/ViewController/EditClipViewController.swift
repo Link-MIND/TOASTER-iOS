@@ -213,12 +213,24 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
         editClipBottom.changeHeightBottomSheet(height: 198)
     }
     
-    func dismissButtonTapped() {
+    func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
         // 수정 서버 통신 붙일 부분
         editClipBottom.hideBottomSheet()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.showToastMessage(width: 157, status: .check, message: "클립 수정 완료!")
             self.editClipBottomSheetView.resetTextField()
         }
+    }
+}
+
+// MARK: - Network
+
+extension EditClipViewController {
+    func deleteCategoryAPI() {
+        
+    }
+    
+    func patchEditCategoryAPI() {
+        
     }
 }

@@ -206,7 +206,7 @@ extension HomeViewController: AddClipBottomSheetViewDelegate {
         addClipBottom.changeHeightBottomSheet(height: 198)
     }
     
-    func dismissButtonTapped() {
+    func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
         addClipBottom.hideBottomSheet()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
