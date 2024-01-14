@@ -48,6 +48,9 @@ extension AppleAuthenticateAdapter: ASAuthorizationControllerDelegate {
                 print("User ID : \(userIdentifier)")
                 print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
                 print("token : \(tokenString)")
+                
+                UserDefaults.standard.set(userIdentifier, forKey: Config.appleUserID)
+                
                 authorizationContinuation?.resume(returning: SocialLoginTokenModel(accessToken: nil, refreshToken: nil, identityToken: tokenString))
             } else {
                 authorizationContinuation?.resume(throwing: LoginError.failedReceiveToken)

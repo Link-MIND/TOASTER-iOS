@@ -12,6 +12,7 @@ import Then
 
 protocol ClipCollectionHeaderViewDelegate: AnyObject {
     func addClipButtonTapped()
+    func searchBarButtonTapped()
 }
 
 final class ClipCollectionHeaderView: UICollectionReusableView {
@@ -22,7 +23,7 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
     
     // MARK: - UI Components
     
-    private let searchBar = UIImageView()
+    private let searchBarButton = UIButton()
     private let clipCountLabel = UILabel()
     private let addClipButton = UIButton()
     
@@ -46,7 +47,7 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
 
 extension ClipCollectionHeaderView {
     func isDetailClipView(isHidden: Bool) {
-        searchBar.isHidden = isHidden
+        searchBarButton.isHidden = isHidden
         addClipButton.isHidden = isHidden
         
         if isHidden {
@@ -68,10 +69,11 @@ private extension ClipCollectionHeaderView {
     func setupStyle() {
         backgroundColor = .toasterBackground
         
-        searchBar.do {
-            $0.image = ImageLiterals.Clip.searchbar 
+        searchBarButton.do {
+            $0.setImage(ImageLiterals.Clip.searchbar, for: .normal)
             $0.contentMode = .scaleAspectFill
             $0.clipsToBounds = true
+            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
         
         clipCountLabel.do {
@@ -90,29 +92,36 @@ private extension ClipCollectionHeaderView {
     }
     
     func setupHierarchy() {
-        addSubviews(searchBar, clipCountLabel, addClipButton)
+        addSubviews(searchBarButton, clipCountLabel, addClipButton)
     }
     
     func setupLayout() {
-        searchBar.snp.makeConstraints {
+        searchBarButton.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(42)
         }
         
         clipCountLabel.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(20)
+            $0.top.equalTo(searchBarButton.snp.bottom).offset(20)
             $0.leading.equalToSuperview().inset(20)
         }
         
         addClipButton.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(15)
+            $0.top.equalTo(searchBarButton.snp.bottom).offset(15)
             $0.trailing.equalToSuperview().inset(20)
         }
     }
 
     @objc
-    func buttonTapped() {
-        clipCollectionHeaderViewDelegate?.addClipButtonTapped()
+    func buttonTapped(_ sender: UIButton) {
+        switch sender {
+        case searchBarButton:
+            clipCollectionHeaderViewDelegate?.searchBarButtonTapped()
+        case addClipButton:
+            clipCollectionHeaderViewDelegate?.addClipButtonTapped()
+        default:
+            break
+        }
     }
 }
