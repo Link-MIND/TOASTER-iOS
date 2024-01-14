@@ -152,9 +152,6 @@ private extension AddLinkView {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(UIScreen.main.bounds.width)
             $0.height.equalTo(56)
-            //$0.bottom.equalTo(accessoryView.snp.top)
-           // $0.top.equalToSuperview().inset(UIScreen.main.bounds.height - keyboardHeight)
-            //$0.top.equalToSuperview().inset(self.frame.height - keyboardHeight)
         }
     }
     
