@@ -64,8 +64,8 @@ final class AddLinkView: UIView, UITextFieldDelegate {
         if (linkEmbedTextField.text?.count ?? 0) < 1 {
             emptyError()
         } else {
-            // URL 유효한지 판단
             // 클립 저장으로 이동
+            
         }
     }
     
@@ -73,6 +73,8 @@ final class AddLinkView: UIView, UITextFieldDelegate {
     @objc func textFieldDidChange(_ sender: Any?) {
     }
 }
+
+// MARK: - Private extension
 
 private extension AddLinkView {
     
@@ -129,7 +131,7 @@ private extension AddLinkView {
         
         linkEmbedTextField.snp.makeConstraints {
             $0.top.equalTo(descriptLabel.snp.bottom).offset(12)
-            $0.leading.equalToSuperview().inset(20)
+            $0.centerX.equalToSuperview()
             $0.width.equalTo(335)
             $0.height.equalTo(54)
         }
@@ -142,7 +144,6 @@ private extension AddLinkView {
         }
         
         // 키보드 위에 버튼 올리기 위한 Layout
-        guard let checkButtonSuperView = nextTopButton.superview else { return }
         nextTopButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(375)
@@ -199,8 +200,8 @@ extension AddLinkView {
     func stopTimer() {
         // 타이머를 정지하고 테두리를 초기화
         timer?.invalidate()
-        linkEmbedTextField.layer.borderColor = UIColor.black.cgColor
-        linkEmbedTextField.layer.borderWidth = 1.0
+        linkEmbedTextField.layer.borderColor = UIColor.clear.cgColor
+//        linkEmbedTextField.layer.borderWidth = 1.0
     }
 
     // MARK: - URL 유효성 검사
@@ -252,15 +253,13 @@ extension AddLinkView {
     
     // 링크가 유효할 경우, error reset
     func resetError() {
-        linkEmbedTextField.layer.borderColor = UIColor.black850.cgColor
-        linkEmbedTextField.layer.borderWidth = 1
+        linkEmbedTextField.layer.borderColor = UIColor.clear.cgColor
         
         // Button 활성화
         nextTopButton.backgroundColor = .black850
         nextBottomButton.backgroundColor = .black850
         nextTopButton.isEnabled = true
         nextBottomButton.isEnabled = true
-        
         
         errorLabel.isHidden = true
     }

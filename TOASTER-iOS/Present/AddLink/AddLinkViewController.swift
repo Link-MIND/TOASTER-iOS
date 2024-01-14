@@ -31,7 +31,6 @@ final class AddLinkViewController: UIViewController {
          setupNavigationBar()
      }
     
-    
     // MARK: - set up Add Link View
     
     private func setAddLinkVew() {
@@ -43,6 +42,7 @@ final class AddLinkViewController: UIViewController {
     }
 }
 
+// MARK: - Private extension
 
 private extension AddLinkViewController {
     func setupNavigationBar() {
