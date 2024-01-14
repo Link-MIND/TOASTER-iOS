@@ -24,6 +24,7 @@ final class SettingViewController: UIViewController {
     // MARK: - UI Properties
     
     private let alertWarningView = UIView()
+    private let warningStackView = UIStackView()
     private let warningImage = UIImageView()
     private let warningLabel = UILabel()
     private let settingTableView = UITableView(frame: .zero, style: .grouped)
@@ -55,6 +56,10 @@ private extension SettingViewController {
             $0.makeRounded(radius: 12)
         }
         
+        warningStackView.do {
+            $0.spacing = 5
+        }
+        
         warningImage.do {
             $0.image = ImageLiterals.Common.alert
             $0.contentMode = .scaleAspectFit
@@ -78,7 +83,8 @@ private extension SettingViewController {
     
     func setupHierarchy() {
         view.addSubviews(alertWarningView, settingTableView)
-        alertWarningView.addSubviews(warningImage, warningLabel)
+        alertWarningView.addSubview(warningStackView)
+        warningStackView.addArrangedSubviews(warningImage, warningLabel)
     }
     
     func setupLayout() {
@@ -88,15 +94,17 @@ private extension SettingViewController {
             $0.height.equalTo(42)
         }
         
+        warningStackView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
         warningImage.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(41)
+            $0.centerY.leading.equalToSuperview()
             $0.size.equalTo(18)
         }
         
         warningLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(41)
+            $0.centerY.trailing.equalToSuperview()
         }
         
         settingTableView.snp.makeConstraints {
