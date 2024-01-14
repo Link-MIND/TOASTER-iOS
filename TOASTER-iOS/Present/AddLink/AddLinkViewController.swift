@@ -20,6 +20,7 @@ final class AddLinkViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setAddLinkVew()
         hideKeyboard()
     }
@@ -35,14 +36,10 @@ final class AddLinkViewController: UIViewController {
     
     private func setAddLinkVew() {
         view.addSubview(addLinkView)
+        
         addLinkView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
-//        addLinkView = AddLinkView(frame: view.bounds)
-//        if let resultView = addLinkView {
-//            view.addSubview(resultView)
-//            resultView.setView()
-//        }
     }
 }
 
