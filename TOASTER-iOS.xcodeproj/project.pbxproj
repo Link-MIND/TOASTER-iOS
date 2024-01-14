@@ -140,6 +140,7 @@
 		830517AA2B4D95E9009FFB60 /* HomeFooterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517A92B4D95E9009FFB60 /* HomeFooterCollectionView.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
 		8315CD842B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */; };
+		8315CD862B517DBF0061F377 /* AddLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD852B517DBF0061F377 /* AddLinkView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -268,6 +269,7 @@
 		830517A92B4D95E9009FFB60 /* HomeFooterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFooterCollectionView.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClipEmptyCollectionViewCell.swift; sourceTree = "<group>"; };
+		8315CD852B517DBF0061F377 /* AddLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddLinkView.swift; path = View/AddLinkView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -668,6 +670,7 @@
 			isa = PBXGroup;
 			children = (
 				6B6AE6952B3FF5B5000E2366 /* AddLinkViewController.swift */,
+				8315CD852B517DBF0061F377 /* AddLinkView.swift */,
 			);
 			path = AddLink;
 			sourceTree = "<group>";
@@ -1167,6 +1170,7 @@
 				6BE6DA652B50BA4F008B06FA /* PostAddCategoryRequestDTO.swift in Sources */,
 				6BE6D9DE2B4E9054008B06FA /* AlarmOffStateButton.swift in Sources */,
 				39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */,
+				8315CD862B517DBF0061F377 /* AddLinkView.swift in Sources */,
 				6BE6DA692B50BD4E008B06FA /* PatchEditCategoryRequestDTO.swift in Sources */,
 				398BE7FE2B46C164001595E0 /* AddClipBottomSheetView.swift in Sources */,
 				6BE6DA592B50B45E008B06FA /* PatchPushAlarmResponseDTO.swift in Sources */,
@@ -1360,7 +1364,7 @@
 				CODE_SIGN_ENTITLEMENTS = "TOASTER-iOS/TOASTER-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = N3H27N59VG;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TOASTER-iOS/Global/Supporting Files/Info.plist";
@@ -1392,7 +1396,7 @@
 				CODE_SIGN_ENTITLEMENTS = "TOASTER-iOS/TOASTER-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = N3H27N59VG;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TOASTER-iOS/Global/Supporting Files/Info.plist";
