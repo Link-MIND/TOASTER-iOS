@@ -14,6 +14,7 @@ struct GetMainPageSearchResponseDTO: Codable {
 }
 
 struct GetMainPageSearchResponseData: Codable {
+    let keyword: String
     let toasts: [Toast]
     let categories: [Category]
 }
