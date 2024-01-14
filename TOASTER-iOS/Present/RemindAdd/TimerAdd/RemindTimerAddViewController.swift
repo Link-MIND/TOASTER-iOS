@@ -279,6 +279,7 @@ private extension RemindTimerAddViewController {
         // TODO: - API 호출
         
         navigationController?.popToRootViewController(animated: true)
+        navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 설정 완료!")
     }
 }
 
