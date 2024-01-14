@@ -15,6 +15,8 @@ struct PostSocialLoginResponseDTO: Codable {
 
 struct PostSocialLoginResponseData: Codable {
     let userId: Int
-    let refreshToken, accessToken, fcmToken: String
+    let accessToken, refreshToken: String
+    let fcmToken: String?
     let isRegistered, fcmIsAllowed: Bool
+    let profile: String
 }
