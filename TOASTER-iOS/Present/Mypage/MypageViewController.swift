@@ -65,6 +65,8 @@ private extension MypageViewController {
     }
         
     func settingButtonTapped() {
-        // 편집 버튼 클릭 시 로직
+        // 편집 버튼 클릭 시 로직 ( 로그아웃 기능을 확인하고자 임시로 로직을 추가 함 )
+        
+        let result = KeyChainService.deleteAccessToken(key: Config.accessTokenKey)
     }
 }

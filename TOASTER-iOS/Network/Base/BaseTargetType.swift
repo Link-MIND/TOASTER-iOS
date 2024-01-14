@@ -11,7 +11,7 @@ import Moya
 
 ///  헤더에 들어가는 토큰의 상태에 따른 Type
 enum HeaderType {
-    case nonTokenHeader
+    case socialTokenHeader(socialToken: String)
     case accessTokenHeader
     case refreshTokenHeader
 }
@@ -49,11 +49,12 @@ extension BaseTargetType {
         var header = ["Content-Type": "application/json"]
         
         switch headerType {
+        case .socialTokenHeader(let socialToken):
+            header["Authorization"] = socialToken
         case .accessTokenHeader:
-            header["accessToken"] = Config.tempToken
+            header["accessToken"] = KeyChainService.loadAccessToken(key: Config.accessTokenKey)
         case .refreshTokenHeader:
-            header["refreshToken"] = ""
-        default: break
+            header["refreshToken"] = KeyChainService.loadAccessToken(key: Config.refreshTokenKey)
         }
         
         return header
