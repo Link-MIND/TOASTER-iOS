@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class AddLinkView: UIView, UITextFieldDelegate {
+final class AddLinkView: UIView {
     
     // MARK: - Properties
     
@@ -78,7 +78,6 @@ final class AddLinkView: UIView, UITextFieldDelegate {
 // MARK: - Private extension
 
 private extension AddLinkView {
-    
     func setupStyle() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -165,7 +164,7 @@ private extension AddLinkView {
 
 // MARK: - Extension
 
-extension AddLinkView {
+extension AddLinkView: UITextFieldDelegate {
     
     // MARK: - Timer Check
     
@@ -250,7 +249,6 @@ extension AddLinkView {
             $0.top.equalTo(linkEmbedTextField.snp.bottom).offset(6)
             $0.leading.equalTo(linkEmbedTextField.snp.leading)
         }
-        
         errorLabel.isHidden = false
     }
     

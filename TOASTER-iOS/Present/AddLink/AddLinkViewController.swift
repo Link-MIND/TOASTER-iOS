@@ -22,7 +22,9 @@ final class AddLinkViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .toasterBackground
-    
+
+        super.tabBarController?.tabBar.isHidden = true
+        
         setAddLinkVew()
         hideKeyboard()
     }
