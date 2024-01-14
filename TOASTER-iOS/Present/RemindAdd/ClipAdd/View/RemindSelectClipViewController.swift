@@ -80,7 +80,7 @@ private extension RemindSelectClipViewController {
         
         nextButton.snp.makeConstraints {
             $0.height.equalTo(62)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview().inset(34)
             $0.horizontalEdges.equalToSuperview().inset(20)
         }
     }

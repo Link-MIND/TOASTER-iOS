@@ -73,7 +73,6 @@ private extension TimerRepeatBottomSheetView {
         repeatCollectionView.do {
             $0.register(TimerRepeatCollectionViewCell.self, forCellWithReuseIdentifier: TimerRepeatCollectionViewCell.className)
             $0.makeRounded(radius: 12)
-            $0.showsVerticalScrollIndicator = false
             $0.backgroundColor = .gray50
         }
         
@@ -93,7 +92,7 @@ private extension TimerRepeatBottomSheetView {
     
     func setupLayout() {
         repeatCollectionView.snp.makeConstraints {
-            $0.height.equalTo(540)
+            $0.height.lessThanOrEqualTo(convertByHeightRatio(540))
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(20)
         }
