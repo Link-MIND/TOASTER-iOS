@@ -39,8 +39,8 @@ extension ToasterTargetType: BaseTargetType {
     
     var path: String {
         switch self {
-        case .postSaveLink(let body): return utilPath.rawValue + "/save"
-        case .patchOpenLink(let body): return utilPath.rawValue + "/is-read"
+        case .postSaveLink: return utilPath.rawValue + "/save"
+        case .patchOpenLink: return utilPath.rawValue + "/is-read"
         case .deleteLink: return utilPath.rawValue + "/delete"
         case .getWeeksLink: return utilPath.rawValue + "/week"
         }
@@ -48,8 +48,8 @@ extension ToasterTargetType: BaseTargetType {
     
     var method: Moya.Method {
         switch self {
-        case .postSaveLink(let body): return .post
-        case .patchOpenLink(let body): return .patch
+        case .postSaveLink: return .post
+        case .patchOpenLink: return .patch
         case .deleteLink: return .delete
         case .getWeeksLink: return .get
         }

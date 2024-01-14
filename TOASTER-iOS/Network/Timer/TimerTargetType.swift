@@ -63,11 +63,11 @@ extension TimerTargetType: BaseTargetType {
         switch self {
         case .getTimerMainpage: return .get
         case .postCreateTimer: return .post
-        case .patchEditTimer(let timerId, _): return .patch
-        case .deleteTimer(let timerId): return .delete
-        case .getDetailTimer(let timerId): return .get
-        case .patchEditTimerTitle(let timerId, _): return .patch
-        case .patchEditAlarmTimer(let timerId): return .patch
+        case .patchEditTimer: return .patch
+        case .deleteTimer: return .delete
+        case .getDetailTimer: return .get
+        case .patchEditTimerTitle: return .patch
+        case .patchEditAlarmTimer: return .patch
         }
     }
 }
