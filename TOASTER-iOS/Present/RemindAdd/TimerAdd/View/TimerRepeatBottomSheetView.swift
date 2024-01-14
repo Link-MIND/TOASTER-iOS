@@ -73,6 +73,7 @@ private extension TimerRepeatBottomSheetView {
         repeatCollectionView.do {
             $0.register(TimerRepeatCollectionViewCell.self, forCellWithReuseIdentifier: TimerRepeatCollectionViewCell.className)
             $0.makeRounded(radius: 12)
+            $0.showsVerticalScrollIndicator = false
             $0.backgroundColor = .gray50
         }
         
@@ -111,7 +112,7 @@ private extension TimerRepeatBottomSheetView {
     
     func createCollectionView() -> UICollectionView {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 335, height: 53)
+        layout.itemSize = CGSize(width: convertByWidthRatio(335), height: convertByHeightRatio(53))
         layout.minimumLineSpacing = 1
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return collectionView

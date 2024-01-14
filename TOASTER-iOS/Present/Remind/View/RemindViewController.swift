@@ -96,7 +96,7 @@ private extension RemindViewController {
         editView.setupEditView(forDelegate: self,
                                forID: forID)
         
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 226, insertView: editView)
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 128, insertView: editView)
         exampleBottom.modalPresentationStyle = .overFullScreen
         
         present(exampleBottom, animated: false)

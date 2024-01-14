@@ -35,7 +35,7 @@ final class RemindTimerAddViewController: UIViewController {
     private let timerView: UIView = UIView()
     private let timerLabel: UILabel = UILabel()
     
-    private lazy var pickerStackView: UIStackView = createStackView(forAxis: .vertical, forSpacing: 0, forAlignment: .fill)
+    private lazy var pickerStackView: UIStackView = createStackView(forAxis: .vertical, forSpacing: 0, forAlignment: .center)
     private let firstDividingView: UIView = UIView()
     private let datePickerView: UIDatePicker = UIDatePicker()
     private let secondDividingView: UIView = UIView()
@@ -70,7 +70,7 @@ final class RemindTimerAddViewController: UIViewController {
 extension RemindTimerAddViewController {
     func configureView(forModel: RemindClipModel?) {
         if let model = forModel {
-            mainLabel.text = "\(model.title)을"
+            mainLabel.text = "\(model.title) 클립을"
             mainLabel.asFont(targetString: model.title,
                              font: .suitSemiBold(size: 18))
             categoryID = forModel?.id
@@ -139,7 +139,7 @@ private extension RemindTimerAddViewController {
         
         repeatButtonLabel.do {
             $0.text = "반복"
-            $0.font = .suitBold(size: 16)
+            $0.font = .suitSemiBold(size: 16)
             $0.textColor = .black850
         }
         
@@ -191,15 +191,24 @@ private extension RemindTimerAddViewController {
             $0.center.equalToSuperview()
         }
         
-        [labelStackView, pickerStackView, repeatStackView].forEach {
+        [labelStackView, repeatStackView].forEach {
             $0.snp.makeConstraints {
                 $0.horizontalEdges.equalToSuperview().inset(20)
             }
         }
         
+        pickerStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+        }
+        
+        datePickerView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
         [firstDividingView, secondDividingView].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(4)
+                $0.horizontalEdges.equalToSuperview()
             }
         }
         
