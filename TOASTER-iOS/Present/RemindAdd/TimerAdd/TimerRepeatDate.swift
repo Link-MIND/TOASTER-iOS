@@ -97,9 +97,9 @@ extension Set<Int> {
         for i in 0..<setList.count {
             if let date = TimerRepeatDate(rawValue: setList[i]) {
                 if i == setList.count - 1 {
-                    text = text + date.days + "요일 마다"
+                    text += date.days + "요일 마다"
                 } else {
-                    text = text + date.days + ", "
+                    text += date.days + ", "
                 }
             }
         }
