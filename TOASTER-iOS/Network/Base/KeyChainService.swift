@@ -72,25 +72,37 @@ struct KeyChainService {
                 let addStatus = SecItemAdd(query as CFDictionary, nil)
                 
                 if addStatus == errSecSuccess {
-                    print("KeyChain 저장 성공")
+                    if key == Config.accessTokenKey {
+                        print("🍞⛔️KeyChain - AccessToken 저장 성공⛔️🍞")
+                    } else {
+                        print("🍞⛔️KeyChain - RefreshToken 저장 성공⛔️🍞")
+                    }
                     return true
                 } else {
-                    print("KeyChain 저장 실패: \(addStatus)")
+                    if key == Config.accessTokenKey {
+                        print("🍞⛔️KeyChain - AccessToken 저장 실패 (Error:\(addStatus) )⛔️🍞")
+                    } else {
+                        print("🍞⛔️KeyChain - RefreshToken 저장 실패 (Error:\(addStatus))⛔️🍞")
+                    }
                     return false
                 }
             case errSecSuccess:
                 // 업데이트 성공
-                print("KeyChain 업데이트 성공")
+                if key == Config.accessTokenKey {
+                    print("🍞⛔️KeyChain - AccessToken 업데이트 성공⛔️🍞")
+                } else {
+                    print("🍞⛔️KeyChain - RefreshToken 업데이트 성공⛔️🍞")
+                }
                 return true
             default:
                 // 다른 오류 발생
-                print("Keychain error: \(status)")
+                print("🍞⛔️Keychain save error: \(status)⛔️🍞")
                 return false
             }
         }
         
         // 데이터 변환 실패
-        print("데이터 변환 실패")
+        print("🍞⛔️Keychain - 데이터 변환 실패⛔️🍞")
         return false
     }
     
@@ -109,22 +121,22 @@ struct KeyChainService {
             let token = String(data: tokenData, encoding: .utf8) {
             
             if key == Config.accessTokenKey {
-                print("KeyChain - AccessToken 불러오기 성공")
+                print("🍞⛔️KeyChain - AccessToken 불러오기 성공⛔️🍞")
             } else {
-                print("KeyChain - RefreshToken 불러오기 성공")
+                print("🍞⛔️KeyChain - RefreshToken 불러오기 성공⛔️🍞")
             }
             return token
         } else if status == errSecItemNotFound {
             // 해당 키에 대한 아이템이 없는 경우
             if key == Config.accessTokenKey {
-                print("KeyChain - AccessToken 존재하지 않음")
+                print("🍞⛔️KeyChain - AccessToken 존재하지 않음⛔️🍞")
             } else {
-                print("KeyChain - RefreshToken 존재하지 않음")
+                print("🍞⛔️KeyChain - RefreshToken 존재하지 않음⛔️🍞")
             }
             return nil
         } else {
             // 다른 오류 발생
-            print("Keychain load error: \(status)")
+            print("🍞⛔️Keychain load error: \(status)⛔️🍞")
             return nil
         }
     }
@@ -140,15 +152,15 @@ struct KeyChainService {
         switch status {
         case errSecItemNotFound:
             // 기존 데이터가 없음
-            print("KeyChain Key 존재하지 않음")
+            print("🍞⛔️KeyChain Key 존재하지 않음⛔️🍞")
             return false
         case errSecSuccess:
             // 삭제 성공
-            print("KeyChain 삭제 성공")
+            print("🍞⛔️KeyChain 삭제 성공⛔️🍞")
             return true
         default:
             // 다른 오류 발생
-            print("Keychain error: \(status)")
+            print("🍞⛔️Keychain error: \(status)")
             return false
         }
     }
