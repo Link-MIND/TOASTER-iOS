@@ -20,7 +20,7 @@ protocol AuthAPIServiceProtocol {
 
 final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
     
-    private let provider = MoyaProvider<AuthTargetType>(plugins: [MoyaPlugin()])
+    private let provider = MoyaProvider<AuthTargetType>.init(session: Session(interceptor: APIInterceptor.shared), plugins: [MoyaPlugin()])
     
     func postSocialLogin(socialToken: String,
                          requestBody: PostSocialLoginRequestDTO,
@@ -80,4 +80,3 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
         }
     }
 }
-
