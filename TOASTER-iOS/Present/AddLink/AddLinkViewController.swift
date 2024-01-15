@@ -7,11 +7,64 @@
 
 import UIKit
 
-class AddLinkViewController: UIViewController {
+import SnapKit
+import Then
+
+final class AddLinkViewController: UIViewController {
+    
+    // MARK: - UI Properties
+    
+    private var addLinkView = AddLinkView()
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupStyle()
+        setAddLinkVew()
+        hideKeyboard()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupNavigationBar()
+    }
+    
+    // MARK: - set up Add Link View
+    
+    private func setAddLinkVew() {
+        view.addSubview(addLinkView)
+        
+        addLinkView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+}
 
+// MARK: - Private extension
+
+private extension AddLinkViewController {
+    func setupStyle() {
+        view.backgroundColor = .toasterBackground
+    }
+    
+    func setupNavigationBar() {
+        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
+                                                                hasRightButton: true,
+                                                                mainTitle: StringOrImageType.string("링크 저장"),
+                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.close),
+                                                                rightButtonAction: closeButtonTapped)
+        
+        if let navigationController = navigationController as? ToasterNavigationController {
+            navigationController.setupNavigationBar(forType: type)
+        }
+    }
+    
+    func closeButtonTapped() {
+        if let tabBarController = self.tabBarController {
+            tabBarController.selectedIndex = 0
+        }
+    }
 }

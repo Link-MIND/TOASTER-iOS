@@ -46,7 +46,6 @@ private extension TabBarController {
     
     func addTabBarController() {
         var tabNavigationControllers = [UINavigationController]()
-        
         for item in TabBarItem.allCases {
             let tabNavController = createTabNavigationController(
                 title: item.itemTitle ?? "",
