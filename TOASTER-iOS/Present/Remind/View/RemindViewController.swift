@@ -23,7 +23,6 @@ final class RemindViewController: UIViewController {
     // MARK: - Properties
     
     private let viewModel = RemindViewModel()
-    private let defaults = UserDefaults.standard
     
     // MARK: - UI Properties
     
@@ -50,6 +49,7 @@ final class RemindViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupNavigationBar()
+        viewModel.fetchAlarmCheck()
     }
 }
 
@@ -68,6 +68,10 @@ private extension RemindViewController {
             
             $0.register(RemindCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: RemindCollectionHeaderView.className)
             $0.register(RemindCollectionFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: RemindCollectionFooterView.className)
+        }
+        
+        editAlarmButton.do {
+            $0.addTarget(self, action: #selector(editAlarmButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -152,7 +156,7 @@ private extension RemindViewController {
         }
     }
     
-    func setupViewHidden(collectionViewHidden: Bool, 
+    func setupViewHidden(collectionViewHidden: Bool,
                          buttonHidden: Bool,
                          emptyViewHidden: Bool,
                          nonAlarmViewHidden: Bool) {
@@ -207,14 +211,25 @@ private extension RemindViewController {
         
         print(forEnable)
     }
+    
+    @objc func editAlarmButtonTapped() {
+        let settingVC = SettingViewController()
+        settingVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(settingVC, animated: true)
+        tabBarController?.selectedIndex = 0
+    }
 }
 
 // MARK: - RemindAlarmOffBottomSheetViewDelegate
 
 extension RemindViewController: RemindAlarmOffBottomSheetViewDelegate {
     func alarmButtonTapped() {
-        // 알람 허용 팝업
-        print("알람 허용 팝업")
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in
+            DispatchQueue.main.async {
+                self.dismiss(animated: false)
+                self.viewModel.fetchAlarmCheck()
+            }
+        }
     }
 }
 

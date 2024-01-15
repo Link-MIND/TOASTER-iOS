@@ -23,18 +23,20 @@ final class RemindViewModel {
     /// RemindViewType을 저장하기 위한 프로퍼티
     private var remindViewType: RemindViewType = .deviceOnAppOnNoneData {
         didSet {
-            dataChangeAction?(remindViewType)
+            DispatchQueue.main.async {
+                self.dataChangeAction?(self.remindViewType)
+            }
         }
     }
     
     private var deviceAlarmSetting: Bool? {
         didSet {
-            
+            setupAlarm(forDeviceAlarm: deviceAlarmSetting)
         }
     }
     private var appAlarmSetting: Bool = true {
         didSet {
-            
+            setupAlarm(forDeviceAlarm: deviceAlarmSetting)
         }
     }
     
@@ -65,8 +67,10 @@ extension RemindViewModel {
         UNUserNotificationCenter.current().getNotificationSettings { permission in
             switch permission.authorizationStatus {
             case .notDetermined:
-                self.remindViewType = .deviceOnAppOnNoneData
-                self.bottomSheetAction?()
+                DispatchQueue.main.async {
+                    self.remindViewType = .deviceOnAppOnNoneData
+                    self.bottomSheetAction?()
+                }
             case .denied:
                 self.deviceAlarmSetting = false
             case .authorized:
@@ -84,7 +88,7 @@ extension RemindViewModel {
 private extension RemindViewModel {
     func setupAlarm(forDeviceAlarm: Bool?) {
         if let deviceAlarm = forDeviceAlarm {
-            if forDeviceAlarm == false {    // device 알람이 꺼져있을 때
+            if deviceAlarm == false {    // device 알람이 꺼져있을 때
                 if appAlarmSetting == false {     // device 알람이 꺼져있고, 앱 알람도 꺼져있을 때
                     remindViewType = .deviceOffAppOff
                 } else {                          // device 알람이 꺼져있고, 앱 알람이 켜져있을 때
@@ -94,7 +98,7 @@ private extension RemindViewModel {
                 if appAlarmSetting == false {     // device 알람이 켜져있고, 앱 알람이 꺼져있을 때
                     remindViewType = .deviceOnAppOff
                 } else {
-                    // TODO: - API 호출
+                    timerData = RemindModel.fetchDummyModel()
                 }
             }
         }
