@@ -86,15 +86,3 @@ final class APIInterceptor: RequestInterceptor {
         }
     }
 }
-
-//extension APIInterceptor {
-//    func showLoginPage() {
-//        let tabBarController = LoginViewController()
-//        
-//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-//            if let window = windowScene.windows.first {
-//                window.rootViewController = tabBarController
-//            }
-//        }
-//    }
-//}
