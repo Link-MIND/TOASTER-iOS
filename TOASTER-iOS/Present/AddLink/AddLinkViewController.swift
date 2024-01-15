@@ -21,8 +21,7 @@ final class AddLinkViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .toasterBackground
-        
+        setupStyle()
         setAddLinkVew()
         hideKeyboard()
     }
@@ -47,6 +46,10 @@ final class AddLinkViewController: UIViewController {
 // MARK: - Private extension
 
 private extension AddLinkViewController {
+    func setupStyle() {
+        view.backgroundColor = .toasterBackground
+    }
+    
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                 hasRightButton: true,

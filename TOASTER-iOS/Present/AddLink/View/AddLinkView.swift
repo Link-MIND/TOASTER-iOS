@@ -34,8 +34,7 @@ final class AddLinkView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        linkEmbedTextField.delegate = self
-        linkEmbedTextField.resignFirstResponder()
+        setLinkEmbedTextField()
         setView()
     }
     
@@ -50,6 +49,11 @@ final class AddLinkView: UIView {
         setupStyle()
         setupHierarchy()
         setupLayout()
+    }
+    
+    func setLinkEmbedTextField() {
+        linkEmbedTextField.delegate = self
+        linkEmbedTextField.resignFirstResponder()
     }
     
     @objc func tappedNextBottomButton() {
@@ -79,7 +83,6 @@ final class AddLinkView: UIView {
 
 private extension AddLinkView {
     func setupStyle() {
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         self.backgroundColor = .toasterBackground
