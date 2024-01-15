@@ -24,7 +24,7 @@ extension ToasterTargetType: BaseTargetType {
     var queryParameter: [String: Any]? {
         switch self {
         case .deleteLink(let toastId):
-            return ["toastId" : toastId]
+            return ["toastId": toastId]
         default: return .none
         }
     }
@@ -55,4 +55,3 @@ extension ToasterTargetType: BaseTargetType {
         }
     }
 }
-

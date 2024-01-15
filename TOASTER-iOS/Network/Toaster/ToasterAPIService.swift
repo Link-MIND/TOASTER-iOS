@@ -82,4 +82,3 @@ final class ToasterAPIService: BaseAPIService, ToasterAPIServiceProtocol {
         }
     }
 }
-

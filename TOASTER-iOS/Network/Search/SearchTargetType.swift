@@ -23,7 +23,7 @@ extension SearchTargetType: BaseTargetType {
     var queryParameter: [String: Any]? {
         switch self {
         case .getMainPageSearch(let searchText):
-            return ["query" : searchText]
+            return ["query": searchText]
         default: return .none
         }
     }
@@ -39,4 +39,3 @@ extension SearchTargetType: BaseTargetType {
     
     var method: Moya.Method { return .get }
 }
-

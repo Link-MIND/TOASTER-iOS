@@ -13,7 +13,6 @@ struct GetRecommendSiteResponseDTO: Codable {
     let data: [GetRecommendSiteResponseData]
 }
 
-// MARK: - Datum
 struct GetRecommendSiteResponseData: Codable {
     let siteId: Int
     let siteTitle: String?

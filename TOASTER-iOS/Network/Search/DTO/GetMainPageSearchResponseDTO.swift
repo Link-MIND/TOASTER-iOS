@@ -25,7 +25,6 @@ struct Category: Codable {
     let toastNum: Int
 }
 
-// MARK: - Toast
 struct Toast: Codable {
     let toastId: Int
     let toastTitle, linkUrl: String
