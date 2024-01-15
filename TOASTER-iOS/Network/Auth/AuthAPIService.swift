@@ -10,7 +10,8 @@ import Foundation
 import Moya
 
 protocol AuthAPIServiceProtocol {
-    func postSocialLogin(requestBody: PostSocialLoginRequestDTO,
+    func postSocialLogin(socialToken: String,
+                         requestBody: PostSocialLoginRequestDTO,
                          completion: @escaping (NetworkResult<PostSocialLoginResponseDTO>) -> Void)
     func postRefreshToken(completion: @escaping (NetworkResult<PostRefreshTokenResponseDTO>) -> Void)
     func postLogout(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
@@ -21,9 +22,10 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
     
     private let provider = MoyaProvider<AuthTargetType>(plugins: [MoyaPlugin()])
     
-    func postSocialLogin(requestBody: PostSocialLoginRequestDTO, 
+    func postSocialLogin(socialToken: String,
+                         requestBody: PostSocialLoginRequestDTO,
                          completion: @escaping (NetworkResult<PostSocialLoginResponseDTO>) -> Void) {
-        provider.request(.postSocialLogin(requestBody: requestBody)) { result in
+        provider.request(.postSocialLogin(socialToken: socialToken, requestBody: requestBody)) { result in
             switch result {
             case .success(let response):
                 let networkResult: NetworkResult<PostSocialLoginResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)

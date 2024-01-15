@@ -10,7 +10,8 @@ import Foundation
 import Moya
 
 enum AuthTargetType {
-    case postSocialLogin(requestBody: PostSocialLoginRequestDTO)
+    case postSocialLogin(socialToken: String,
+                         requestBody: PostSocialLoginRequestDTO)
     case postRefreshToken
     case postLogout
     case deleteWithdraw
@@ -20,7 +21,7 @@ extension AuthTargetType: BaseTargetType {
     
     var headerType: HeaderType {
         switch self {
-        case .postSocialLogin(_): return .nonTokenHeader
+        case .postSocialLogin(let socialToken, _): return .socialTokenHeader(socialToken: socialToken)
         case .postRefreshToken: return .refreshTokenHeader
         default: return .accessTokenHeader
         }
@@ -32,14 +33,14 @@ extension AuthTargetType: BaseTargetType {
     
     var requestBodyParameter: Codable? {
         switch self {
-        case .postSocialLogin(let requestBody): return requestBody
+        case .postSocialLogin(_, let requestBody): return requestBody
         default: return .none
         }
     }
     
     var path: String {
         switch self {
-        case .postSocialLogin(_): return utilPath.rawValue
+        case .postSocialLogin: return utilPath.rawValue
         case .postRefreshToken: return utilPath.rawValue + "/token"
         case .postLogout: return utilPath.rawValue + "/sign-out"
         case .deleteWithdraw: return utilPath.rawValue + "/withdraw"
@@ -48,7 +49,7 @@ extension AuthTargetType: BaseTargetType {
     
     var method: Moya.Method {
         switch self {
-        case .postSocialLogin(_): return .post
+        case .postSocialLogin: return .post
         case .postRefreshToken: return .post
         case .postLogout: return .post
         case .deleteWithdraw: return .delete

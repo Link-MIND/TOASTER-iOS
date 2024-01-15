@@ -63,8 +63,8 @@ private extension RemindViewController {
     
     func setupLayout() {
         timerCollectionView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.horizontalEdges.bottom.equalToSuperview()
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.horizontalEdges.equalToSuperview()
         }
     }
     
@@ -96,14 +96,16 @@ private extension RemindViewController {
         editView.setupEditView(forDelegate: self,
                                forID: forID)
         
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 226, insertView: editView)
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 128, insertView: editView)
         exampleBottom.modalPresentationStyle = .overFullScreen
         
         present(exampleBottom, animated: false)
     }
     
     func plusButtonTapped() {
-        // plusButtonTapped
+        let clipAddViewController = RemindSelectClipViewController()
+        clipAddViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(clipAddViewController, animated: true)
     }
     
     func deleteButtonTapped() {

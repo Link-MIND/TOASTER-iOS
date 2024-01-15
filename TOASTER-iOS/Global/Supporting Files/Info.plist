@@ -25,7 +25,7 @@
 	</array>
 	<key>KAKAO_LOGIN</key>
 	<string>$(KAKAO_LOGIN)</string>
-	<key>KakaoNativeAppKey</key>
+	<key>KAKAO_NATIVE_APP_KEY</key>
 	<string>$(KAKAO_NATIVE_APP_KEY)</string>
 	<key>LOGIN_TYPE</key>
 	<string>$(LOGIN_TYPE)</string>

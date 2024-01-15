@@ -65,6 +65,8 @@ private extension MypageViewController {
     }
         
     func settingButtonTapped() {
-        // 편집 버튼 클릭 시 로직
+        let settingVC = SettingViewController()
+        settingVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(settingVC, animated: true)
     }
 }
