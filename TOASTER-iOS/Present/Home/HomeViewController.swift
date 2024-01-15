@@ -198,6 +198,10 @@ private extension HomeViewController {
 }
 
 extension HomeViewController: AddClipBottomSheetViewDelegate {
+    func callCheckAPI(text: String) {
+        // getCheckCategoryAPI(categoryTitle: text)
+    }
+    
     func addHeightBottom() {
         addClipBottom.changeHeightBottomSheet(height: 219)
     }

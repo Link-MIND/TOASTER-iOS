@@ -203,12 +203,15 @@ extension ClipViewController: AddClipBottomSheetViewDelegate {
     
     func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
         postAddCategoryAPI(requestBody: text)
-        addClipBottom.hideBottomSheet()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.addClipBottom.hideBottomSheet()
             self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
             self.addClipBottomSheetView.resetTextField()
-            self.clipListCollectionView.reloadData()
         }
+    }
+    
+    func callCheckAPI(text: String) {
+        getCheckCategoryAPI(categoryTitle: text)
     }
 }
 
@@ -239,7 +242,23 @@ extension ClipViewController {
         }
     }
     
-    func getCheckCategoryAPI() {
-        
+    func getCheckCategoryAPI(categoryTitle: String) {
+        NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle) { result in
+            switch result {
+            case .success(let response):
+                if let data = response?.data.isDupicated {
+                    if categoryTitle.count != 16 {
+                        if data {
+                            self.addHeightBottom()
+                            self.addClipBottomSheetView.changeTextField(addButton: false, border: true, error: true, clearButton: true)
+                            self.addClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
+                        } else {
+                            self.minusHeightBottom()
+                        }
+                    }
+                }
+            default: return
+            }
+        }
     }
 }

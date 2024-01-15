@@ -119,10 +119,8 @@ extension EditClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EditClipCollectionViewCell.className, for: indexPath) as? EditClipCollectionViewCell else { return UICollectionViewCell() }
         if indexPath.row == 0 {
-            cell.configureCell(forModel: ClipListModel(categoryID: 0, categoryTitle: "전체클립",
-                                                       toastNum: 100),
-                               icon: ImageLiterals.Clip.pin,
-                               isFirst: true)
+            cell.configureCell(forModel: GetAllCategoryData(categoryId: 0, categoryTitle: "전체클립", toastNum: 0),
+                               icon: ImageLiterals.Clip.pin, isFirst: true)
         } else {
             if let clips = clipList?.data {
                 cell.configureCell(forModel: clips.categories[indexPath.row-1],
@@ -205,9 +203,12 @@ extension EditClipViewController: UICollectionViewDropDelegate {
         if destinationIndexPath.item != 0 {
             guard let item = coordinator.items.first, let sourceIndexPath = item.sourceIndexPath else { return }
             collectionView.performBatchUpdates {
-                let sourceItem = dummyClipList[sourceIndexPath.item-1]
-                dummyClipList.remove(at: sourceIndexPath.item-1)
-                dummyClipList.insert(sourceItem, at: destinationIndexPath.item-1)
+                if let clips = clipList?.data {
+                    var categories = clips.categories
+                    let sourceItem = clips.categories[sourceIndexPath.item-1]
+                    categories.remove(at: sourceIndexPath.item-1)
+                    categories.insert(sourceItem, at: destinationIndexPath.item-1)
+                }
                 collectionView.deleteItems(at: [sourceIndexPath])
                 collectionView.insertItems(at: [destinationIndexPath])
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
@@ -221,6 +222,10 @@ extension EditClipViewController: UICollectionViewDropDelegate {
 // MARK: - AddClipBottomSheetView Delegate
 
 extension EditClipViewController: AddClipBottomSheetViewDelegate {
+    func callCheckAPI(text: String) {
+        getCheckCategoryAPI(categoryTitle: text)
+    }
+    
     func addHeightBottom() {
         editClipBottom.changeHeightBottomSheet(height: 219)
     }
@@ -241,10 +246,21 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
 // MARK: - Network
 
 extension EditClipViewController {
+    func getAllCategoryAPI() {
+        NetworkService.shared.clipService.getAllCategory { result in
+            switch result {
+            case .success(let response):
+                self.clipList = response
+            default: return
+            }
+        }
+    }
+    
     func deleteCategoryAPI(requestBody: DeleteCategoryRequestDTO) {
         NetworkService.shared.clipService.deleteCategory(requestBody: requestBody) { result in
             switch result {
             case .success:
+                self.getAllCategoryAPI()
                 self.dismiss(animated: false) {
                     self.showToastMessage(width: 152, status: .check, message: "클립 삭제 완료")
                 }
@@ -255,5 +271,25 @@ extension EditClipViewController {
     
     func patchEditCategoryAPI() {
         
+    }
+    
+    func getCheckCategoryAPI(categoryTitle: String) {
+        NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle) { result in
+            switch result {
+            case .success(let response):
+                if let data = response?.data.isDupicated {
+                    if categoryTitle.count != 16 {
+                        if data {
+                            self.addHeightBottom()
+                            self.editClipBottomSheetView.changeTextField(addButton: false, border: true, error: true, clearButton: true)
+                            self.editClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
+                        } else {
+                            self.minusHeightBottom()
+                        }
+                    }
+                }
+            default: return
+            }
+        }
     }
 }
