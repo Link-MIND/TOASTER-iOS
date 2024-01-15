@@ -54,7 +54,7 @@ extension BaseTargetType {
         case .accessTokenHeader:
             header["accessToken"] = KeyChainService.loadAccessToken(key: Config.accessTokenKey)
         case .refreshTokenHeader:
-            header["refreshToken"] = KeyChainService.loadAccessToken(key: Config.refreshTokenKey)
+            header["refreshToken"] = KeyChainService.loadRefreshToken(key: Config.refreshTokenKey)
         }
         
         return header
@@ -72,5 +72,9 @@ extension BaseTargetType {
     
     var sampleData: Data {
         return Data()
+    }
+    
+    var validationType: ValidationType {
+        return .successCodes
     }
 }

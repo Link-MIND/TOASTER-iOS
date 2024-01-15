@@ -137,10 +137,10 @@ private extension LoginViewController {
                     /// Decoding 하는 과정 중 생길 수 있는 오류
                     guard let serverAccessToken = response?.data.accessToken, let serverRefreshToken = response?.data.refreshToken else { return continuation.resume(throwing: LoginError.failedReceiveToken) }
                     
-                    let keyChainResult = KeyChainService.saveTokens(accessKey: Config.tempToken, refreshKey: Config.tempToken)
+//                    let keyChainResult = KeyChainService.saveTokens(accessKey: Config.tempToken, refreshKey: Config.tempToken)
+                    let keyChainResult = KeyChainService.saveTokens(accessKey: serverAccessToken, refreshKey: serverRefreshToken)
                     
                     if keyChainResult.accessResult == true && keyChainResult.refreshResult == true {
-                        print("Token 저장")
                         continuation.resume(returning: true)
                     } else {
                         continuation.resume(returning: false)
@@ -150,17 +150,6 @@ private extension LoginViewController {
                 default:
                     continuation.resume(returning: false)
                 }
-            }
-        }
-    }
-    
-    /// 로그인 성공 시 보여줄 ViewController 처리하는 메서드
-    func loginSuccess() {
-        let tabBarController = TabBarController()
-        
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                window.rootViewController = tabBarController
             }
         }
     }
@@ -180,7 +169,7 @@ private extension LoginViewController {
         
                 if serverResult == true {
                     UserDefaults.standard.set("\(Config.kakaoLogin)", forKey: Config.loginType)
-                    loginSuccess()
+                    self.changeViewController(viewController: TabBarController())
                 }
             } catch {
                 guard let error = error as? LoginError else { return }
@@ -207,7 +196,7 @@ private extension LoginViewController {
                 
                 if serverResult == true {
                     UserDefaults.standard.set(Config.appleLogin, forKey: Config.loginType)
-                    loginSuccess()
+                    self.changeViewController(viewController: TabBarController())
                 }
             } catch let error {
                 print("Apple Login Error:", error)

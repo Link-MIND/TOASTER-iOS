@@ -21,7 +21,7 @@ protocol ToasterAPIServiceProtocol {
 
 final class ToasterAPIService: BaseAPIService, ToasterAPIServiceProtocol {
     
-    private let provider = MoyaProvider<ToasterTargetType>(plugins: [MoyaPlugin()])
+    private let provider = MoyaProvider<ToasterTargetType>.init(session: Session(interceptor: APIInterceptor.shared), plugins: [MoyaPlugin()])
 
     func postSaveLink(requestBody: PostSaveLinkRequestDTO, 
                       completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
