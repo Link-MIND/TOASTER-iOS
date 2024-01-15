@@ -11,6 +11,15 @@ import SnapKit
 
 final class DetailClipViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    private var toastList: GetDetailCategoryResponseDTO? {
+        didSet {
+            detailClipListCollectionView.reloadData()
+            setupEmptyView()
+        }
+    }
+    
     // MARK: - UI Properties
     
     private let detailClipSegmentedControlView = DetailClipSegmentedControlView()
@@ -35,7 +44,6 @@ final class DetailClipViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setupEmptyView()
         setupNavigationBar()
     }
 }
@@ -80,10 +88,8 @@ private extension DetailClipViewController {
     }
     
     func setupEmptyView() {
-        if dummyDetailClipList.count > 0 {
-            detailClipEmptyView.isHidden = true
-        } else {
-            detailClipEmptyView.isHidden = false
+        if let data = toastList?.data {
+            detailClipEmptyView.isHidden = data.allToastNum > 0 ? true : false
         }
     }
     
@@ -103,13 +109,15 @@ private extension DetailClipViewController {
 
 extension DetailClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyDetailClipList.count
+        return toastList?.data.toastListDto.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.configureCell(forModel: dummyDetailClipList[indexPath.row].toastListDto[0])
+        if let data = toastList?.data {
+            cell.configureCell(forModel: data, index: indexPath.row)
+        }
         cell.detailClipListCollectionViewCellButtonAction = {
             self.bottom.modalPresentationStyle = .overFullScreen
             self.present(self.bottom, animated: false)
@@ -126,7 +134,7 @@ extension DetailClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
         headerView.isDetailClipView(isHidden: true)
-        headerView.setupDataBind(count: dummyDetailClipList.count)
+        headerView.setupDataBind(count: toastList?.data.allToastNum ?? 0)
         return headerView
     }
 }
@@ -137,8 +145,10 @@ extension DetailClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = LinkWebViewController()
         nextVC.hidesBottomBarWhenPushed = true
-        nextVC.setupDataBind(linkURL: dummyDetailClipList[indexPath.row].toastListDto[0].linkURL,
-                             isRead: dummyDetailClipList[indexPath.row].toastListDto[0].isRead)
+        if let data = toastList?.data {
+            nextVC.setupDataBind(linkURL: data.toastListDto[indexPath.row].linkUrl,
+                                 isRead: data.toastListDto[indexPath.row].isRead)
+        }
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
@@ -169,7 +179,23 @@ extension DetailClipViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - Network
 
 extension DetailClipViewController {
-    func getDetailAllCategoryAPI() {
-        
+    func getDetailAllCategoryAPI(filter: DetailCategoryFilter) {
+        NetworkService.shared.clipService.getDetailAllCategory(filter: filter) { result in
+            switch result {
+            case .success(let response):
+                self.toastList = response
+            default: return
+            }
+        }
+    }
+    
+    func getDetailCategoryAPI(categoryID: Int, filter: DetailCategoryFilter) {
+        NetworkService.shared.clipService.getDetailCategory(categoryID: categoryID, filter: filter) { result in
+            switch result {
+            case .success(let response):
+                self.toastList = response
+            default: return
+            }
+        }
     }
 }

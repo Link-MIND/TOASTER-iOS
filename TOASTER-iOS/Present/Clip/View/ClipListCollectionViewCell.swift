@@ -39,7 +39,7 @@ final class ClipListCollectionViewCell: UICollectionViewCell {
 extension ClipListCollectionViewCell {
     func configureCell(forModel: GetAllCategoryResponseData, icon: UIImage, name: String) {
         clipNameLabel.text = name
-        countLabel.text = "\(forModel.categories[0].toastNum)개"
+        countLabel.text = "\(forModel.toastNumberInEntire)개"
         clipImage.image = icon
     }
     

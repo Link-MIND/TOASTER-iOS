@@ -103,11 +103,8 @@ private extension EditClipViewController {
         editClipCollectionView.dropDelegate = self
     }
     
-    func popupDeleteButtonTapped() {
-        // 삭제 서버 통신 붙일 부분
-        dismiss(animated: false) {
-            self.showToastMessage(width: 152, status: .check, message: "클립 삭제 완료")
-        }
+    func popupDeleteButtonTapped(categoryID: Int, index: Int) {
+        deleteCategoryAPI(requestBody: DeleteCategoryRequestDTO.init(deleteCategoryList: [categoryID]))
     }
 }
 
@@ -115,7 +112,7 @@ private extension EditClipViewController {
 
 extension EditClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let data = clipList?.data { return data.categories.count }
+        if let data = clipList?.data { return data.categories.count+1 }
         return 1
     }
     
@@ -128,16 +125,17 @@ extension EditClipViewController: UICollectionViewDataSource {
                                isFirst: true)
         } else {
             if let clips = clipList?.data {
-                cell.configureCell(forModel: clips.categories[indexPath.row], 
+                cell.configureCell(forModel: clips.categories[indexPath.row-1],
                                    icon: ImageLiterals.Clip.delete,
                                    isFirst: false)
-            }
-            cell.leadingButtonTapped {
-                self.showPopup(forMainText: "‘\(dummyClipList[indexPath.row-1].categoryTitle)’ 클립을 삭제하시겠어요?",
-                               forSubText: "지금까지 저장된 모든 링크가 사라져요",
-                               forLeftButtonTitle: "닫기",
-                               forRightButtonTitle: "삭제",
-                               forRightButtonHandler: self.popupDeleteButtonTapped)
+                
+                cell.leadingButtonTapped {
+                    self.showPopup(forMainText: "‘\(clips.categories[indexPath.row-1].categoryTitle)’ 클립을 삭제하시겠어요?",
+                                   forSubText: "지금까지 저장된 모든 링크가 사라져요",
+                                   forLeftButtonTitle: "닫기",
+                                   forRightButtonTitle: "삭제",
+                                   forRightButtonHandler: { self.popupDeleteButtonTapped(categoryID: clips.categories[indexPath.row-1].categoryId, index: indexPath.row-1) })
+                }
             }
             
             cell.changeTitleButtonTapped {
@@ -232,7 +230,6 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
     }
     
     func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
-        // 수정 서버 통신 붙일 부분
         editClipBottom.hideBottomSheet()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.showToastMessage(width: 157, status: .check, message: "클립 수정 완료!")
@@ -244,8 +241,16 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
 // MARK: - Network
 
 extension EditClipViewController {
-    func deleteCategoryAPI() {
-        
+    func deleteCategoryAPI(requestBody: DeleteCategoryRequestDTO) {
+        NetworkService.shared.clipService.deleteCategory(requestBody: requestBody) { result in
+            switch result {
+            case .success:
+                self.dismiss(animated: false) {
+                    self.showToastMessage(width: 152, status: .check, message: "클립 삭제 완료")
+                }
+            default: return
+            }
+        }
     }
     
     func patchEditCategoryAPI() {

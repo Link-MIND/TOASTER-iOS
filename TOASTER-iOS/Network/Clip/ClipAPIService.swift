@@ -16,7 +16,7 @@ protocol ClipAPIServiceProtocol {
                            filter: DetailCategoryFilter,
                            completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> Void)
     func getDetailAllCategory(filter: DetailCategoryFilter,
-                              ompletion: @escaping (NetworkResult<GetDetailAllCategoryResponseDTO>) -> Void)
+                              completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> Void)
     func deleteCategory(requestBody: DeleteCategoryRequestDTO,
                         completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
     func patchEditCategory(requestBody: PatchPushAlarmRequestDTO,
@@ -63,12 +63,12 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
     }
     
     func getDetailAllCategory(filter: DetailCategoryFilter,
-                              ompletion completion: @escaping (NetworkResult<GetDetailAllCategoryResponseDTO>) -> Void) {
+                              completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> Void) {
         provider.request(.getDetailCategory(categoryID: 0,
                                             filter: filter)) { result in
             switch result {
             case .success(let response):
-                let networkResult: NetworkResult<GetDetailAllCategoryResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                let networkResult: NetworkResult<GetDetailCategoryResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):

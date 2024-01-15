@@ -19,9 +19,7 @@ final class ClipViewController: UIViewController {
             clipListCollectionView.reloadData()
         }
     }
-    
-    private var clipCount: Int = 0          // 클립뷰 헤더에 표출되는 클립의 개수
-    private var allToasterCount: Int = 0    // 클립 컬뷰 상단에 고정으로 표출되는 전체클립의 개수
+    private var clipCount: Int = 0
     
     // MARK: - UI Properties
     
@@ -112,6 +110,14 @@ private extension ClipViewController {
 extension ClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = DetailClipViewController()
+        if indexPath.row == 0 {
+            nextVC.getDetailAllCategoryAPI(filter: .all)
+        } else {
+            if let data = clipList?.data {
+                nextVC.getDetailCategoryAPI(categoryID: data.categories[indexPath.row-1].categoryId,
+                                            filter: .all)
+            }
+        }
         nextVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -121,7 +127,7 @@ extension ClipViewController: UICollectionViewDelegate {
 
 extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return clipCount
+        return clipCount+1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -131,7 +137,7 @@ extension ClipViewController: UICollectionViewDataSource {
                 cell.configureCell(forModel: clips,
                                    icon: ImageLiterals.TabBar.allClip.withTintColor(.black900), name: "전체클립")
             } else {
-                cell.configureCell(forModel: clips, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.row)
+                cell.configureCell(forModel: clips, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.row-1)
             }
         }
         return cell
@@ -227,7 +233,7 @@ extension ClipViewController {
         NetworkService.shared.clipService.postAddCategory(requestBody: requestBody) { result in
             switch result {
             case .success:
-                self.clipListCollectionView.reloadData()
+                self.getAllCategoryAPI()
             default: return
             }
         }
