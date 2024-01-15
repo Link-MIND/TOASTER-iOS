@@ -12,6 +12,14 @@ import Then
 
 final class EditClipViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    private var clipList: GetAllCategoryResponseDTO? {
+        didSet {
+            editClipCollectionView.reloadData()
+        }
+    }
+    
     // MARK: - UI Properties
     
     private let editClipNoticeView = EditClipNoticeView()
@@ -37,6 +45,14 @@ final class EditClipViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+    }
+}
+
+// MARK: - Extensions
+
+extension EditClipViewController {
+    func setupDataBind(getAllCategoryResponseDTO: GetAllCategoryResponseDTO) {
+        clipList = getAllCategoryResponseDTO
     }
 }
 
@@ -99,7 +115,8 @@ private extension EditClipViewController {
 
 extension EditClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyClipList.count + 1
+        if let data = clipList?.data { return data.categories.count }
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -110,10 +127,11 @@ extension EditClipViewController: UICollectionViewDataSource {
                                icon: ImageLiterals.Clip.pin,
                                isFirst: true)
         } else {
-            cell.configureCell(forModel: dummyClipList[indexPath.row-1],
-                               icon: ImageLiterals.Clip.delete,
-                               isFirst: false)
-            
+            if let clips = clipList?.data {
+                cell.configureCell(forModel: clips.categories[indexPath.row], 
+                                   icon: ImageLiterals.Clip.delete,
+                                   isFirst: false)
+            }
             cell.leadingButtonTapped {
                 self.showPopup(forMainText: "‘\(dummyClipList[indexPath.row-1].categoryTitle)’ 클립을 삭제하시겠어요?",
                                forSubText: "지금까지 저장된 모든 링크가 사라져요",

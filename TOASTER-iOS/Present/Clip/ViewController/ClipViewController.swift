@@ -45,7 +45,7 @@ final class ClipViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        getDetailCategoryAPI()
+        getAllCategoryAPI()
         setupNavigationBar()
     }
 }
@@ -101,6 +101,7 @@ private extension ClipViewController {
     
     func editButtonTapped() {
         let editClipViewController = EditClipViewController()
+        if let clipList = clipList { editClipViewController.setupDataBind(getAllCategoryResponseDTO: clipList) }
         editClipViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(editClipViewController, animated: false)
     }
@@ -120,17 +121,17 @@ extension ClipViewController: UICollectionViewDelegate {
 
 extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let count = clipList?.data.count else { return 1 }
-        return count
+        return clipCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell else { return UICollectionViewCell() }
-        if indexPath.row == 0 {
-            cell.configureCell(forModel: GetAllCategoryResponseData(categoryId: 0, categoryTitle: "전체클립", toastNum: allToasterCount), icon: ImageLiterals.TabBar.allClip.withTintColor(.black900))
-        } else {
-            if let clips = clipList?.data[indexPath.row] {
-                cell.configureCell(forModel: clips, icon: ImageLiterals.TabBar.clip.withTintColor(.black900))
+        if let clips = clipList?.data {
+            if indexPath.row == 0 {
+                cell.configureCell(forModel: clips,
+                                   icon: ImageLiterals.TabBar.allClip.withTintColor(.black900), name: "전체클립")
+            } else {
+                cell.configureCell(forModel: clips, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.row)
             }
         }
         return cell
@@ -208,13 +209,13 @@ extension ClipViewController: AddClipBottomSheetViewDelegate {
 // MARK: - Network
 
 extension ClipViewController {
-    func getDetailCategoryAPI() {
+    func getAllCategoryAPI() {
         NetworkService.shared.clipService.getAllCategory { result in
             switch result {
             case .success(let response):
                 self.clipList = response
                 if let data = response?.data {
-                    self.clipCount = data.count
+                    self.clipCount = data.categories.count
                     self.setupEmptyView()
                 }
             default: return
