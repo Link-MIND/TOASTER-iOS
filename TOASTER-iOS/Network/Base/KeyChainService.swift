@@ -10,7 +10,7 @@ import Security
 
 struct KeyChainService {
     
-    // MARK: - static func
+    // MARK: - static func save
     
     static func saveAccessToken(accessToken: String, key: String) -> Bool {
         let result = saveToken(token: accessToken, key: key)
@@ -28,6 +28,8 @@ struct KeyChainService {
         return (accessResult: accessResult, refreshResult: refreshResult)
     }
     
+    // MARK: - static func load
+    
     static func loadAccessToken(key: String) -> String? {
         let result = loadToken(key: key)
         return result
@@ -37,6 +39,14 @@ struct KeyChainService {
         let result = loadToken(key: key)
         return result
     }
+    
+    static func loadTokens(accessKey: String, refreshKey: String) -> (access: String?, refresh: String?) {
+        let accessResult = loadToken(key: accessKey)
+        let refreshResult = loadToken(key: refreshKey)
+        return (access: accessResult, refresh: refreshResult)
+    }
+    
+    // MARK: - static func delete
     
     static func deleteAccessToken(key: String) -> Bool {
         let result = deleteToken(key: key)
@@ -48,9 +58,9 @@ struct KeyChainService {
         return result
     }
     
-    static func loadTokens(accessKey: String, refreshKey: String) -> (access: String?, refresh: String?) {
-        let accessResult = loadToken(key: accessKey)
-        let refreshResult = loadToken(key: refreshKey)
+    static func deleteTokens(accessKey: String, refreshKey: String) -> (access: Bool, refresh: Bool) {
+        let accessResult = deleteAccessToken(key: accessKey)
+        let refreshResult = deleteRefreshToken(key: refreshKey)
         return (access: accessResult, refresh: refreshResult)
     }
     
@@ -156,11 +166,15 @@ struct KeyChainService {
             return false
         case errSecSuccess:
             // 삭제 성공
-            print("🍞⛔️KeyChain 삭제 성공⛔️🍞")
+            if key == Config.accessTokenKey {
+                print("🍞⛔️KeyChain - AccessToken 삭제 성공⛔️🍞")
+            } else {
+                print("🍞⛔️KeyChain - RefreshToken 삭제 성공⛔️🍞")
+            }
             return true
         default:
             // 다른 오류 발생
-            print("🍞⛔️Keychain error: \(status)")
+            print("🍞⛔️Keychain delete error: \(status)")
             return false
         }
     }
