@@ -109,9 +109,8 @@ private extension AddLinkViewController {
     
     func rightButtonTapped() {
         dismiss(animated: false)
-        if let tabBarController = self.tabBarController {
-            tabBarController.selectedIndex = 0
-        }
+        delegate?.popToHomeViewController()
+        navigationController?.popViewController(animated: false)
     }
     
     @objc func tappedNextBottomButton() {
@@ -128,15 +127,11 @@ private extension AddLinkViewController {
 
 extension AddLinkViewController: SaveLinkButtonDelegate {
     func saveLinkButtonTapped() {
-        if let tabBarController = self.tabBarController {
-            tabBarController.selectedIndex = 0
-        }       
-        tabBarController?.showToastMessage(width: 169, status: .check, message: "링크 저장 완료!")
+        delegate?.popToHomeViewController()
+        navigationController?.showToastMessage(width: 169, status: .check, message: "링크 저장 완료!")
     }
     
     func cancleLinkButtonTapped() {
-        if let tabBarController = self.tabBarController {
-            tabBarController.selectedIndex = 0
-        }
+        delegate?.popToHomeViewController()
     }
 }

@@ -120,12 +120,12 @@ private extension SelectClipViewController {
     func rightButtonTapped() {
         dismiss(animated: false)
         delegate?.cancleLinkButtonTapped()
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     @objc func completeButtonTapped() {
         delegate?.saveLinkButtonTapped()
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 
