@@ -15,8 +15,16 @@ protocol SaveLinkButtonDelegate: AnyObject {
     func cancleLinkButtonTapped()
 }
 
+protocol AddLinkViewControllerPopDelegate: AnyObject {
+    func popToHomeViewController()
+}
+
 final class AddLinkViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    private weak var delegate: AddLinkViewControllerPopDelegate?
+
     // MARK: - UI Properties
     
     private var addLinkView = AddLinkView()
@@ -37,6 +45,13 @@ final class AddLinkViewController: UIViewController {
         setupNavigationBar()
 
         resetView()
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: - set up Add Link View
@@ -50,6 +65,14 @@ final class AddLinkViewController: UIViewController {
         
         addLinkView.nextBottomButton.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
         addLinkView.nextTopButton.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
+    }
+}
+
+// MARK: - extension
+
+extension AddLinkViewController {
+    func setupDelegate(forDelegate: AddLinkViewControllerPopDelegate) {
+        delegate = forDelegate
     }
 }
 

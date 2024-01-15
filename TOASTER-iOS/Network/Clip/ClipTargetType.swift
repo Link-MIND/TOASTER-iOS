@@ -58,7 +58,7 @@ extension ClipTargetType: BaseTargetType {
         switch self {
         case .postAddCategory(_): return utilPath.rawValue
         case .getDetailCategory(let categoryID, _):
-            return utilPath.rawValue + "\(categoryID)"
+            return utilPath.rawValue + "/\(categoryID)"
         case .deleteCategory(_): return utilPath.rawValue
         case .patchEditCategory(_): return utilPath.rawValue + "/edit"
         case .getAllCategory: return utilPath.rawValue + "/all"
