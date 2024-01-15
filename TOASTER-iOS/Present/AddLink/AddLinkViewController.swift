@@ -16,7 +16,7 @@ protocol SaveLinkButtonDelegate: AnyObject {
 }
 
 protocol AddLinkViewControllerPopDelegate: AnyObject {
-    func popToHomeViewController()
+    func changeTabBarIndex()
 }
 
 final class AddLinkViewController: UIViewController {
@@ -44,14 +44,13 @@ final class AddLinkViewController: UIViewController {
         
         setupNavigationBar()
 
-        resetView()
-        tabBarController?.tabBar.isHidden = true
+        navigationBarHidden(forHidden: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        tabBarController?.tabBar.isHidden = false
+        navigationBarHidden(forHidden: false)
     }
     
     // MARK: - set up Add Link View
@@ -95,8 +94,8 @@ private extension AddLinkViewController {
         }
     }
     
-    func resetView() {
-        addLinkView.linkEmbedTextField.text = nil
+    func navigationBarHidden(forHidden: Bool) {
+        tabBarController?.tabBar.isHidden = forHidden
     }
     
     func closeButtonTapped() {
@@ -109,7 +108,7 @@ private extension AddLinkViewController {
     
     func rightButtonTapped() {
         dismiss(animated: false)
-        delegate?.popToHomeViewController()
+        delegate?.changeTabBarIndex()
         navigationController?.popViewController(animated: false)
     }
     
@@ -127,11 +126,11 @@ private extension AddLinkViewController {
 
 extension AddLinkViewController: SaveLinkButtonDelegate {
     func saveLinkButtonTapped() {
-        delegate?.popToHomeViewController()
+        delegate?.changeTabBarIndex()
         navigationController?.showToastMessage(width: 169, status: .check, message: "링크 저장 완료!")
     }
     
     func cancleLinkButtonTapped() {
-        delegate?.popToHomeViewController()
+        delegate?.changeTabBarIndex()
     }
 }

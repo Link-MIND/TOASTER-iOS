@@ -114,7 +114,7 @@ extension TabBarController: UITabBarControllerDelegate {
 }
 
 extension TabBarController: AddLinkViewControllerPopDelegate {
-    func popToHomeViewController() {
+    func changeTabBarIndex() {
         selectedIndex = 0
     }
 }
