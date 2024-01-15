@@ -73,16 +73,19 @@ private extension AddLinkViewController {
     }
     
     func resetView() {
-        print("안ㄴ123123")
-        addLinkView.linkEmbedTextField.placeholder = "복사한 링크를 붙여 넣어 주세요"
-        addLinkView.nextTopButton.isEnabled = false
-        addLinkView.nextTopButton.backgroundColor = .gray200
-        addLinkView.nextBottomButton.isEnabled = false
-        addLinkView.nextBottomButton.backgroundColor = .gray200
-        addLi
+        addLinkView.linkEmbedTextField.text = nil
     }
     
     func closeButtonTapped() {
+        showPopup(forMainText: "링크 저장을 취소하시겠어요?",
+                  forSubText: "저장 중인 링크가 사라져요",
+                  forLeftButtonTitle: "닫기",
+                  forRightButtonTitle: "삭제",
+                  forRightButtonHandler: rightButtonTapped)
+    }
+    
+    func rightButtonTapped() {
+        dismiss(animated: false)
         if let tabBarController = self.tabBarController {
             tabBarController.selectedIndex = 0
         }
@@ -102,11 +105,15 @@ private extension AddLinkViewController {
 
 extension AddLinkViewController: SaveLinkButtonDelegate {
     func saveLinkButtonTapped() {
-        closeButtonTapped()
+        if let tabBarController = self.tabBarController {
+            tabBarController.selectedIndex = 0
+        }       
         tabBarController?.showToastMessage(width: 169, status: .check, message: "링크 저장 완료!")
     }
     
     func cancleLinkButtonTapped() {
-        closeButtonTapped()
+        if let tabBarController = self.tabBarController {
+            tabBarController.selectedIndex = 0
+        }
     }
 }

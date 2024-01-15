@@ -20,7 +20,7 @@ final class AddLinkView: UIView {
     // MARK: - UI Components
     
     private let descriptLabel = UILabel()
-    let linkEmbedTextField = UITextField()
+    var linkEmbedTextField = UITextField()
     
     let nextBottomButton = UIButton()
     let nextTopButton = UIButton()
@@ -55,24 +55,7 @@ final class AddLinkView: UIView {
         linkEmbedTextField.delegate = self
         linkEmbedTextField.resignFirstResponder()
     }
-    
-//    @objc func tappedNextBottomButton() {
-//        if (linkEmbedTextField.text?.count ?? 0) < 1 {
-//            emptyError()
-//        } else {
-//            
-//        }
-//        
-//    }
-//    
-//    @objc func tappedNextTopButton() {
-//        if (linkEmbedTextField.text?.count ?? 0) < 1 {
-//            emptyError()
-//        } else {
-//            // 클립 저장으로 이동
-//        }
-//    }
-    
+
     @objc func textFieldDidChange() {
         nextBottomButton.backgroundColor = .black850
         nextBottomButton.isEnabled = true
