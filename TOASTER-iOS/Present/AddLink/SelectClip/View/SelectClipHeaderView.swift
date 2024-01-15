@@ -32,11 +32,6 @@ final class SelectClipHeaderView: UICollectionReusableView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        
-//        setupStyle()
-//        setupHierarchy()
-//        setupLayout()
-
     }
     
     func setupView() {
@@ -49,7 +44,6 @@ final class SelectClipHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
 
 // MARK: - Private Extension
 
@@ -64,8 +58,7 @@ private extension SelectClipHeaderView {
         }
         
         totalCountLabel.do {
-            // viewModel.clipData.count
-            $0.text = "전체 (\(clipCount))"
+            $0.text = "전체 (\(SelectClipModel.fetchDummyData().count))"
             $0.textColor = .gray500
             $0.font = .suitBold(size: 12)
         }
@@ -89,7 +82,7 @@ private extension SelectClipHeaderView {
             $0.leading.equalToSuperview().inset(20)
         }
         
-        totalCountLabel.snp.makeConstraints  {
+        totalCountLabel.snp.makeConstraints {
             $0.top.equalTo(desciptLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview().inset(20)
         }

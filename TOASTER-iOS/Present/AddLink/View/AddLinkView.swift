@@ -20,10 +20,10 @@ final class AddLinkView: UIView {
     // MARK: - UI Components
     
     private let descriptLabel = UILabel()
-    private let linkEmbedTextField = UITextField()
+    let linkEmbedTextField = UITextField()
     
-    private let nextBottomButton = UIButton()
-    private let nextTopButton = UIButton()
+    let nextBottomButton = UIButton()
+    let nextTopButton = UIButton()
     
     lazy var accessoryView: UIView = { return UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 56.0)) }()
     
@@ -56,22 +56,22 @@ final class AddLinkView: UIView {
         linkEmbedTextField.resignFirstResponder()
     }
     
-    @objc func tappedNextBottomButton() {
-        if (linkEmbedTextField.text?.count ?? 0) < 1 {
-            emptyError()
-        } else {
-            // 클립 저장으로 이동
-        }
-        
-    }
-    
-    @objc func tappedNextTopButton() {
-        if (linkEmbedTextField.text?.count ?? 0) < 1 {
-            emptyError()
-        } else {
-            // 클립 저장으로 이동
-        }
-    }
+//    @objc func tappedNextBottomButton() {
+//        if (linkEmbedTextField.text?.count ?? 0) < 1 {
+//            emptyError()
+//        } else {
+//            
+//        }
+//        
+//    }
+//    
+//    @objc func tappedNextTopButton() {
+//        if (linkEmbedTextField.text?.count ?? 0) < 1 {
+//            emptyError()
+//        } else {
+//            // 클립 저장으로 이동
+//        }
+//    }
     
     @objc func textFieldDidChange() {
         nextBottomButton.backgroundColor = .black850
@@ -108,14 +108,12 @@ private extension AddLinkView {
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.backgroundColor = .gray200
             $0.makeRounded(radius: 12)
-            $0.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
         }
         
         nextTopButton.do {
             $0.setTitle("다음", for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.backgroundColor = .black850
-            $0.addTarget(self, action: #selector(tappedNextTopButton), for: .touchUpInside)
         }
         
         errorLabel.do {

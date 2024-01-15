@@ -11,17 +11,17 @@ import SnapKit
 import Then
 
 final class SelectClipViewController: UIViewController {
-
     
-
     // MARK: - Properties
-    // private let viewModel = RemindSelectClipViewModel()
     
+    weak var delegate: SaveLinkButtonDelegate?
+        
     private var selectedClip: RemindClipModel? {
         didSet {
             completeButton.backgroundColor = .toasterBlack
         }
     }
+    private var selectedClipData = SelectClipModel.fetchDummyData()
     
     private let addClipBottomSheetView = AddClipBottomSheetView()
     private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
@@ -40,13 +40,12 @@ final class SelectClipViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupDelegate()
-        // setupViewModel()
+        setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // setupNavigationBar()
     }
 }
 
@@ -66,7 +65,7 @@ private extension SelectClipViewController {
         
         completeButton.do {
             $0.makeRounded(radius: 12)
-            $0.backgroundColor = .gray200
+            $0.backgroundColor = .black850
             $0.setTitle("완료", for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
@@ -96,19 +95,37 @@ private extension SelectClipViewController {
         clipSelectCollectionView.delegate = self
         clipSelectCollectionView.dataSource = self
         addClipBottomSheetView.addClipBottomSheetViewDelegate = self
-        
     }
     
-//    func setupViewModel() {
-//        viewModel.setupDataChangeAction {
-//            self.clipSelectCollectionView.reloadData()
-//        }
-//    }
-
+    func setupNavigationBar() {
+        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
+                                                                hasRightButton: true,
+                                                                mainTitle: StringOrImageType.string("링크 저장"),
+                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.close),
+                                                                rightButtonAction: closeButtonTapped)
+        
+        if let navigationController = navigationController as? ToasterNavigationController {
+            navigationController.setupNavigationBar(forType: type)
+        }
+    }
+    
+    func closeButtonTapped() {
+        showPopup(forMainText: "링크 저장을 취소하시겠어요?",
+                  forSubText: "저장 중인 링크가 사라져요",
+                  forLeftButtonTitle: "닫기",
+                  forRightButtonTitle: "삭제",
+                  forRightButtonHandler: rightButtonTapped)
+    }
+    
+    func rightButtonTapped() {
+        dismiss(animated: false)
+        delegate?.cancleLinkButtonTapped()
+        navigationController?.popViewController(animated: true)
+    }
+    
     @objc func completeButtonTapped() {
-        let nextViewController = RemindTimerAddViewController()
-        nextViewController.configureView(forModel: selectedClip)
-        navigationController?.pushViewController(nextViewController, animated: true)
+        delegate?.saveLinkButtonTapped()
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -120,18 +137,14 @@ extension SelectClipViewController: UICollectionViewDelegate { }
 
 extension SelectClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // return viewModel.clipData.count
-        return 3
+        return selectedClipData.count
+        // return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RemindSelectClipCollectionViewCell.className, for: indexPath) as? RemindSelectClipCollectionViewCell else { return UICollectionViewCell() }
-        // cell.configureCell(forModel: viewModel.clipData[indexPath.item])
+        cell.configureCell(forModel: selectedClipData[indexPath.item])
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // selectedClip = viewModel.clipData[indexPath.item]
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
