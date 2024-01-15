@@ -103,8 +103,9 @@ private extension RemindViewController {
     }
     
     func setupViewModel() {
-        viewModel.setupDataChangeAction(changeAction: reloadCollectionViewWithData,
-                                        emptyAction: reloadCollectionViewWithNoneData)
+        viewModel.fetchAlarmCheck()
+        viewModel.setupDataChangeAction(changeAction: reloadCollectionViewWithView,
+                                        normalAction: setupAlarmBottomSheet)
     }
     
     func setupNavigationBar() {
@@ -161,7 +162,7 @@ private extension RemindViewController {
         offAlarmView.isHidden = nonAlarmViewHidden
     }
     
-    func setupBottomSheet(forID: Int?) {
+    func setupEditBottomSheet(forID: Int?) {
         let editView = RemindTimerEditBottomSheetView()
         editView.setupEditView(forDelegate: self,
                                forID: forID)
@@ -172,14 +173,18 @@ private extension RemindViewController {
         present(exampleBottom, animated: false)
     }
     
-    func reloadCollectionViewWithData() {
-        timerCollectionView.reloadData()
-        setupViewWithAlarm(forType: .deviceOnAppOnExistData)
+    func setupAlarmBottomSheet() {
+        let alarmView = RemindAlarmOffBottomSheetView()
+        alarmView.setupDelegate(forDelegate: self)
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "알림이 꺼져있어요!", height: 311, insertView: alarmView)
+        exampleBottom.modalPresentationStyle = .overFullScreen
+        
+        present(exampleBottom, animated: false)
     }
     
-    func reloadCollectionViewWithNoneData() {
+    func reloadCollectionViewWithView(forType: RemindViewType) {
         timerCollectionView.reloadData()
-        setupViewWithAlarm(forType: .deviceOnAppOnNoneData)
+        setupViewWithAlarm(forType: forType)
     }
     
     func plusButtonTapped() {
@@ -201,6 +206,15 @@ private extension RemindViewController {
         // TODO: - Timer OnOff API 연결
         
         print(forEnable)
+    }
+}
+
+// MARK: - RemindAlarmOffBottomSheetViewDelegate
+
+extension RemindViewController: RemindAlarmOffBottomSheetViewDelegate {
+    func alarmButtonTapped() {
+        // 알람 허용 팝업
+        print("알람 허용 팝업")
     }
 }
 
@@ -257,7 +271,7 @@ extension RemindViewController: UICollectionViewDataSource {
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaitTimerCollectionViewCell.className, for: indexPath) as? WaitTimerCollectionViewCell else { return UICollectionViewCell() }
             cell.configureCell(forModel: viewModel.timerData.waitTimerModelList[indexPath.item],
-                               forEditAction: setupBottomSheet,
+                               forEditAction: setupEditBottomSheet,
                                forToggleAction: toggleAction)
             return cell
         default:
