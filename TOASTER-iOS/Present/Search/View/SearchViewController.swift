@@ -75,6 +75,7 @@ private extension SearchViewController {
         
         backButton.do {
             $0.setImage(ImageLiterals.Common.arrowLeft, for: .normal)
+            $0.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         }
         
         searchButton.do {
@@ -161,7 +162,8 @@ private extension SearchViewController {
     
     func setupViewModel() {
         viewModel.setupDataChangeAction(changeAction: reloadCollectionView,
-                                        emptyAction: reloadEmptyView)
+                                        emptyAction: reloadEmptyView,
+                                        forUnAuthorizedAction: unAuthorizedAction)
     }
     
     func reloadCollectionView() {
@@ -180,8 +182,13 @@ private extension SearchViewController {
         isSearching = false
         view.endEditing(true)
         
-        // TODO: - API 호출
-        
+        if let text = searchTextField.text {
+            viewModel.fetchSearchResult(forText: text)
+        }
+    }
+    
+    func unAuthorizedAction() {
+        self.changeViewController(viewController: LoginViewController())
     }
     
     @objc func searchButtonTapped() {
@@ -192,6 +199,10 @@ private extension SearchViewController {
         isSearching = true
         searchTextField.text = nil
         searchTextField.becomeFirstResponder()
+    }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -235,9 +246,10 @@ extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell, 
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell,
                     let text = searchTextField.text else { return UICollectionViewCell() }
-            cell.configureCell(forModel: viewModel.searchResultData.detailClipList[indexPath.item], forText: text)
+            cell.configureCell(forModel: viewModel.searchResultData.detailClipList[indexPath.item],
+                               forText: text)
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell,
