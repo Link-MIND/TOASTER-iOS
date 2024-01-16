@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        // 기본 앱 알림 세팅 (true)
+        UserDefaults.standard.set(true, forKey: "isAppAlarmOn")
+
         KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
         
         let result = KeyChainService.loadTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)

@@ -28,8 +28,10 @@ final class SearchAPIService: BaseAPIService, SearchAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<GetMainPageResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -42,8 +44,10 @@ final class SearchAPIService: BaseAPIService, SearchAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<GetRecommendSiteResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }

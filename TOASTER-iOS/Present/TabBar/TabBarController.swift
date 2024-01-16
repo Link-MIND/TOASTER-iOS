@@ -94,7 +94,7 @@ private extension TabBarController {
 final class CustomTabBar: UITabBar {
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         var size = super.sizeThatFits(size)
-        size.height = size.height + 11
+        size.height += 11
         return size
     }
 }
@@ -114,7 +114,7 @@ extension TabBarController: UITabBarControllerDelegate {
 }
 
 extension TabBarController: AddLinkViewControllerPopDelegate {
-    func popToHomeViewController() {
+    func changeTabBarIndex() {
         selectedIndex = 0
     }
 }
