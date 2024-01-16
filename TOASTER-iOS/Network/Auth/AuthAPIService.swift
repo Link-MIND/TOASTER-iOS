@@ -32,8 +32,10 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<PostSocialLoginResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -46,8 +48,10 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<PostRefreshTokenResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -60,8 +64,10 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -74,8 +80,10 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
