@@ -250,6 +250,8 @@ extension EditClipViewController {
             switch result {
             case .success(let response):
                 self.clipList = response
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
             default: return
             }
         }
@@ -263,6 +265,8 @@ extension EditClipViewController {
                 self.dismiss(animated: false) {
                     self.showToastMessage(width: 152, status: .check, message: "클립 삭제 완료")
                 }
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
             default: return
             }
         }
@@ -273,6 +277,8 @@ extension EditClipViewController {
             switch result {
             case .success:
                 return
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
             default: return
             }
         }
@@ -293,6 +299,8 @@ extension EditClipViewController {
                         }
                     }
                 }
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
             default: return
             }
         }

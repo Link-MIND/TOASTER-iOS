@@ -230,6 +230,8 @@ extension ClipViewController {
                     self.clipCount = data.categories.count
                     self.setupEmptyView()
                 }
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
             default: return
             }
         }
@@ -240,6 +242,8 @@ extension ClipViewController {
             switch result {
             case .success:
                 self.getAllCategoryAPI()
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
             default: return
             }
         }
@@ -260,6 +264,8 @@ extension ClipViewController {
                         }
                     }
                 }
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
             default: return
             }
         }
