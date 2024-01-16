@@ -211,10 +211,12 @@ private extension RemindViewController {
         guard let id = selectedID else { return }
         NetworkService.shared.timerService.deleteTimer(timerId: id) { result in
             switch result {
-            case .success(let response):
+            case .success:
                 self.dismiss(animated: false)
                 self.viewModel.fetchTimerData()
                 self.showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
             default: break
             }
         }
@@ -226,9 +228,10 @@ private extension RemindViewController {
             switch result {
             case .success:
                 self.viewModel.fetchTimerData()
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
             default: break
             }
-            
         }
     }
     

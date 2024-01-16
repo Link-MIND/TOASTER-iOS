@@ -13,6 +13,7 @@ final class RemindTimerAddViewModel {
     
     typealias DataChangeAction = () -> Void
     private var dataChangeAction: DataChangeAction?
+    private var unAuthorizedAction: DataChangeAction?
     
     // MARK: - Data
     
@@ -26,8 +27,10 @@ final class RemindTimerAddViewModel {
 // MARK: - extension
 
 extension RemindTimerAddViewModel {
-    func setupDataChangeAction(changeAction: @escaping DataChangeAction) {
+    func setupDataChangeAction(changeAction: @escaping DataChangeAction,
+                               forUnAuthorizedAction: @escaping DataChangeAction) {
         dataChangeAction = changeAction
+        unAuthorizedAction = forUnAuthorizedAction
     }
     
     func fetchClipData(forID: Int) {

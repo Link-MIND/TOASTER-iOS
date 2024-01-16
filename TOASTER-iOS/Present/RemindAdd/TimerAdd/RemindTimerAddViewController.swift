@@ -248,14 +248,8 @@ private extension RemindTimerAddViewController {
     }
     
     func setupViewModel() {
-        viewModel.setupDataChangeAction {
-            if let data = self.viewModel.remindAddData {
-                self.mainLabel.text = "\(data.clipTitle) 클립을"
-                self.mainLabel.asFont(targetString: data.clipTitle,
-                                 font: .suitSemiBold(size: 18))
-                self.selectedIndex = Set(data.remindDates)
-            }
-        }
+        viewModel.setupDataChangeAction(changeAction: congifureView,
+                                        forUnAuthorizedAction: unAuthorizedAction)
     }
     
     func setupNavigationBar() {
@@ -314,6 +308,19 @@ private extension RemindTimerAddViewController {
         }
     }
     
+    func congifureView() {
+        if let data = self.viewModel.remindAddData {
+            self.mainLabel.text = "\(data.clipTitle) 클립을"
+            self.mainLabel.asFont(targetString: data.clipTitle,
+                                  font: .suitSemiBold(size: 18))
+            self.selectedIndex = Set(data.remindDates)
+        }
+    }
+    
+    func unAuthorizedAction() {
+        self.changeViewController(viewController: LoginViewController())
+    }
+    
     @objc func pickerValueChanged() {
         let date = labelDateformatter.string(from: datePickerView.date)
         timerLabel.text = date
@@ -341,11 +348,10 @@ private extension RemindTimerAddViewController {
                 case .success:
                     self.navigationController?.popToRootViewController(animated: true)
                     self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 설정 완료!")
+                case .unAuthorized, .networkFail:
+                    self.changeViewController(viewController: LoginViewController())
                 case .unProcessable:
-                    
-                    // TODO: - 이미 타이머가 존재하는 클립
-                    
-                    break
+                    self.showToastMessage(width: 297, status: .warning, message: "한 클립당 하나의 타이머만 설정 가능해요")
                 default: break
                 }
             }
@@ -358,6 +364,8 @@ private extension RemindTimerAddViewController {
                 case .success:
                     self.navigationController?.popToRootViewController(animated: true)
                     self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 수정 완료!")
+                case .unAuthorized, .networkFail:
+                    self.changeViewController(viewController: LoginViewController())
                 default: break
                 }
             }

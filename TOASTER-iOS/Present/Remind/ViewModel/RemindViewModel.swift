@@ -113,7 +113,7 @@ extension RemindViewModel {
                 }
                 self.timerData = RemindModel(completeTimerModelList: completedList,
                                              waitTimerModelList: waitList)
-            case .unAuthorized:
+            case .unAuthorized, .networkFail:
                 self.unAuthorizedAction?()
             default: break
             }
