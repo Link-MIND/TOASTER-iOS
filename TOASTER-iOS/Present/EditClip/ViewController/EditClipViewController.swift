@@ -200,21 +200,21 @@ extension EditClipViewController: UICollectionViewDropDelegate {
             destinationIndexPath = IndexPath(item: row, section: 0)
         }
         // 0번째 인덱스 드랍이 아닌 경우, 배열과 컬뷰 아이템 삭제, 삽입, reload까지 진행
-           if destinationIndexPath.item != 0 {
-               guard let item = coordinator.items.first, let sourceIndexPath = item.sourceIndexPath else { return }
-               collectionView.performBatchUpdates {
-                   if var clips = clipList?.data {
-                       let sourceItem = clips.categories.remove(at: sourceIndexPath.item - 1)
-                       clips.categories.insert(sourceItem, at: destinationIndexPath.item - 1)
-                       clipList?.data.categories = clips.categories
-                   }
-                   collectionView.deleteItems(at: [sourceIndexPath])
-                   collectionView.insertItems(at: [destinationIndexPath])
-                   coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-               } completion: { _ in
-                   collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
-               }
-           }
+        if destinationIndexPath.item != 0 {
+            guard let item = coordinator.items.first, let sourceIndexPath = item.sourceIndexPath else { return }
+            collectionView.performBatchUpdates {
+                if var clips = clipList?.data {
+                    let sourceItem = clips.categories.remove(at: sourceIndexPath.item - 1)
+                    clips.categories.insert(sourceItem, at: destinationIndexPath.item - 1)
+                    clipList?.data.categories = clips.categories
+                }
+                collectionView.deleteItems(at: [sourceIndexPath])
+                collectionView.insertItems(at: [destinationIndexPath])
+                coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+            } completion: { _ in
+                collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+            }
+        }
     }
 }
 

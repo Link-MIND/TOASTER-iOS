@@ -21,7 +21,7 @@ final class DetailClipSegmentedControlView: UIView {
     // MARK: - Properties
     
     var detailClipSegmentedDelegate: DetailClipSegmentedDelegate?
-        
+    
     // MARK: - UI Components
     
     private let readSegmentedControl = UISegmentedControl()
