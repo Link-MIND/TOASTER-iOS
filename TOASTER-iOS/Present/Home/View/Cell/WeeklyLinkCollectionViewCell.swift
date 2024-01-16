@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 import Then
 
+import Kingfisher
+
 // MARK: - 이주의 링크
 
 final class WeeklyLinkCollectionViewCell: UICollectionViewCell {
@@ -51,7 +53,7 @@ private extension WeeklyLinkCollectionViewCell {
         
         linkImage.do {
             $0.makeRounded(radius: 8)
-            $0.image = ImageLiterals.Home.linkThumbNail
+            //$0.image = ImageLiterals.Home.linkThumbNail
         }
         
         linkTitleLabel.do {
