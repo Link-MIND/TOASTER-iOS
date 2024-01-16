@@ -82,9 +82,11 @@ private extension SettingTableViewCell {
         
         settingSwitch.do {
             $0.onTintColor = .toasterPrimary
-            $0.isOn = false
             $0.isUserInteractionEnabled = true
             $0.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
+            if let isOn = UserDefaults.standard.object(forKey: "isAppAlarmOn") as? Bool {
+                $0.isOn = isOn
+            }
         }
     }
     
