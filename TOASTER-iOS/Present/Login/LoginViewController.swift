@@ -34,6 +34,11 @@ final class LoginViewController: UIViewController {
         setupLayout()
         setupAddTarget()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hideNavigationBar()
+    }
 }
 
 // MARK: - Private Extensions
@@ -41,7 +46,6 @@ final class LoginViewController: UIViewController {
 private extension LoginViewController {
     func setupStyle() {
         view.backgroundColor = .white
-        hideNavigationBar()
         
         titleLogoImageView.do {
             $0.image = ImageLiterals.Logo.wordmark
