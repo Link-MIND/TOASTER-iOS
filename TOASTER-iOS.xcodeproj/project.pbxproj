@@ -951,7 +951,6 @@
 		6BE6DA0D2B4F36E5008B06FA /* TimerAdd */ = {
 			isa = PBXGroup;
 			children = (
-				6BE6DA762B517E2B008B06FA /* Model */,
 				6BE6DA102B4F574B008B06FA /* View */,
 				6BE6DA0E2B4F3716008B06FA /* RemindTimerAddViewController.swift */,
 				6BE6DA172B4FF285008B06FA /* TimerRepeatDate.swift */,
@@ -1103,13 +1102,6 @@
 				6BE6DA742B50C373008B06FA /* GetCheckCategoryResponseDTO.swift */,
 			);
 			path = Response;
-			sourceTree = "<group>";
-		};
-		6BE6DA762B517E2B008B06FA /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		6BE6DA792B5456FE008B06FA /* Toaster */ = {

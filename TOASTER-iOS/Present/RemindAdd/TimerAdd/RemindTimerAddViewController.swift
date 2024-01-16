@@ -13,8 +13,9 @@ import Then
 final class RemindTimerAddViewController: UIViewController {
     
     // MARK: - Properties
-    
-    private let dateformatter = DateFormatter()
+        
+    private let labelDateformatter = DateFormatter()
+    private let networkDateformatter = DateFormatter()
     private var categoryID: Int?
     private var selectedIndex: Set<Int> = [] {
         didSet {
@@ -84,8 +85,13 @@ private extension RemindTimerAddViewController {
     func setupStyle() {
         view.backgroundColor = .toasterBackground
         
-        dateformatter.do {
+        labelDateformatter.do {
             $0.dateFormat = "a hh시 mm분"
+            $0.locale = Locale(identifier: "ko_KR")
+        }
+        
+        networkDateformatter.do {
+            $0.dateFormat = "HH:mm"
             $0.locale = Locale(identifier: "ko_KR")
         }
         
@@ -102,7 +108,7 @@ private extension RemindTimerAddViewController {
         timerLabel.do {
             $0.font = .suitBold(size: 18)
             $0.textColor = .toasterPrimary
-            $0.text = dateformatter.string(from: Date())
+            $0.text = labelDateformatter.string(from: Date())
         }
         
         subLabel.do {
@@ -271,7 +277,7 @@ private extension RemindTimerAddViewController {
     }
     
     @objc func pickerValueChanged() {
-        let date = dateformatter.string(from: datePickerView.date)
+        let date = labelDateformatter.string(from: datePickerView.date)
         timerLabel.text = date
     }
     
@@ -285,10 +291,25 @@ private extension RemindTimerAddViewController {
     }
     
     @objc func completeButtonTapped() {
-        // TODO: - API 호출
-        
-        navigationController?.popToRootViewController(animated: true)
-        navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 설정 완료!")
+        guard let categoryID = categoryID else { return }
+        let dateString = networkDateformatter.string(from: datePickerView.date)
+
+        NetworkService.shared.timerService.postCreateTimer(requestBody: PostCreateTimerRequestDTO(categoryId: categoryID,
+                                                                                                  remindTime: dateString,
+                                                                                                  remindDates: Array(selectedIndex))) { result in
+            switch result {
+            case .success:
+                self.navigationController?.popToRootViewController(animated: true)
+                self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 설정 완료!")
+            case .unProcessable:
+                
+                // TODO: - 이미 타이머가 존재하는 클립
+                
+                break
+            default: break
+            }
+        }
+
     }
 }
 
