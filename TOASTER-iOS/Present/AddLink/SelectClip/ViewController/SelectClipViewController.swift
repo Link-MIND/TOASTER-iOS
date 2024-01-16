@@ -23,13 +23,13 @@ final class SelectClipViewController: UIViewController {
     }
     private var selectedClipData = SelectClipModel.fetchDummyData()
     
-    private let addClipBottomSheetView = AddClipBottomSheetView()
-    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
     
     // MARK: - UI Properties
     
     private let clipSelectCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let completeButton: UIButton = UIButton()
+    private let addClipBottomSheetView = AddClipBottomSheetView()
+    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
     
     // MARK: - Life Cycle
     
@@ -40,12 +40,11 @@ final class SelectClipViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupDelegate()
-        setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        setupNavigationBar()
     }
 }
 
@@ -138,7 +137,6 @@ extension SelectClipViewController: UICollectionViewDelegate { }
 extension SelectClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedClipData.count
-        // return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -159,7 +157,7 @@ extension SelectClipViewController: UICollectionViewDataSource {
     
     // Header 크기 지정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: 335, height: 60)
+        return CGSize(width: 335, height: 68)
     }
 }
 
