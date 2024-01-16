@@ -13,10 +13,6 @@ import Then
 
 final class MainCollectionViewCell: UICollectionViewCell {
     
-//    private var nickName: String = String()
-//    private var readToastNum: Int = Int()
-//    private var allToastNum: Int = Int()
-    
     // MARK: - UI Components
     
     private let searchButton = UIButton()
@@ -81,20 +77,17 @@ private extension MainCollectionViewCell {
         }
         
         userLabel.do {
-           // $0.text = nickName + StringLiterals.Home.Main.subNickName
             $0.font = .suitBold(size: 20)
             $0.textColor = .black900
             $0.asFont(targetString: StringLiterals.Home.Main.subNickName, font: .suitRegular(size: 20))
         }
         
         noticeLabel.do {
-          //  $0.text = "토스터로 " + String(allToastNum) + "개의 링크를 \n잊지 않고 읽었어요!"
             $0.numberOfLines = 2
             $0.setLineSpacing(spacing: 4)
             $0.textAlignment = .left
             $0.font = .suitRegular(size: 20)
             $0.textColor = .black900
-           // $0.asFontColor(targetString: String(allToastNum) + "개의 링크", font: .suitExtraBold(size: 20), color: .toasterPrimary)
         }
         
         countToastLabel.do {
@@ -105,7 +98,6 @@ private extension MainCollectionViewCell {
         linkProgressView.do {
             $0.trackTintColor = .gray100
             $0.progressTintColor = .toasterPrimary
-        //    $0.progress = Float(readToastNum)/Float(allToastNum)
             $0.makeRounded(radius: 8)
             $0.clipsToBounds = true
         }

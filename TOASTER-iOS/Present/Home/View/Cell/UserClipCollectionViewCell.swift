@@ -97,7 +97,6 @@ private extension UserClipCollectionViewCell {
         clipImage.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(12)
             $0.width.height.equalTo(24)
-            
         }
         
         titleLabel.snp.makeConstraints {

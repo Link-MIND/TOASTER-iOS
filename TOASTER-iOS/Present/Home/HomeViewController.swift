@@ -53,7 +53,6 @@ final class HomeViewController: UIViewController {
         fetchWeeklyLinkData()
         fetchRecommendSiteData()
     }
-
 }
 
 extension HomeViewController: UICollectionViewDelegate {}

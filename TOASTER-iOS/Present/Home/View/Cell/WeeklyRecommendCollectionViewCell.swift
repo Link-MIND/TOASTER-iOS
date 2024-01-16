@@ -7,9 +7,9 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
-import Kingfisher
 
 // MARK: - 이주의 추천 사이트
 
