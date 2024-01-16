@@ -44,6 +44,14 @@ final class WeeklyLinkCollectionViewCell: UICollectionViewCell {
     }
 }
 
+extension WeeklyLinkCollectionViewCell {
+    func bindData(forModel: WeeklyLinkModel) {
+        linkImage.kf.setImage(with: URL(string: forModel.toastImg)) // if let 구문으로 바꿩
+        linkTitleLabel.text = forModel.toastTitle
+        linkLabel.text = forModel.toastLink
+    }
+}
+
 // MARK: - Private extensions
 
 private extension WeeklyLinkCollectionViewCell {
@@ -57,13 +65,13 @@ private extension WeeklyLinkCollectionViewCell {
         }
         
         linkTitleLabel.do {
-            $0.text = "Title" // 서버 통신 이후 dummyData로 뺄 것
+            //$0.text = "Title" // 서버 통신 이후 dummyData로 뺄 것
             $0.font = .suitMedium(size: 16)
             $0.textColor = .black900
         }
         
         linkLabel.do {
-            $0.text = "https://myApple.com" // 서버 통신 이후 dummyData로 뺄 것
+          //  $0.text = "https://myApple.com" // 서버 통신 이후 dummyData로 뺄 것
             $0.font = .suitRegular(size: 10)
             $0.textColor = .gray200
         }
