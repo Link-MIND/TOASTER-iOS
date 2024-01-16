@@ -9,6 +9,7 @@ import UIKit
 
 import SnapKit
 import Then
+import Kingfisher
 
 // MARK: - 이주의 추천 사이트
 
@@ -39,6 +40,14 @@ final class WeeklyRecommendCollectionViewCell: UICollectionViewCell {
         setupStyle()
         setupHierarchy()
         setupLayout()
+    }
+}
+
+extension WeeklyRecommendCollectionViewCell {
+    func bindData(forModel: RecommendSiteModel) {
+        brandImage.kf.setImage(with: URL(string: forModel.siteImg ?? ""))
+        titleLabel.text = forModel.siteTitle
+        subLabel.text = forModel.siteSub
     }
 }
 
