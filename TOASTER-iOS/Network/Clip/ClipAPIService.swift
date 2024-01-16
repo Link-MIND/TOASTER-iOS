@@ -28,7 +28,7 @@ protocol ClipAPIServiceProtocol {
 
 final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
     
-    private let provider = MoyaProvider<ClipTargetType>(plugins: [MoyaPlugin()])
+    private let provider = MoyaProvider<ClipTargetType>.init(session: Session(interceptor: APIInterceptor.shared), plugins: [MoyaPlugin()])
 
     func postAddCategory(requestBody: PostAddCategoryRequestDTO,
                          completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {

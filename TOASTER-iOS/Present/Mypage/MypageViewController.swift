@@ -24,13 +24,12 @@ final class MypageViewController: UIViewController {
         setupStyle()
         setupHierarchy()
         setupLayout()
-        
-        mypageHeaderView.bindModel(model: MypageUserModel(nickname: "홍길동", profile: nil, allReadToast: 5, thisWeekendRead: 3, thisWeekendSaved: 7))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+        fetchMypageInformation()
     }
 }
 
@@ -68,5 +67,26 @@ private extension MypageViewController {
         let settingVC = SettingViewController()
         settingVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(settingVC, animated: true)
+    }
+    
+    func fetchMypageInformation() {
+        NetworkService.shared.userService.getMyPage { [weak self] result in
+            switch result {
+            case .success(let response):
+                if let responseData = response?.data {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.mypageHeaderView.bindModel(model: MypageUserModel(nickname: responseData.nickname,
+                                                                                profile: responseData.profile,
+                                                                                allReadToast: responseData.allReadToast,
+                                                                                thisWeekendRead: responseData.thisWeekendRead,
+                                                                                thisWeekendSaved: responseData.thisWeekendSaved))
+                    }
+                }
+            case .networkFail:
+                self?.changeViewController(viewController: LoginViewController())
+            default:
+                print("default Fail")
+            }
+        }
     }
 }

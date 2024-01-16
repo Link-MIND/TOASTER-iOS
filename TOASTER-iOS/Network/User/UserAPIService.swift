@@ -19,7 +19,7 @@ protocol UserAPIServiceProtocol {
 
 final class UserAPIService: BaseAPIService, UserAPIServiceProtocol {
     
-    private let provider = MoyaProvider<UserTargetType>(plugins: [MoyaPlugin()])
+    private let provider = MoyaProvider<UserTargetType>.init(session: Session(interceptor: APIInterceptor.shared), plugins: [MoyaPlugin()])
 
     func getSettingPage(completion: @escaping (NetworkResult<GetSettingPageResponseDTO>) -> Void) {
         provider.request(.getSettingPage) { result in

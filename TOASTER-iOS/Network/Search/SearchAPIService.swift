@@ -17,7 +17,7 @@ protocol SearchAPIServiceProtocol {
 
 final class SearchAPIService: BaseAPIService, SearchAPIServiceProtocol {
     
-    private let provider = MoyaProvider<SearchTargetType>(plugins: [MoyaPlugin()])
+    private let provider = MoyaProvider<SearchTargetType>.init(session: Session(interceptor: APIInterceptor.shared), plugins: [MoyaPlugin()])
 
     func getMainPageSearch(searchText: String, 
                            completion: @escaping (NetworkResult<GetMainPageResponseDTO>) -> Void) {

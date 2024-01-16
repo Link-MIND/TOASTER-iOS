@@ -29,7 +29,7 @@ protocol TimerAPIServiceProtocol {
 
 final class TimerAPIService: BaseAPIService, TimerAPIServiceProtocol {
     
-    private let provider = MoyaProvider<TimerTargetType>(plugins: [MoyaPlugin()])
+    private let provider = MoyaProvider<TimerTargetType>.init(session: Session(interceptor: APIInterceptor.shared), plugins: [MoyaPlugin()])
     
     func getTimerMainpage(completion: @escaping (NetworkResult<GetTimerMainpageResponseDTO>) -> Void) {
         provider.request(.getTimerMainpage) { result in

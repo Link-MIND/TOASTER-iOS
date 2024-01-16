@@ -17,17 +17,13 @@ final class TabBarController: UITabBarController {
     var customTabBar = CustomTabBar()
     
     // MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setValue(customTabBar, forKey: "tabBar")
+        
         setupStyle()
         addTabBarController()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigation()
     }
 }
 
@@ -35,39 +31,39 @@ final class TabBarController: UITabBarController {
 
 private extension TabBarController {
     func setupStyle() {
-        self.view.backgroundColor = .toasterBackground
+        delegate = self
+        view.backgroundColor = .toasterBackground
         tabBar.backgroundColor = .toasterWhite
-    }
-    
-    func setupNavigation() {
-        hideNavigationBar()
-        navigationItem.hidesBackButton = true
+        tabBar.unselectedItemTintColor = .gray150
+        tabBar.tintColor = .black950
     }
     
     func addTabBarController() {
-        var tabNavigationControllers = [UINavigationController]()
+        var viewControllers = [UIViewController]()
         for item in TabBarItem.allCases {
-            let tabNavController = createTabNavigationController(
+            let currentViewController = createViewController(
                 title: item.itemTitle ?? "",
                 image: item.normalItem ?? UIImage(),
                 selectedImage: item.selectedItem ?? UIImage(),
                 viewController: item.targetViewController,
                 inset: item == TabBarItem.plus ? UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0) : nil
             )
-            tabNavigationControllers.append(tabNavController)
+            viewControllers.append(currentViewController)
         }
-        setViewControllers(tabNavigationControllers, animated: true)
+        setViewControllers(viewControllers, animated: false)
     }
     
-    func createTabNavigationController(title: String, image: UIImage, selectedImage: UIImage, viewController: UIViewController?, inset: UIEdgeInsets? ) -> UINavigationController {
-        let tabNavigationController = ToasterNavigationController()
-        
+    func createViewController(title: String,
+                              image: UIImage,
+                              selectedImage: UIImage,
+                              viewController: UIViewController,
+                              inset: UIEdgeInsets? ) -> UIViewController {
+        let currentViewController = viewController
         let tabbarItem = UITabBarItem(
             title: title,
             image: image.withRenderingMode(.alwaysOriginal),
             selectedImage: selectedImage.withRenderingMode(.alwaysOriginal)
         )
-        
         if let inset {
             tabbarItem.imageInsets = inset
         }
@@ -84,15 +80,13 @@ private extension TabBarController {
             .foregroundColor: UIColor.black900
         ]
         
+        tabbarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5)
         tabbarItem.setTitleTextAttributes(normalAttributes, for: .normal)
         tabbarItem.setTitleTextAttributes(selectedAttributes, for: .selected)
-        tabbarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5)
         
-        tabNavigationController.tabBarItem = tabbarItem
-        if let viewController = viewController {
-            tabNavigationController.viewControllers = [viewController]
-        }
-        return tabNavigationController
+        currentViewController.tabBarItem = tabbarItem
+        
+        return currentViewController
     }
 }
 
@@ -100,7 +94,27 @@ private extension TabBarController {
 final class CustomTabBar: UITabBar {
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         var size = super.sizeThatFits(size)
-        size.height = 60 + safeAreaInsets.bottom
+        size.height += 11
         return size
+    }
+}
+
+// MARK: - UITabBarControllerDelegate
+
+extension TabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if viewController == viewControllers?[2] {
+            let addLinkViewController = AddLinkViewController()
+            addLinkViewController.setupDelegate(forDelegate: self)
+            navigationController?.pushViewController(addLinkViewController, animated: false)
+            return false
+        }
+        return true
+    }
+}
+
+extension TabBarController: AddLinkViewControllerPopDelegate {
+    func changeTabBarIndex() {
+        selectedIndex = 0
     }
 }
