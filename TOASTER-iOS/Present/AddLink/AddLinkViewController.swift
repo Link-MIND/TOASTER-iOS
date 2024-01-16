@@ -10,8 +10,16 @@ import UIKit
 import SnapKit
 import Then
 
+protocol AddLinkViewControllerPopDelegate: AnyObject {
+    func popToHomeViewController()
+}
+
 final class AddLinkViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    private weak var delegate: AddLinkViewControllerPopDelegate?
+
     // MARK: - UI Properties
     
     private var addLinkView = AddLinkView()
@@ -30,6 +38,13 @@ final class AddLinkViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupNavigationBar()
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: - set up Add Link View
@@ -40,6 +55,14 @@ final class AddLinkViewController: UIViewController {
         addLinkView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+}
+
+// MARK: - extension
+
+extension AddLinkViewController {
+    func setupDelegate(forDelegate: AddLinkViewControllerPopDelegate) {
+        delegate = forDelegate
     }
 }
 
@@ -63,8 +86,7 @@ private extension AddLinkViewController {
     }
     
     func closeButtonTapped() {
-        if let tabBarController = self.tabBarController {
-            tabBarController.selectedIndex = 0
-        }
+        delegate?.popToHomeViewController()
+        navigationController?.popViewController(animated: true)
     }
 }
