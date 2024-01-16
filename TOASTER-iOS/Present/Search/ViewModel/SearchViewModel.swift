@@ -47,7 +47,7 @@ extension SearchViewModel {
             switch result {
             case .success(let response):
                 var detailClipList: [SearchResultDetailClipModel] = []
-                response?.data.toasts.forEach {
+                response?.data?.toasts.forEach {
                     detailClipList.append(SearchResultDetailClipModel(iD: $0.toastId,
                                                                       title: $0.toastTitle,
                                                                       link: $0.linkUrl,
@@ -55,7 +55,7 @@ extension SearchViewModel {
                                                                       clipTitle: $0.categoryTitle))
                 }
                 var clipList: [SearchResultClipModel] = []
-                response?.data.categories.forEach {
+                response?.data?.categories.forEach {
                     clipList.append(SearchResultClipModel(iD: $0.categoryId,
                                                           title: $0.title,
                                                           numberOfDetailClip: $0.toastNum))
