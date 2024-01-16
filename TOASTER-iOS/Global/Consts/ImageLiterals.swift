@@ -75,6 +75,8 @@ enum ImageLiterals {
     enum Login {
         static var kakaoLogo: UIImage { .load(name: "ic_kakao_login_24") }
         static var appleLogo: UIImage { .load(name: "ic_apple_login_24") }
+        static var loginLogo: UIImage { .load(name: "img_login") }
+        static var loginLogo2: UIImage { .load(name: "img_login2") }
     }
     
     enum Remind {
