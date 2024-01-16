@@ -39,8 +39,10 @@ final class TimerAPIService: BaseAPIService, TimerAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<GetTimerMainpageResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -54,8 +56,10 @@ final class TimerAPIService: BaseAPIService, TimerAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -71,8 +75,10 @@ final class TimerAPIService: BaseAPIService, TimerAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -86,8 +92,10 @@ final class TimerAPIService: BaseAPIService, TimerAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -101,8 +109,10 @@ final class TimerAPIService: BaseAPIService, TimerAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<GetDetailTimerResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -118,8 +128,10 @@ final class TimerAPIService: BaseAPIService, TimerAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -133,8 +145,10 @@ final class TimerAPIService: BaseAPIService, TimerAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }

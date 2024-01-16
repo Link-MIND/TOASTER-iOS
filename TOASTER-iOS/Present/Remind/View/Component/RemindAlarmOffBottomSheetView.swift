@@ -10,9 +10,17 @@ import UIKit
 import SnapKit
 import Then
 
+protocol RemindAlarmOffBottomSheetViewDelegate: AnyObject {
+    func alarmButtonTapped()
+}
+
 final class RemindAlarmOffBottomSheetView: UIView {
     
-    // MARK: - UI Components
+    // MARK: - Properties
+
+    private weak var delegate: RemindAlarmOffBottomSheetViewDelegate?
+    
+    // MARK: - UI Properties
     
     private let alarmOffView: RemindAlarmOffView = RemindAlarmOffView(frame: .zero, type: .bottomSheet)
     private let alarmButton: UIButton = UIButton()
@@ -32,6 +40,14 @@ final class RemindAlarmOffBottomSheetView: UIView {
     }
 }
 
+// MARK: - Extension
+
+extension RemindAlarmOffBottomSheetView {
+    func setupDelegate(forDelegate: RemindAlarmOffBottomSheetViewDelegate) {
+        delegate = forDelegate
+    }
+}
+
 // MARK: - Private Extension
 
 private extension RemindAlarmOffBottomSheetView {
@@ -44,6 +60,7 @@ private extension RemindAlarmOffBottomSheetView {
             $0.setTitle("알림 받을래요", for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
+            $0.addTarget(self, action: #selector(alarmButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -61,5 +78,9 @@ private extension RemindAlarmOffBottomSheetView {
             $0.top.equalTo(alarmOffView.snp.bottom).offset(20)
             $0.horizontalEdges.equalToSuperview().inset(20)
         }
+    }
+    
+    @objc func alarmButtonTapped() {
+        delegate?.alarmButtonTapped()
     }
 }

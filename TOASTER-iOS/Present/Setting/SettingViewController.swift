@@ -218,7 +218,7 @@ extension SettingViewController: UITableViewDataSource {
                 cell.showSwitch()
                 cell.setSwitchValueChangedHandler { isOn in
                     self.isToggle = isOn
-                    // TODO: - 토글 상태에 따른 알림 설정 분기처리는 여기에서 하세요
+                    UserDefaults.standard.set(isOn, forKey: "isAppAlarmOn")
                 }
             }
         default:
