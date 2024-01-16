@@ -13,6 +13,9 @@ final class DetailClipViewController: UIViewController {
     
     // MARK: - Properties
     
+    private var categoryID: Int = 0
+    private var categoryName: String = ""
+    private var clipCount: Int = 0
     private var toastList: GetDetailCategoryResponseDTO? {
         didSet {
             detailClipListCollectionView.reloadData()
@@ -45,6 +48,15 @@ final class DetailClipViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupNavigationBar()
+    }
+}
+
+// MARK: - Extensions
+
+extension DetailClipViewController {
+    func setupCategory(id: Int, name: String) {
+        categoryID = id
+        categoryName = name
     }
 }
 
@@ -85,6 +97,7 @@ private extension DetailClipViewController {
     func setupDelegate() {
         detailClipListCollectionView.delegate = self
         detailClipListCollectionView.dataSource = self
+        detailClipSegmentedControlView.detailClipSegmentedDelegate = self
     }
     
     func setupEmptyView() {
@@ -96,7 +109,7 @@ private extension DetailClipViewController {
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
                                                                 hasRightButton: false,
-                                                                mainTitle: StringOrImageType.string(StringLiterals.NavigationBar.Title.allClip),
+                                                                mainTitle: StringOrImageType.string(categoryName),
                                                                 rightButton: StringOrImageType.string("어쩌구"), rightButtonAction: {})
         
         if let navigationController = navigationController as? ToasterNavigationController {
@@ -134,7 +147,7 @@ extension DetailClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
         headerView.isDetailClipView(isHidden: true)
-        headerView.setupDataBind(count: toastList?.data.allToastNum ?? 0)
+        headerView.setupDataBind(count: clipCount)
         return headerView
     }
 }
@@ -176,6 +189,22 @@ extension DetailClipViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - DetailClipSegmented Delegate
+
+extension DetailClipViewController: DetailClipSegmentedDelegate {
+    func setupAllLink() {
+        categoryID == 0 ? getDetailAllCategoryAPI(filter: .all) : getDetailCategoryAPI(categoryID: categoryID, filter: .all)
+    }
+    
+    func setupReadLink() {
+        categoryID == 0 ? getDetailAllCategoryAPI(filter: .read) : getDetailCategoryAPI(categoryID: categoryID, filter: .read)
+    }
+    
+    func setupNotReadLink() {
+        categoryID == 0 ? getDetailAllCategoryAPI(filter: .unread) : getDetailCategoryAPI(categoryID: categoryID, filter: .unread)
+    }
+}
+
 // MARK: - Network
 
 extension DetailClipViewController {
@@ -184,6 +213,7 @@ extension DetailClipViewController {
             switch result {
             case .success(let response):
                 self.toastList = response
+                self.clipCount = response?.data.toastListDto.count ?? 0
             default: return
             }
         }

@@ -69,6 +69,14 @@ extension DetailClipListCollectionViewCell {
         linkLabel.text = forModel.toastListDto[index].linkUrl
         isClipNameLabelHidden = forModel.toastListDto[index].categoryTitle != nil ? true : false
         isReadDimmedView = forModel.toastListDto[index].isRead
+        
+        if forModel.toastListDto[index].categoryTitle != nil {
+            clipNameLabel.text = forModel.toastListDto[index].categoryTitle
+            isClipNameLabelHidden = false
+        } else {
+            isClipNameLabelHidden = true
+        }
+        
         if let imageURL = forModel.toastListDto[index].thumbnailUrl {
             linkImage.kf.setImage(with: URL(string: imageURL))
         } else {

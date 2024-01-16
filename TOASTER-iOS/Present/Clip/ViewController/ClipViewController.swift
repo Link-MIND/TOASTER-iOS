@@ -112,10 +112,13 @@ extension ClipViewController: UICollectionViewDelegate {
         let nextVC = DetailClipViewController()
         if indexPath.row == 0 {
             nextVC.getDetailAllCategoryAPI(filter: .all)
+            nextVC.setupCategory(id: 0, name: "전체클립")
         } else {
             if let data = clipList?.data {
                 nextVC.getDetailCategoryAPI(categoryID: data.categories[indexPath.row-1].categoryId,
                                             filter: .all)
+                nextVC.setupCategory(id: data.categories[indexPath.row-1].categoryId,
+                                     name: data.categories[indexPath.row-1].categoryTitle)
             }
         }
         nextVC.hidesBottomBarWhenPushed = true
@@ -204,9 +207,9 @@ extension ClipViewController: AddClipBottomSheetViewDelegate {
     func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
         postAddCategoryAPI(requestBody: text)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.addClipBottomSheetView.resetTextField()
             self.addClipBottom.hideBottomSheet()
             self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
-            self.addClipBottomSheetView.resetTextField()
         }
     }
     
