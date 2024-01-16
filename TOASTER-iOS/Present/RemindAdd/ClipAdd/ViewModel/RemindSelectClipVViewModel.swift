@@ -16,10 +16,14 @@ final class RemindSelectClipViewModel {
     
     // MARK: - Data
 
-    var clipData: [RemindClipModel] = RemindClipModel.fetchDummyData() {
+    var clipData: [RemindClipModel] = [] {
         didSet {
             dataChangeAction?()
         }
+    }
+    
+    init() {
+        fetchClipData()
     }
 }
 
@@ -28,5 +32,23 @@ final class RemindSelectClipViewModel {
 extension RemindSelectClipViewModel {
     func setupDataChangeAction(changeAction: @escaping DataChangeAction) {
         dataChangeAction = changeAction
+    }
+    
+    func fetchClipData() {
+        NetworkService.shared.clipService.getAllCategory { result in
+            switch result {
+            case .success(let response):
+                var clipDataList: [RemindClipModel] = []
+                response?.data.categories.forEach {
+                    let clipData = RemindClipModel(id: $0.categoryId,
+                                                   title: $0.categoryTitle,
+                                                   clipCount: $0.toastNum)
+                    clipDataList.append(clipData)
+                }
+                self.clipData = clipDataList
+            default: break
+            }
+            
+        }
     }
 }

@@ -43,6 +43,7 @@ final class RemindSelectClipViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupNavigationBar()
+        viewModel.fetchClipData()
     }
 }
 

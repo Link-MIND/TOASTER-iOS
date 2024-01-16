@@ -134,7 +134,7 @@ private extension RemindViewModel {
                 if appAlarmSetting == false {     // device 알람이 켜져있고, 앱 알람이 꺼져있을 때
                     remindViewType = .deviceOnAppOff
                 } else {
-                    timerData = RemindModel.fetchDummyModel()
+                    self.fetchTimerData()
                 }
             }
         }
