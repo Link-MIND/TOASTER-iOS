@@ -16,8 +16,14 @@ final class HomeViewController: UIViewController {
     private let homeView = HomeView()
     private let mainCollectionViewCell = MainCollectionViewCell()
     
+    private var mainInfoList: MainInfoModel = MainInfoModel(nickname: "", readToastNum: 0, allToastNum: 0,
+                                                            mainCategoryListDto: [CategoryList(categoryId: 0, categroyTitle: "", toastNum: 0)]) {
+        didSet {
+            homeView.collectionView.reloadData()
+        }
+    }
     
-    private var clipList: MainInfoModel {
+    private var weeklyLinkList: WeeklyLinkModel = WeeklyLinkModel(toastId: 0, toastTitle: "", toastImg: "", toastLink: "") {
         didSet {
             homeView.collectionView.reloadData()
         }
@@ -37,7 +43,9 @@ final class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+        fetchMainPageData()
     }
+
 }
 
 extension HomeViewController: UICollectionViewDelegate {}
@@ -51,7 +59,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            return 2
+            return mainInfoList.mainCategoryListDto.count
         case 2:
             return 3
         case 3:
@@ -65,14 +73,15 @@ extension HomeViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.className, for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell() }
-            cell.bindData(forModel: MainInfoModel )
+            
+            cell.bindData(forModel: mainInfoList)
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
             if indexPath.row == 0 {
                 cell.configureCell(forModel: CategoryList(categoryId: 0, categroyTitle: "전체클립", toastNum: 100), icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
             } else {
-                cell.configureCell(forModel: dummyCategoryInfo[indexPath.row], icon: ImageLiterals.Home.clipFull.withTintColor(.black900))
+                cell.configureCell(forModel: mainInfoList.mainCategoryListDto[indexPath.row], icon: ImageLiterals.Home.clipFull.withTintColor(.black900))
             }
             return cell
         case 2:
@@ -89,7 +98,7 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == clipCellData.count - 1 {
+        if indexPath.row == mainInfoList.mainCategoryListDto.count - 1 {
             addClipCellTapped()
         }
     }
@@ -202,23 +211,6 @@ private extension HomeViewController {
         setupDelegate()
     }
     
-    func fetchMainPageData() {
-        NetworkService.shared.userService.getMainPage { [weak self] result in
-            switch result { // response ==> GetMainPageResponseDTO?
-            case .success(let response):
-                if let responseData = response?.data {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.mainCollectionViewCell.bindData(forModel: MainInfoModel(nickname: responseData.nickname, readToastNum: responseData.readToastNum, allToastNum: responseData.allToastNum, mainCategoryListDto:))
-                    }
-                }
-            case .networkFail:
-                // skip
-                print("NETWORK FAIL...")
-            default:
-                print("default fail")
-            }
-        }
-    }
 }
 
 extension HomeViewController: AddClipBottomSheetViewDelegate {
@@ -247,3 +239,54 @@ extension HomeViewController: UserClipCollectionViewCellDelegate {
 }
 
 // MARK: - Network
+
+//extension HomeViewController {
+//    func fetchMainPageData() {
+//        NetworkService.shared.userService.getMainPage { [weak self] result in
+//            switch result { // response ==> GetMainPageResponseDTO?
+//            case .success(let response):
+//                if let responseData = response?.data {
+//                    DispatchQueue.main.async { [weak self] in
+//                        self?.mainCollectionViewCell.bindData(forModel: MainInfoModel(nickname: responseData.nickname,
+//                                                                                      readToastNum: responseData.readToastNum,
+//                                                                                      allToastNum: responseData.allToastNum,
+//                                                                                      mainCategoryListDto: [CategoryList(categoryId: 0,
+//                                                                                                                         categroyTitle: "title",
+//                                                                                                                         toastNum: 1)]
+//                                                                                    ))
+//                    }
+//                }
+//            case .networkFail:
+//                // skip
+//                print("NETWORK FAIL...")
+//            default:
+//                print("default fail")
+//            }
+//        }
+//    }
+//}
+
+extension HomeViewController {
+    func fetchMainPageData() {
+        NetworkService.shared.userService.getMainPage { result in
+            switch result { // response ==> GetMainPageResponseDTO?
+            case .success(let response):
+                
+                var categoryList: [CategoryList] = []
+                response?.data.mainCategoryListDto.forEach {
+                    categoryList.append(CategoryList(categoryId: $0.categoryId,
+                                                     categroyTitle: $0.categoryTitle,
+                                                     toastNum: $0.toastNum))
+                }
+                if let data = response?.data {
+                    self.mainInfoList = MainInfoModel(nickname: data.nickname,
+                                                      readToastNum: data.readToastNum,
+                                                      allToastNum: data.allToastNum,
+                                                      mainCategoryListDto: categoryList)
+                }
+            default:
+                print("default fail")
+            }
+        }
+    }
+}

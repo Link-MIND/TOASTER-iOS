@@ -13,9 +13,9 @@ import Then
 
 final class MainCollectionViewCell: UICollectionViewCell {
     
-    private var nickName: String = String()
-    private var readToastNum: Int = Int()
-    private var allToastNum: Int = Int()
+//    private var nickName: String = String()
+//    private var readToastNum: Int = Int()
+//    private var allToastNum: Int = Int()
     
     // MARK: - UI Components
     
@@ -49,9 +49,15 @@ final class MainCollectionViewCell: UICollectionViewCell {
 
 extension MainCollectionViewCell {
     func bindData(forModel: MainInfoModel) {
-        nickName = forModel.nickname
-        readToastNum = forModel.readToastNum
-        allToastNum = forModel.allToastNum
+        userLabel.text = forModel.nickname + StringLiterals.Home.Main.subNickName
+        
+        noticeLabel.text = "토스터로 " + String(forModel.allToastNum) + "개의 링크를 \n잊지 않고 읽었어요!"
+        noticeLabel.asFontColor(targetString: String(forModel.allToastNum) + "개의 링크", font: .suitExtraBold(size: 20), color: .toasterPrimary)
+        
+        countToastLabel.text = String(forModel.readToastNum) + " / " + String(forModel.allToastNum)
+        countToastLabel.asFontColor(targetString: String(forModel.readToastNum), font: .suitBold(size: 20), color: .toasterPrimary)
+        
+        linkProgressView.progress = Float(forModel.readToastNum)/Float(forModel.allToastNum)
     }
 }
 
@@ -75,34 +81,31 @@ private extension MainCollectionViewCell {
         }
         
         userLabel.do {
-            $0.text = nickName + StringLiterals.Home.Main.subNickName
+           // $0.text = nickName + StringLiterals.Home.Main.subNickName
             $0.font = .suitBold(size: 20)
             $0.textColor = .black900
             $0.asFont(targetString: StringLiterals.Home.Main.subNickName, font: .suitRegular(size: 20))
         }
         
         noticeLabel.do {
-            $0.text = "토스터로 " + String(allToastNum) + "개의 링크를 \n잊지 않고 읽었어요!"
+          //  $0.text = "토스터로 " + String(allToastNum) + "개의 링크를 \n잊지 않고 읽었어요!"
             $0.numberOfLines = 2
             $0.setLineSpacing(spacing: 4)
             $0.textAlignment = .left
             $0.font = .suitRegular(size: 20)
             $0.textColor = .black900
-            $0.asFontColor(targetString: String(allToastNum) + "개의 링크", font: .suitExtraBold(size: 20), color: .toasterPrimary)
+           // $0.asFontColor(targetString: String(allToastNum) + "개의 링크", font: .suitExtraBold(size: 20), color: .toasterPrimary)
         }
         
         countToastLabel.do {
-            $0.text = String(readToastNum) + " / " + String(allToastNum)
             $0.font = .suitRegular(size: 16)
             $0.textColor = .gray300
-            $0.asColor(targetString: String(readToastNum), color: .red)
-            $0.asFontColor(targetString: String(readToastNum), font: .suitBold(size: 20), color: .toasterPrimary)
         }
         
         linkProgressView.do {
             $0.trackTintColor = .gray100
             $0.progressTintColor = .toasterPrimary
-            $0.progress = Float(readToastNum)/Float(allToastNum)
+        //    $0.progress = Float(readToastNum)/Float(allToastNum)
             $0.makeRounded(radius: 8)
             $0.clipsToBounds = true
         }
