@@ -71,6 +71,7 @@ extension RemindViewModel {
         unAuthorizedAction = forUnAuthorizedAction
     }
     
+    /// 기기의 알림 설정, 앱 알림 설정 분기처리
     func fetchAlarmCheck() {
         UNUserNotificationCenter.current().getNotificationSettings { permission in
             switch permission.authorizationStatus {
@@ -122,6 +123,7 @@ extension RemindViewModel {
 }
 
 private extension RemindViewModel {
+    /// 기기 설정과 앱 설정에 따른 viewType을 업데이트하는 함수
     func setupAlarm(forDeviceAlarm: Bool?) {
         if let deviceAlarm = forDeviceAlarm {
             if deviceAlarm == false {    // device 알람이 꺼져있을 때

@@ -24,7 +24,7 @@ final class RemindViewController: UIViewController {
     
     private let viewModel = RemindViewModel()
     
-    private var selectedID: Int?
+    private var selectedTimerID: Int?
     
     // MARK: - UI Properties
     
@@ -130,6 +130,7 @@ private extension RemindViewController {
         }
     }
     
+    /// viewType에 따라 뷰를 업데이트해주는 함수
     func setupViewWithAlarm(forType: RemindViewType) {
         switch forType {
         case .deviceOnAppOnExistData:
@@ -177,7 +178,10 @@ private extension RemindViewController {
         editView.setupEditView(forDelegate: self,
                                forID: forID)
         
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 128, insertView: editView)
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, 
+                                                             bottomTitle: "수정하기",
+                                                             height: 128,
+                                                             insertView: editView)
         exampleBottom.modalPresentationStyle = .overFullScreen
         
         present(exampleBottom, animated: false)
@@ -186,7 +190,11 @@ private extension RemindViewController {
     func setupAlarmBottomSheet() {
         let alarmView = RemindAlarmOffBottomSheetView()
         alarmView.setupDelegate(forDelegate: self)
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "알림이 꺼져있어요!", height: 311, insertView: alarmView)
+        
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, 
+                                                             bottomTitle: "알림이 꺼져있어요!",
+                                                             height: 311,
+                                                             insertView: alarmView)
         exampleBottom.modalPresentationStyle = .overFullScreen
         
         present(exampleBottom, animated: false)
@@ -208,7 +216,7 @@ private extension RemindViewController {
     }
     
     func deleteButtonTapped() {
-        guard let id = selectedID else { return }
+        guard let id = selectedTimerID else { return }
         NetworkService.shared.timerService.deleteTimer(timerId: id) { result in
             switch result {
             case .success:
@@ -260,7 +268,7 @@ extension RemindViewController: RemindAlarmOffBottomSheetViewDelegate {
 
 extension RemindViewController: RemindEditViewDelegate {
     func editTimer(forID: Int?) {
-        selectedID = forID
+        selectedTimerID = forID
         dismiss(animated: false)
         if let id = forID {
             let editViewController = RemindTimerAddViewController()
@@ -270,7 +278,7 @@ extension RemindViewController: RemindEditViewDelegate {
     }
     
     func deleteTimer(forID: Int?) {
-        selectedID = forID
+        selectedTimerID = forID
         dismiss(animated: false)
         showPopup(forMainText: "타이머를 삭제하시겠어요?",
                   forSubText: "더 이상 해당 클립의 리마인드를 \n받을 수 없어요",

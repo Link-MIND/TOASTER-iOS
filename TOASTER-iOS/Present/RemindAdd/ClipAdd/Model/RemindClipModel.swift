@@ -8,7 +8,7 @@
 import Foundation
 
 struct RemindClipModel {
-    let id: Int
+    let id: Int?
     let title: String
     let clipCount: Int
 }

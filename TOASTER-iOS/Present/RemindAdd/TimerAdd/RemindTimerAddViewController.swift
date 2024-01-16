@@ -19,7 +19,7 @@ final class RemindTimerAddViewController: UIViewController {
     // MARK: - Properties
     
     private let viewModel = RemindTimerAddViewModel()
-        
+    
     private let labelDateformatter = DateFormatter()
     private let networkDateformatter = DateFormatter()
     private var buttonType: RemindTimerAddButtonType = .add
@@ -172,7 +172,7 @@ private extension RemindTimerAddViewController {
             $0.setTitle("완료", for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitSemiBold(size: 16)
-
+            
             $0.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         }
     }
@@ -248,8 +248,21 @@ private extension RemindTimerAddViewController {
     }
     
     func setupViewModel() {
-        viewModel.setupDataChangeAction(changeAction: congifureView,
+        viewModel.setupDataChangeAction(changeAction: configureView,
                                         forUnAuthorizedAction: unAuthorizedAction)
+    }
+    
+    func configureView() {
+        if let data = self.viewModel.remindAddData {
+            self.mainLabel.text = "\(data.clipTitle) 클립을"
+            self.mainLabel.asFont(targetString: data.clipTitle,
+                                  font: .suitSemiBold(size: 18))
+            self.selectedIndex = Set(data.remindDates)
+        }
+    }
+    
+    func unAuthorizedAction() {
+        self.changeViewController(viewController: LoginViewController())
     }
     
     func setupNavigationBar() {
@@ -274,6 +287,7 @@ private extension RemindTimerAddViewController {
         return stackView
     }
     
+    /// 반복 설정 값에 따라 Button의 상태를 바꿔주는 함수
     func setupButton(forEnable: Bool) {
         completeButton.isEnabled = forEnable
         if forEnable {
@@ -308,19 +322,6 @@ private extension RemindTimerAddViewController {
         }
     }
     
-    func congifureView() {
-        if let data = self.viewModel.remindAddData {
-            self.mainLabel.text = "\(data.clipTitle) 클립을"
-            self.mainLabel.asFont(targetString: data.clipTitle,
-                                  font: .suitSemiBold(size: 18))
-            self.selectedIndex = Set(data.remindDates)
-        }
-    }
-    
-    func unAuthorizedAction() {
-        self.changeViewController(viewController: LoginViewController())
-    }
-    
     @objc func pickerValueChanged() {
         let date = labelDateformatter.string(from: datePickerView.date)
         timerLabel.text = date
@@ -340,7 +341,6 @@ private extension RemindTimerAddViewController {
         
         switch buttonType {
         case .add:
-            guard let categoryID = categoryID else { return }
             NetworkService.shared.timerService.postCreateTimer(requestBody: PostCreateTimerRequestDTO(categoryId: categoryID,
                                                                                                       remindTime: dateString,
                                                                                                       remindDates: Array(selectedIndex))) { result in
