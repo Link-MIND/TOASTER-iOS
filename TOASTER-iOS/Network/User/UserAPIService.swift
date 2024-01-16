@@ -29,8 +29,10 @@ final class UserAPIService: BaseAPIService, UserAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<GetSettingPageResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -43,8 +45,10 @@ final class UserAPIService: BaseAPIService, UserAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<GetMyPageResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -58,8 +62,10 @@ final class UserAPIService: BaseAPIService, UserAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<PatchPushAlarmResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
@@ -72,8 +78,10 @@ final class UserAPIService: BaseAPIService, UserAPIServiceProtocol {
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
-                print(error)
-                completion(.networkFail)
+                if let response = error.response {
+                    let networkResult: NetworkResult<GetMainPageResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
             }
         }
     }
