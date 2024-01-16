@@ -58,7 +58,6 @@ final class LinkWebViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupNavigationBarAction()
-        setupSwipeGesture()
     }
     
     deinit {
@@ -162,21 +161,6 @@ private extension LinkWebViewController {
         }
     }
     
-    func setupSwipeGesture() {
-        let swipeRecognizer = UISwipeGestureRecognizer().then {
-            $0.addTarget(self, action: #selector(swipeAction))
-            $0.direction = .right
-        }
-        view.addGestureRecognizer(swipeRecognizer)
-    }
-    
-    @objc func swipeAction(_ sender: UISwipeGestureRecognizer) {
-        if sender.direction == .right {
-            navigationController?.popViewController(animated: true)
-            self.showNavigationBar()
-        }
-    }
-    
     /// 툴바 뒤로가기 버튼 클릭 시
     @objc func goBackInWeb() {
         if webView.canGoBack {
@@ -193,7 +177,7 @@ private extension LinkWebViewController {
     
     /// 툴바 링크 확인 완료 버튼 클릭 시
     @objc func checkReadInWeb() {
-        patchOpenLinkAPI(requestBody: PatchOpenLink(toastId: toastId, isRead: isRead))
+        patchOpenLinkAPI(requestBody: PatchOpenLink(toastId: toastId, isRead: !isRead))
     }
     
     /// 툴바 사파리 버튼 클릭 시
@@ -233,7 +217,7 @@ extension LinkWebViewController {
     func patchOpenLinkAPI(requestBody: PatchOpenLink) {
         NetworkService.shared.toastService.patchOpenLink(requestBody: requestBody) { result in
             switch result {
-            case .success(let response):
+            case .success:
                 if !self.isRead {
                     self.showToastMessage(width: 152, status: .check, message: "링크 확인 완료")
                 } else {
