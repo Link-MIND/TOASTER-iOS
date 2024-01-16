@@ -16,7 +16,7 @@ struct SearchResultDetailClipModel {
     let iD: Int
     let title: String
     let link: String
-    let imageURL: String
+    let imageURL: String?
     let clipTitle: String?
 }
 

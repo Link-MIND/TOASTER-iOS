@@ -32,7 +32,7 @@ extension SearchTargetType: BaseTargetType {
     
     var path: String {
         switch self {
-        case .getMainPageSearch: return utilPath.rawValue + "/main/search"
+        case .getMainPageSearch: return utilPath.rawValue + "main/search"
         case .getRecommendSite: return utilPath.rawValue + "sites"
         }
     }
