@@ -56,7 +56,7 @@ extension RemindTimerAddViewModel {
         }
     }
     
-    func postClipData(forClipID: Int?, forModel: RemindTimerAddModel) {
+    func postClipData(forClipID: Int, forModel: RemindTimerAddModel) {
         NetworkService.shared.timerService.postCreateTimer(requestBody: PostCreateTimerRequestDTO(categoryId: forClipID,
                                                                                                   remindTime: forModel.remindTime,
                                                                                                   remindDates: forModel.remindDates)) { result in

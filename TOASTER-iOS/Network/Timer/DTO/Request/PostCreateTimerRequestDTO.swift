@@ -8,7 +8,7 @@
 import Foundation
 
 struct PostCreateTimerRequestDTO: Codable {
-    let categoryId: Int?
+    let categoryId: Int
     let remindTime: String
     let remindDates: [Int]
 }
