@@ -24,6 +24,8 @@ final class RemindViewController: UIViewController {
     
     private let viewModel = RemindViewModel()
     
+    private var selectedID: Int?
+    
     // MARK: - UI Properties
     
     private let timerCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -204,11 +206,16 @@ private extension RemindViewController {
     }
     
     func deleteButtonTapped() {
-        
-        // TODO: - Delete API 연결
-        
-        dismiss(animated: false)
-        showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
+        guard let id = selectedID else { return }
+        NetworkService.shared.timerService.deleteTimer(timerId: id) { result in
+            switch result {
+            case .success(let response):
+                self.dismiss(animated: false)
+                self.viewModel.fetchTimerData()
+                self.showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
+            default: break
+            }
+        }
     }
     
     func toggleAction(forEnable: Bool) {
@@ -245,11 +252,13 @@ extension RemindViewController: RemindEditViewDelegate {
     func editTimer(forID: Int?) {
         
         // TODO: - Edit 로직
-        
+
+        selectedID = forID
         dismiss(animated: false)
     }
     
     func deleteTimer(forID: Int?) {
+        selectedID = forID
         dismiss(animated: false)
         showPopup(forMainText: "타이머를 삭제하시겠어요?",
                   forSubText: "더 이상 해당 클립의 리마인드를 \n받을 수 없어요",
