@@ -10,15 +10,29 @@ import UIKit
 import SnapKit
 import Then
 
+enum RemindViewType {
+    case deviceOnAppOnExistData
+    case deviceOnAppOnNoneData
+    case deviceOffAppOn
+    case deviceOnAppOff
+    case deviceOffAppOff
+}
+
 final class RemindViewController: UIViewController {
     
     // MARK: - Properties
     
     private let viewModel = RemindViewModel()
     
+    private var selectedTimerID: Int?
+    
     // MARK: - UI Properties
     
     private let timerCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let editAlarmButton: AlarmOffStateButton = AlarmOffStateButton()
+    private let emptyTimerView: RemindTimerEmptyView = RemindTimerEmptyView()
+    private let offAlarmView: RemindAlarmOffView = RemindAlarmOffView(frame: .zero,
+                                                                      type: .normal)
     
     // MARK: - Life Cycle
     
@@ -30,12 +44,15 @@ final class RemindViewController: UIViewController {
         setupLayout()
         setupDelegate()
         setupViewModel()
+        setupViewWithAlarm(forType: .deviceOnAppOnExistData)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setupNavigationBar()
+        viewModel.fetchAlarmCheck()
+        viewModel.fetchTimerData()
     }
 }
 
@@ -55,16 +72,37 @@ private extension RemindViewController {
             $0.register(RemindCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: RemindCollectionHeaderView.className)
             $0.register(RemindCollectionFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: RemindCollectionFooterView.className)
         }
+        
+        editAlarmButton.do {
+            $0.addTarget(self, action: #selector(editAlarmButtonTapped), for: .touchUpInside)
+        }
+        
+        emptyTimerView.setupButtonAction(action: plusButtonTapped)
     }
     
     func setupHierarchy() {
-        view.addSubview(timerCollectionView)
+        view.addSubviews(timerCollectionView,
+                         editAlarmButton,
+                         emptyTimerView,
+                         offAlarmView)
     }
     
     func setupLayout() {
         timerCollectionView.snp.makeConstraints {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview()
+        }
+        
+        editAlarmButton.snp.makeConstraints {
+            $0.height.equalTo(90)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        [emptyTimerView, offAlarmView].forEach {
+            $0.snp.makeConstraints {
+                $0.center.equalToSuperview()
+            }
         }
     }
     
@@ -74,9 +112,11 @@ private extension RemindViewController {
     }
     
     func setupViewModel() {
-        viewModel.setupDataChangeAction {
-            self.timerCollectionView.reloadData()
-        }
+        viewModel.fetchAlarmCheck()
+        viewModel.setupDataChangeAction(changeAction: reloadCollectionViewWithView,
+                                        normalAction: setupAlarmBottomSheet, 
+                                        forDeleteTimerAction: deleteAction,
+                                        forUnAuthorizedAction: unAuthorizedAction)
     }
     
     func setupNavigationBar() {
@@ -91,15 +131,88 @@ private extension RemindViewController {
         }
     }
     
-    func setupBottomSheet(forID: Int?) {
+    /// viewType에 따라 뷰를 업데이트해주는 함수
+    func setupViewWithAlarm(forType: RemindViewType) {
+        switch forType {
+        case .deviceOnAppOnExistData:
+            setupViewHidden(collectionViewHidden: false,
+                            buttonHidden: true,
+                            emptyViewHidden: true,
+                            nonAlarmViewHidden: true)
+        case .deviceOnAppOnNoneData:
+            setupViewHidden(collectionViewHidden: true,
+                            buttonHidden: true,
+                            emptyViewHidden: false,
+                            nonAlarmViewHidden: true)
+            emptyTimerView.setupButtonEnable(forEnable: true)
+        case .deviceOffAppOn:
+            setupViewHidden(collectionViewHidden: true,
+                            buttonHidden: true,
+                            emptyViewHidden: true,
+                            nonAlarmViewHidden: false)
+        case .deviceOnAppOff:
+            setupViewHidden(collectionViewHidden: true,
+                            buttonHidden: false,
+                            emptyViewHidden: false,
+                            nonAlarmViewHidden: true)
+            emptyTimerView.setupButtonEnable(forEnable: false)
+        case .deviceOffAppOff:
+            setupViewHidden(collectionViewHidden: true,
+                            buttonHidden: false,
+                            emptyViewHidden: true,
+                            nonAlarmViewHidden: false)
+        }
+    }
+    
+    func setupViewHidden(collectionViewHidden: Bool,
+                         buttonHidden: Bool,
+                         emptyViewHidden: Bool,
+                         nonAlarmViewHidden: Bool) {
+        timerCollectionView.isHidden = collectionViewHidden
+        editAlarmButton.isHidden = buttonHidden
+        emptyTimerView.isHidden = emptyViewHidden
+        offAlarmView.isHidden = nonAlarmViewHidden
+    }
+    
+    func setupEditBottomSheet(forID: Int?) {
         let editView = RemindTimerEditBottomSheetView()
         editView.setupEditView(forDelegate: self,
                                forID: forID)
         
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 128, insertView: editView)
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, 
+                                                             bottomTitle: "수정하기",
+                                                             height: 128,
+                                                             insertView: editView)
         exampleBottom.modalPresentationStyle = .overFullScreen
         
         present(exampleBottom, animated: false)
+    }
+    
+    func setupAlarmBottomSheet() {
+        let alarmView = RemindAlarmOffBottomSheetView()
+        alarmView.setupDelegate(forDelegate: self)
+        
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, 
+                                                             bottomTitle: "알림이 꺼져있어요!",
+                                                             height: 311,
+                                                             insertView: alarmView)
+        exampleBottom.modalPresentationStyle = .overFullScreen
+        
+        present(exampleBottom, animated: false)
+    }
+    
+    func reloadCollectionViewWithView(forType: RemindViewType) {
+        timerCollectionView.reloadData()
+        setupViewWithAlarm(forType: forType)
+    }
+    
+    func unAuthorizedAction() {
+        self.changeViewController(viewController: LoginViewController())
+    }
+    
+    func deleteAction() {
+        dismiss(animated: false)
+        self.showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
     }
     
     func plusButtonTapped() {
@@ -109,18 +222,33 @@ private extension RemindViewController {
     }
     
     func deleteButtonTapped() {
-        
-        // TODO: - Delete API 연결
-        
-        dismiss(animated: false)
-        showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
+        guard let id = selectedTimerID else { return }
+        viewModel.deleteTimerData(timerID: id)
     }
     
-    func toggleAction(forEnable: Bool) {
-        
-        // TODO: - Timer OnOff API 연결
-        
-        print(forEnable)
+    func toggleAction(forTimerID: Int?) {
+        guard let id = forTimerID else { return }
+        viewModel.patchTimerData(timerID: id)
+    }
+    
+    @objc func editAlarmButtonTapped() {
+        let settingVC = SettingViewController()
+        settingVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(settingVC, animated: true)
+        tabBarController?.selectedIndex = 0
+    }
+}
+
+// MARK: - RemindAlarmOffBottomSheetViewDelegate
+
+extension RemindViewController: RemindAlarmOffBottomSheetViewDelegate {
+    func alarmButtonTapped() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in
+            DispatchQueue.main.async {
+                self.dismiss(animated: false)
+                self.viewModel.fetchAlarmCheck()
+            }
+        }
     }
 }
 
@@ -128,13 +256,17 @@ private extension RemindViewController {
 
 extension RemindViewController: RemindEditViewDelegate {
     func editTimer(forID: Int?) {
-        
-        // TODO: - Edit 로직
-        
+        selectedTimerID = forID
         dismiss(animated: false)
+        if let id = forID {
+            let editViewController = RemindTimerAddViewController()
+            editViewController.configureView(forTimerID: id)
+            navigationController?.pushViewController(editViewController, animated: true)
+        }
     }
     
     func deleteTimer(forID: Int?) {
+        selectedTimerID = forID
         dismiss(animated: false)
         showPopup(forMainText: "타이머를 삭제하시겠어요?",
                   forSubText: "더 이상 해당 클립의 리마인드를 \n받을 수 없어요",
@@ -177,7 +309,7 @@ extension RemindViewController: UICollectionViewDataSource {
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaitTimerCollectionViewCell.className, for: indexPath) as? WaitTimerCollectionViewCell else { return UICollectionViewCell() }
             cell.configureCell(forModel: viewModel.timerData.waitTimerModelList[indexPath.item],
-                               forEditAction: setupBottomSheet,
+                               forEditAction: setupEditBottomSheet,
                                forToggleAction: toggleAction)
             return cell
         default:

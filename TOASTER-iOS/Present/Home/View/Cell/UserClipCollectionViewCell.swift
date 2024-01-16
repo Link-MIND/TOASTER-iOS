@@ -60,7 +60,7 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
 }
 
 extension UserClipCollectionViewCell {
-    func configureCell(forModel: CategoryList, icon: UIImage) {
+    func bindData(forModel: CategoryList, icon: UIImage) {
         titleLabel.text = forModel.categroyTitle
         countLabel.text = String(forModel.toastNum)
         clipImage.image = icon
@@ -97,7 +97,6 @@ private extension UserClipCollectionViewCell {
         clipImage.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(12)
             $0.width.height.equalTo(24)
-            
         }
         
         titleLabel.snp.makeConstraints {

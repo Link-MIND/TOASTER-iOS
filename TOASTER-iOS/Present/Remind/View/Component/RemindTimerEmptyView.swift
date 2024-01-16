@@ -12,7 +12,12 @@ import Then
 
 final class RemindTimerEmptyView: UIView {
 
-    // MARK: - UI Components
+    // MARK: - Properties
+    
+    typealias SettingButtonAction = () -> Void
+    private var settingButtonAction: SettingButtonAction?
+
+    // MARK: - UI Properties
     
     private let emptyImageView: UIImageView = UIImageView()
     private let emptyLabel: UILabel = UILabel()
@@ -52,6 +57,10 @@ extension RemindTimerEmptyView {
             }
         }
     }
+    
+    func setupButtonAction(action: @escaping SettingButtonAction) {
+        settingButtonAction = action
+    }
 }
 
 // MARK: - Private Extension
@@ -86,6 +95,7 @@ private extension RemindTimerEmptyView {
             $0.setTitle("지금은 설정할 수 없어요", for: .disabled)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
+            $0.addTarget(self, action: #selector(settingButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -110,5 +120,9 @@ private extension RemindTimerEmptyView {
             $0.centerX.bottom.equalToSuperview()
             $0.top.equalTo(emptyLabel.snp.bottom).offset(12)
         }
+    }
+    
+    @objc func settingButtonTapped() {
+        settingButtonAction?()
     }
 }

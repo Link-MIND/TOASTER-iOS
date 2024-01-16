@@ -54,7 +54,7 @@ final class HomeHeaderCollectionView: UICollectionReusableView {
     
     private func setupLayout() {
         titleLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(10)
+            $0.leading.trailing.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview().inset(5)
         }
     }

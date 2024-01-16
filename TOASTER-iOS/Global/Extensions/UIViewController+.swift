@@ -79,7 +79,7 @@ extension UIViewController {
         
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             if let window = windowScene.windows.first {
-                window.rootViewController = viewController
+                window.rootViewController = ToasterNavigationController(rootViewController: viewController)
                 print("🍞⛔️\(String(describing: type(of: viewController)))⛔️🍞")
             }
         }
