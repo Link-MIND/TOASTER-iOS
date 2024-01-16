@@ -11,7 +11,7 @@ import Moya
 
 enum ToasterTargetType {
     case postSaveLink(requestBody: PostSaveLinkRequestDTO)
-    case patchOpenLink(requestBody: PostSaveLinkRequestDTO)
+    case patchOpenLink(requestBody: PatchOpenLink)
     case deleteLink(toastId: Int)
     case getWeeksLink
 }

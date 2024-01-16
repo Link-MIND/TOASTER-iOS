@@ -19,7 +19,7 @@ enum ClipTargetType {
     case postAddCategory(requestBody: PostAddCategoryRequestDTO)
     case getDetailCategory(categoryID: Int, filter: DetailCategoryFilter)
     case deleteCategory(requestBody: DeleteCategoryRequestDTO)
-    case patchEditCategory(requestBody: PatchPushAlarmRequestDTO)
+    case patchEditCategory(requestBody: PatchEditCategoryRequestDTO)
     case getAllCategory
     case getCheckCategory(categoryTitle: String)
 }

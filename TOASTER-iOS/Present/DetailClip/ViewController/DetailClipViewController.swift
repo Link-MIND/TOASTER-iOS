@@ -162,7 +162,8 @@ extension DetailClipViewController: UICollectionViewDelegate {
         nextVC.hidesBottomBarWhenPushed = true
         if let data = toastList?.data {
             nextVC.setupDataBind(linkURL: data.toastListDto[indexPath.row].linkUrl,
-                                 isRead: data.toastListDto[indexPath.row].isRead)
+                                 isRead: data.toastListDto[indexPath.row].isRead,
+                                 id: data.toastListDto[indexPath.row].toastId)
         }
         self.navigationController?.pushViewController(nextVC, animated: true)
     }

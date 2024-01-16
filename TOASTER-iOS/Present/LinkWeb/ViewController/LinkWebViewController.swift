@@ -34,6 +34,7 @@ final class LinkWebViewController: UIViewController {
             readLinkCheckButton.tintColor = isRead ? .gray700 : .gray150
         }
     }
+    private var toastId: Int = 0
     
     // MARK: - UI Properties
     
@@ -68,12 +69,13 @@ final class LinkWebViewController: UIViewController {
 // MARK: - Extensions
 
 extension LinkWebViewController {
-    func setupDataBind(linkURL: String, isRead: Bool) {
+    func setupDataBind(linkURL: String, isRead: Bool, id: Int) {
         if let url = URL(string: linkURL) {
             let request = URLRequest(url: url)
             webView.load(request)
         }
         self.isRead = isRead
+        self.toastId = id
     }
     
     /// KVO를 사용하여 estimatedProgress가 변경될 때 호출되는 메서드
@@ -191,13 +193,7 @@ private extension LinkWebViewController {
     
     /// 툴바 링크 확인 완료 버튼 클릭 시
     @objc func checkReadInWeb() {
-        if !isRead {
-            showToastMessage(width: 152, status: .check, message: "링크 확인 완료")
-        } else {
-            showToastMessage(width: 152, status: .check, message: "링크 열람 취소")
-        }
-        isRead = !isRead
-        // TODO: - 서버 통신 추가해줘야 할 부분
+        patchOpenLinkAPI(requestBody: PatchOpenLink(toastId: toastId, isRead: isRead))
     }
     
     /// 툴바 사파리 버튼 클릭 시
@@ -228,5 +224,24 @@ extension LinkWebViewController: WKNavigationDelegate {
     /// 웹 페이지 로딩이 시작할 때 호출
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         progressView.isHidden = false
+    }
+}
+
+// MARK: - Network
+
+extension LinkWebViewController {
+    func patchOpenLinkAPI(requestBody: PatchOpenLink) {
+        NetworkService.shared.toastService.patchOpenLink(requestBody: requestBody) { result in
+            switch result {
+            case .success(let response):
+                if !self.isRead {
+                    self.showToastMessage(width: 152, status: .check, message: "링크 확인 완료")
+                } else {
+                    self.showToastMessage(width: 152, status: .check, message: "링크 열람 취소")
+                }
+                self.isRead = !self.isRead
+            default: return
+            }
+        }
     }
 }

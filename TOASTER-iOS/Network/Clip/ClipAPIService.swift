@@ -19,7 +19,7 @@ protocol ClipAPIServiceProtocol {
                               completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> Void)
     func deleteCategory(requestBody: DeleteCategoryRequestDTO,
                         completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
-    func patchEditCategory(requestBody: PatchPushAlarmRequestDTO,
+    func patchEditCategory(requestBody: PatchEditCategoryRequestDTO,
                            completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
     func getAllCategory(completion: @escaping (NetworkResult<GetAllCategoryResponseDTO>) -> Void)
     func getCheckCategory(categoryTitle: String,
@@ -101,7 +101,7 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
         }
     }
     
-    func patchEditCategory(requestBody: PatchPushAlarmRequestDTO, 
+    func patchEditCategory(requestBody: PatchEditCategoryRequestDTO,
                            completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
         provider.request(.patchEditCategory(requestBody: requestBody)) { result in
             switch result {
