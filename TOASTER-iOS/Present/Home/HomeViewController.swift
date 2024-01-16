@@ -82,6 +82,7 @@ extension HomeViewController: UICollectionViewDataSource {
             if let model = mainInfoList {
                 cell.bindData(forModel: model)
             }
+            cell.mainCollectionViewDelegate = self
             return cell
         case 1:
             guard var cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
@@ -252,6 +253,13 @@ extension HomeViewController: UserClipCollectionViewCellDelegate {
     func addClipCellTapped() {
         addClipBottom.modalPresentationStyle = .overFullScreen
         self.present(addClipBottom, animated: false)
+    }
+}
+
+extension HomeViewController: MainCollectionViewDelegate {
+    func searchButtonTapped() {
+        let searchVC = SearchViewController()
+        self.navigationController?.pushViewController(searchVC, animated: true)
     }
 }
 

@@ -9,9 +9,15 @@ import UIKit
 import SnapKit
 import Then
 
+protocol MainCollectionViewDelegate: AnyObject {
+    func searchButtonTapped()
+}
+
 // MARK: - main section
 
 final class MainCollectionViewCell: UICollectionViewCell {
+    
+    weak var mainCollectionViewDelegate: MainCollectionViewDelegate?
     
     // MARK: - UI Components
     
@@ -74,6 +80,7 @@ private extension MainCollectionViewCell {
             configuration.imagePadding = 8
             configuration.baseBackgroundColor = .gray50
             $0.configuration = configuration
+            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
         
         userLabel.do {
@@ -136,4 +143,9 @@ private extension MainCollectionViewCell {
             $0.height.equalTo(12)
         }
     }
+    
+    @objc func buttonTapped() {
+        mainCollectionViewDelegate?.searchButtonTapped()
+    }
+    
 }
