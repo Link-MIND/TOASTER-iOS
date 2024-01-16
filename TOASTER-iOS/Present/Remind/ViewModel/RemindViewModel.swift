@@ -17,6 +17,7 @@ final class RemindViewModel {
     
     typealias NormalChangeAction = () -> Void
     private var bottomSheetAction: NormalChangeAction?
+    private var unAuthorizedAction: NormalChangeAction?
     
     private let userDefault = UserDefaults.standard
     
@@ -63,9 +64,11 @@ final class RemindViewModel {
 
 extension RemindViewModel {
     func setupDataChangeAction(changeAction: @escaping DataChangeAction,
-                               normalAction: @escaping NormalChangeAction) {
+                               normalAction: @escaping NormalChangeAction,
+                               forUnAuthorizedAction: @escaping NormalChangeAction) {
         dataChangeAction = changeAction
         bottomSheetAction = normalAction
+        unAuthorizedAction = forUnAuthorizedAction
     }
     
     func fetchAlarmCheck() {
@@ -86,26 +89,6 @@ extension RemindViewModel {
         }
         if let isAppOn = userDefault.object(forKey: "isAppAlarmOn") as? Bool {
             appAlarmSetting = isAppOn
-        }
-    }
-}
-
-private extension RemindViewModel {
-    func setupAlarm(forDeviceAlarm: Bool?) {
-        if let deviceAlarm = forDeviceAlarm {
-            if deviceAlarm == false {    // device 알람이 꺼져있을 때
-                if appAlarmSetting == false {     // device 알람이 꺼져있고, 앱 알람도 꺼져있을 때
-                    remindViewType = .deviceOffAppOff
-                } else {                          // device 알람이 꺼져있고, 앱 알람이 켜져있을 때
-                    remindViewType = .deviceOffAppOn
-                }
-            } else {                        // device 알람이 켜져있을 때
-                if appAlarmSetting == false {     // device 알람이 켜져있고, 앱 알람이 꺼져있을 때
-                    remindViewType = .deviceOnAppOff
-                } else {
-                    timerData = RemindModel.fetchDummyModel()
-                }
-            }
         }
     }
     
@@ -130,7 +113,29 @@ private extension RemindViewModel {
                 }
                 self.timerData = RemindModel(completeTimerModelList: completedList,
                                              waitTimerModelList: waitList)
+            case .unAuthorized:
+                self.unAuthorizedAction?()
             default: break
+            }
+        }
+    }
+}
+
+private extension RemindViewModel {
+    func setupAlarm(forDeviceAlarm: Bool?) {
+        if let deviceAlarm = forDeviceAlarm {
+            if deviceAlarm == false {    // device 알람이 꺼져있을 때
+                if appAlarmSetting == false {     // device 알람이 꺼져있고, 앱 알람도 꺼져있을 때
+                    remindViewType = .deviceOffAppOff
+                } else {                          // device 알람이 꺼져있고, 앱 알람이 켜져있을 때
+                    remindViewType = .deviceOffAppOn
+                }
+            } else {                        // device 알람이 켜져있을 때
+                if appAlarmSetting == false {     // device 알람이 켜져있고, 앱 알람이 꺼져있을 때
+                    remindViewType = .deviceOnAppOff
+                } else {
+                    timerData = RemindModel.fetchDummyModel()
+                }
             }
         }
     }

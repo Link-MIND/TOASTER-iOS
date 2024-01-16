@@ -50,6 +50,7 @@ final class RemindViewController: UIViewController {
         
         setupNavigationBar()
         viewModel.fetchAlarmCheck()
+        viewModel.fetchTimerData()
     }
 }
 
@@ -109,7 +110,8 @@ private extension RemindViewController {
     func setupViewModel() {
         viewModel.fetchAlarmCheck()
         viewModel.setupDataChangeAction(changeAction: reloadCollectionViewWithView,
-                                        normalAction: setupAlarmBottomSheet)
+                                        normalAction: setupAlarmBottomSheet,
+                                        forUnAuthorizedAction: unAuthorizedAction)
     }
     
     func setupNavigationBar() {
@@ -189,6 +191,10 @@ private extension RemindViewController {
     func reloadCollectionViewWithView(forType: RemindViewType) {
         timerCollectionView.reloadData()
         setupViewWithAlarm(forType: forType)
+    }
+    
+    func unAuthorizedAction() {
+        self.changeViewController(viewController: LoginViewController())
     }
     
     func plusButtonTapped() {
