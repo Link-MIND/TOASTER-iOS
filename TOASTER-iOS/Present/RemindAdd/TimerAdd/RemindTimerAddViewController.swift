@@ -10,12 +10,20 @@ import UIKit
 import SnapKit
 import Then
 
+enum RemindTimerAddButtonType {
+    case add, edit
+}
+
 final class RemindTimerAddViewController: UIViewController {
     
     // MARK: - Properties
+    
+    private let viewModel = RemindTimerAddViewModel()
         
     private let labelDateformatter = DateFormatter()
     private let networkDateformatter = DateFormatter()
+    private var buttonType: RemindTimerAddButtonType = .add
+    private var timerID: Int?
     private var categoryID: Int?
     private var selectedIndex: Set<Int> = [] {
         didSet {
@@ -58,6 +66,7 @@ final class RemindTimerAddViewController: UIViewController {
         setupStyle()
         setupHierarchy()
         setupLayout()
+        setupViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,12 +80,19 @@ final class RemindTimerAddViewController: UIViewController {
 
 extension RemindTimerAddViewController {
     func configureView(forModel: RemindClipModel?) {
+        buttonType = .add
         if let model = forModel {
             mainLabel.text = "\(model.title) 클립을"
             mainLabel.asFont(targetString: model.title,
                              font: .suitSemiBold(size: 18))
             categoryID = forModel?.id
         }
+    }
+    
+    func configureView(forTimerID: Int) {
+        buttonType = .edit
+        viewModel.fetchClipData(forID: forTimerID)
+        timerID = forTimerID
     }
 }
 
@@ -230,6 +246,17 @@ private extension RemindTimerAddViewController {
         }
     }
     
+    func setupViewModel() {
+        viewModel.setupDataChangeAction {
+            if let data = self.viewModel.remindAddData {
+                self.mainLabel.text = "\(data.clipTitle) 클립을"
+                self.mainLabel.asFont(targetString: data.clipTitle,
+                                 font: .suitSemiBold(size: 18))
+                self.selectedIndex = Set(data.remindDates)
+            }
+        }
+    }
+    
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
                                                                 hasRightButton: true,
@@ -301,25 +328,39 @@ private extension RemindTimerAddViewController {
     }
     
     @objc func completeButtonTapped() {
-        guard let categoryID = categoryID else { return }
         let dateString = networkDateformatter.string(from: datePickerView.date)
-
-        NetworkService.shared.timerService.postCreateTimer(requestBody: PostCreateTimerRequestDTO(categoryId: categoryID,
-                                                                                                  remindTime: dateString,
-                                                                                                  remindDates: Array(selectedIndex))) { result in
-            switch result {
-            case .success:
-                self.navigationController?.popToRootViewController(animated: true)
-                self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 설정 완료!")
-            case .unProcessable:
-                
-                // TODO: - 이미 타이머가 존재하는 클립
-                
-                break
-            default: break
+        
+        switch buttonType {
+        case .add:
+            guard let categoryID = categoryID else { return }
+            NetworkService.shared.timerService.postCreateTimer(requestBody: PostCreateTimerRequestDTO(categoryId: categoryID,
+                                                                                                      remindTime: dateString,
+                                                                                                      remindDates: Array(selectedIndex))) { result in
+                switch result {
+                case .success:
+                    self.navigationController?.popToRootViewController(animated: true)
+                    self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 설정 완료!")
+                case .unProcessable:
+                    
+                    // TODO: - 이미 타이머가 존재하는 클립
+                    
+                    break
+                default: break
+                }
+            }
+        case .edit:
+            guard let timerID = timerID else { return }
+            NetworkService.shared.timerService.patchEditTimer(timerId: timerID,
+                                                              requestBody: PatchEditTimerRequestDTO(remindTime: dateString,
+                                                                                                    remindDates: Array(selectedIndex))) { result in
+                switch result {
+                case .success:
+                    self.navigationController?.popToRootViewController(animated: true)
+                    self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 수정 완료!")
+                default: break
+                }
             }
         }
-
     }
 }
 

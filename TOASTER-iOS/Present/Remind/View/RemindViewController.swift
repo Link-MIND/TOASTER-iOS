@@ -255,11 +255,13 @@ extension RemindViewController: RemindAlarmOffBottomSheetViewDelegate {
 
 extension RemindViewController: RemindEditViewDelegate {
     func editTimer(forID: Int?) {
-        
-        // TODO: - Edit 로직
-
         selectedID = forID
         dismiss(animated: false)
+        if let id = forID {
+            let editViewController = RemindTimerAddViewController()
+            editViewController.configureView(forTimerID: id)
+            navigationController?.pushViewController(editViewController, animated: true)
+        }
     }
     
     func deleteTimer(forID: Int?) {
