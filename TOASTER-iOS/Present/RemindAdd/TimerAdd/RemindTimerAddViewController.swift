@@ -101,6 +101,7 @@ extension RemindTimerAddViewController {
 private extension RemindTimerAddViewController {
     func setupStyle() {
         view.backgroundColor = .toasterBackground
+        selectedIndex = []
         
         labelDateformatter.do {
             $0.dateFormat = "a hh시 mm분"
@@ -171,7 +172,7 @@ private extension RemindTimerAddViewController {
             $0.setTitle("완료", for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitSemiBold(size: 16)
-            $0.backgroundColor = .toasterBlack
+
             $0.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         }
     }

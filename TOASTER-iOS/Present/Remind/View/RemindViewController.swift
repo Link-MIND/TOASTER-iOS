@@ -76,6 +76,8 @@ private extension RemindViewController {
         editAlarmButton.do {
             $0.addTarget(self, action: #selector(editAlarmButtonTapped), for: .touchUpInside)
         }
+        
+        emptyTimerView.setupButtonAction(action: plusButtonTapped)
     }
     
     func setupHierarchy() {
