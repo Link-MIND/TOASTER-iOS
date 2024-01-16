@@ -82,7 +82,7 @@ private extension MypageViewController {
                                                                                 thisWeekendSaved: responseData.thisWeekendSaved))
                     }
                 }
-            case .networkFail:
+            case .unAuthorized, .networkFail:
                 self?.changeViewController(viewController: LoginViewController())
             default:
                 print("default Fail")
