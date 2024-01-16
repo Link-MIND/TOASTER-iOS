@@ -21,6 +21,7 @@ final class RemindTimerAddViewController: UIViewController {
         didSet {
             repeatButtonLabel.text = selectedIndex.fetchDaysString()
             repeatButtonLabel.textColor = .toasterPrimary
+            setupButton(forEnable: !selectedIndex.isEmpty)
         }
     }
     
@@ -249,6 +250,15 @@ private extension RemindTimerAddViewController {
         stackView.spacing = forSpacing
         stackView.alignment = forAlignment
         return stackView
+    }
+    
+    func setupButton(forEnable: Bool) {
+        completeButton.isEnabled = forEnable
+        if forEnable {
+            completeButton.backgroundColor = .toasterBlack
+        } else {
+            completeButton.backgroundColor = .gray200
+        }
     }
     
     func closeButtonTapped() {
