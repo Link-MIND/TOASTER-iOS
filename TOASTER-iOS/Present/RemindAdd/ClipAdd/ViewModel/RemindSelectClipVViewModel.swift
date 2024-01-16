@@ -38,7 +38,9 @@ extension RemindSelectClipViewModel {
         NetworkService.shared.clipService.getAllCategory { result in
             switch result {
             case .success(let response):
-                var clipDataList: [RemindClipModel] = []
+                var clipDataList: [RemindClipModel] = [RemindClipModel(id: 0,
+                                                                       title: "전체",
+                                                                       clipCount: response?.data.toastNumberInEntire ?? 0)]
                 response?.data.categories.forEach {
                     let clipData = RemindClipModel(id: $0.categoryId,
                                                    title: $0.categoryTitle,
