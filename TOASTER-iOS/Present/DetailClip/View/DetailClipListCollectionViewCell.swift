@@ -31,7 +31,7 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
             setupHiddenLayout(forHidden: isClipNameLabelHidden)
         }
     }
-    var detailClipListCollectionViewCellButtonAction: (() -> Void)?
+    private var detailClipListCollectionViewCellButtonAction: (() -> Void)?
     
     // MARK: - UI Components
     
@@ -62,6 +62,10 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension DetailClipListCollectionViewCell {
+    func modifiedButtonTapped(_ action: @escaping () -> Void) {
+        detailClipListCollectionViewCellButtonAction = action
+    }
+    
     func configureCell(forModel: GetDetailCategoryResponseData, index: Int) {
         modifiedButton.isHidden = false
         clipNameLabel.text = forModel.toastListDto[index].categoryTitle

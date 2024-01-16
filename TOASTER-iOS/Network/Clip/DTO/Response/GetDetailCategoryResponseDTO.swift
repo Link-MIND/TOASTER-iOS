@@ -20,6 +20,7 @@ struct GetDetailCategoryResponseData: Codable {
 
 // MARK: - ToastListDto
 struct ToastListDto: Codable {
+    let toastId: Int
     let toastTitle: String
     let linkUrl: String
     let isRead: Bool

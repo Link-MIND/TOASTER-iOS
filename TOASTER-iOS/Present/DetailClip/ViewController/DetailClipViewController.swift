@@ -16,6 +16,7 @@ final class DetailClipViewController: UIViewController {
     private var categoryID: Int = 0
     private var categoryName: String = ""
     private var clipCount: Int = 0
+    private var segmentIndex: Int = 0
     private var toastList: GetDetailCategoryResponseDTO? {
         didSet {
             detailClipListCollectionView.reloadData()
@@ -131,11 +132,12 @@ extension DetailClipViewController: UICollectionViewDataSource {
         if let data = toastList?.data {
             cell.configureCell(forModel: data, index: indexPath.row)
         }
-        cell.detailClipListCollectionViewCellButtonAction = {
+        cell.modifiedButtonTapped {
             self.bottom.modalPresentationStyle = .overFullScreen
             self.present(self.bottom, animated: false)
         }
         deleteLinkBottomSheetView.setupDeleteLinkBottomSheetButtonAction {
+            self.deleteLinkAPI(toastId: self.toastList?.data.toastListDto[indexPath.row].toastId ?? 0)
             self.bottom.hideBottomSheet()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.showToastMessage(width: 152, status: .check, message: StringLiterals.Toast.Message.completeDeleteLink)
@@ -167,6 +169,7 @@ extension DetailClipViewController: UICollectionViewDelegate {
 }
 
 // MARK: - CollectionView Delegate Flow Layout
+
 extension DetailClipViewController: UICollectionViewDelegateFlowLayout {
     // sizeForItemAt: 각 Cell의 크기를 CGSize 형태로 return
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -193,6 +196,7 @@ extension DetailClipViewController: UICollectionViewDelegateFlowLayout {
 
 extension DetailClipViewController: DetailClipSegmentedDelegate {
     func setupAllLink() {
+        segmentIndex = 0
         if categoryID == 0 {
             getDetailAllCategoryAPI(filter: .all)
         } else {
@@ -201,6 +205,7 @@ extension DetailClipViewController: DetailClipSegmentedDelegate {
     }
     
     func setupReadLink() {
+        segmentIndex = 1
         if categoryID == 0 {
             getDetailAllCategoryAPI(filter: .read)
         } else {
@@ -209,6 +214,7 @@ extension DetailClipViewController: DetailClipSegmentedDelegate {
     }
     
     func setupNotReadLink() {
+        segmentIndex = 2
         if categoryID == 0 {
             getDetailAllCategoryAPI(filter: .unread)
         } else {
@@ -236,6 +242,28 @@ extension DetailClipViewController {
             switch result {
             case .success(let response):
                 self.toastList = response
+            default: return
+            }
+        }
+    }
+    
+    func deleteLinkAPI(toastId: Int) {
+        NetworkService.shared.toastService.deleteLink(toastId: toastId) { result in
+            switch result {
+            case .success:
+                if self.categoryName == "전체클립" {
+                    switch self.segmentIndex {
+                    case 0: self.getDetailAllCategoryAPI(filter: .all)
+                    case 1: self.getDetailAllCategoryAPI(filter: .read)
+                    default: self.getDetailAllCategoryAPI(filter: .unread)
+                    }
+                } else {
+                    switch self.segmentIndex {
+                    case 0: self.getDetailCategoryAPI(categoryID: self.categoryID, filter: .all)
+                    case 1: self.getDetailCategoryAPI(categoryID: self.categoryID, filter: .read)
+                    default: self.getDetailCategoryAPI(categoryID: self.categoryID, filter: .unread)
+                    }
+                }
             default: return
             }
         }

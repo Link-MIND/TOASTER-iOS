@@ -270,7 +270,6 @@ extension EditClipViewController {
     }
     
     func patchEditCategoryAPI() {
-        
     }
     
     func getCheckCategoryAPI(categoryTitle: String) {
