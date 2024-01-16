@@ -14,13 +14,14 @@ final class HomeViewController: UIViewController {
     // MARK: - Properties
     
     private let homeView = HomeView()
+    private let mainCollectionViewCell = MainCollectionViewCell()
     
-    private var clipList: GetMainPageResponseDTO? {
+    
+    private var clipList: MainInfoModel {
         didSet {
             homeView.collectionView.reloadData()
         }
     }
-
     
     private let addClipBottomSheetView = AddClipBottomSheetView()
     private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
@@ -200,6 +201,24 @@ private extension HomeViewController {
         createCollectionView()
         setupDelegate()
     }
+    
+    func fetchMainPageData() {
+        NetworkService.shared.userService.getMainPage { [weak self] result in
+            switch result { // response ==> GetMainPageResponseDTO?
+            case .success(let response):
+                if let responseData = response?.data {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.mainCollectionViewCell.bindData(forModel: MainInfoModel(nickname: responseData.nickname, readToastNum: responseData.readToastNum, allToastNum: responseData.allToastNum, mainCategoryListDto:))
+                    }
+                }
+            case .networkFail:
+                // skip
+                print("NETWORK FAIL...")
+            default:
+                print("default fail")
+            }
+        }
+    }
 }
 
 extension HomeViewController: AddClipBottomSheetViewDelegate {
@@ -228,30 +247,3 @@ extension HomeViewController: UserClipCollectionViewCellDelegate {
 }
 
 // MARK: - Network
-
-extension HomeViewController {
-    func getCheckCategoryAPI() {
-        NetworkService.shared.userService.getMainPage { result in
-            switch result {
-            case .success(let response):
-                if let data = response?.data {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.mainCollectionViewCell.bindData(forModel: MainInfoModel(nickname: data.nickname,
-                                                                                      readToastNum: data.readToastNum,
-                                                                                      allToastNum: data.allToastNum, 
-                                                                                      //mainCategoryListDto: [CategoryList(categoryId: , categroyTitle: <#T##String#>, toastNum: <#T##Int#>)] ))
-            
-                        
-                        }
-                    }
-            case .networkFail:
-                // 이따 추가해 ~ 
-            default:
-                print("default Fail")
-                }
-
-            }
-        }
-    }
-    
-}

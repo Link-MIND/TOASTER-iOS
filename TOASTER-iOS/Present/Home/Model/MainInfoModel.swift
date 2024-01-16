@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MainInfoModel: Codable {
+struct MainInfoModel {
     let nickname: String
     let readToastNum: Int
     let allToastNum: Int
@@ -15,7 +15,7 @@ struct MainInfoModel: Codable {
     
 }
 
-struct CategoryList: Codable {
+struct CategoryList {
     let categoryId: Int
     let categroyTitle: String
     let toastNum: Int
