@@ -49,10 +49,10 @@ extension SearchViewModel {
                 var detailClipList: [SearchResultDetailClipModel] = []
                 response?.data.toasts.forEach {
                     detailClipList.append(SearchResultDetailClipModel(iD: $0.toastId,
-                                                                                   title: $0.toastTitle,
-                                                                                   link: $0.linkUrl,
-                                                                                   imageURL: $0.thumbnailUrl,
-                                                                                   clipTitle: $0.categoryTitle))
+                                                                      title: $0.toastTitle,
+                                                                      link: $0.linkUrl,
+                                                                      imageURL: $0.thumbnailUrl,
+                                                                      clipTitle: $0.categoryTitle))
                 }
                 var clipList: [SearchResultClipModel] = []
                 response?.data.categories.forEach {
