@@ -11,7 +11,6 @@ import Kingfisher
 import SnapKit
 import Then
 
-
 // MARK: - 이주의 링크
 
 final class WeeklyLinkCollectionViewCell: UICollectionViewCell {
@@ -46,7 +45,7 @@ final class WeeklyLinkCollectionViewCell: UICollectionViewCell {
 
 extension WeeklyLinkCollectionViewCell {
     func bindData(forModel: WeeklyLinkModel) {
-        linkImage.kf.setImage(with: URL(string: forModel.toastImg)) // if let 구문으로 바꿩
+        linkImage.kf.setImage(with: URL(string: forModel.toastImg))
         linkTitleLabel.text = forModel.toastTitle
         linkLabel.text = forModel.toastLink
     }

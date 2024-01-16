@@ -15,20 +15,19 @@ final class HomeViewController: UIViewController {
     
     private let homeView = HomeView()
     
-    private var mainInfoList: MainInfoModel = MainInfoModel(nickname: "", readToastNum: 0, allToastNum: 0,
-                                                            mainCategoryListDto: [CategoryList(categoryId: 0, categroyTitle: "", toastNum: 0)]) {
+    private var mainInfoList: MainInfoModel? {
         didSet {
             homeView.collectionView.reloadData()
         }
     }
     
-    private var weeklyLinkList: WeeklyLinkModel = WeeklyLinkModel(toastId: 0, toastTitle: "", toastImg: "", toastLink: "") {
+    private var weeklyLinkList: WeeklyLinkModel? {
         didSet {
             homeView.collectionView.reloadData()
         }
     }
     
-    private var recommendSiteList: RecommendSiteModel = RecommendSiteModel(siteId: 0, siteTitle: "", siteUrl: "", siteImg: "", siteSub: "") {
+    private var recommendSiteList: RecommendSiteModel? {
         didSet {
             homeView.collectionView.reloadData()
         }
@@ -66,11 +65,11 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            return mainInfoList.mainCategoryListDto.count + 1
+            return (mainInfoList?.mainCategoryListDto.count ?? 0) + 1
         case 2:
-            return weeklyLinkList.toastId 
+            return weeklyLinkList?.toastId ?? 0
         case 3:
-            return 9 // 나중에 recommendSiteList.count 로 변경해줘야됨 어케해 
+            return 9 // 나중에 recommendSiteList.count 로 변경해줘야됨 어케해
         default:
             return 0
         }
@@ -80,25 +79,33 @@ extension HomeViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.className, for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell() }
-            cell.bindData(forModel: mainInfoList)
+            if let model = mainInfoList {
+                cell.bindData(forModel: model)
+            }
             return cell
         case 1:
             guard var cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
             if indexPath.item == 0 {
                 cell.bindData(forModel: CategoryList(categoryId: 0, categroyTitle: "전체클립", toastNum: 100), icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
             } else {
-                cell.bindData(forModel: mainInfoList.mainCategoryListDto[indexPath.item - 1], icon: ImageLiterals.Home.clipFull.withTintColor(.black900))
+                if let model = mainInfoList {
+                    cell.bindData(forModel: model.mainCategoryListDto[indexPath.item - 1], icon: ImageLiterals.Home.clipFull.withTintColor(.black900))
+                }
             }
             return cell
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyLinkCollectionViewCell.className, for: indexPath) as? WeeklyLinkCollectionViewCell
             else { return UICollectionViewCell() }
-            cell.bindData(forModel: weeklyLinkList)
+            if let model = weeklyLinkList {
+                cell.bindData(forModel: model)
+            }
             return cell
         case 3:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyRecommendCollectionViewCell.className, for: indexPath) as? WeeklyRecommendCollectionViewCell
             else { return UICollectionViewCell() }
-            cell.bindData(forModel: recommendSiteList)
+            if let model = recommendSiteList {
+                cell.bindData(forModel: model)
+            }
             return cell
         default:
             return MainCollectionViewCell()
@@ -119,7 +126,9 @@ extension HomeViewController: UICollectionViewDataSource {
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeaderCollectionView.className, for: indexPath) as? HomeHeaderCollectionView else { return UICollectionReusableView() }
             switch indexPath.section {
             case 1:
-                header.configureHeader(forTitle: mainInfoList.nickname + " 님의 클립")
+                if let nickName = mainInfoList?.nickname {
+                    header.configureHeader(forTitle: nickName + " 님의 클립")
+                }
             case 2:
                 header.configureHeader(forTitle: "이주의 링크")
             case 3:
