@@ -50,7 +50,6 @@ extension RemindSelectClipViewModel {
                 self.clipData = clipDataList
             default: break
             }
-            
         }
     }
 }
