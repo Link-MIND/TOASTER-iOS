@@ -77,6 +77,8 @@ private extension MypageHeaderView {
         subTitleStackView.do {
             $0.spacing = 2
             $0.axis = .vertical
+            $0.distribution = .fillEqually
+            $0.alignment = .leading
         }
         
         topSubTitleLabel.do {
@@ -88,12 +90,6 @@ private extension MypageHeaderView {
             $0.text = StringLiterals.Mypage.Title.bottomTitle
             $0.font = .suitRegular(size: 18)
             $0.textColor = .black900
-        }
-        
-        readLinkStackView.do {
-            $0.spacing = 3
-            $0.axis = .horizontal
-            $0.alignment = .bottom
         }
         
         readLinkCountLabel.do {
@@ -138,7 +134,7 @@ private extension MypageHeaderView {
     }
     
     func setupHierarchy() {
-        addSubviews(profileImageView, subTitleStackView, readLinkStackView, weakLinkDataView, readLinkCountLabel, readLinkCountUnitLabel)
+        addSubviews(profileImageView, subTitleStackView, weakLinkDataView, readLinkCountLabel, readLinkCountUnitLabel)
         
         subTitleStackView.addArrangedSubviews(topSubTitleLabel, bottomSubTitleLabel)
         
@@ -154,10 +150,11 @@ private extension MypageHeaderView {
         subTitleStackView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(1)
             $0.leading.equalTo(profileImageView.snp.trailing).offset(12)
+            $0.trailing.equalTo(readLinkCountLabel.snp.leading).inset(-5)
+            $0.bottom.equalTo(weakLinkDataView.snp.top).offset(-19)
         }
         
         weakLinkDataView.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(18)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview().offset(24)
             $0.height.equalTo(83)
