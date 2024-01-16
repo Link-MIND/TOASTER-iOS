@@ -172,6 +172,8 @@
 		8315CD8C2B54782F0061F377 /* SelectClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */; };
 		8315CD8E2B547EE30061F377 /* SelectClipHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */; };
 		8315CD912B5521F70061F377 /* SelectClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD902B5521F70061F377 /* SelectClipModel.swift */; };
+		83CFC3372B564F1100A2EB2B /* WeeklyLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CFC3362B564F1100A2EB2B /* WeeklyLinkModel.swift */; };
+		83CFC3392B568BE700A2EB2B /* RecommendSiteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CFC3382B568BE700A2EB2B /* RecommendSiteModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -332,6 +334,8 @@
 		8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipViewController.swift; sourceTree = "<group>"; };
 		8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipHeaderView.swift; sourceTree = "<group>"; };
 		8315CD902B5521F70061F377 /* SelectClipModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipModel.swift; sourceTree = "<group>"; };
+		83CFC3362B564F1100A2EB2B /* WeeklyLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyLinkModel.swift; sourceTree = "<group>"; };
+		83CFC3382B568BE700A2EB2B /* RecommendSiteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendSiteModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1242,6 +1246,8 @@
 			isa = PBXGroup;
 			children = (
 				8305179C2B4D3701009FFB60 /* MainInfoModel.swift */,
+				83CFC3362B564F1100A2EB2B /* WeeklyLinkModel.swift */,
+				83CFC3382B568BE700A2EB2B /* RecommendSiteModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1427,6 +1433,7 @@
 				6B6AE6902B3FF59C000E2366 /* DetailClipViewController.swift in Sources */,
 				6BE6DA202B504433008B06FA /* BaseTargetType.swift in Sources */,
 				6B6AE6A62B3FF6BD000E2366 /* UIView+.swift in Sources */,
+				83CFC3372B564F1100A2EB2B /* WeeklyLinkModel.swift in Sources */,
 				398BE7FC2B468F80001595E0 /* ClipCollectionHeaderView.swift in Sources */,
 				3F617CB82B4ECB6000956E69 /* MypageUserModel.swift in Sources */,
 				6BE6DA612B50B742008B06FA /* ClipAPIService.swift in Sources */,
@@ -1461,6 +1468,7 @@
 				6BE6DA512B50B309008B06FA /* PatchPushAlarmRequestDTO.swift in Sources */,
 				830517962B4D21BB009FFB60 /* CompositioinalFactory.swift in Sources */,
 				6BE6D9E82B4EA773008B06FA /* RemindCollectionFooterView.swift in Sources */,
+				83CFC3392B568BE700A2EB2B /* RecommendSiteModel.swift in Sources */,
 				6BE6D9F42B4EF568008B06FA /* RemindTimerEditBottomSheetView.swift in Sources */,
 				6BE6DA3D2B5067CA008B06FA /* PostSocialLoginResponseDTO.swift in Sources */,
 				398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */,

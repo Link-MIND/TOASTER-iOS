@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
@@ -42,6 +43,14 @@ final class WeeklyLinkCollectionViewCell: UICollectionViewCell {
     }
 }
 
+extension WeeklyLinkCollectionViewCell {
+    func bindData(forModel: WeeklyLinkModel) {
+        linkImage.kf.setImage(with: URL(string: forModel.toastImg))
+        linkTitleLabel.text = forModel.toastTitle
+        linkLabel.text = forModel.toastLink
+    }
+}
+
 // MARK: - Private extensions
 
 private extension WeeklyLinkCollectionViewCell {
@@ -51,17 +60,14 @@ private extension WeeklyLinkCollectionViewCell {
         
         linkImage.do {
             $0.makeRounded(radius: 8)
-            $0.image = ImageLiterals.Home.linkThumbNail
         }
         
         linkTitleLabel.do {
-            $0.text = "Title" // 서버 통신 이후 dummyData로 뺄 것
             $0.font = .suitMedium(size: 16)
             $0.textColor = .black900
         }
         
         linkLabel.do {
-            $0.text = "https://myApple.com" // 서버 통신 이후 dummyData로 뺄 것
             $0.font = .suitRegular(size: 10)
             $0.textColor = .gray200
         }
