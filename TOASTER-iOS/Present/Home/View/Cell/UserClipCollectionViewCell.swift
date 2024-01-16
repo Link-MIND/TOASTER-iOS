@@ -60,7 +60,7 @@ final class UserClipCollectionViewCell: UICollectionViewCell {
 }
 
 extension UserClipCollectionViewCell {
-    func configureCell(forModel: CategoryList, icon: UIImage) {
+    func bindData(forModel: CategoryList, icon: UIImage) {
         titleLabel.text = forModel.categroyTitle
         countLabel.text = String(forModel.toastNum)
         clipImage.image = icon
