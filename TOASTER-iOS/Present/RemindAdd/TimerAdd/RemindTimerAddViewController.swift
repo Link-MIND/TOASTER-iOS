@@ -10,16 +10,26 @@ import UIKit
 import SnapKit
 import Then
 
+enum RemindTimerAddButtonType {
+    case add, edit
+}
+
 final class RemindTimerAddViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let dateformatter = DateFormatter()
+    private let viewModel = RemindTimerAddViewModel()
+    
+    private let labelDateformatter = DateFormatter()
+    private let networkDateformatter = DateFormatter()
+    private var buttonType: RemindTimerAddButtonType = .add
+    private var timerID: Int?
     private var categoryID: Int?
     private var selectedIndex: Set<Int> = [] {
         didSet {
             repeatButtonLabel.text = selectedIndex.fetchDaysString()
             repeatButtonLabel.textColor = .toasterPrimary
+            setupButton(forEnable: !selectedIndex.isEmpty)
         }
     }
     
@@ -56,6 +66,7 @@ final class RemindTimerAddViewController: UIViewController {
         setupStyle()
         setupHierarchy()
         setupLayout()
+        setupViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,12 +80,19 @@ final class RemindTimerAddViewController: UIViewController {
 
 extension RemindTimerAddViewController {
     func configureView(forModel: RemindClipModel?) {
+        buttonType = .add
         if let model = forModel {
             mainLabel.text = "\(model.title) 클립을"
             mainLabel.asFont(targetString: model.title,
                              font: .suitSemiBold(size: 18))
             categoryID = forModel?.id
         }
+    }
+    
+    func configureView(forTimerID: Int) {
+        buttonType = .edit
+        viewModel.fetchClipData(forID: forTimerID)
+        timerID = forTimerID
     }
 }
 
@@ -83,9 +101,15 @@ extension RemindTimerAddViewController {
 private extension RemindTimerAddViewController {
     func setupStyle() {
         view.backgroundColor = .toasterBackground
+        selectedIndex = []
         
-        dateformatter.do {
+        labelDateformatter.do {
             $0.dateFormat = "a hh시 mm분"
+            $0.locale = Locale(identifier: "ko_KR")
+        }
+        
+        networkDateformatter.do {
+            $0.dateFormat = "HH:mm"
             $0.locale = Locale(identifier: "ko_KR")
         }
         
@@ -102,7 +126,7 @@ private extension RemindTimerAddViewController {
         timerLabel.do {
             $0.font = .suitBold(size: 18)
             $0.textColor = .toasterPrimary
-            $0.text = dateformatter.string(from: Date())
+            $0.text = labelDateformatter.string(from: Date())
         }
         
         subLabel.do {
@@ -148,7 +172,7 @@ private extension RemindTimerAddViewController {
             $0.setTitle("완료", for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitSemiBold(size: 16)
-            $0.backgroundColor = .toasterBlack
+            
             $0.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         }
     }
@@ -223,6 +247,41 @@ private extension RemindTimerAddViewController {
         }
     }
     
+    func setupViewModel() {
+        viewModel.setupDataChangeAction(changeAction: configureView, 
+                                        forSuccessAction: patchSuccessAction, 
+                                        forEditSuccessAction: editSuccessAction,
+                                        forUnAuthorizedAction: unAuthorizedAction,
+                                        forUnProcessableAction: unProcessableAction)
+    }
+    
+    func configureView() {
+        if let data = self.viewModel.remindAddData {
+            self.mainLabel.text = "\(data.clipTitle) 클립을"
+            self.mainLabel.asFont(targetString: data.clipTitle,
+                                  font: .suitSemiBold(size: 18))
+            self.selectedIndex = Set(data.remindDates)
+        }
+    }
+    
+    func unAuthorizedAction() {
+        self.changeViewController(viewController: LoginViewController())
+    }
+    
+    func patchSuccessAction() {
+        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 설정 완료!")
+    }
+    
+    func editSuccessAction() {
+        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 수정 완료!")
+    }
+    
+    func unProcessableAction() {
+        self.showToastMessage(width: 297, status: .warning, message: "한 클립당 하나의 타이머만 설정 가능해요")
+    }
+    
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
                                                                 hasRightButton: true,
@@ -243,6 +302,16 @@ private extension RemindTimerAddViewController {
         stackView.spacing = forSpacing
         stackView.alignment = forAlignment
         return stackView
+    }
+    
+    /// 반복 설정 값에 따라 Button의 상태를 바꿔주는 함수
+    func setupButton(forEnable: Bool) {
+        completeButton.isEnabled = forEnable
+        if forEnable {
+            completeButton.backgroundColor = .toasterBlack
+        } else {
+            completeButton.backgroundColor = .gray200
+        }
     }
     
     func closeButtonTapped() {
@@ -271,7 +340,7 @@ private extension RemindTimerAddViewController {
     }
     
     @objc func pickerValueChanged() {
-        let date = dateformatter.string(from: datePickerView.date)
+        let date = labelDateformatter.string(from: datePickerView.date)
         timerLabel.text = date
     }
     
@@ -285,10 +354,21 @@ private extension RemindTimerAddViewController {
     }
     
     @objc func completeButtonTapped() {
-        // TODO: - API 호출
+        let dateString = networkDateformatter.string(from: datePickerView.date)
         
-        navigationController?.popToRootViewController(animated: true)
-        navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 설정 완료!")
+        switch buttonType {
+        case .add:
+            guard let categoryID = categoryID else { return }
+            self.viewModel.postClipData(forClipID: categoryID,
+                                        forModel: RemindTimerAddModel(clipTitle: "", 
+                                                                      remindTime: dateString,
+                                                                      remindDates: Array(selectedIndex)))
+        case .edit:
+            guard let timerID = timerID else { return }
+            self.viewModel.editClipData(forModel: RemindTimerEditModel(remindID: timerID,
+                                                                       remindTime: dateString,
+                                                                       remindDates: Array(selectedIndex)))
+        }
     }
 }
 
