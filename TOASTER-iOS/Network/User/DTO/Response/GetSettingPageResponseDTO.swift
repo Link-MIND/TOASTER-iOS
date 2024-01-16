@@ -15,6 +15,5 @@ struct GetSettingPageResponseDTO: Codable {
 
 struct GetSettingPageResponseData: Codable {
     let nickname: String
-    let email: String
-    let isFcmAllowed: Bool
+    let fcmIsAllowed: Bool
 }
