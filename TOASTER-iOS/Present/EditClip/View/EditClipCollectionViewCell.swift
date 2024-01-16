@@ -48,12 +48,6 @@ extension EditClipCollectionViewCell {
         changeTitleButton.isHidden = isFirst
     }
     
-    func configureCell(forModel: ClipListModel, icon: UIImage, isFirst: Bool) {
-        clipTitleLabel.text = forModel.categoryTitle
-        leadingButton.setImage(icon, for: .normal)
-        changeTitleButton.isHidden = isFirst
-    }
-    
     func leadingButtonTapped(_ action: @escaping () -> Void) {
         leadingButtonAction = action
     }

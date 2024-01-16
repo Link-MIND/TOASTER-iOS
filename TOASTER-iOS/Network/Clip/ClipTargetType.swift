@@ -56,24 +56,24 @@ extension ClipTargetType: BaseTargetType {
     
     var path: String {
         switch self {
-        case .postAddCategory(_): return utilPath.rawValue
+        case .postAddCategory: return utilPath.rawValue
         case .getDetailCategory(let categoryID, _):
             return utilPath.rawValue + "/\(categoryID)"
-        case .deleteCategory(_): return utilPath.rawValue
-        case .patchEditCategory(_): return utilPath.rawValue + "/edit"
+        case .deleteCategory: return utilPath.rawValue
+        case .patchEditCategory: return utilPath.rawValue + "/edit"
         case .getAllCategory: return utilPath.rawValue + "/all"
-        case .getCheckCategory(_): return utilPath.rawValue + "/check"
+        case .getCheckCategory: return utilPath.rawValue + "/check"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .postAddCategory(_): return .post
-        case .getDetailCategory(_, _): return .get
-        case .deleteCategory(_): return .delete
-        case .patchEditCategory(_): return .patch
+        case .postAddCategory: return .post
+        case .getDetailCategory: return .get
+        case .deleteCategory: return .delete
+        case .patchEditCategory: return .patch
         case .getAllCategory: return .get
-        case .getCheckCategory(_): return .get
+        case .getCheckCategory: return .get
         }
     }
 }

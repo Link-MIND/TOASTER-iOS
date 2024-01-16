@@ -193,15 +193,27 @@ extension DetailClipViewController: UICollectionViewDelegateFlowLayout {
 
 extension DetailClipViewController: DetailClipSegmentedDelegate {
     func setupAllLink() {
-        categoryID == 0 ? getDetailAllCategoryAPI(filter: .all) : getDetailCategoryAPI(categoryID: categoryID, filter: .all)
+        if categoryID == 0 {
+            getDetailAllCategoryAPI(filter: .all)
+        } else {
+            getDetailCategoryAPI(categoryID: categoryID, filter: .all)
+        }
     }
     
     func setupReadLink() {
-        categoryID == 0 ? getDetailAllCategoryAPI(filter: .read) : getDetailCategoryAPI(categoryID: categoryID, filter: .read)
+        if categoryID == 0 {
+            getDetailAllCategoryAPI(filter: .read)
+        } else {
+            getDetailCategoryAPI(categoryID: categoryID, filter: .read)
+        }
     }
     
     func setupNotReadLink() {
-        categoryID == 0 ? getDetailAllCategoryAPI(filter: .unread) : getDetailCategoryAPI(categoryID: categoryID, filter: .unread)
+        if categoryID == 0 {
+            getDetailAllCategoryAPI(filter: .unread)
+        } else {
+            getDetailCategoryAPI(categoryID: categoryID, filter: .unread)
+        }
     }
 }
 

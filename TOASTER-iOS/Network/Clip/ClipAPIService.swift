@@ -77,7 +77,7 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
                 completion(networkResult)
             case .failure(let error):
                 if let response = error.response {
-                    let networkResult: NetworkResult<GetDetailAllCategoryResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    let networkResult: NetworkResult<GetDetailCategoryResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
                     completion(networkResult)
                 }
             }
