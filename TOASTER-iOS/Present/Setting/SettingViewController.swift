@@ -21,6 +21,12 @@ final class SettingViewController: UIViewController {
         }
     }
     
+    private var userName: String = "" {
+        didSet {
+            settingTableView.reloadData()
+        }
+    }
+    
     // MARK: - UI Properties
     
     private let alertWarningView = UIView()
@@ -42,6 +48,7 @@ final class SettingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+        fetchMysettings()
     }
 }
 
@@ -135,6 +142,21 @@ private extension SettingViewController {
             settingTableView.snp.remakeConstraints {
                 $0.top.equalTo(alertWarningView.snp.bottom)
                 $0.leading.trailing.bottom.equalToSuperview()
+            }
+        }
+    }
+    
+    func fetchMysettings() {
+        NetworkService.shared.userService.getSettingPage { [weak self] result in
+            switch result {
+            case .success(let response):
+                if let responseData = response?.data {
+                    self?.userName = responseData.nickname
+                }
+            case .unAuthorized, .networkFail:
+                self?.changeViewController(viewController: LoginViewController())
+            default:
+                self?.changeViewController(viewController: LoginViewController())
             }
         }
     }
@@ -247,7 +269,7 @@ extension SettingViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             // TODO: - 사용자 유저 이름 불러오는 것으로 수정 필요
-            cell.configureCell(name: "홍길동", sectionNumber: indexPath.section)
+            cell.configureCell(name: userName, sectionNumber: indexPath.section)
         case 1:
             cell.configureCell(name: settingList[indexPath.row], sectionNumber: indexPath.section)
             if indexPath.row == 0 {
