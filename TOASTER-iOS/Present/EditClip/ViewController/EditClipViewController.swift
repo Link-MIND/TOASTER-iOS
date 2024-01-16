@@ -14,6 +14,7 @@ final class EditClipViewController: UIViewController {
     
     // MARK: - Properties
     
+    private var cellIndex: Int = 0
     private var clipList: GetAllCategoryResponseDTO? {
         didSet {
             editClipCollectionView.reloadData()
@@ -137,6 +138,7 @@ extension EditClipViewController: UICollectionViewDataSource {
             }
             
             cell.changeTitleButtonTapped {
+                self.cellIndex = indexPath.item-1
                 self.editClipBottom.modalPresentationStyle = .overFullScreen
                 self.present(self.editClipBottom, animated: false)
             }
@@ -235,7 +237,7 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
     }
     
     func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
-        // patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO(categoryId: <#T##Int#>, newTitle: <#T##String#>))
+        patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO(categoryId: clipList?.data.categories[cellIndex].categoryId ?? 0, newTitle: text.categoryTitle))
         editClipBottom.hideBottomSheet()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.showToastMessage(width: 157, status: .check, message: "클립 수정 완료!")
@@ -278,7 +280,7 @@ extension EditClipViewController {
         NetworkService.shared.clipService.patchEditPriorityCategory(requestBody: requestBody) { result in
             switch result {
             case .success:
-                return
+                self.getAllCategoryAPI()
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
             default: return
@@ -290,7 +292,7 @@ extension EditClipViewController {
         NetworkService.shared.clipService.patchEditNameCategory(requestBody: requestBody) { result in
             switch result {
             case .success:
-                return
+                self.getAllCategoryAPI()
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
             default: return

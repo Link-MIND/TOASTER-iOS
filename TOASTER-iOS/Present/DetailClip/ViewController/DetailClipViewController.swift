@@ -13,8 +13,9 @@ final class DetailClipViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var categoryID: Int = 0
+    private var categoryId: Int = 0
     private var categoryName: String = ""
+    private var toastId: Int = 0
     private var clipCount: Int = 0
     private var segmentIndex: Int = 0
     private var toastList: GetDetailCategoryResponseDTO? {
@@ -57,7 +58,7 @@ final class DetailClipViewController: UIViewController {
 
 extension DetailClipViewController {
     func setupCategory(id: Int, name: String) {
-        categoryID = id
+        categoryId = id
         categoryName = name
     }
 }
@@ -129,16 +130,14 @@ extension DetailClipViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell else { return UICollectionViewCell() }
+        cell.detailClipListCollectionViewCellDelegate = self
         
         if let data = toastList?.data {
             cell.configureCell(forModel: data, index: indexPath.row)
         }
-        cell.modifiedButtonTapped {
-            self.bottom.modalPresentationStyle = .overFullScreen
-            self.present(self.bottom, animated: false)
-        }
+        
         deleteLinkBottomSheetView.setupDeleteLinkBottomSheetButtonAction {
-            self.deleteLinkAPI(toastId: self.toastList?.data.toastListDto[indexPath.row].toastId ?? 0)
+            self.deleteLinkAPI(toastId: self.toastId)
             self.bottom.hideBottomSheet()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.showToastMessage(width: 152, status: .check, message: StringLiterals.Toast.Message.completeDeleteLink)
@@ -199,29 +198,37 @@ extension DetailClipViewController: UICollectionViewDelegateFlowLayout {
 extension DetailClipViewController: DetailClipSegmentedDelegate {
     func setupAllLink() {
         segmentIndex = 0
-        if categoryID == 0 {
+        if categoryId == 0 {
             getDetailAllCategoryAPI(filter: .all)
         } else {
-            getDetailCategoryAPI(categoryID: categoryID, filter: .all)
+            getDetailCategoryAPI(categoryID: categoryId, filter: .all)
         }
     }
     
     func setupReadLink() {
         segmentIndex = 1
-        if categoryID == 0 {
+        if categoryId == 0 {
             getDetailAllCategoryAPI(filter: .read)
         } else {
-            getDetailCategoryAPI(categoryID: categoryID, filter: .read)
+            getDetailCategoryAPI(categoryID: categoryId, filter: .read)
         }
     }
     
     func setupNotReadLink() {
         segmentIndex = 2
-        if categoryID == 0 {
+        if categoryId == 0 {
             getDetailAllCategoryAPI(filter: .unread)
         } else {
-            getDetailCategoryAPI(categoryID: categoryID, filter: .unread)
+            getDetailCategoryAPI(categoryID: categoryId, filter: .unread)
         }
+    }
+}
+
+extension DetailClipViewController: DetailClipListCollectionViewCellDelegate {
+    func modifiedButtonTapped(toastId: Int) {
+        self.toastId = toastId
+        bottom.modalPresentationStyle = .overFullScreen
+        present(bottom, animated: false)
     }
 }
 
@@ -266,9 +273,9 @@ extension DetailClipViewController {
                     }
                 } else {
                     switch self.segmentIndex {
-                    case 0: self.getDetailCategoryAPI(categoryID: self.categoryID, filter: .all)
-                    case 1: self.getDetailCategoryAPI(categoryID: self.categoryID, filter: .read)
-                    default: self.getDetailCategoryAPI(categoryID: self.categoryID, filter: .unread)
+                    case 0: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .all)
+                    case 1: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .read)
+                    default: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .unread)
                     }
                 }
             case .unAuthorized, .networkFail:

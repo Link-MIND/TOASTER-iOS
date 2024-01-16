@@ -11,10 +11,15 @@ import Kingfisher
 import SnapKit
 import Then
 
+protocol DetailClipListCollectionViewCellDelegate: AnyObject {
+    func modifiedButtonTapped(toastId: Int)
+}
+
 final class DetailClipListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    private var toastId: Int = 0
     private var isReadDimmedView: Bool = false {
         didSet {
             dimmedView.isHidden = !isReadDimmedView
@@ -31,7 +36,8 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
             setupHiddenLayout(forHidden: isClipNameLabelHidden)
         }
     }
-    private var detailClipListCollectionViewCellButtonAction: (() -> Void)?
+    weak var detailClipListCollectionViewCellDelegate: DetailClipListCollectionViewCellDelegate?
+    // private var detailClipListCollectionViewCellButtonAction: (() -> Void)?
     
     // MARK: - UI Components
     
@@ -62,9 +68,9 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension DetailClipListCollectionViewCell {
-    func modifiedButtonTapped(_ action: @escaping () -> Void) {
-        detailClipListCollectionViewCellButtonAction = action
-    }
+//    func modifiedButtonTapped(_ action: @escaping () -> Void) {
+//        detailClipListCollectionViewCellButtonAction = action
+//    }
     
     func configureCell(forModel: GetDetailCategoryResponseData, index: Int) {
         modifiedButton.isHidden = false
@@ -73,6 +79,7 @@ extension DetailClipListCollectionViewCell {
         linkLabel.text = forModel.toastListDto[index].linkUrl
         isClipNameLabelHidden = forModel.toastListDto[index].categoryTitle != nil ? true : false
         isReadDimmedView = forModel.toastListDto[index].isRead
+        toastId = forModel.toastListDto[index].toastId
         
         if forModel.toastListDto[index].categoryTitle != nil {
             clipNameLabel.text = forModel.toastListDto[index].categoryTitle
@@ -214,6 +221,7 @@ private extension DetailClipListCollectionViewCell {
     
     @objc
     func buttonTapped() {
-        detailClipListCollectionViewCellButtonAction?()
+        detailClipListCollectionViewCellDelegate?.modifiedButtonTapped(toastId: toastId)
+        // detailClipListCollectionViewCellButtonAction?()
     }
 }
