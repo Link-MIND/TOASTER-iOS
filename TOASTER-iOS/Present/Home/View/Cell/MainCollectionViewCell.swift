@@ -48,7 +48,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
 }
 
 extension MainCollectionViewCell {
-    func configureCell(forModel: MainInfoModel) {
+    func bindData(forModel: MainInfoModel) {
         nickName = forModel.nickname
         readToastNum = forModel.readToastNum
         allToastNum = forModel.allToastNum

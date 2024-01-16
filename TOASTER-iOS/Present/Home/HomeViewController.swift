@@ -15,7 +15,12 @@ final class HomeViewController: UIViewController {
     
     private let homeView = HomeView()
     
-    var clipCellData = dummyCategoryInfo
+    private var clipList: GetMainPageResponseDTO? {
+        didSet {
+            homeView.collectionView.reloadData()
+        }
+    }
+
     
     private let addClipBottomSheetView = AddClipBottomSheetView()
     private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
@@ -45,7 +50,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            return clipCellData.count
+            return 2
         case 2:
             return 3
         case 3:
@@ -59,7 +64,7 @@ extension HomeViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.className, for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell() }
-            // cell.configureCell() 서버 통신 이후 추가 예정
+            cell.bindData(forModel: MainInfoModel )
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
@@ -220,4 +225,33 @@ extension HomeViewController: UserClipCollectionViewCellDelegate {
         addClipBottom.modalPresentationStyle = .overFullScreen
         self.present(addClipBottom, animated: false)
     }
+}
+
+// MARK: - Network
+
+extension HomeViewController {
+    func getCheckCategoryAPI() {
+        NetworkService.shared.userService.getMainPage { result in
+            switch result {
+            case .success(let response):
+                if let data = response?.data {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.mainCollectionViewCell.bindData(forModel: MainInfoModel(nickname: data.nickname,
+                                                                                      readToastNum: data.readToastNum,
+                                                                                      allToastNum: data.allToastNum, 
+                                                                                      //mainCategoryListDto: [CategoryList(categoryId: , categroyTitle: <#T##String#>, toastNum: <#T##Int#>)] ))
+            
+                        
+                        }
+                    }
+            case .networkFail:
+                // 이따 추가해 ~ 
+            default:
+                print("default Fail")
+                }
+
+            }
+        }
+    }
+    
 }
