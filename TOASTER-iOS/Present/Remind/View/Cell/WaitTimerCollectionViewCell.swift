@@ -15,13 +15,13 @@ final class WaitTimerCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     
     typealias EditButtonAction = (Int?) -> Void
-    typealias ToggleButtonAction = (Bool) -> Void
+    typealias ToggleButtonAction = (Int?) -> Void
     private var editButtonAction: EditButtonAction?
     private var toggleButtonAction: ToggleButtonAction?
     private var editTimerID: Int?
     private lazy var toggleEnable: Bool = toggleSwitch.isOn {
         didSet {
-            toggleButtonAction?(toggleEnable)
+            toggleButtonAction?(editTimerID)
         }
     }
 

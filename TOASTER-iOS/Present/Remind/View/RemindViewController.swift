@@ -218,11 +218,16 @@ private extension RemindViewController {
         }
     }
     
-    func toggleAction(forEnable: Bool) {
-        
-        // TODO: - Timer OnOff API 연결
-        
-        print(forEnable)
+    func toggleAction(forTimerID: Int?) {
+        guard let id = forTimerID else { return }
+        NetworkService.shared.timerService.patchEditAlarmTimer(timerId: id) { result in
+            switch result {
+            case .success:
+                self.viewModel.fetchTimerData()
+            default: break
+            }
+            
+        }
     }
     
     @objc func editAlarmButtonTapped() {
