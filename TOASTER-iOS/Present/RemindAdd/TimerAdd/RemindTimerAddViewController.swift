@@ -248,8 +248,11 @@ private extension RemindTimerAddViewController {
     }
     
     func setupViewModel() {
-        viewModel.setupDataChangeAction(changeAction: configureView,
-                                        forUnAuthorizedAction: unAuthorizedAction)
+        viewModel.setupDataChangeAction(changeAction: configureView, 
+                                        forSuccessAction: patchSuccessAction, 
+                                        forEditSuccessAction: editSuccessAction,
+                                        forUnAuthorizedAction: unAuthorizedAction,
+                                        forUnProcessableAction: unProcessableAction)
     }
     
     func configureView() {
@@ -263,6 +266,20 @@ private extension RemindTimerAddViewController {
     
     func unAuthorizedAction() {
         self.changeViewController(viewController: LoginViewController())
+    }
+    
+    func patchSuccessAction() {
+        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 설정 완료!")
+    }
+    
+    func editSuccessAction() {
+        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 수정 완료!")
+    }
+    
+    func unProcessableAction() {
+        self.showToastMessage(width: 297, status: .warning, message: "한 클립당 하나의 타이머만 설정 가능해요")
     }
     
     func setupNavigationBar() {
@@ -341,34 +358,15 @@ private extension RemindTimerAddViewController {
         
         switch buttonType {
         case .add:
-            NetworkService.shared.timerService.postCreateTimer(requestBody: PostCreateTimerRequestDTO(categoryId: categoryID,
-                                                                                                      remindTime: dateString,
-                                                                                                      remindDates: Array(selectedIndex))) { result in
-                switch result {
-                case .success:
-                    self.navigationController?.popToRootViewController(animated: true)
-                    self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 설정 완료!")
-                case .unAuthorized, .networkFail:
-                    self.changeViewController(viewController: LoginViewController())
-                case .unProcessable:
-                    self.showToastMessage(width: 297, status: .warning, message: "한 클립당 하나의 타이머만 설정 가능해요")
-                default: break
-                }
-            }
+            self.viewModel.postClipData(forClipID: categoryID, 
+                                        forModel: RemindTimerAddModel(clipTitle: "", 
+                                                                      remindTime: dateString,
+                                                                      remindDates: Array(selectedIndex)))
         case .edit:
             guard let timerID = timerID else { return }
-            NetworkService.shared.timerService.patchEditTimer(timerId: timerID,
-                                                              requestBody: PatchEditTimerRequestDTO(remindTime: dateString,
-                                                                                                    remindDates: Array(selectedIndex))) { result in
-                switch result {
-                case .success:
-                    self.navigationController?.popToRootViewController(animated: true)
-                    self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 수정 완료!")
-                case .unAuthorized, .networkFail:
-                    self.changeViewController(viewController: LoginViewController())
-                default: break
-                }
-            }
+            self.viewModel.editClipData(forModel: RemindTimerEditModel(remindID: timerID,
+                                                                       remindTime: dateString,
+                                                                       remindDates: Array(selectedIndex)))
         }
     }
 }

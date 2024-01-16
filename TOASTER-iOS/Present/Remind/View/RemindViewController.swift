@@ -114,7 +114,8 @@ private extension RemindViewController {
     func setupViewModel() {
         viewModel.fetchAlarmCheck()
         viewModel.setupDataChangeAction(changeAction: reloadCollectionViewWithView,
-                                        normalAction: setupAlarmBottomSheet,
+                                        normalAction: setupAlarmBottomSheet, 
+                                        forDeleteTimerAction: deleteAction,
                                         forUnAuthorizedAction: unAuthorizedAction)
     }
     
@@ -209,6 +210,11 @@ private extension RemindViewController {
         self.changeViewController(viewController: LoginViewController())
     }
     
+    func deleteAction() {
+        dismiss(animated: false)
+        self.showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
+    }
+    
     func plusButtonTapped() {
         let clipAddViewController = RemindSelectClipViewController()
         clipAddViewController.hidesBottomBarWhenPushed = true
@@ -217,30 +223,12 @@ private extension RemindViewController {
     
     func deleteButtonTapped() {
         guard let id = selectedTimerID else { return }
-        NetworkService.shared.timerService.deleteTimer(timerId: id) { result in
-            switch result {
-            case .success:
-                self.dismiss(animated: false)
-                self.viewModel.fetchTimerData()
-                self.showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
-            case .unAuthorized, .networkFail:
-                self.changeViewController(viewController: LoginViewController())
-            default: break
-            }
-        }
+        viewModel.deleteTimerData(timerID: id)
     }
     
     func toggleAction(forTimerID: Int?) {
         guard let id = forTimerID else { return }
-        NetworkService.shared.timerService.patchEditAlarmTimer(timerId: id) { result in
-            switch result {
-            case .success:
-                self.viewModel.fetchTimerData()
-            case .unAuthorized, .networkFail:
-                self.changeViewController(viewController: LoginViewController())
-            default: break
-            }
-        }
+        viewModel.patchTimerData(timerID: id)
     }
     
     @objc func editAlarmButtonTapped() {

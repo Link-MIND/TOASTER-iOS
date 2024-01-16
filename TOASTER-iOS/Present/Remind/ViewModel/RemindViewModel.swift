@@ -18,6 +18,7 @@ final class RemindViewModel {
     typealias NormalChangeAction = () -> Void
     private var bottomSheetAction: NormalChangeAction?
     private var unAuthorizedAction: NormalChangeAction?
+    private var deleteTimerAction: NormalChangeAction?
     
     private let userDefault = UserDefaults.standard
     
@@ -65,9 +66,11 @@ final class RemindViewModel {
 extension RemindViewModel {
     func setupDataChangeAction(changeAction: @escaping DataChangeAction,
                                normalAction: @escaping NormalChangeAction,
+                               forDeleteTimerAction: @escaping NormalChangeAction,
                                forUnAuthorizedAction: @escaping NormalChangeAction) {
         dataChangeAction = changeAction
         bottomSheetAction = normalAction
+        deleteTimerAction = forDeleteTimerAction
         unAuthorizedAction = forUnAuthorizedAction
     }
     
@@ -114,6 +117,31 @@ extension RemindViewModel {
                 }
                 self.timerData = RemindModel(completeTimerModelList: completedList,
                                              waitTimerModelList: waitList)
+            case .unAuthorized, .networkFail:
+                self.unAuthorizedAction?()
+            default: break
+            }
+        }
+    }
+    
+    func deleteTimerData(timerID: Int) {
+        NetworkService.shared.timerService.deleteTimer(timerId: timerID) { result in
+            switch result {
+            case .success:
+                self.fetchTimerData()
+                self.deleteTimerAction?()
+            case .unAuthorized, .networkFail:
+                self.unAuthorizedAction?()
+            default: break
+            }
+        }
+    }
+    
+    func patchTimerData(timerID: Int) {
+        NetworkService.shared.timerService.patchEditAlarmTimer(timerId: timerID) { result in
+            switch result {
+            case .success:
+                self.fetchTimerData()
             case .unAuthorized, .networkFail:
                 self.unAuthorizedAction?()
             default: break

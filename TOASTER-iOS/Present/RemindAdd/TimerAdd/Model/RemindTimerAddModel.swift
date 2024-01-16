@@ -12,3 +12,9 @@ struct RemindTimerAddModel {
     let remindTime: String
     let remindDates: [Int]
 }
+
+struct RemindTimerEditModel {
+    let remindID: Int
+    let remindTime: String
+    let remindDates: [Int]
+}
