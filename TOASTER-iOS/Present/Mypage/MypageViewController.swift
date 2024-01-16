@@ -75,7 +75,11 @@ private extension MypageViewController {
             case .success(let response):
                 if let responseData = response?.data {
                     DispatchQueue.main.async { [weak self] in
-                        self?.mypageHeaderView.bindModel(model: MypageUserModel(nickname: responseData.nickname, profile: responseData.profile, allReadToast: responseData.allReadToast, thisWeekendRead: responseData.thisWeekendRead, thisWeekendSaved: responseData.thisWeekendSaved))
+                        self?.mypageHeaderView.bindModel(model: MypageUserModel(nickname: responseData.nickname,
+                                                                                profile: responseData.profile,
+                                                                                allReadToast: responseData.allReadToast,
+                                                                                thisWeekendRead: responseData.thisWeekendRead,
+                                                                                thisWeekendSaved: responseData.thisWeekendSaved))
                     }
                 }
             case .networkFail:
