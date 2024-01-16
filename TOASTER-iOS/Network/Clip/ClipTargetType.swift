@@ -19,7 +19,8 @@ enum ClipTargetType {
     case postAddCategory(requestBody: PostAddCategoryRequestDTO)
     case getDetailCategory(categoryID: Int, filter: DetailCategoryFilter)
     case deleteCategory(requestBody: DeleteCategoryRequestDTO)
-    case patchEditCategory(requestBody: PatchEditCategoryRequestDTO)
+    case patchEditPriorityCategory(requestBody: PatchEditPriorityCategoryRequestDTO)
+    case patchEditNameCategory(requestBody: PatchEditNameCategoryRequestDTO)
     case getAllCategory
     case getCheckCategory(categoryTitle: String)
 }
@@ -49,7 +50,8 @@ extension ClipTargetType: BaseTargetType {
         switch self {
         case .postAddCategory(let body): return body
         case .deleteCategory(let body): return body
-        case .patchEditCategory(let body): return body
+        case .patchEditPriorityCategory(let body): return body
+        case .patchEditNameCategory(let body): return body
         default: return .none
         }
     }
@@ -60,7 +62,8 @@ extension ClipTargetType: BaseTargetType {
         case .getDetailCategory(let categoryID, _):
             return utilPath.rawValue + "/\(categoryID)"
         case .deleteCategory: return utilPath.rawValue
-        case .patchEditCategory: return utilPath.rawValue + "/edit"
+        case .patchEditPriorityCategory: return utilPath.rawValue + "/priority"
+        case .patchEditNameCategory: return utilPath.rawValue + "/title"
         case .getAllCategory: return utilPath.rawValue + "/all"
         case .getCheckCategory: return utilPath.rawValue + "/check"
         }
@@ -71,7 +74,8 @@ extension ClipTargetType: BaseTargetType {
         case .postAddCategory: return .post
         case .getDetailCategory: return .get
         case .deleteCategory: return .delete
-        case .patchEditCategory: return .patch
+        case .patchEditNameCategory: return .patch
+        case .patchEditPriorityCategory: return .patch
         case .getAllCategory: return .get
         case .getCheckCategory: return .get
         }

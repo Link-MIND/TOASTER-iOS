@@ -207,6 +207,7 @@ extension EditClipViewController: UICollectionViewDropDelegate {
                     let sourceItem = clips.categories.remove(at: sourceIndexPath.item - 1)
                     clips.categories.insert(sourceItem, at: destinationIndexPath.item - 1)
                     clipList?.data.categories = clips.categories
+                    patchEditPriorityCategoryAPI(requestBody: PatchEditPriorityCategoryRequestDTO(categoryId: clips.categories[destinationIndexPath.item-1].categoryId, newPriority: destinationIndexPath.item-1))
                 }
                 collectionView.deleteItems(at: [sourceIndexPath])
                 collectionView.insertItems(at: [destinationIndexPath])
@@ -234,6 +235,7 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
     }
     
     func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
+        // patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO(categoryId: <#T##Int#>, newTitle: <#T##String#>))
         editClipBottom.hideBottomSheet()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.showToastMessage(width: 157, status: .check, message: "클립 수정 완료!")
@@ -272,8 +274,20 @@ extension EditClipViewController {
         }
     }
     
-    func patchEditCategoryAPI(requestBody: PatchEditCategoryRequestDTO) {
-        NetworkService.shared.clipService.patchEditCategory(requestBody: requestBody) { result in
+    func patchEditPriorityCategoryAPI(requestBody: PatchEditPriorityCategoryRequestDTO) {
+        NetworkService.shared.clipService.patchEditPriorityCategory(requestBody: requestBody) { result in
+            switch result {
+            case .success:
+                return
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default: return
+            }
+        }
+    }
+    
+    func patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO) {
+        NetworkService.shared.clipService.patchEditNameCategory(requestBody: requestBody) { result in
             switch result {
             case .success:
                 return
