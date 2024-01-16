@@ -207,7 +207,7 @@ extension SettingViewController: UITableViewDelegate {
                 // TODO: - 문의하기 기능 여기에다 붙입시다
                 print("문의하기 붙여")
             case 2:
-                let urlString = "https://www.notion.so/db429c114629431f8301a969ed028e37"
+                let urlString = "https://hill-agenda-2b0.notion.site/0f83855ea17f4a67a3ff66b6507b229f"
                 
                 if let url = URL(string: urlString) {
                     UIApplication.shared.open(url)
