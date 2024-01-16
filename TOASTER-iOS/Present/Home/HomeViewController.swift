@@ -15,8 +15,6 @@ final class HomeViewController: UIViewController {
     
     private let homeView = HomeView()
     
-    // private let mainCollectionViewCell = MainCollectionViewCell()
-    
     private var mainInfoList: MainInfoModel = MainInfoModel(nickname: "", readToastNum: 0, allToastNum: 0,
                                                             mainCategoryListDto: [CategoryList(categoryId: 0, categroyTitle: "", toastNum: 0)]) {
         didSet {
@@ -73,7 +71,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case 2:
             return weeklyLinkList.toastId 
         case 3:
-            return 9
+            return 9 // 나중에 recommendSiteList.count 로 변경해줘야됨 어케해 
         default:
             return 0
         }
@@ -86,7 +84,7 @@ extension HomeViewController: UICollectionViewDataSource {
             cell.bindData(forModel: mainInfoList)
             return cell
         case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
+            guard var cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
             if indexPath.item == 0 {
                 cell.bindData(forModel: CategoryList(categoryId: 0, categroyTitle: "전체클립", toastNum: 100), icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
             } else {
@@ -122,7 +120,7 @@ extension HomeViewController: UICollectionViewDataSource {
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeaderCollectionView.className, for: indexPath) as? HomeHeaderCollectionView else { return UICollectionReusableView() }
             switch indexPath.section {
             case 1:
-                header.configureHeader(forTitle: "토스터 님의 클립")
+                header.configureHeader(forTitle: mainInfoList.nickname + " 님의 클립")
             case 2:
                 header.configureHeader(forTitle: "이주의 링크")
             case 3:
@@ -252,7 +250,7 @@ extension HomeViewController: UserClipCollectionViewCellDelegate {
 // MARK: - Network
 
 extension HomeViewController {
-    // 메인페이지 + 유저 정보 + 클립 조회 -> GET baseurl/user/main
+    // 메인페이지 + 유저 정보 + 클립 조회 -> GET
     func fetchMainPageData() {
         NetworkService.shared.userService.getMainPage { result in
             switch result {
@@ -269,15 +267,15 @@ extension HomeViewController {
                                                       allToastNum: data.allToastNum,
                                                       mainCategoryListDto: categoryList)
                 }
-            case .unAuthorized:
+            case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
             default:
-                print("default fail")
+                return
             }
         }
     }
     
-    // 이주의 링크 -> GET baseurl/toast/week
+    // 이주의 링크 -> GET
     func fetchWeeklyLinkData() {
         NetworkService.shared.toastService.getWeeksLink { result in
             switch result {
@@ -290,15 +288,15 @@ extension HomeViewController {
                                                               toastLink: data[idx].toastLink)
                     }
                 }
-            case .networkFail:
+            case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
             default:
-                print("default fail")
+                return
             }
         }
     }
     
-    // 추천 사이트 -> GET baseurl/sites
+    // 추천 사이트 -> GET
     func fetchRecommendSiteData() {
         NetworkService.shared.searchService.getRecommendSite { result in
             switch result {
@@ -312,10 +310,10 @@ extension HomeViewController {
                                                                     siteSub: data[idx].siteSub)
                     }
                 }
-            case .networkFail:
+            case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
             default:
-                print("default fail...")
+                return
             }
         }
     }
