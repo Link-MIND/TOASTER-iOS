@@ -20,6 +20,9 @@ final class LoginViewController: UIViewController {
     
     private let kakaoSocialLoginButtonView = SocialLoginButtonView(type: .kakao)
     private let appleSocialLoginButtonView = SocialLoginButtonView(type: .apple)
+    private let titleLogoImageView = UIImageView()
+    private let titleLabel = UILabel()
+    private let loginImageView = UIImageView()
     
     // MARK: - Life Cycle
 
@@ -31,6 +34,11 @@ final class LoginViewController: UIViewController {
         setupLayout()
         setupAddTarget()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hideNavigationBar()
+    }
 }
 
 // MARK: - Private Extensions
@@ -38,21 +46,60 @@ final class LoginViewController: UIViewController {
 private extension LoginViewController {
     func setupStyle() {
         view.backgroundColor = .white
+        
+        titleLogoImageView.do {
+            $0.image = ImageLiterals.Logo.wordmark
+            $0.contentMode = .scaleAspectFit
+        }
+        
+        titleLabel.do {
+            $0.text = StringLiterals.Login.Title.subTitle
+            $0.textColor = .black900
+            $0.font = .suitBold(size: 18)
+            $0.numberOfLines = 0
+        }
+        
+        loginImageView.do {
+            $0.image = ImageLiterals.Login.loginLogo
+            $0.contentMode = .scaleAspectFit
+        }
     }
     
     func setupHierarchy() {
-        view.addSubviews(kakaoSocialLoginButtonView, appleSocialLoginButtonView)
+        view.addSubviews(titleLogoImageView, titleLabel, loginImageView, kakaoSocialLoginButtonView, appleSocialLoginButtonView)
     }
     
     func setupLayout() {
-        kakaoSocialLoginButtonView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(30)
-            $0.bottom.equalTo(appleSocialLoginButtonView.snp.top).offset(-15)
+        titleLogoImageView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(view.convertByHeightRatio(115))
+            $0.leading.equalToSuperview().offset(32)
+            $0.height.equalTo(39)
+            $0.width.equalTo(215)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLogoImageView.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().offset(32)
+            $0.height.equalTo(45)
+        }
+        
+        loginImageView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(view.convertByHeightRatio(60))
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(loginImageView.snp.height).multipliedBy(304/294)
+            $0.bottom.equalTo(appleSocialLoginButtonView.snp.top).inset(-10)
         }
         
         appleSocialLoginButtonView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(30)
-            $0.bottom.equalToSuperview().offset(-100)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.bottom.equalTo(kakaoSocialLoginButtonView.snp.top).inset(-12)
+            $0.height.equalTo(62)
+        }
+        
+        kakaoSocialLoginButtonView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(34)
+            $0.height.equalTo(62)
         }
     }
     
@@ -94,10 +141,10 @@ private extension LoginViewController {
                     /// Decoding 하는 과정 중 생길 수 있는 오류
                     guard let serverAccessToken = response?.data.accessToken, let serverRefreshToken = response?.data.refreshToken else { return continuation.resume(throwing: LoginError.failedReceiveToken) }
                     
-                    let keyChainResult = KeyChainService.saveTokens(accessKey: Config.tempToken, refreshKey: Config.tempToken)
+//                    let keyChainResult = KeyChainService.saveTokens(accessKey: Config.tempToken, refreshKey: Config.tempToken)
+                    let keyChainResult = KeyChainService.saveTokens(accessKey: serverAccessToken, refreshKey: serverRefreshToken)
                     
                     if keyChainResult.accessResult == true && keyChainResult.refreshResult == true {
-                        print("Token 저장")
                         continuation.resume(returning: true)
                     } else {
                         continuation.resume(returning: false)
@@ -107,17 +154,6 @@ private extension LoginViewController {
                 default:
                     continuation.resume(returning: false)
                 }
-            }
-        }
-    }
-    
-    /// 로그인 성공 시 보여줄 ViewController 처리하는 메서드
-    func loginSuccess() {
-        let tabBarController = TabBarController()
-        
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                window.rootViewController = tabBarController
             }
         }
     }
@@ -137,7 +173,7 @@ private extension LoginViewController {
         
                 if serverResult == true {
                     UserDefaults.standard.set("\(Config.kakaoLogin)", forKey: Config.loginType)
-                    loginSuccess()
+                    self.changeViewController(viewController: TabBarController())
                 }
             } catch {
                 guard let error = error as? LoginError else { return }
@@ -164,7 +200,7 @@ private extension LoginViewController {
                 
                 if serverResult == true {
                     UserDefaults.standard.set(Config.appleLogin, forKey: Config.loginType)
-                    loginSuccess()
+                    self.changeViewController(viewController: TabBarController())
                 }
             } catch let error {
                 print("Apple Login Error:", error)

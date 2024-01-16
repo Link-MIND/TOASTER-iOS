@@ -52,6 +52,11 @@ extension RemindSelectClipCollectionViewCell {
         clipTitleLabel.text = forModel.title
         clipCountLabel.text = "\(forModel.clipCount)개"
     }
+    
+    func configureCell(forModel: SelectClipModel) {
+        clipTitleLabel.text = forModel.title
+        clipCountLabel.text = "\(forModel.clipCount)개"
+    }
 }
 
 // MARK: - Private Extension
