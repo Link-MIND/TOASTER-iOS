@@ -12,6 +12,15 @@ import Then
 
 final class ClipViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    private var clipList: GetAllCategoryResponseDTO? {
+        didSet {
+            clipListCollectionView.reloadData()
+        }
+    }
+    private var clipCount: Int = 0
+    
     // MARK: - UI Properties
     
     private let clipEmptyView = ClipEmptyView()
@@ -34,7 +43,7 @@ final class ClipViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setupEmptyView()
+        getAllCategoryAPI()
         setupNavigationBar()
     }
 }
@@ -73,11 +82,7 @@ private extension ClipViewController {
     }
     
     func setupEmptyView() {
-        if dummyClipList.count > 0 {
-            clipEmptyView.isHidden = true
-        } else {
-            clipEmptyView.isHidden = false
-        }
+        clipEmptyView.isHidden = clipCount > 0 ? true : false
     }
     
     func setupNavigationBar() {
@@ -94,6 +99,7 @@ private extension ClipViewController {
     
     func editButtonTapped() {
         let editClipViewController = EditClipViewController()
+        if let clipList = clipList { editClipViewController.setupDataBind(getAllCategoryResponseDTO: clipList) }
         editClipViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(editClipViewController, animated: false)
     }
@@ -104,6 +110,17 @@ private extension ClipViewController {
 extension ClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = DetailClipViewController()
+        if indexPath.row == 0 {
+            nextVC.getDetailAllCategoryAPI(filter: .all)
+            nextVC.setupCategory(id: 0, name: "전체클립")
+        } else {
+            if let data = clipList?.data {
+                nextVC.getDetailCategoryAPI(categoryID: data.categories[indexPath.row-1].categoryId,
+                                            filter: .all)
+                nextVC.setupCategory(id: data.categories[indexPath.row-1].categoryId,
+                                     name: data.categories[indexPath.row-1].categoryTitle)
+            }
+        }
         nextVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -113,15 +130,18 @@ extension ClipViewController: UICollectionViewDelegate {
 
 extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyClipList.count + 1
+        return clipCount+1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell else { return UICollectionViewCell() }
-        if indexPath.row == 0 {
-            cell.configureCell(forModel: ClipListModel(categoryID: 0, categoryTitle: "전체클립", toastNum: 100), icon: ImageLiterals.TabBar.allClip.withTintColor(.black900))
-        } else {
-            cell.configureCell(forModel: dummyClipList[indexPath.row-1], icon: ImageLiterals.TabBar.clip.withTintColor(.black900))
+        if let clips = clipList?.data {
+            if indexPath.row == 0 {
+                cell.configureCell(forModel: clips,
+                                   icon: ImageLiterals.TabBar.allClip.withTintColor(.black900), name: "전체클립")
+            } else {
+                cell.configureCell(forModel: clips, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.row-1)
+            }
         }
         return cell
     }
@@ -130,6 +150,7 @@ extension ClipViewController: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
             headerView.isDetailClipView(isHidden: false)
+            headerView.setupDataBind(count: clipCount)
             headerView.clipCollectionHeaderViewDelegate = self
             return headerView
         }
@@ -183,11 +204,64 @@ extension ClipViewController: AddClipBottomSheetViewDelegate {
         addClipBottom.changeHeightBottomSheet(height: 198)
     }
     
-    func dismissButtonTapped() {
-        addClipBottom.hideBottomSheet()
+    func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
+        postAddCategoryAPI(requestBody: text)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
             self.addClipBottomSheetView.resetTextField()
+            self.addClipBottom.hideBottomSheet()
+            self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
+        }
+    }
+    
+    func callCheckAPI(text: String) {
+        getCheckCategoryAPI(categoryTitle: text)
+    }
+}
+
+// MARK: - Network
+
+extension ClipViewController {
+    func getAllCategoryAPI() {
+        NetworkService.shared.clipService.getAllCategory { result in
+            switch result {
+            case .success(let response):
+                self.clipList = response
+                if let data = response?.data {
+                    self.clipCount = data.categories.count
+                    self.setupEmptyView()
+                }
+            default: return
+            }
+        }
+    }
+    
+    func postAddCategoryAPI(requestBody: PostAddCategoryRequestDTO) {
+        NetworkService.shared.clipService.postAddCategory(requestBody: requestBody) { result in
+            switch result {
+            case .success:
+                self.getAllCategoryAPI()
+            default: return
+            }
+        }
+    }
+    
+    func getCheckCategoryAPI(categoryTitle: String) {
+        NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle) { result in
+            switch result {
+            case .success(let response):
+                if let data = response?.data.isDupicated {
+                    if categoryTitle.count != 16 {
+                        if data {
+                            self.addHeightBottom()
+                            self.addClipBottomSheetView.changeTextField(addButton: false, border: true, error: true, clearButton: true)
+                            self.addClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
+                        } else {
+                            self.minusHeightBottom()
+                        }
+                    }
+                }
+            default: return
+            }
         }
     }
 }

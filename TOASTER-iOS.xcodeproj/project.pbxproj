@@ -135,7 +135,6 @@
 		6BE6DA692B50BD4E008B06FA /* PatchEditCategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA682B50BD4E008B06FA /* PatchEditCategoryRequestDTO.swift */; };
 		6BE6DA6B2B50BFED008B06FA /* NoneDataResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA6A2B50BFED008B06FA /* NoneDataResponseDTO.swift */; };
 		6BE6DA6D2B50C109008B06FA /* GetDetailCategoryResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA6C2B50C109008B06FA /* GetDetailCategoryResponseDTO.swift */; };
-		6BE6DA6F2B50C163008B06FA /* GetDetailAllCategoryResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA6E2B50C163008B06FA /* GetDetailAllCategoryResponseDTO.swift */; };
 		6BE6DA732B50C33A008B06FA /* GetAllCategoryResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA722B50C33A008B06FA /* GetAllCategoryResponseDTO.swift */; };
 		6BE6DA752B50C373008B06FA /* GetCheckCategoryResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA742B50C373008B06FA /* GetCheckCategoryResponseDTO.swift */; };
 		6BE6DA7C2B54571D008B06FA /* ToasterTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA7B2B54571D008B06FA /* ToasterTargetType.swift */; };
@@ -295,7 +294,6 @@
 		6BE6DA682B50BD4E008B06FA /* PatchEditCategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditCategoryRequestDTO.swift; sourceTree = "<group>"; };
 		6BE6DA6A2B50BFED008B06FA /* NoneDataResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoneDataResponseDTO.swift; sourceTree = "<group>"; };
 		6BE6DA6C2B50C109008B06FA /* GetDetailCategoryResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDetailCategoryResponseDTO.swift; sourceTree = "<group>"; };
-		6BE6DA6E2B50C163008B06FA /* GetDetailAllCategoryResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDetailAllCategoryResponseDTO.swift; sourceTree = "<group>"; };
 		6BE6DA722B50C33A008B06FA /* GetAllCategoryResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllCategoryResponseDTO.swift; sourceTree = "<group>"; };
 		6BE6DA742B50C373008B06FA /* GetCheckCategoryResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCheckCategoryResponseDTO.swift; sourceTree = "<group>"; };
 		6BE6DA7B2B54571D008B06FA /* ToasterTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterTargetType.swift; sourceTree = "<group>"; };
@@ -1098,7 +1096,6 @@
 			isa = PBXGroup;
 			children = (
 				6BE6DA6C2B50C109008B06FA /* GetDetailCategoryResponseDTO.swift */,
-				6BE6DA6E2B50C163008B06FA /* GetDetailAllCategoryResponseDTO.swift */,
 				6BE6DA722B50C33A008B06FA /* GetAllCategoryResponseDTO.swift */,
 				6BE6DA742B50C373008B06FA /* GetCheckCategoryResponseDTO.swift */,
 			);
