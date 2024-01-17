@@ -52,7 +52,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
 extension MainCollectionViewCell {
     func bindData(forModel: MainInfoModel) {
         userLabel.text = forModel.nickname + StringLiterals.Home.Main.subNickName
-        
+        userLabel.asFont(targetString: forModel.nickname, font: .suitBold(size: 20))
         noticeLabel.text = "토스터로 " + String(forModel.allToastNum) + "개의 링크를 \n잊지 않고 읽었어요!"
         noticeLabel.asFontColor(targetString: String(forModel.allToastNum) + "개의 링크", font: .suitExtraBold(size: 20), color: .toasterPrimary)
         
@@ -84,9 +84,8 @@ private extension MainCollectionViewCell {
         }
         
         userLabel.do {
-            $0.font = .suitBold(size: 20)
+            $0.font = .suitRegular(size: 20)
             $0.textColor = .black900
-            $0.asFont(targetString: StringLiterals.Home.Main.subNickName, font: .suitRegular(size: 20))
         }
         
         noticeLabel.do {
