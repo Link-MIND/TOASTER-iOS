@@ -8,6 +8,6 @@
 import Foundation
 
 struct SaveLinkModel {
-    let linkUrl: String
+    var linkUrl: String
     let categoryId: Int?
 }

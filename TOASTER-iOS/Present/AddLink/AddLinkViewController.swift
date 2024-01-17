@@ -124,7 +124,8 @@ private extension AddLinkViewController {
         if (addLinkView.linkEmbedTextField.text?.count ?? 0) < 1 {
             addLinkView.emptyError()
         } else {
-            postSaveLink()
+            // TODO: - categoryId는 민재 오빠 API 연결 후에 받아오겠습니다
+            postSaveLink(url: addLinkView.linkEmbedTextField.text ?? "", category: nil)
             let selectClipViewController = SelectClipViewController()
             selectClipViewController.delegate = self
             self.navigationController?.pushViewController(selectClipViewController, animated: true)
@@ -146,10 +147,28 @@ extension AddLinkViewController: SaveLinkButtonDelegate {
 
  // MARK: - Network
 
+//extension AddLinkViewController {
+//    func postSaveLink() {
+//        let request = PostSaveLinkRequestDTO(linkUrl: linkSaveList?.linkUrl ?? "",
+//                                             categoryId: linkSaveList?.categoryId)
+//        NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
+//            switch result {
+//            case .success:
+//                print(result)
+//            case .networkFail, .unAuthorized:
+//                self.changeViewController(viewController: LoginViewController())
+//            default:
+//                return
+//            }
+//        }
+//    }
+//    
+//}
+
 extension AddLinkViewController {
-    func postSaveLink() {
-        let request = PostSaveLinkRequestDTO(linkUrl: linkSaveList?.linkUrl ?? "",
-                                             categoryId: linkSaveList?.categoryId)
+    func postSaveLink(url: String, category: Int?) {
+        let request = PostSaveLinkRequestDTO(linkUrl: url,
+                                             categoryId: category)
         NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
             switch result {
             case .success:
