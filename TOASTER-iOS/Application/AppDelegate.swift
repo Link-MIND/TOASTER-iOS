@@ -134,18 +134,12 @@ extension AppDelegate: MessagingDelegate {
     // FCM 토큰을 받았을 때 실행
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         if let token = fcmToken {
-            KeyChainService.saveFCMToken(fcmToken: token, key: Config.fcmTokenKey)
+            let _ = KeyChainService.saveFCMToken(fcmToken: token, key: Config.fcmTokenKey)
         }
     }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    // 앱이 실행중일 때, 화면이 켜져있을 때 실행
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.alert, .badge, .sound])
-    }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
