@@ -84,11 +84,22 @@ struct KeyChainService {
                 kSecValueData as String: data
             ]
             
-            let status = SecItemAdd(query as CFDictionary, nil)
+            let status = SecItemUpdate(query as CFDictionary, [kSecValueData as String: data] as CFDictionary)
             
-            if status == errSecSuccess {
+            switch status {
+                
+            case errSecSuccess:
                 print("🍞⛔️KeyChain - FCMToken 저장 성공⛔️🍞")
-            } else {
+            case errSecItemNotFound:
+                let addStatus = SecItemAdd(query as CFDictionary, nil)
+                if addStatus == errSecSuccess {
+                    print("🍞⛔️KeyChain - FCMToken 저장 성공⛔️🍞")
+                    return true
+                } else {
+                    print("🍞⛔️KeyChain - FCMToken 저장 실패 (Error:\(addStatus))⛔️🍞")
+                    return false
+                }
+            default:
                 print("🍞⛔️KeyChain - FCMToken 저장 실패 (Error:\(status))⛔️🍞")
             }
         }
@@ -159,6 +170,7 @@ struct KeyChainService {
         if status == errSecSuccess, let retrievedData = dataTypeRef as? Data {
             if let token = String(data: retrievedData, encoding: .utf8) {
                 print("🍞⛔️KeyChain - FCMToken 불러오기 성공⛔️🍞")
+                print("🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨\(token)")
                 return token
             }
         }
