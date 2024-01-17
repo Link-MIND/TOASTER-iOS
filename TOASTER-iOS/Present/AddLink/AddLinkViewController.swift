@@ -19,12 +19,19 @@ protocol AddLinkViewControllerPopDelegate: AnyObject {
     func changeTabBarIndex()
 }
 
+protocol SelectClipViewControllerDelegate: AnyObject {
+    func sendEmbedUrl()
+}
+
 final class AddLinkViewController: UIViewController {
     
     // MARK: - Properties
     
+    private var linkSaveList: SaveLinkModel? 
+    
     private weak var delegate: AddLinkViewControllerPopDelegate?
-
+    private weak var urldelegate: SelectClipViewControllerDelegate?
+    
     // MARK: - UI Properties
     
     private var addLinkView = AddLinkView()
@@ -44,7 +51,7 @@ final class AddLinkViewController: UIViewController {
         
         setupNavigationBar()
 
-        navigationBarHidden(forHidden: true)
+        navigationBarHidden(forHidden: true) 
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -117,6 +124,7 @@ private extension AddLinkViewController {
             addLinkView.emptyError()
         } else {
             let selectClipViewController = SelectClipViewController()
+            selectClipViewController.linkURL = addLinkView.linkEmbedTextField.text ?? "" 
             selectClipViewController.delegate = self
             self.navigationController?.pushViewController(selectClipViewController, animated: true)
         }
