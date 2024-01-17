@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>TEMP_ACCESS_TOKEN</key>
-	<string>$(TEMP_ACCESS_TOKEN)</string>
 	<key>ACCESS_TOKEN_KEY</key>
 	<string>$(ACCESS_TOKEN_KEY)</string>
 	<key>APPLE_LOGIN</key>
@@ -41,6 +39,8 @@
 	</dict>
 	<key>REFRESH_TOKEN_KEY</key>
 	<string>$(REFRESH_TOKEN_KEY)</string>
+	<key>TEMP_ACCESS_TOKEN</key>
+	<string>$(TEMP_ACCESS_TOKEN)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SUIT-ExtraBold.otf</string>
@@ -66,5 +66,10 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>
