@@ -302,10 +302,10 @@ extension HomeViewController {
             case .success(let response):
                 if let data = response?.data {
                     for idx in 0..<data.count {
-                        self.weeklyLinkList = WeeklyLinkModel(toastId: data[idx].toastId,
-                                                              toastTitle: data[idx].toastTitle,
-                                                              toastImg: data[idx].toastImg ?? "",
-                                                              toastLink: data[idx].toastLink)
+                        self.weeklyLinkList = WeeklyLinkModel(toastId: data[idx].linkId,
+                                                              toastTitle: data[idx].linkTitle,
+                                                              toastImg: data[idx].linkImg ?? "",
+                                                              toastLink: data[idx].linkUrl)
                     }
                 }
             case .unAuthorized, .networkFail:
