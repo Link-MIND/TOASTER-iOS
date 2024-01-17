@@ -34,7 +34,7 @@ final class LinkWebViewController: UIViewController {
             readLinkCheckButton.tintColor = isRead ? .gray700 : .gray150
         }
     }
-    private var toastId: Int = 0
+    private var toastId: Int?
     
     // MARK: - UI Properties
     
@@ -177,7 +177,9 @@ private extension LinkWebViewController {
     
     /// 툴바 링크 확인 완료 버튼 클릭 시
     @objc func checkReadInWeb() {
-        patchOpenLinkAPI(requestBody: PatchOpenLink(toastId: toastId, isRead: !isRead))
+        if let toastId = toastId {
+            patchOpenLinkAPI(requestBody: PatchOpenLinkRequestDTO(toastId: toastId, isRead: !isRead))
+        }
     }
     
     /// 툴바 사파리 버튼 클릭 시
@@ -214,7 +216,7 @@ extension LinkWebViewController: WKNavigationDelegate {
 // MARK: - Network
 
 extension LinkWebViewController {
-    func patchOpenLinkAPI(requestBody: PatchOpenLink) {
+    func patchOpenLinkAPI(requestBody: PatchOpenLinkRequestDTO) {
         NetworkService.shared.toastService.patchOpenLink(requestBody: requestBody) { result in
             switch result {
             case .success:

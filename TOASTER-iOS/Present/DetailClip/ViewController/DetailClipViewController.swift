@@ -20,6 +20,7 @@ final class DetailClipViewController: UIViewController {
     private var segmentIndex: Int = 0
     private var toastList: GetDetailCategoryResponseDTO? {
         didSet {
+            clipCount = toastList?.data.toastListDto.count ?? 0
             detailClipListCollectionView.reloadData()
             setupEmptyView()
         }
@@ -69,6 +70,7 @@ private extension DetailClipViewController {
     func setupStyle() {
         view.backgroundColor = .toasterBackground
         detailClipListCollectionView.backgroundColor = .toasterBackground
+        detailClipEmptyView.isHidden = false
     }
     
     func setupHierarchy() {
@@ -240,7 +242,6 @@ extension DetailClipViewController {
             switch result {
             case .success(let response):
                 self.toastList = response
-                self.clipCount = response?.data.toastListDto.count ?? 0
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
             default: return
@@ -253,7 +254,6 @@ extension DetailClipViewController {
             switch result {
             case .success(let response):
                 self.toastList = response
-                self.clipCount = response?.data.toastListDto.count ?? 0
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
             default: return
@@ -265,7 +265,7 @@ extension DetailClipViewController {
         NetworkService.shared.toastService.deleteLink(toastId: toastId) { result in
             switch result {
             case .success:
-                if self.categoryName == "전체클립" {
+                if self.categoryId == 0 {
                     switch self.segmentIndex {
                     case 0: self.getDetailAllCategoryAPI(filter: .all)
                     case 1: self.getDetailAllCategoryAPI(filter: .read)

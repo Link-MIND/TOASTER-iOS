@@ -17,6 +17,10 @@ final class ClipViewController: UIViewController {
     private var clipList: GetAllCategoryResponseDTO? {
         didSet {
             clipListCollectionView.reloadData()
+            if let data = clipList?.data {
+                clipCount = data.categories.count
+                setupEmptyView()
+            }
         }
     }
     private var clipCount: Int = 0
@@ -110,15 +114,15 @@ private extension ClipViewController {
 extension ClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = DetailClipViewController()
-        if indexPath.row == 0 {
+        if indexPath.item == 0 {
             nextVC.getDetailAllCategoryAPI(filter: .all)
             nextVC.setupCategory(id: 0, name: "전체클립")
         } else {
             if let data = clipList?.data {
-                nextVC.getDetailCategoryAPI(categoryID: data.categories[indexPath.row-1].categoryId,
+                nextVC.getDetailCategoryAPI(categoryID: data.categories[indexPath.item-1].categoryId,
                                             filter: .all)
-                nextVC.setupCategory(id: data.categories[indexPath.row-1].categoryId,
-                                     name: data.categories[indexPath.row-1].categoryTitle)
+                nextVC.setupCategory(id: data.categories[indexPath.item-1].categoryId,
+                                     name: data.categories[indexPath.item-1].categoryTitle)
             }
         }
         nextVC.hidesBottomBarWhenPushed = true
@@ -136,11 +140,11 @@ extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell else { return UICollectionViewCell() }
         if let clips = clipList?.data {
-            if indexPath.row == 0 {
+            if indexPath.item == 0 {
                 cell.configureCell(forModel: clips,
                                    icon: ImageLiterals.TabBar.allClip.withTintColor(.black900), name: "전체클립")
             } else {
-                cell.configureCell(forModel: clips, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.row-1)
+                cell.configureCell(forModel: clips, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.item-1)
             }
         }
         return cell
@@ -206,11 +210,6 @@ extension ClipViewController: AddClipBottomSheetViewDelegate {
     
     func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
         postAddCategoryAPI(requestBody: text)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.addClipBottomSheetView.resetTextField()
-            self.addClipBottom.hideBottomSheet()
-            self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
-        }
     }
     
     func callCheckAPI(text: String) {
@@ -226,10 +225,6 @@ extension ClipViewController {
             switch result {
             case .success(let response):
                 self?.clipList = response
-                if let data = response?.data {
-                    self?.clipCount = data.categories.count
-                    self?.setupEmptyView()
-                }
             case .unAuthorized, .networkFail:
                 self?.changeViewController(viewController: LoginViewController())
             default: return
@@ -241,6 +236,11 @@ extension ClipViewController {
         NetworkService.shared.clipService.postAddCategory(requestBody: requestBody) { result in
             switch result {
             case .success:
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.addClipBottomSheetView.resetTextField()
+                    self.addClipBottom.hideBottomSheet()
+                    self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
+                }
                 self.getAllCategoryAPI()
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())

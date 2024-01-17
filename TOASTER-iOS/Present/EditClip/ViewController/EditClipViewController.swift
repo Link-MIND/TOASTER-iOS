@@ -237,11 +237,8 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
     }
     
     func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
-        patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO(categoryId: clipList?.data.categories[cellIndex].categoryId ?? 0, newTitle: text.categoryTitle))
-        editClipBottom.hideBottomSheet()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.showToastMessage(width: 157, status: .check, message: "클립 수정 완료!")
-            self.editClipBottomSheetView.resetTextField()
+        if let data = clipList?.data {
+            patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO(categoryId: data.categories[cellIndex].categoryId, newTitle: text.categoryTitle))
         }
     }
 }
@@ -292,6 +289,11 @@ extension EditClipViewController {
         NetworkService.shared.clipService.patchEditNameCategory(requestBody: requestBody) { result in
             switch result {
             case .success:
+                self.editClipBottom.hideBottomSheet()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.showToastMessage(width: 157, status: .check, message: "클립 수정 완료!")
+                    self.editClipBottomSheetView.resetTextField()
+                }
                 self.getAllCategoryAPI()
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
