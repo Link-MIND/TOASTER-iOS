@@ -97,7 +97,7 @@ private extension SettingTableViewCell {
     func setupLayout() {
         settingLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
         settingSwitch.snp.makeConstraints {
