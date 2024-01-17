@@ -7,13 +7,19 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
+
+protocol DetailClipListCollectionViewCellDelegate: AnyObject {
+    func modifiedButtonTapped(toastId: Int)
+}
 
 final class DetailClipListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    private var toastId: Int = 0
     private var isReadDimmedView: Bool = false {
         didSet {
             dimmedView.isHidden = !isReadDimmedView
@@ -30,7 +36,7 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
             setupHiddenLayout(forHidden: isClipNameLabelHidden)
         }
     }
-    var detailClipListCollectionViewCellButtonAction: (() -> Void)?
+    weak var detailClipListCollectionViewCellDelegate: DetailClipListCollectionViewCellDelegate?
     
     // MARK: - UI Components
     
@@ -61,13 +67,27 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension DetailClipListCollectionViewCell {
-    func configureCell(forModel: ToastList) {
+    func configureCell(forModel: GetDetailCategoryResponseData, index: Int) {
         modifiedButton.isHidden = false
-        clipNameLabel.text = forModel.categoryTitle
-        linkTitleLabel.text = forModel.toastTitle
-        linkLabel.text = forModel.linkURL
-        isClipNameLabelHidden = forModel.isRead
-        isReadDimmedView = forModel.isRead
+        clipNameLabel.text = forModel.toastListDto[index].categoryTitle
+        linkTitleLabel.text = forModel.toastListDto[index].toastTitle
+        linkLabel.text = forModel.toastListDto[index].linkUrl
+        isClipNameLabelHidden = forModel.toastListDto[index].categoryTitle != nil ? true : false
+        isReadDimmedView = forModel.toastListDto[index].isRead
+        toastId = forModel.toastListDto[index].toastId
+        
+        if forModel.toastListDto[index].categoryTitle != nil {
+            clipNameLabel.text = forModel.toastListDto[index].categoryTitle
+            isClipNameLabelHidden = false
+        } else {
+            isClipNameLabelHidden = true
+        }
+        
+        if let imageURL = forModel.toastListDto[index].thumbnailUrl {
+            linkImage.kf.setImage(with: URL(string: imageURL))
+        } else {
+            linkImage.image = ImageLiterals.Clip.thumb
+        }
     }
     
     func configureCell(forModel: SearchResultDetailClipModel, forText: String) {
@@ -94,7 +114,6 @@ private extension DetailClipListCollectionViewCell {
         
         linkImage.do {
             $0.makeRounded(radius: 8)
-            $0.image = ImageLiterals.Clip.thumb
         }
         
         clipNameLabel.do {
@@ -103,7 +122,6 @@ private extension DetailClipListCollectionViewCell {
             $0.textColor = .toasterPrimary
             $0.font = .suitMedium(size: 10)
             $0.textAlignment = .center
-            $0.text = "세부 클립명 API 나오면 붙일게요~"
         }
         
         linkTitleLabel.do {
@@ -164,6 +182,7 @@ private extension DetailClipListCollectionViewCell {
         linkTitleLabel.snp.makeConstraints {
             $0.top.equalTo(clipNameLabel.snp.bottom).offset(6)
             $0.leading.equalTo(linkImage.snp.trailing).offset(12)
+            $0.trailing.equalToSuperview().inset(44)
         }
         
         dimmedView.snp.makeConstraints {
@@ -180,11 +199,13 @@ private extension DetailClipListCollectionViewCell {
             linkTitleLabel.snp.remakeConstraints {
                 $0.top.equalToSuperview().inset(12)
                 $0.leading.equalTo(linkImage.snp.trailing).offset(12)
+                $0.trailing.equalToSuperview().inset(44)
             }
         } else {
             linkTitleLabel.snp.remakeConstraints {
                 $0.top.equalTo(clipNameLabel.snp.bottom).offset(6)
                 $0.leading.equalTo(linkImage.snp.trailing).offset(12)
+                $0.trailing.equalToSuperview().inset(12)
             }
         }
     }
@@ -195,6 +216,6 @@ private extension DetailClipListCollectionViewCell {
     
     @objc
     func buttonTapped() {
-        detailClipListCollectionViewCellButtonAction?()
+        detailClipListCollectionViewCellDelegate?.modifiedButtonTapped(toastId: toastId)
     }
 }

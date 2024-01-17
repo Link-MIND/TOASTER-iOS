@@ -112,7 +112,7 @@ private extension ClipCollectionHeaderView {
             $0.trailing.equalToSuperview().inset(20)
         }
     }
-
+    
     @objc
     func buttonTapped(_ sender: UIButton) {
         switch sender {

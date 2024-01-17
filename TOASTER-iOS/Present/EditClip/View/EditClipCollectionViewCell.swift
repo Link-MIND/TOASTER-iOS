@@ -42,7 +42,7 @@ final class EditClipCollectionViewCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension EditClipCollectionViewCell {
-    func configureCell(forModel: ClipListModel, icon: UIImage, isFirst: Bool) {
+    func configureCell(forModel: GetAllCategoryData, icon: UIImage, isFirst: Bool) {
         clipTitleLabel.text = forModel.categoryTitle
         leadingButton.setImage(icon, for: .normal)
         changeTitleButton.isHidden = isFirst
