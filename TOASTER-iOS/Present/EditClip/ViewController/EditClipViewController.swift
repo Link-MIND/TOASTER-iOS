@@ -12,6 +12,15 @@ import Then
 
 final class EditClipViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    private var cellIndex: Int = 0
+    private var clipList: GetAllCategoryResponseDTO? {
+        didSet {
+            editClipCollectionView.reloadData()
+        }
+    }
+    
     // MARK: - UI Properties
     
     private let editClipNoticeView = EditClipNoticeView()
@@ -37,6 +46,14 @@ final class EditClipViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+    }
+}
+
+// MARK: - Extensions
+
+extension EditClipViewController {
+    func setupDataBind(getAllCategoryResponseDTO: GetAllCategoryResponseDTO) {
+        clipList = getAllCategoryResponseDTO
     }
 }
 
@@ -87,11 +104,8 @@ private extension EditClipViewController {
         editClipCollectionView.dropDelegate = self
     }
     
-    func popupDeleteButtonTapped() {
-        // 삭제 서버 통신 붙일 부분
-        dismiss(animated: false) {
-            self.showToastMessage(width: 152, status: .check, message: "클립 삭제 완료")
-        }
+    func popupDeleteButtonTapped(categoryID: Int, index: Int) {
+        deleteCategoryAPI(requestBody: DeleteCategoryRequestDTO.init(deleteCategoryList: [categoryID]))
     }
 }
 
@@ -99,30 +113,32 @@ private extension EditClipViewController {
 
 extension EditClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyClipList.count + 1
+        if let data = clipList?.data { return data.categories.count+1 }
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EditClipCollectionViewCell.className, for: indexPath) as? EditClipCollectionViewCell else { return UICollectionViewCell() }
         if indexPath.row == 0 {
-            cell.configureCell(forModel: ClipListModel(categoryID: 0, categoryTitle: "전체클립",
-                                                       toastNum: 100),
-                               icon: ImageLiterals.Clip.pin,
-                               isFirst: true)
+            cell.configureCell(forModel: GetAllCategoryData(categoryId: 0, categoryTitle: "전체클립", toastNum: 0),
+                               icon: ImageLiterals.Clip.pin, isFirst: true)
         } else {
-            cell.configureCell(forModel: dummyClipList[indexPath.row-1],
-                               icon: ImageLiterals.Clip.delete,
-                               isFirst: false)
-            
-            cell.leadingButtonTapped {
-                self.showPopup(forMainText: "‘\(dummyClipList[indexPath.row-1].categoryTitle)’ 클립을 삭제하시겠어요?",
-                               forSubText: "지금까지 저장된 모든 링크가 사라져요",
-                               forLeftButtonTitle: "닫기",
-                               forRightButtonTitle: "삭제",
-                               forRightButtonHandler: self.popupDeleteButtonTapped)
+            if let clips = clipList?.data {
+                cell.configureCell(forModel: clips.categories[indexPath.row-1],
+                                   icon: ImageLiterals.Clip.delete,
+                                   isFirst: false)
+                
+                cell.leadingButtonTapped {
+                    self.showPopup(forMainText: "‘\(clips.categories[indexPath.row-1].categoryTitle)’ 클립을 삭제하시겠어요?",
+                                   forSubText: "지금까지 저장된 모든 링크가 사라져요",
+                                   forLeftButtonTitle: "닫기",
+                                   forRightButtonTitle: "삭제",
+                                   forRightButtonHandler: { self.popupDeleteButtonTapped(categoryID: clips.categories[indexPath.row-1].categoryId, index: indexPath.row-1) })
+                }
             }
             
             cell.changeTitleButtonTapped {
+                self.cellIndex = indexPath.item-1
                 self.editClipBottom.modalPresentationStyle = .overFullScreen
                 self.present(self.editClipBottom, animated: false)
             }
@@ -189,9 +205,12 @@ extension EditClipViewController: UICollectionViewDropDelegate {
         if destinationIndexPath.item != 0 {
             guard let item = coordinator.items.first, let sourceIndexPath = item.sourceIndexPath else { return }
             collectionView.performBatchUpdates {
-                let sourceItem = dummyClipList[sourceIndexPath.item-1]
-                dummyClipList.remove(at: sourceIndexPath.item-1)
-                dummyClipList.insert(sourceItem, at: destinationIndexPath.item-1)
+                if var clips = clipList?.data {
+                    let sourceItem = clips.categories.remove(at: sourceIndexPath.item - 1)
+                    clips.categories.insert(sourceItem, at: destinationIndexPath.item - 1)
+                    clipList?.data.categories = clips.categories
+                    patchEditPriorityCategoryAPI(requestBody: PatchEditPriorityCategoryRequestDTO(categoryId: clips.categories[destinationIndexPath.item-1].categoryId, newPriority: destinationIndexPath.item-1))
+                }
                 collectionView.deleteItems(at: [sourceIndexPath])
                 collectionView.insertItems(at: [destinationIndexPath])
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
@@ -205,6 +224,10 @@ extension EditClipViewController: UICollectionViewDropDelegate {
 // MARK: - AddClipBottomSheetView Delegate
 
 extension EditClipViewController: AddClipBottomSheetViewDelegate {
+    func callCheckAPI(text: String) {
+        getCheckCategoryAPI(categoryTitle: text)
+    }
+    
     func addHeightBottom() {
         editClipBottom.changeHeightBottomSheet(height: 219)
     }
@@ -213,12 +236,91 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
         editClipBottom.changeHeightBottomSheet(height: 198)
     }
     
-    func dismissButtonTapped() {
-        // 수정 서버 통신 붙일 부분
-        editClipBottom.hideBottomSheet()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.showToastMessage(width: 157, status: .check, message: "클립 수정 완료!")
-            self.editClipBottomSheetView.resetTextField()
+    func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
+        if let data = clipList?.data {
+            patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO(categoryId: data.categories[cellIndex].categoryId, newTitle: text.categoryTitle))
+        }
+    }
+}
+
+// MARK: - Network
+
+extension EditClipViewController {
+    func getAllCategoryAPI() {
+        NetworkService.shared.clipService.getAllCategory { result in
+            switch result {
+            case .success(let response):
+                self.clipList = response
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default: return
+            }
+        }
+    }
+    
+    func deleteCategoryAPI(requestBody: DeleteCategoryRequestDTO) {
+        NetworkService.shared.clipService.deleteCategory(requestBody: requestBody) { result in
+            switch result {
+            case .success:
+                self.getAllCategoryAPI()
+                self.dismiss(animated: false) {
+                    self.showToastMessage(width: 152, status: .check, message: "클립 삭제 완료")
+                }
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default: return
+            }
+        }
+    }
+    
+    func patchEditPriorityCategoryAPI(requestBody: PatchEditPriorityCategoryRequestDTO) {
+        NetworkService.shared.clipService.patchEditPriorityCategory(requestBody: requestBody) { result in
+            switch result {
+            case .success:
+                self.getAllCategoryAPI()
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default: return
+            }
+        }
+    }
+    
+    func patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO) {
+        NetworkService.shared.clipService.patchEditNameCategory(requestBody: requestBody) { result in
+            switch result {
+            case .success:
+                self.editClipBottom.hideBottomSheet()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.showToastMessage(width: 157, status: .check, message: "클립 수정 완료!")
+                    self.editClipBottomSheetView.resetTextField()
+                }
+                self.getAllCategoryAPI()
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default: return
+            }
+        }
+    }
+    
+    func getCheckCategoryAPI(categoryTitle: String) {
+        NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle) { result in
+            switch result {
+            case .success(let response):
+                if let data = response?.data.isDupicated {
+                    if categoryTitle.count != 16 {
+                        if data {
+                            self.addHeightBottom()
+                            self.editClipBottomSheetView.changeTextField(addButton: false, border: true, error: true, clearButton: true)
+                            self.editClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
+                        } else {
+                            self.minusHeightBottom()
+                        }
+                    }
+                }
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default: return
+            }
         }
     }
 }

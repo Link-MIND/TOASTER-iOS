@@ -12,7 +12,7 @@ import Moya
 protocol ToasterAPIServiceProtocol {
     func postSaveLink(requestBody: PostSaveLinkRequestDTO,
                       completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
-    func patchOpenLink(requestBody: PostSaveLinkRequestDTO,
+    func patchOpenLink(requestBody: PatchOpenLinkRequestDTO,
                        completion: @escaping (NetworkResult<PatchOpenLinkResponseDTO>) -> Void)
     func deleteLink(toastId: Int,
                     completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
@@ -40,7 +40,7 @@ final class ToasterAPIService: BaseAPIService, ToasterAPIServiceProtocol {
         }
     }
     
-    func patchOpenLink(requestBody: PostSaveLinkRequestDTO, 
+    func patchOpenLink(requestBody: PatchOpenLinkRequestDTO, 
                        completion: @escaping (NetworkResult<PatchOpenLinkResponseDTO>) -> Void) {
         provider.request(.patchOpenLink(requestBody: requestBody)) { result in
             switch result {

@@ -19,7 +19,8 @@ enum ClipTargetType {
     case postAddCategory(requestBody: PostAddCategoryRequestDTO)
     case getDetailCategory(categoryID: Int, filter: DetailCategoryFilter)
     case deleteCategory(requestBody: DeleteCategoryRequestDTO)
-    case patchEditCategory(requestBody: PatchPushAlarmRequestDTO)
+    case patchEditPriorityCategory(requestBody: PatchEditPriorityCategoryRequestDTO)
+    case patchEditNameCategory(requestBody: PatchEditNameCategoryRequestDTO)
     case getAllCategory
     case getCheckCategory(categoryTitle: String)
 }
@@ -49,31 +50,34 @@ extension ClipTargetType: BaseTargetType {
         switch self {
         case .postAddCategory(let body): return body
         case .deleteCategory(let body): return body
-        case .patchEditCategory(let body): return body
+        case .patchEditPriorityCategory(let body): return body
+        case .patchEditNameCategory(let body): return body
         default: return .none
         }
     }
     
     var path: String {
         switch self {
-        case .postAddCategory(_): return utilPath.rawValue
+        case .postAddCategory: return utilPath.rawValue
         case .getDetailCategory(let categoryID, _):
             return utilPath.rawValue + "/\(categoryID)"
-        case .deleteCategory(_): return utilPath.rawValue
-        case .patchEditCategory(_): return utilPath.rawValue + "/edit"
+        case .deleteCategory: return utilPath.rawValue
+        case .patchEditPriorityCategory: return utilPath.rawValue + "/priority"
+        case .patchEditNameCategory: return utilPath.rawValue + "/title"
         case .getAllCategory: return utilPath.rawValue + "/all"
-        case .getCheckCategory(_): return utilPath.rawValue + "/check"
+        case .getCheckCategory: return utilPath.rawValue + "/check"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .postAddCategory(_): return .post
-        case .getDetailCategory(_, _): return .get
-        case .deleteCategory(_): return .delete
-        case .patchEditCategory(_): return .patch
+        case .postAddCategory: return .post
+        case .getDetailCategory: return .get
+        case .deleteCategory: return .delete
+        case .patchEditNameCategory: return .patch
+        case .patchEditPriorityCategory: return .patch
         case .getAllCategory: return .get
-        case .getCheckCategory(_): return .get
+        case .getCheckCategory: return .get
         }
     }
 }
