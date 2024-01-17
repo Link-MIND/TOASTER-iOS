@@ -15,6 +15,18 @@ final class HomeViewController: UIViewController {
     
     private let homeView = HomeView()
     
+    private var _clipItemCount: Int = 0
+
+    private var clipItemCount: Int {
+        get {
+            return _clipItemCount
+        }
+        set(newValue) {
+            let adjustedValue = newValue + 2
+            _clipItemCount = min(adjustedValue, 4)
+        }
+    }
+
     private var mainInfoList: MainInfoModel? {
         didSet {
             homeView.collectionView.reloadData()
@@ -97,7 +109,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            return (mainInfoList?.mainCategoryListDto.count ?? 0) + 1
+            return clipItemCount
         case 2:
             return weeklyLinkList?.count ?? 0
         case 3:
@@ -117,15 +129,25 @@ extension HomeViewController: UICollectionViewDataSource {
             cell.mainCollectionViewDelegate = self
             return cell
         case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
+            let lastIndex = clipItemCount - 1
+            
             if indexPath.item == 0 {
-                cell.bindData(forModel: CategoryList(categoryId: 0, categroyTitle: "전체클립", toastNum: 100), icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
-            } else {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
                 if let model = mainInfoList {
-                    cell.bindData(forModel: model.mainCategoryListDto[indexPath.item - 1], icon: ImageLiterals.Home.clipFull.withTintColor(.black900))
+                    cell.bindData(forModel: CategoryList(categoryId: 0, categroyTitle: "전체클립", toastNum: model.allToastNum), icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
                 }
+                return cell
+            } else if clipItemCount <= 4 && lastIndex == indexPath.item && mainInfoList?.mainCategoryListDto.count ?? 0 <= 2 {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipEmptyCollectionViewCell.className, for: indexPath) as? UserClipEmptyCollectionViewCell else { return UICollectionViewCell() }
+                return cell
+            } else {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
+                
+                if let model = mainInfoList?.mainCategoryListDto {
+                    cell.bindData(forModel: model[indexPath.item - 1], icon: ImageLiterals.Home.clipFull)
+                }
+                return cell
             }
-            return cell
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyLinkCollectionViewCell.className, for: indexPath) as? WeeklyLinkCollectionViewCell
             else { return UICollectionViewCell() }
@@ -318,6 +340,8 @@ extension HomeViewController {
                                                       readToastNum: data.readToastNum,
                                                       allToastNum: data.allToastNum,
                                                       mainCategoryListDto: categoryList)
+                    
+                    self.clipItemCount = data.mainCategoryListDto.count
                 }
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())

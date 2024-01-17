@@ -18,7 +18,7 @@ enum DetailCategoryFilter: String {
 enum ClipTargetType {
     case postAddCategory(requestBody: PostAddCategoryRequestDTO)
     case getDetailCategory(categoryID: Int, filter: DetailCategoryFilter)
-    case deleteCategory(requestBody: DeleteCategoryRequestDTO)
+    case deleteCategory(deleteCategoryDto: Int)
     case patchEditPriorityCategory(requestBody: PatchEditPriorityCategoryRequestDTO)
     case patchEditNameCategory(requestBody: PatchEditNameCategoryRequestDTO)
     case getAllCategory
@@ -42,6 +42,8 @@ extension ClipTargetType: BaseTargetType {
             return ["filter": filter.rawValue]
         case .getCheckCategory(let categoryTitle):
             return ["title": categoryTitle]
+        case .deleteCategory(let deleteCategoryDto):
+            return ["deleteCategoryDto": deleteCategoryDto]
         default: return .none
         }
     }
@@ -49,7 +51,6 @@ extension ClipTargetType: BaseTargetType {
     var requestBodyParameter: Codable? {
         switch self {
         case .postAddCategory(let body): return body
-        case .deleteCategory(let body): return body
         case .patchEditPriorityCategory(let body): return body
         case .patchEditNameCategory(let body): return body
         default: return .none

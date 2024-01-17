@@ -17,7 +17,7 @@ protocol ClipAPIServiceProtocol {
                            completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> Void)
     func getDetailAllCategory(filter: DetailCategoryFilter,
                               completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> Void)
-    func deleteCategory(requestBody: DeleteCategoryRequestDTO,
+    func deleteCategory(deleteCategoryDto: Int,
                         completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
     func patchEditPriorityCategory(requestBody: PatchEditPriorityCategoryRequestDTO,
                                    completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
@@ -86,9 +86,9 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
         }
     }
     
-    func deleteCategory(requestBody: DeleteCategoryRequestDTO, 
+    func deleteCategory(deleteCategoryDto: Int,
                         completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
-        provider.request(.deleteCategory(requestBody: requestBody)) { result in
+        provider.request(.deleteCategory(deleteCategoryDto: deleteCategoryDto)) { result in
             switch result {
             case .success(let response):
                 let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
