@@ -242,7 +242,7 @@ extension DetailClipViewController {
             switch result {
             case .success(let response):
                 self.toastList = response
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }
@@ -254,7 +254,7 @@ extension DetailClipViewController {
             switch result {
             case .success(let response):
                 self.toastList = response
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }
@@ -278,7 +278,7 @@ extension DetailClipViewController {
                     default: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .unread)
                     }
                 }
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }
