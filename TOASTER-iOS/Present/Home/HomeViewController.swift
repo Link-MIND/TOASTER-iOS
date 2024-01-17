@@ -21,13 +21,13 @@ final class HomeViewController: UIViewController {
         }
     }
     
-    private var weeklyLinkList: WeeklyLinkModel? {
+    private var weeklyLinkList: [WeeklyLinkModel]? {
         didSet {
             homeView.collectionView.reloadData()
         }
     }
     
-    private var recommendSiteList: RecommendSiteModel? {
+    private var recommendSiteList: [RecommendSiteModel]? {
         didSet {
             homeView.collectionView.reloadData()
         }
@@ -67,9 +67,9 @@ extension HomeViewController: UICollectionViewDataSource {
         case 1:
             return (mainInfoList?.mainCategoryListDto.count ?? 0) + 1
         case 2:
-            return weeklyLinkList?.toastId ?? 0
+            return weeklyLinkList?.count ?? 0
         case 3:
-            return 9 // 나중에 recommendSiteList.count 로 변경해줘야됨 어케해
+            return recommendSiteList?.count ?? 0
         default:
             return 0
         }
@@ -98,14 +98,14 @@ extension HomeViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyLinkCollectionViewCell.className, for: indexPath) as? WeeklyLinkCollectionViewCell
             else { return UICollectionViewCell() }
             if let model = weeklyLinkList {
-                cell.bindData(forModel: model)
+                cell.bindData(forModel: model[indexPath.item])
             }
             return cell
         case 3:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyRecommendCollectionViewCell.className, for: indexPath) as? WeeklyRecommendCollectionViewCell
             else { return UICollectionViewCell() }
             if let model = recommendSiteList {
-                cell.bindData(forModel: model)
+                cell.bindData(forModel: model[indexPath.item])
             }
             return cell
         default:
@@ -300,13 +300,15 @@ extension HomeViewController {
         NetworkService.shared.toastService.getWeeksLink { result in
             switch result {
             case .success(let response):
+                var list: [WeeklyLinkModel] = []
                 if let data = response?.data {
                     for idx in 0..<data.count {
-                        self.weeklyLinkList = WeeklyLinkModel(toastId: data[idx].linkId,
-                                                              toastTitle: data[idx].linkTitle,
-                                                              toastImg: data[idx].linkImg ?? "",
-                                                              toastLink: data[idx].linkUrl)
+                        list.append(WeeklyLinkModel(toastId: data[idx].linkId,
+                                                    toastTitle: data[idx].linkTitle,
+                                                    toastImg: data[idx].linkImg ?? "",
+                                                    toastLink: data[idx].linkUrl))
                     }
+                    self.weeklyLinkList = list
                 }
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
@@ -321,14 +323,16 @@ extension HomeViewController {
         NetworkService.shared.searchService.getRecommendSite { result in
             switch result {
             case .success(let response):
+                var list: [RecommendSiteModel] = []
                 if let data = response?.data {
                     for idx in 0..<data.count {
-                        self.recommendSiteList = RecommendSiteModel(siteId: data[idx].siteId,
-                                                                    siteTitle: data[idx].siteTitle, 
-                                                                    siteUrl: data[idx].siteUrl,
-                                                                    siteImg: data[idx].siteImg,
-                                                                    siteSub: data[idx].siteSub)
+                        list.append(RecommendSiteModel(siteId: data[idx].siteId,
+                                                       siteTitle: data[idx].siteTitle,
+                                                       siteUrl: data[idx].siteUrl,
+                                                       siteImg: data[idx].siteImg,
+                                                       siteSub: data[idx].siteSub))
                     }
+                    self.recommendSiteList = list
                 }
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
