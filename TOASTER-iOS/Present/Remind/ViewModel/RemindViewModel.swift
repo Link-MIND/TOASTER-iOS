@@ -47,11 +47,15 @@ final class RemindViewModel {
     var timerData: RemindModel = RemindModel(completeTimerModelList: [],
                                              waitTimerModelList: []) {
         didSet {
-            if timerData.completeTimerModelList.count == 0 && 
-                timerData.waitTimerModelList.count == 0 {
-                remindViewType = .deviceOnAppOnNoneData
-            } else {
-                remindViewType = .deviceOnAppOnExistData
+            switch remindViewType {
+            case .deviceOnAppOnExistData, .deviceOnAppOnNoneData :
+                if timerData.completeTimerModelList.count == 0 &&
+                    timerData.waitTimerModelList.count == 0 {
+                        remindViewType = .deviceOnAppOnNoneData
+                    } else {
+                        remindViewType = .deviceOnAppOnExistData
+                    }
+            default: break
             }
         }
     }
@@ -164,6 +168,7 @@ private extension RemindViewModel {
                 if appAlarmSetting == false {     // device 알람이 켜져있고, 앱 알람이 꺼져있을 때
                     remindViewType = .deviceOnAppOff
                 } else {
+                    self.remindViewType = .deviceOnAppOnExistData
                     self.fetchTimerData()
                 }
             }

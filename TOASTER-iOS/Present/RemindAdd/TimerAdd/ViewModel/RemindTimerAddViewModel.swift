@@ -17,6 +17,7 @@ final class RemindTimerAddViewModel {
     private var editSuccessAction: DataChangeAction?
     private var unAuthorizedAction: DataChangeAction?
     private var unProcessableAction: DataChangeAction?
+    private var badRequestAction: DataChangeAction?
     
     // MARK: - Data
     
@@ -34,12 +35,14 @@ extension RemindTimerAddViewModel {
                                forSuccessAction: @escaping DataChangeAction,
                                forEditSuccessAction: @escaping DataChangeAction,
                                forUnAuthorizedAction: @escaping DataChangeAction,
-                               forUnProcessableAction: @escaping DataChangeAction) {
+                               forUnProcessableAction: @escaping DataChangeAction,
+                               forBadRequestAction: @escaping DataChangeAction) {
         dataChangeAction = changeAction
         patchSuccessAction = forSuccessAction
         editSuccessAction = forEditSuccessAction
         unAuthorizedAction = forUnAuthorizedAction
         unProcessableAction = forUnProcessableAction
+        badRequestAction = forBadRequestAction
     }
     
     func fetchClipData(forID: Int) {
@@ -67,6 +70,8 @@ extension RemindTimerAddViewModel {
                 self.unAuthorizedAction?()
             case .unProcessable:
                 self.unProcessableAction?()
+            case .badRequest:
+                self.badRequestAction?()
             default: break
             }
         }

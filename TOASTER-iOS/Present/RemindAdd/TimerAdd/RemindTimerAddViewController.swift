@@ -252,7 +252,8 @@ private extension RemindTimerAddViewController {
                                         forSuccessAction: patchSuccessAction, 
                                         forEditSuccessAction: editSuccessAction,
                                         forUnAuthorizedAction: unAuthorizedAction,
-                                        forUnProcessableAction: unProcessableAction)
+                                        forUnProcessableAction: unProcessableAction, 
+                                        forBadRequestAction: badRequestAction)
     }
     
     func configureView() {
@@ -261,6 +262,10 @@ private extension RemindTimerAddViewController {
             self.mainLabel.asFont(targetString: data.clipTitle,
                                   font: .suitSemiBold(size: 18))
             self.selectedIndex = Set(data.remindDates)
+            
+            let date = networkDateformatter.date(from: data.remindTime) ?? Date()
+            timerLabel.text = labelDateformatter.string(from: date)
+            datePickerView.date = date
         }
     }
     
@@ -280,6 +285,10 @@ private extension RemindTimerAddViewController {
     
     func unProcessableAction() {
         self.showToastMessage(width: 297, status: .warning, message: "한 클립당 하나의 타이머만 설정 가능해요")
+    }
+    
+    func badRequestAction() {
+        self.showToastMessage(width: 297, status: .warning, message: "타이머는 최대 다섯 개까지 설정 가능해요")
     }
     
     func setupNavigationBar() {
@@ -315,7 +324,7 @@ private extension RemindTimerAddViewController {
     }
     
     func closeButtonTapped() {
-        showPopup(forMainText: "타이머 만들기를 취소할까요?",
+        showPopup(forMainText: "타이머 설정을 취소할까요?",
                   forSubText: "지금까지 진행한 타이머 설정이\n사라져요",
                   forLeftButtonTitle: "닫기",
                   forRightButtonTitle: "취소",
