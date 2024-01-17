@@ -50,9 +50,7 @@ final class AddLinkViewController: UIViewController {
         
         setupNavigationBar()
 
-        navigationBarHidden(forHidden: true)
-        
-        
+        navigationBarHidden(forHidden: true) 
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -146,24 +144,6 @@ extension AddLinkViewController: SaveLinkButtonDelegate {
 }
 
  // MARK: - Network
-
-//extension AddLinkViewController {
-//    func postSaveLink() {
-//        let request = PostSaveLinkRequestDTO(linkUrl: linkSaveList?.linkUrl ?? "",
-//                                             categoryId: linkSaveList?.categoryId)
-//        NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
-//            switch result {
-//            case .success:
-//                print(result)
-//            case .networkFail, .unAuthorized:
-//                self.changeViewController(viewController: LoginViewController())
-//            default:
-//                return
-//            }
-//        }
-//    }
-//    
-//}
 
 extension AddLinkViewController {
     func postSaveLink(url: String, category: Int?) {
