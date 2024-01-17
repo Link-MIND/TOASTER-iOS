@@ -102,7 +102,9 @@ extension HomeViewController: UICollectionViewDataSource {
             
             if indexPath.item == 0 {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
-                cell.bindData(forModel: CategoryList(categoryId: 0, categroyTitle: "전체클립", toastNum: 100), icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
+                if let model = mainInfoList {
+                    cell.bindData(forModel: CategoryList(categoryId: 0, categroyTitle: "전체클립", toastNum: model.allToastNum), icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
+                }
                 return cell
             } else if clipItemCount <= 4 && lastIndex == indexPath.item && mainInfoList?.mainCategoryListDto.count ?? 0 <= 2 {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipEmptyCollectionViewCell.className, for: indexPath) as? UserClipEmptyCollectionViewCell else { return UICollectionViewCell() }
