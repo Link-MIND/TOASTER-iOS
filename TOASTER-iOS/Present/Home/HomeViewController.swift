@@ -19,7 +19,6 @@ final class HomeViewController: UIViewController {
 
     private var clipItemCount: Int {
         get {
-            print("clipItemCount: \(_clipItemCount)")
             return _clipItemCount
         }
         set(newValue) {
