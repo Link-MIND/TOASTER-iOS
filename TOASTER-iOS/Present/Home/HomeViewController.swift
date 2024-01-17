@@ -14,7 +14,7 @@ final class HomeViewController: UIViewController {
     // MARK: - Properties
     
     private let homeView = HomeView()
-
+    
     private var mainInfoList: MainInfoModel? {
         didSet {
             homeView.collectionView.reloadData()
@@ -34,7 +34,7 @@ final class HomeViewController: UIViewController {
     }
     
     // MARK: - UI Properties
-
+    
     private let addClipBottomSheetView = AddClipBottomSheetView()
     private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
     
@@ -62,7 +62,19 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1:
-            print(mainInfoList?.mainCategoryListDto[indexPath.item].categoryId)
+            if let data = mainInfoList?.mainCategoryListDto {
+                if indexPath.item < data.count {
+                    let nextVC = DetailClipViewController()
+                    nextVC.getDetailCategoryAPI(categoryID: data[indexPath.item].categoryId,
+                                                filter: .all)
+                    nextVC.setupCategory(id: data[indexPath.item].categoryId,
+                                         name: data[indexPath.item].categroyTitle)
+                    nextVC.hidesBottomBarWhenPushed = true
+                    self.navigationController?.pushViewController(nextVC, animated: true)
+                } else {
+                    addClipCellTapped()
+                }
+            }
         case 2:
             let nextVC = LinkWebViewController()
             nextVC.hidesBottomBarWhenPushed = true
@@ -118,7 +130,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case 1:
             let lastIndex = mainInfoList?.mainCategoryListDto.count ?? 0
             
-            if indexPath.item == lastIndex {
+            if indexPath.item == lastIndex && lastIndex < 4 {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipEmptyCollectionViewCell.className, for: indexPath) as? UserClipEmptyCollectionViewCell else { return UICollectionViewCell() }
                 return cell
             } else {
@@ -268,7 +280,7 @@ private extension HomeViewController {
 
 extension HomeViewController: AddClipBottomSheetViewDelegate {
     func callCheckAPI(text: String) {
-        // getCheckCategoryAPI(categoryTitle: text)
+        getCheckCategoryAPI(categoryTitle: text)
     }
     
     func addHeightBottom() {
@@ -280,11 +292,7 @@ extension HomeViewController: AddClipBottomSheetViewDelegate {
     }
     
     func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
-        addClipBottom.hideBottomSheet()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
-            self.addClipBottomSheetView.resetTextField()
-        }
+        postAddCategoryAPI(requestBody: text)
     }
 }
 
@@ -379,6 +387,45 @@ extension HomeViewController {
                 self.changeViewController(viewController: LoginViewController())
             default:
                 return
+            }
+        }
+    }
+    
+    func getCheckCategoryAPI(categoryTitle: String) {
+        NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle) { result in
+            switch result {
+            case .success(let response):
+                if let data = response?.data.isDupicated {
+                    if categoryTitle.count != 16 {
+                        if data {
+                            self.addHeightBottom()
+                            self.addClipBottomSheetView.changeTextField(addButton: false, border: true, error: true, clearButton: true)
+                            self.addClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
+                        } else {
+                            self.minusHeightBottom()
+                        }
+                    }
+                }
+            case .unAuthorized, .networkFail, .notFound:
+                self.changeViewController(viewController: LoginViewController())
+            default: return
+            }
+        }
+    }
+    
+    func postAddCategoryAPI(requestBody: PostAddCategoryRequestDTO) {
+        NetworkService.shared.clipService.postAddCategory(requestBody: requestBody) { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.addClipBottomSheetView.resetTextField()
+                    self.addClipBottom.hideBottomSheet()
+                    self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
+                }
+                self.fetchMainPageData()
+            case .networkFail, .unAuthorized, .notFound:
+                self.changeViewController(viewController: LoginViewController())
+            default: return
             }
         }
     }
