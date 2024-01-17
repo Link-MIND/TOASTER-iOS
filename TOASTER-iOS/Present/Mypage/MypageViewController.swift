@@ -15,6 +15,7 @@ final class MypageViewController: UIViewController {
     // MARK: - UI Properties
     
     private let mypageHeaderView = MypageHeaderView()
+    private let mypageAlertView = MypageAlertView()
     
     // MARK: - Life Cycle
     
@@ -41,13 +42,18 @@ private extension MypageViewController {
     }
     
     func setupHierarchy() {
-        view.addSubview(mypageHeaderView)
+        view.addSubviews(mypageHeaderView, mypageAlertView)
     }
     
     func setupLayout() {
         mypageHeaderView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        mypageAlertView.snp.makeConstraints {
+            $0.top.equalTo(mypageHeaderView.snp.bottom).offset(48)
+            $0.horizontalEdges.equalToSuperview()
         }
     }
 

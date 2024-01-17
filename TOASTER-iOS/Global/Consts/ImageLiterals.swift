@@ -100,6 +100,7 @@ enum ImageLiterals {
     
     enum Mypage {
         static var profile: UIImage { .load(name: "profile") }
+        static var alarm: UIImage { .load(name: "img_alarm") }
     }
     
     enum Home {

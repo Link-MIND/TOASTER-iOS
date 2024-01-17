@@ -276,7 +276,6 @@ extension SettingViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         switch indexPath.section {
         case 0:
-            // TODO: - 사용자 유저 이름 불러오는 것으로 수정 필요
             cell.configureCell(name: userName, sectionNumber: indexPath.section)
         case 1:
             cell.configureCell(name: settingList[indexPath.row], sectionNumber: indexPath.section)

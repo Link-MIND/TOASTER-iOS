@@ -80,7 +80,7 @@ private extension WeeklyLinkCollectionViewCell {
     func setupLayout() {
         linkImage.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.top.leading.equalToSuperview().inset(12)
+            $0.leading.equalToSuperview().inset(12)
             $0.size.equalTo(74)
         }
         

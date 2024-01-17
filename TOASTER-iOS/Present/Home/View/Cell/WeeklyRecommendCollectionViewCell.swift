@@ -61,6 +61,7 @@ private extension WeeklyRecommendCollectionViewCell {
         
         brandImage.do {
             $0.image = ImageLiterals.Home.siteThumbNail
+            $0.makeRounded(radius: 20)
         }
         
         titleLabel.do {

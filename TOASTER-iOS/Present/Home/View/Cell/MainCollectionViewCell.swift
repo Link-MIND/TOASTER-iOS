@@ -122,7 +122,7 @@ private extension MainCollectionViewCell {
         
         userLabel.snp.makeConstraints {
             $0.top.equalTo(searchButton.snp.bottom).offset(18)
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
         noticeLabel.snp.makeConstraints {
