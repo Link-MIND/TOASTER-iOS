@@ -16,13 +16,15 @@ final class SelectClipViewController: UIViewController {
     
     weak var delegate: SaveLinkButtonDelegate?
         
-    private var selectedClip: RemindClipModel? {
+    // MARK: - Data
+    
+    private var selectedClip: [RemindClipModel] = [] {
         didSet {
             completeButton.backgroundColor = .toasterBlack
         }
     }
+
     private var selectedClipData = SelectClipModel.fetchDummyData()
-    
     
     // MARK: - UI Properties
     
@@ -44,7 +46,10 @@ final class SelectClipViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         setupNavigationBar()
+        fetchClipData()
+        
     }
 }
 
@@ -198,6 +203,45 @@ extension SelectClipViewController: AddClipBottomSheetViewDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
             self.addClipBottomSheetView.resetTextField()
+        }
+    }
+}
+
+// MARK: - Network
+extension SelectClipViewController {
+    // 임베드한 링크, 선택한 클립 id - POST
+    func postSaveLink(url: String, category: Int?) {
+        let request = PostSaveLinkRequestDTO(linkUrl: url,
+                                             categoryId: category)
+        NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
+            switch result {
+            case .success:
+                print(result)
+            case .networkFail, .unAuthorized:
+                self.changeViewController(viewController: LoginViewController())
+            default:
+                return
+            }
+        }
+    }
+    
+    // 클립 정보 - GET
+    func fetchClipData() {
+        NetworkService.shared.clipService.getAllCategory { result in
+            switch result {
+            case .success(let response):
+                var clipDataList: [RemindClipModel] = [RemindClipModel(id: 0,
+                                                                       title: "전체",
+                                                                       clipCount: response?.data.toastNumberInEntire ?? 0)]
+                response?.data.categories.forEach {
+                    let clipData = RemindClipModel(id: $0.categoryId,
+                                                   title: $0.categoryTitle,
+                                                   clipCount: $0.toastNum)
+                    clipDataList.append(clipData)
+                }
+                self.selectedClip = clipDataList
+            default: break
+            }
         }
     }
 }

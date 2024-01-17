@@ -145,20 +145,20 @@ extension AddLinkViewController: SaveLinkButtonDelegate {
 
  // MARK: - Network
 
-extension AddLinkViewController {
-    func postSaveLink(url: String, category: Int?) {
-        let request = PostSaveLinkRequestDTO(linkUrl: url,
-                                             categoryId: category)
-        NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
-            switch result {
-            case .success:
-                print(result)
-            case .networkFail, .unAuthorized:
-                self.changeViewController(viewController: LoginViewController())
-            default:
-                return
-            }
-        }
-    }
-    
-}
+//extension AddLinkViewController {
+//    func postSaveLink(url: String, category: Int?) {
+//        let request = PostSaveLinkRequestDTO(linkUrl: url,
+//                                             categoryId: category)
+//        NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
+//            switch result {
+//            case .success:
+//                print(result)
+//            case .networkFail, .unAuthorized:
+//                self.changeViewController(viewController: LoginViewController())
+//            default:
+//                return
+//            }
+//        }
+//    }
+//    
+//}
