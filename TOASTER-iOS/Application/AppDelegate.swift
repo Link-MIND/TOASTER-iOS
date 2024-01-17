@@ -150,6 +150,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
-        // 받은 메시지 처리
+        
+        if let navigationViewController = UIApplication.shared.keyWindow?.rootViewController as? ToasterNavigationController {
+            navigationViewController.popToRootViewController(animated: false)
+            if let tabBarControlelr = navigationViewController.topViewController as? TabBarController {
+                tabBarControlelr.selectedIndex = 3
+            }
+        }
     }
 }
