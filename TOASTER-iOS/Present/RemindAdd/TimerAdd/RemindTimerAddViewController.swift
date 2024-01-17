@@ -252,7 +252,8 @@ private extension RemindTimerAddViewController {
                                         forSuccessAction: patchSuccessAction, 
                                         forEditSuccessAction: editSuccessAction,
                                         forUnAuthorizedAction: unAuthorizedAction,
-                                        forUnProcessableAction: unProcessableAction)
+                                        forUnProcessableAction: unProcessableAction, 
+                                        forBadRequestAction: badRequestAction)
     }
     
     func configureView() {
@@ -284,6 +285,10 @@ private extension RemindTimerAddViewController {
     
     func unProcessableAction() {
         self.showToastMessage(width: 297, status: .warning, message: "한 클립당 하나의 타이머만 설정 가능해요")
+    }
+    
+    func badRequestAction() {
+        self.showToastMessage(width: 297, status: .warning, message: "타이머는 최대 다섯 개까지 설정 가능해요")
     }
     
     func setupNavigationBar() {
