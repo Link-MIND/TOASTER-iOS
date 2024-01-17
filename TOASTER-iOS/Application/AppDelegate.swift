@@ -8,20 +8,32 @@
 import AuthenticationServices
 import UIKit
 
+import FirebaseCore
+import FirebaseMessaging
 import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var isLogin = false
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
-        // 기본 앱 알림 세팅 (true)
+        // MARK: - 푸시알림 설정
+        
+        FirebaseApp.configure()
+        
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        application.registerForRemoteNotifications()
+        
+        // MARK: - 앱 내 알림 기본 설정
+        
         UserDefaults.standard.set(true, forKey: "isAppAlarmOn")
+        
+        // MARK: - 카카오 로그인 설정
 
         KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
         
@@ -56,21 +68,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
-
+    
     // MARK: UISceneSession Lifecycle
-
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
+    
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
+    
     func checkKakaoLogin(completion: @escaping (Bool) -> Void) {
         if (AuthApi.hasToken()) {
             UserApi.shared.accessTokenInfo { (_, error) in
@@ -116,3 +128,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+// MARK: - MessagingDelegate
+extension AppDelegate: MessagingDelegate {
+    
+    // FCM 토큰을 받았을 때 실행
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        if let token = fcmToken {
+            let _ = KeyChainService.saveFCMToken(fcmToken: token, key: Config.fcmTokenKey)
+        }
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        if let navigationViewController = UIApplication.shared.keyWindow?.rootViewController as? ToasterNavigationController {
+            navigationViewController.popToRootViewController(animated: false)
+            if let tabBarControlelr = navigationViewController.topViewController as? TabBarController {
+                tabBarControlelr.selectedIndex = 3
+            }
+        }
+    }
+}
