@@ -37,7 +37,6 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
         }
     }
     weak var detailClipListCollectionViewCellDelegate: DetailClipListCollectionViewCellDelegate?
-    // private var detailClipListCollectionViewCellButtonAction: (() -> Void)?
     
     // MARK: - UI Components
     
@@ -68,10 +67,6 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension DetailClipListCollectionViewCell {
-//    func modifiedButtonTapped(_ action: @escaping () -> Void) {
-//        detailClipListCollectionViewCellButtonAction = action
-//    }
-    
     func configureCell(forModel: GetDetailCategoryResponseData, index: Int) {
         modifiedButton.isHidden = false
         clipNameLabel.text = forModel.toastListDto[index].categoryTitle
@@ -222,6 +217,5 @@ private extension DetailClipListCollectionViewCell {
     @objc
     func buttonTapped() {
         detailClipListCollectionViewCellDelegate?.modifiedButtonTapped(toastId: toastId)
-        // detailClipListCollectionViewCellButtonAction?()
     }
 }

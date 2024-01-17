@@ -222,16 +222,16 @@ extension ClipViewController: AddClipBottomSheetViewDelegate {
 
 extension ClipViewController {
     func getAllCategoryAPI() {
-        NetworkService.shared.clipService.getAllCategory { result in
+        NetworkService.shared.clipService.getAllCategory { [weak self] result in
             switch result {
             case .success(let response):
-                self.clipList = response
+                self?.clipList = response
                 if let data = response?.data {
-                    self.clipCount = data.categories.count
-                    self.setupEmptyView()
+                    self?.clipCount = data.categories.count
+                    self?.setupEmptyView()
                 }
             case .unAuthorized, .networkFail:
-                self.changeViewController(viewController: LoginViewController())
+                self?.changeViewController(viewController: LoginViewController())
             default: return
             }
         }
