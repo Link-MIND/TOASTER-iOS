@@ -14,17 +14,19 @@ final class SelectClipViewController: UIViewController {
     
     // MARK: - Properties
     
+    var linkURL = String()
+    private var categoryID: Int?
     weak var delegate: SaveLinkButtonDelegate?
         
     // MARK: - Data
     
+    // GET
     private var selectedClip: [RemindClipModel] = [] {
         didSet {
             completeButton.backgroundColor = .toasterBlack
+            clipSelectCollectionView.reloadData()
         }
     }
-
-    private var selectedClipData = SelectClipModel.fetchDummyData()
     
     // MARK: - UI Properties
     
@@ -49,7 +51,6 @@ final class SelectClipViewController: UIViewController {
         
         setupNavigationBar()
         fetchClipData()
-        
     }
 }
 
@@ -128,25 +129,28 @@ private extension SelectClipViewController {
     }
     
     @objc func completeButtonTapped() {
-        delegate?.saveLinkButtonTapped()
-        navigationController?.popToRootViewController(animated: true)
+        postSaveLink(url: linkURL, category: categoryID)
     }
 }
 
 // MARK: - UICollectionViewDelegate
 
-extension SelectClipViewController: UICollectionViewDelegate { }
+extension SelectClipViewController: UICollectionViewDelegate { 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        categoryID = selectedClip[indexPath.item].id
+    }
+}
 
 // MARK: - UICollectionViewDataSource
 
 extension SelectClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectedClipData.count
+         return selectedClip.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RemindSelectClipCollectionViewCell.className, for: indexPath) as? RemindSelectClipCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureCell(forModel: selectedClipData[indexPath.item])
+        cell.configureCell(forModel: selectedClip[indexPath.item])
         return cell
     }
     
@@ -155,6 +159,7 @@ extension SelectClipViewController: UICollectionViewDataSource {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SelectClipHeaderView.className, for: indexPath) as? SelectClipHeaderView else { return UICollectionReusableView() }
             headerView.selectClipHeaderViewDelegate = self
             headerView.setupView()
+            headerView.bindData(count: selectedClip.count)
             return headerView
         }
         return UICollectionReusableView()
@@ -191,11 +196,11 @@ extension SelectClipViewController: SelectClipHeaderViewlDelegate {
 
 extension SelectClipViewController: AddClipBottomSheetViewDelegate {
     func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
-        return
+        postAddCategoryAPI(requestBody: text)
     }
     
     func callCheckAPI(text: String) {
-        return
+        getCheckCategoryAPI(categoryTitle: text)
     }
     
     func addHeightBottom() {
@@ -224,7 +229,8 @@ extension SelectClipViewController {
         NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
             switch result {
             case .success:
-                print(result)
+                self.delegate?.saveLinkButtonTapped()
+                self.navigationController?.popToRootViewController(animated: true)
             case .networkFail, .unAuthorized:
                 self.changeViewController(viewController: LoginViewController())
             default:
@@ -252,4 +258,43 @@ extension SelectClipViewController {
             }
         }
     }
+    
+    func postAddCategoryAPI(requestBody: PostAddCategoryRequestDTO) {
+        NetworkService.shared.clipService.postAddCategory(requestBody: requestBody) { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.addClipBottomSheetView.resetTextField()
+                    self.addClipBottom.hideBottomSheet()
+                    self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
+                }
+                self.fetchClipData()
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default: return
+            }
+        }
+    }
+    
+    func getCheckCategoryAPI(categoryTitle: String) {
+        NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle) { result in
+            switch result {
+            case .success(let response):
+                if let data = response?.data.isDupicated {
+                    if categoryTitle.count != 16 {
+                        if data {
+                            self.addHeightBottom()
+                            self.addClipBottomSheetView.changeTextField(addButton: false, border: true, error: true, clearButton: true)
+                            self.addClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
+                        } else {
+                            self.minusHeightBottom()
+                        }
+                    }
+                }
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default: return
+            }
+        }
+    }  
 }

@@ -19,6 +19,10 @@ protocol AddLinkViewControllerPopDelegate: AnyObject {
     func changeTabBarIndex()
 }
 
+protocol SelectClipViewControllerDelegate: AnyObject {
+    func sendEmbedUrl()
+}
+
 final class AddLinkViewController: UIViewController {
     
     // MARK: - Properties
@@ -30,7 +34,8 @@ final class AddLinkViewController: UIViewController {
     }
     
     private weak var delegate: AddLinkViewControllerPopDelegate?
-
+    private weak var urldelegate: SelectClipViewControllerDelegate?
+    
     // MARK: - UI Properties
     
     private var addLinkView = AddLinkView()
@@ -123,8 +128,10 @@ private extension AddLinkViewController {
             addLinkView.emptyError()
         } else {
             // TODO: - categoryId는 민재 오빠 API 연결 후에 받아오겠습니다
-            postSaveLink(url: addLinkView.linkEmbedTextField.text ?? "", category: nil)
+            // postSaveLink(url: addLinkView.linkEmbedTextField.text ?? "", category: nil)
+            
             let selectClipViewController = SelectClipViewController()
+            selectClipViewController.linkURL = addLinkView.linkEmbedTextField.text ?? "" 
             selectClipViewController.delegate = self
             self.navigationController?.pushViewController(selectClipViewController, animated: true)
         }
