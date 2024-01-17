@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
@@ -39,6 +40,14 @@ final class WeeklyRecommendCollectionViewCell: UICollectionViewCell {
         setupStyle()
         setupHierarchy()
         setupLayout()
+    }
+}
+
+extension WeeklyRecommendCollectionViewCell {
+    func bindData(forModel: RecommendSiteModel) {
+        brandImage.kf.setImage(with: URL(string: forModel.siteImg ?? ""))
+        titleLabel.text = forModel.siteTitle
+        subLabel.text = forModel.siteSub
     }
 }
 

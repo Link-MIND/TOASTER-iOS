@@ -10,7 +10,7 @@ import Foundation
 struct GetMainPageSearchResponseDTO: Codable {
     let code: Int
     let message: String
-    let data: GetMainPageSearchResponseData
+    let data: GetMainPageSearchResponseData?
 }
 
 struct GetMainPageSearchResponseData: Codable {

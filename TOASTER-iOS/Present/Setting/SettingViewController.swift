@@ -21,6 +21,12 @@ final class SettingViewController: UIViewController {
         }
     }
     
+    private var userName: String = "" {
+        didSet {
+            settingTableView.reloadData()
+        }
+    }
+    
     // MARK: - UI Properties
     
     private let alertWarningView = UIView()
@@ -42,6 +48,7 @@ final class SettingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+        fetchMysettings()
     }
 }
 
@@ -138,6 +145,63 @@ private extension SettingViewController {
             }
         }
     }
+    
+    func fetchMysettings() {
+        NetworkService.shared.userService.getSettingPage { [weak self] result in
+            switch result {
+            case .success(let response):
+                if let responseData = response?.data {
+                    self?.userName = responseData.nickname
+                }
+            case .unAuthorized, .networkFail:
+                self?.changeViewController(viewController: LoginViewController())
+            default:
+                self?.changeViewController(viewController: LoginViewController())
+            }
+        }
+    }
+    
+    func fetchSignOut() {
+        NetworkService.shared.authService.postLogout { [weak self] result in
+            switch result {
+            case .success:
+                let result = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+                
+                if result.access && result.refresh {
+                    self?.showConfirmationPopup(forMainText: "로그아웃", forSubText: "로그아웃이 완료되었습니다", centerButtonTitle: "확인", centerButtonHandler: self?.popupConfirmationButtonTapped)
+                }
+            case .notFound, .networkFail:
+                print("🍞⛔️로그아웃 실패⛔️🍞")
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 로그아웃이 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
+            default:
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 로그아웃이 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
+                print("🍞⛔️로그아웃 실패⛔️🍞")
+            }
+        }
+    }
+    
+    func deleteAccount() {
+        NetworkService.shared.authService.deleteWithdraw { [weak self] result in
+            switch result {
+            case .success:
+                let result = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+                
+                if result.access && result.refresh {
+                    self?.showConfirmationPopup(forMainText: "회원탈퇴", forSubText: "회원탈퇴가 완료되었습니다", centerButtonTitle: "확인", centerButtonHandler: self?.popupConfirmationButtonTapped)
+                }
+            case .notFound, .unProcessable, .networkFail:
+                print("🍞⛔️회원탈퇴 실패⛔️🍞")
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 회원탈퇴가 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
+            default:
+                print("🍞⛔️회원탈퇴 실패⛔️🍞")
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 회원탈퇴가 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
+            }
+        }
+    }
+    
+    func popupConfirmationButtonTapped() {
+        self.changeViewController(viewController: LoginViewController())
+    }
 }
 
 // MARK: - TableView Delegate
@@ -173,16 +237,18 @@ extension SettingViewController: UITableViewDelegate {
                 // TODO: - 문의하기 기능 여기에다 붙입시다
                 print("문의하기 붙여")
             case 2:
-                // TODO: - 이용약관 기능 여기에다 붙입시다
-                print("이용약관 붙여")
+                let urlString = "https://hill-agenda-2b0.notion.site/0f83855ea17f4a67a3ff66b6507b229f"
+                
+                if let url = URL(string: urlString) {
+                    UIApplication.shared.open(url)
+                }
             case 3:
-                // TODO: - 로그아웃 기능 여기에다 붙입시다
-                print("로그아웃 붙여")
+                fetchSignOut()
             default:
                 return
             }
         } else if indexPath.section == 2 {
-            print("탈퇴하기 붙여")
+            deleteAccount()
         }
     }
 }
@@ -211,7 +277,7 @@ extension SettingViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             // TODO: - 사용자 유저 이름 불러오는 것으로 수정 필요
-            cell.configureCell(name: "홍길동", sectionNumber: indexPath.section)
+            cell.configureCell(name: userName, sectionNumber: indexPath.section)
         case 1:
             cell.configureCell(name: settingList[indexPath.row], sectionNumber: indexPath.section)
             if indexPath.row == 0 {

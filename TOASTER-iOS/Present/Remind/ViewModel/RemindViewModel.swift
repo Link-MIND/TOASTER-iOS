@@ -17,6 +17,8 @@ final class RemindViewModel {
     
     typealias NormalChangeAction = () -> Void
     private var bottomSheetAction: NormalChangeAction?
+    private var unAuthorizedAction: NormalChangeAction?
+    private var deleteTimerAction: NormalChangeAction?
     
     private let userDefault = UserDefaults.standard
     
@@ -42,7 +44,8 @@ final class RemindViewModel {
     
     // MARK: - Data
 
-    var timerData: RemindModel = RemindModel.fetchDummyModel() {
+    var timerData: RemindModel = RemindModel(completeTimerModelList: [],
+                                             waitTimerModelList: []) {
         didSet {
             if timerData.completeTimerModelList.count == 0 && 
                 timerData.waitTimerModelList.count == 0 {
@@ -52,17 +55,26 @@ final class RemindViewModel {
             }
         }
     }
+    
+    init() {
+        fetchTimerData()
+    }
 }
 
 // MARK: - extension
 
 extension RemindViewModel {
     func setupDataChangeAction(changeAction: @escaping DataChangeAction,
-                               normalAction: @escaping NormalChangeAction) {
+                               normalAction: @escaping NormalChangeAction,
+                               forDeleteTimerAction: @escaping NormalChangeAction,
+                               forUnAuthorizedAction: @escaping NormalChangeAction) {
         dataChangeAction = changeAction
         bottomSheetAction = normalAction
+        deleteTimerAction = forDeleteTimerAction
+        unAuthorizedAction = forUnAuthorizedAction
     }
     
+    /// 기기의 알림 설정, 앱 알림 설정 분기처리
     func fetchAlarmCheck() {
         UNUserNotificationCenter.current().getNotificationSettings { permission in
             switch permission.authorizationStatus {
@@ -83,9 +95,63 @@ extension RemindViewModel {
             appAlarmSetting = isAppOn
         }
     }
+    
+    func fetchTimerData() {
+        NetworkService.shared.timerService.getTimerMainpage { result in
+            switch result {
+            case .success(let response):
+                var completedList: [CompleteTimerModel] = []
+                response?.data.completedTimerList.forEach {
+                    completedList.append(CompleteTimerModel(id: $0.timerId,
+                                                            remindDay: $0.remindDate,
+                                                            remindTime: $0.remindTime,
+                                                            clipName: $0.comment))
+                }
+                var waitList: [WaitTimerModel] = []
+                response?.data.waitingTimerList.forEach {
+                    waitList.append(WaitTimerModel(id: $0.timerId,
+                                                   clipName: $0.comment,
+                                                   remindDay: $0.remindDates,
+                                                   remindTime: $0.remindTime,
+                                                   isEnable: $0.isAlarm))
+                }
+                self.timerData = RemindModel(completeTimerModelList: completedList,
+                                             waitTimerModelList: waitList)
+            case .unAuthorized, .networkFail:
+                self.unAuthorizedAction?()
+            default: break
+            }
+        }
+    }
+    
+    func deleteTimerData(timerID: Int) {
+        NetworkService.shared.timerService.deleteTimer(timerId: timerID) { result in
+            switch result {
+            case .success:
+                self.fetchTimerData()
+                self.deleteTimerAction?()
+            case .unAuthorized, .networkFail:
+                self.unAuthorizedAction?()
+            default: break
+            }
+        }
+    }
+    
+    func patchTimerData(timerID: Int) {
+        NetworkService.shared.timerService.patchEditAlarmTimer(timerId: timerID) { result in
+            switch result {
+            case .success:
+                self.fetchTimerData()
+            case .unAuthorized, .networkFail:
+                self.unAuthorizedAction?()
+            default: break
+            }
+        }
+    }
 }
 
 private extension RemindViewModel {
+    /// 기기 설정과 앱 설정에 따른 viewType을 업데이트하는 함수
     func setupAlarm(forDeviceAlarm: Bool?) {
         if let deviceAlarm = forDeviceAlarm {
             if deviceAlarm == false {    // device 알람이 꺼져있을 때
@@ -98,7 +164,7 @@ private extension RemindViewModel {
                 if appAlarmSetting == false {     // device 알람이 켜져있고, 앱 알람이 꺼져있을 때
                     remindViewType = .deviceOnAppOff
                 } else {
-                    timerData = RemindModel.fetchDummyModel()
+                    self.fetchTimerData()
                 }
             }
         }

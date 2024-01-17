@@ -24,6 +24,8 @@ final class RemindViewController: UIViewController {
     
     private let viewModel = RemindViewModel()
     
+    private var selectedTimerID: Int?
+    
     // MARK: - UI Properties
     
     private let timerCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -50,6 +52,7 @@ final class RemindViewController: UIViewController {
         
         setupNavigationBar()
         viewModel.fetchAlarmCheck()
+        viewModel.fetchTimerData()
     }
 }
 
@@ -73,6 +76,8 @@ private extension RemindViewController {
         editAlarmButton.do {
             $0.addTarget(self, action: #selector(editAlarmButtonTapped), for: .touchUpInside)
         }
+        
+        emptyTimerView.setupButtonAction(action: plusButtonTapped)
     }
     
     func setupHierarchy() {
@@ -109,7 +114,9 @@ private extension RemindViewController {
     func setupViewModel() {
         viewModel.fetchAlarmCheck()
         viewModel.setupDataChangeAction(changeAction: reloadCollectionViewWithView,
-                                        normalAction: setupAlarmBottomSheet)
+                                        normalAction: setupAlarmBottomSheet, 
+                                        forDeleteTimerAction: deleteAction,
+                                        forUnAuthorizedAction: unAuthorizedAction)
     }
     
     func setupNavigationBar() {
@@ -124,6 +131,7 @@ private extension RemindViewController {
         }
     }
     
+    /// viewType에 따라 뷰를 업데이트해주는 함수
     func setupViewWithAlarm(forType: RemindViewType) {
         switch forType {
         case .deviceOnAppOnExistData:
@@ -171,7 +179,10 @@ private extension RemindViewController {
         editView.setupEditView(forDelegate: self,
                                forID: forID)
         
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 128, insertView: editView)
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, 
+                                                             bottomTitle: "수정하기",
+                                                             height: 128,
+                                                             insertView: editView)
         exampleBottom.modalPresentationStyle = .overFullScreen
         
         present(exampleBottom, animated: false)
@@ -180,7 +191,11 @@ private extension RemindViewController {
     func setupAlarmBottomSheet() {
         let alarmView = RemindAlarmOffBottomSheetView()
         alarmView.setupDelegate(forDelegate: self)
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "알림이 꺼져있어요!", height: 311, insertView: alarmView)
+        
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, 
+                                                             bottomTitle: "알림이 꺼져있어요!",
+                                                             height: 311,
+                                                             insertView: alarmView)
         exampleBottom.modalPresentationStyle = .overFullScreen
         
         present(exampleBottom, animated: false)
@@ -191,6 +206,15 @@ private extension RemindViewController {
         setupViewWithAlarm(forType: forType)
     }
     
+    func unAuthorizedAction() {
+        self.changeViewController(viewController: LoginViewController())
+    }
+    
+    func deleteAction() {
+        dismiss(animated: false)
+        self.showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
+    }
+    
     func plusButtonTapped() {
         let clipAddViewController = RemindSelectClipViewController()
         clipAddViewController.hidesBottomBarWhenPushed = true
@@ -198,18 +222,13 @@ private extension RemindViewController {
     }
     
     func deleteButtonTapped() {
-        
-        // TODO: - Delete API 연결
-        
-        dismiss(animated: false)
-        showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
+        guard let id = selectedTimerID else { return }
+        viewModel.deleteTimerData(timerID: id)
     }
     
-    func toggleAction(forEnable: Bool) {
-        
-        // TODO: - Timer OnOff API 연결
-        
-        print(forEnable)
+    func toggleAction(forTimerID: Int?) {
+        guard let id = forTimerID else { return }
+        viewModel.patchTimerData(timerID: id)
     }
     
     @objc func editAlarmButtonTapped() {
@@ -237,13 +256,17 @@ extension RemindViewController: RemindAlarmOffBottomSheetViewDelegate {
 
 extension RemindViewController: RemindEditViewDelegate {
     func editTimer(forID: Int?) {
-        
-        // TODO: - Edit 로직
-        
+        selectedTimerID = forID
         dismiss(animated: false)
+        if let id = forID {
+            let editViewController = RemindTimerAddViewController()
+            editViewController.configureView(forTimerID: id)
+            navigationController?.pushViewController(editViewController, animated: true)
+        }
     }
     
     func deleteTimer(forID: Int?) {
+        selectedTimerID = forID
         dismiss(animated: false)
         showPopup(forMainText: "타이머를 삭제하시겠어요?",
                   forSubText: "더 이상 해당 클립의 리마인드를 \n받을 수 없어요",

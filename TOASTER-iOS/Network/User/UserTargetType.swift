@@ -32,9 +32,9 @@ extension UserTargetType: BaseTargetType {
     
     var path: String {
         switch self {
-        case .getSettingPage: return utilPath.rawValue + "/mysettings"
+        case .getSettingPage: return utilPath.rawValue + "/settings"
         case .getMyPage: return utilPath.rawValue + "/my-page"
-        case .patchPushAlarm(_): return utilPath.rawValue + "/notification"
+        case .patchPushAlarm: return utilPath.rawValue + "/notification"
         case .getMainPage: return utilPath.rawValue + "/main"
         }
     }
@@ -43,7 +43,7 @@ extension UserTargetType: BaseTargetType {
         switch self {
         case .getSettingPage: return .get
         case .getMyPage: return .get
-        case .patchPushAlarm(_): return .patch
+        case .patchPushAlarm: return .patch
         case .getMainPage: return .get
         }
     }

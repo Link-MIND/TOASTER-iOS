@@ -26,30 +26,3 @@ struct WaitTimerModel {
     let remindTime: String
     let isEnable: Bool
 }
-
-extension RemindModel {
-    
-    // TODO: - 더미 데이터 (삭제 예정)
-    
-    static func fetchDummyModel() -> RemindModel {
-        let complete: [CompleteTimerModel] = []
-        let wait = [WaitTimerModel(id: 0,
-                                   clipName: "월요병 퇴치",
-                                   remindDay: "월",
-                                   remindTime: "오전 10시",
-                                   isEnable: true),
-                    WaitTimerModel(id: 1,
-                                   clipName: "주말 나들이",
-                                   remindDay: "토, 일",
-                                   remindTime: "오전 10시",
-                                   isEnable: false),
-                    WaitTimerModel(id: 2,
-                                   clipName: "점심 뭐먹지",
-                                   remindDay: "월, 금",
-                                   remindTime: "오전 11시",
-                                   isEnable: true)]
-        
-        return RemindModel(completeTimerModelList: complete,
-                           waitTimerModelList: wait)
-    }
-}
