@@ -16,11 +16,13 @@ protocol ClipAPIServiceProtocol {
                            filter: DetailCategoryFilter,
                            completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> Void)
     func getDetailAllCategory(filter: DetailCategoryFilter,
-                              ompletion: @escaping (NetworkResult<GetDetailAllCategoryResponseDTO>) -> Void)
+                              completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> Void)
     func deleteCategory(requestBody: DeleteCategoryRequestDTO,
                         completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
-    func patchEditCategory(requestBody: PatchPushAlarmRequestDTO,
-                           completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
+    func patchEditPriorityCategory(requestBody: PatchEditPriorityCategoryRequestDTO,
+                                   completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
+    func patchEditNameCategory(requestBody: PatchEditNameCategoryRequestDTO,
+                               completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
     func getAllCategory(completion: @escaping (NetworkResult<GetAllCategoryResponseDTO>) -> Void)
     func getCheckCategory(categoryTitle: String,
                           completion: @escaping (NetworkResult<GetCheckCategoryResponseDTO>) -> Void)
@@ -67,17 +69,17 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
     }
     
     func getDetailAllCategory(filter: DetailCategoryFilter,
-                              ompletion completion: @escaping (NetworkResult<GetDetailAllCategoryResponseDTO>) -> Void) {
+                              completion: @escaping (NetworkResult<GetDetailCategoryResponseDTO>) -> Void) {
         provider.request(.getDetailCategory(categoryID: 0,
                                             filter: filter)) { result in
             switch result {
             case .success(let response):
-                let networkResult: NetworkResult<GetDetailAllCategoryResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                let networkResult: NetworkResult<GetDetailCategoryResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
                 if let response = error.response {
-                    let networkResult: NetworkResult<GetDetailAllCategoryResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    let networkResult: NetworkResult<GetDetailCategoryResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
                     completion(networkResult)
                 }
             }
@@ -101,9 +103,26 @@ final class ClipAPIService: BaseAPIService, ClipAPIServiceProtocol {
         }
     }
     
-    func patchEditCategory(requestBody: PatchPushAlarmRequestDTO, 
-                           completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
-        provider.request(.patchEditCategory(requestBody: requestBody)) { result in
+    func patchEditPriorityCategory(requestBody: PatchEditPriorityCategoryRequestDTO,
+                                   completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
+        provider.request(.patchEditPriorityCategory(requestBody: requestBody)) { result in
+            switch result {
+            case .success(let response):
+                let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                print(networkResult.stateDescription)
+                completion(networkResult)
+            case .failure(let error):
+                if let response = error.response {
+                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
+            }
+        }
+    }
+    
+    func patchEditNameCategory(requestBody: PatchEditNameCategoryRequestDTO,
+                               completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
+        provider.request(.patchEditNameCategory(requestBody: requestBody)) { result in
             switch result {
             case .success(let response):
                 let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)

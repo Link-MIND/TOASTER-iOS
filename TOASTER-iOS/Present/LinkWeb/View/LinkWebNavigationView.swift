@@ -72,7 +72,7 @@ private extension LinkWebNavigationView {
             $0.textColor = .black900
             $0.textAlignment = .center
         }
-
+        
         reloadButton.do {
             $0.tintColor = .gray800
             $0.setImage(ImageLiterals.Web.reload, for: .normal)
@@ -103,7 +103,7 @@ private extension LinkWebNavigationView {
             $0.top.equalToSuperview().inset(6)
         }
     }
-
+    
     @objc
     func buttonTapped(_ sender: UIButton) {
         switch sender {

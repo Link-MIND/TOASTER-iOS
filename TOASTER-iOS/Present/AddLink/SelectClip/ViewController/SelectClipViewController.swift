@@ -185,6 +185,14 @@ extension SelectClipViewController: SelectClipHeaderViewlDelegate {
 }
 
 extension SelectClipViewController: AddClipBottomSheetViewDelegate {
+    func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
+        return
+    }
+    
+    func callCheckAPI(text: String) {
+        return
+    }
+    
     func addHeightBottom() {
         addClipBottom.changeHeightBottomSheet(height: 219)
     }

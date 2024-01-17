@@ -168,11 +168,13 @@ private extension SettingViewController {
                 let result = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
                 
                 if result.access && result.refresh {
-                    self?.changeViewController(viewController: LoginViewController())
+                    self?.showConfirmationPopup(forMainText: "로그아웃", forSubText: "로그아웃이 완료되었습니다", centerButtonTitle: "확인", centerButtonHandler: self?.popupConfirmationButtonTapped)
                 }
             case .notFound, .networkFail:
                 print("🍞⛔️로그아웃 실패⛔️🍞")
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 로그아웃이 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
             default:
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 로그아웃이 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
                 print("🍞⛔️로그아웃 실패⛔️🍞")
             }
         }
@@ -185,14 +187,20 @@ private extension SettingViewController {
                 let result = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
                 
                 if result.access && result.refresh {
-                    self?.changeViewController(viewController: LoginViewController())
+                    self?.showConfirmationPopup(forMainText: "회원탈퇴", forSubText: "회원탈퇴가 완료되었습니다", centerButtonTitle: "확인", centerButtonHandler: self?.popupConfirmationButtonTapped)
                 }
             case .notFound, .unProcessable, .networkFail:
                 print("🍞⛔️회원탈퇴 실패⛔️🍞")
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 회원탈퇴가 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
             default:
                 print("🍞⛔️회원탈퇴 실패⛔️🍞")
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 회원탈퇴가 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
             }
         }
+    }
+    
+    func popupConfirmationButtonTapped() {
+        self.changeViewController(viewController: LoginViewController())
     }
 }
 

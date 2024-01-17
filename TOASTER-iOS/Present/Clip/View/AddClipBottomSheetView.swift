@@ -11,9 +11,10 @@ import SnapKit
 import Then
 
 protocol AddClipBottomSheetViewDelegate: AnyObject {
-    func dismissButtonTapped()
+    func dismissButtonTapped(text: PostAddCategoryRequestDTO)
     func addHeightBottom()
     func minusHeightBottom()
+    func callCheckAPI(text: String)
 }
 
 final class AddClipBottomSheetView: UIView {
@@ -22,6 +23,7 @@ final class AddClipBottomSheetView: UIView {
     
     weak var addClipBottomSheetViewDelegate: AddClipBottomSheetViewDelegate?
     
+    private var timer: Timer?
     private var isButtonClicked: Bool = false {
         didSet {
             setupButtonColor()
@@ -81,6 +83,17 @@ extension AddClipBottomSheetView {
         addClipTextField.text = nil
         addClipTextField.becomeFirstResponder()
     }
+    
+    func changeTextField(addButton: Bool, border: Bool, error: Bool, clearButton: Bool) {
+        isButtonClicked = addButton
+        isBorderColor = border
+        isError = error
+        isClearButtonShow = clearButton
+    }
+    
+    func setupMessage(message: String) {
+        errorMessage.text = message
+    }
 }
 
 // MARK: - Private Extensions
@@ -114,7 +127,6 @@ private extension AddClipBottomSheetView {
             $0.isHidden = true
             $0.font = .suitMedium(size: 12)
             $0.textColor = .toasterError
-            $0.text = "클립의 이름은 최대 15자까지 입력 가능해요"
         }
         
         clearButton.do {
@@ -185,6 +197,7 @@ private extension AddClipBottomSheetView {
             addClipBottomSheetViewDelegate?.addHeightBottom()
             errorMessage.isHidden = false
         } else {
+            addClipBottomSheetViewDelegate?.minusHeightBottom()
             errorMessage.isHidden = true
         }
     }
@@ -197,9 +210,23 @@ private extension AddClipBottomSheetView {
         }
     }
     
+    func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] _ in
+            if let urlText = self?.addClipTextField.text {
+                self?.addClipBottomSheetViewDelegate?.callCheckAPI(text: urlText)
+            }
+        }
+    }
+    
+    /// 타이머 재시작
+    func restartTimer() {
+        timer?.invalidate()
+        startTimer()
+    }
+    
     @objc
     func buttonTapped() {
-        addClipBottomSheetViewDelegate?.dismissButtonTapped()
+        addClipBottomSheetViewDelegate?.dismissButtonTapped(text: PostAddCategoryRequestDTO.init(categoryTitle: addClipTextField.text ?? ""))
     }
     
     @objc
@@ -211,22 +238,24 @@ private extension AddClipBottomSheetView {
 // MARK: - UITextField Delegate
 
 extension AddClipBottomSheetView: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.text?.count ?? 0 > 1 {
+            startTimer()
+        }
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        restartTimer()
         let newText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string
         let currentText = textField.text ?? ""
         let maxLength = 16
         
+        // 길이가 16에서 15로 돌아갈 때
         if currentText.count == maxLength && newText.count == 15 {
             addClipBottomSheetViewDelegate?.minusHeightBottom()
+            restartTimer()
         }
         return newText.count <= maxLength
-    }
-    
-    func changeTextField(addButton: Bool, border: Bool, error: Bool, clearButton: Bool) {
-        isButtonClicked = addButton
-        isBorderColor = border
-        isError = error
-        isClearButtonShow = clearButton
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
@@ -235,6 +264,7 @@ extension AddClipBottomSheetView: UITextFieldDelegate {
             changeTextField(addButton: false, border: false, error: false, clearButton: false)
         } else if currentText.count > 15 {
             changeTextField(addButton: false, border: true, error: true, clearButton: true)
+            setupMessage(message: "클립의 이름은 최대 15자까지 입력 가능해요")
         } else {
             changeTextField(addButton: true, border: false, error: false, clearButton: true)
         }
