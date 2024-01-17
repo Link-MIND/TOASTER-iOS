@@ -156,11 +156,9 @@ extension AddLinkView: UITextFieldDelegate {
         // 텍스트 필드에 입력이 시작될 때 호출되는 메서드
         nextTopButton.backgroundColor = .black850
         linkEmbedTextField.placeholder = nil
-        // 여기서 타이머를 시작하고, 1.5초 후에 텍스트를 확인하고 테두리 색상을 변경합니다.
+        // 여기서 타이머를 시작하고, 0.5초 후에 텍스트를 확인 후 텍스트필드 에러 처리
         if textField.text?.count ?? 0 > 1 {
             startTimer()
-        } else {
-            // 버튼 클릭시 링크를 입력해주세요 에러
         }
     }
     
@@ -172,15 +170,13 @@ extension AddLinkView: UITextFieldDelegate {
     }
     
     func startTimer() {
-        // 1.5초 후에 checkTextField 메서드 호출
+        // 0.5초 후에 checkTextField 메서드 호출
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
             // URL 유효 여부 판단 후 처리
             if let urlText = self?.linkEmbedTextField.text {
-                if urlText.contains("http") {
-                    print("유효한 링크입니다. :", urlText)
+                if urlText.prefix(4) == "http" {
                     self?.resetError()
                 } else {
-                    print("유효하지 않은 링크입니다. :", urlText)
                     self?.isValidLinkError()
                 }
             }
@@ -197,21 +193,6 @@ extension AddLinkView: UITextFieldDelegate {
         // 타이머를 정지, 테두리 초기화
         timer?.invalidate()
         linkEmbedTextField.layer.borderColor = UIColor.clear.cgColor
-    }
-    
-    // MARK: - URL 유효성 검사
-    
-    // 화면 구현 완성하고 검사할게요
-    func isValidURL(_ urlString: String?) -> Bool {
-        guard let urlString = urlString else {
-            return false
-        }
-        // 정규표현식을 사용하여 URL 패턴 확인
-        let urlPattern = #"^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$"# // 간단한 URL 패턴
-        let regex = try? NSRegularExpression(pattern: urlPattern, options: .caseInsensitive)
-        let range = NSRange(location: 0, length: urlString.utf16.count)
-        
-        return regex?.firstMatch(in: urlString, options: [], range: range) != nil
     }
     
     // MARK: - Text Field Error
