@@ -154,7 +154,7 @@ extension ClipViewController: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
             headerView.isDetailClipView(isHidden: false)
-            headerView.setupDataBind(count: clipCount)
+            headerView.setupDataBind(count: clipCount+1)
             headerView.clipCollectionHeaderViewDelegate = self
             return headerView
         }
