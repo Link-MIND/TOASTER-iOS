@@ -231,7 +231,7 @@ extension SelectClipViewController {
             case .success:
                 self.delegate?.saveLinkButtonTapped()
                 self.navigationController?.popToRootViewController(animated: true)
-            case .networkFail, .unAuthorized:
+            case .networkFail, .unAuthorized, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default:
                 return
@@ -254,6 +254,8 @@ extension SelectClipViewController {
                     clipDataList.append(clipData)
                 }
                 self.selectedClip = clipDataList
+            case .networkFail, .unAuthorized, .notFound:
+                self.changeViewController(viewController: LoginViewController())
             default: break
             }
         }
@@ -269,7 +271,7 @@ extension SelectClipViewController {
                     self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
                 }
                 self.fetchClipData()
-            case .unAuthorized, .networkFail:
+            case .networkFail, .unAuthorized, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }
@@ -291,7 +293,7 @@ extension SelectClipViewController {
                         }
                     }
                 }
-            case .unAuthorized, .networkFail:
+            case .networkFail, .unAuthorized, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }
