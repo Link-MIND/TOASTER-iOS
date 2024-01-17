@@ -14,18 +14,6 @@ final class HomeViewController: UIViewController {
     // MARK: - Properties
     
     private let homeView = HomeView()
-    
-    private var _clipItemCount: Int = 0
-
-    private var clipItemCount: Int {
-        get {
-            return _clipItemCount
-        }
-        set(newValue) {
-            let adjustedValue = newValue + 2
-            _clipItemCount = min(adjustedValue, 4)
-        }
-    }
 
     private var mainInfoList: MainInfoModel? {
         didSet {
@@ -74,9 +62,7 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1:
-            if indexPath.item != 0 {
-                addClipCellTapped()
-            }
+            print(mainInfoList?.mainCategoryListDto[indexPath.item].categoryId)
         case 2:
             let nextVC = LinkWebViewController()
             nextVC.hidesBottomBarWhenPushed = true
@@ -109,7 +95,8 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            return clipItemCount
+            guard let count = mainInfoList?.mainCategoryListDto.count else { return 1 }
+            return min(count + 1, 4)
         case 2:
             return weeklyLinkList?.count ?? 0
         case 3:
@@ -129,22 +116,20 @@ extension HomeViewController: UICollectionViewDataSource {
             cell.mainCollectionViewDelegate = self
             return cell
         case 1:
-            let lastIndex = clipItemCount - 1
+            let lastIndex = mainInfoList?.mainCategoryListDto.count ?? 0
             
-            if indexPath.item == 0 {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
-                if let model = mainInfoList {
-                    cell.bindData(forModel: CategoryList(categoryId: 0, categroyTitle: "전체클립", toastNum: model.allToastNum), icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
-                }
-                return cell
-            } else if clipItemCount <= 4 && lastIndex == indexPath.item && mainInfoList?.mainCategoryListDto.count ?? 0 <= 2 {
+            if indexPath.item == lastIndex {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipEmptyCollectionViewCell.className, for: indexPath) as? UserClipEmptyCollectionViewCell else { return UICollectionViewCell() }
                 return cell
             } else {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
                 
                 if let model = mainInfoList?.mainCategoryListDto {
-                    cell.bindData(forModel: model[indexPath.item - 1], icon: ImageLiterals.Home.clipFull)
+                    if indexPath.item == 0 {
+                        cell.bindData(forModel: model[indexPath.item], icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
+                    } else {
+                        cell.bindData(forModel: model[indexPath.item], icon: ImageLiterals.Home.clipFull)
+                    }
                 }
                 return cell
             }
@@ -329,19 +314,19 @@ extension HomeViewController {
         NetworkService.shared.userService.getMainPage { result in
             switch result {
             case .success(let response):
-                var categoryList: [CategoryList] = []
-                response?.data.mainCategoryListDto.forEach {
-                    categoryList.append(CategoryList(categoryId: $0.categoryId,
-                                                     categroyTitle: $0.categoryTitle,
-                                                     toastNum: $0.toastNum))
-                }
                 if let data = response?.data {
+                    var categoryList: [CategoryList] = [CategoryList(categoryId: 0,
+                                                                     categroyTitle: "전체 클립",
+                                                                     toastNum: data.allToastNum)]
+                    data.mainCategoryListDto.forEach {
+                        categoryList.append(CategoryList(categoryId: $0.categoryId,
+                                                         categroyTitle: $0.categoryTitle,
+                                                         toastNum: $0.toastNum))
+                    }
                     self.mainInfoList = MainInfoModel(nickname: data.nickname,
                                                       readToastNum: data.readToastNum,
                                                       allToastNum: data.allToastNum,
                                                       mainCategoryListDto: categoryList)
-                    
-                    self.clipItemCount = data.mainCategoryListDto.count
                 }
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
