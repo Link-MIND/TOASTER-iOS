@@ -60,6 +60,18 @@ final class LinkWebViewController: UIViewController {
         setupNavigationBarAction()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        hideNavigationBar()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        showNavigationBar()
+    }
+    
     deinit {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
     }
@@ -94,7 +106,6 @@ private extension LinkWebViewController {
     func setupStyle() {
         view.bringSubviewToFront(progressView)
         view.backgroundColor = .toasterWhite
-        hideNavigationBar()
         
         progressView.do {
             $0.tintColor = .toasterPrimary
