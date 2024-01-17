@@ -261,6 +261,10 @@ private extension RemindTimerAddViewController {
             self.mainLabel.asFont(targetString: data.clipTitle,
                                   font: .suitSemiBold(size: 18))
             self.selectedIndex = Set(data.remindDates)
+            
+            let date = networkDateformatter.date(from: data.remindTime) ?? Date()
+            timerLabel.text = labelDateformatter.string(from: date)
+            datePickerView.date = date
         }
     }
     
@@ -315,7 +319,7 @@ private extension RemindTimerAddViewController {
     }
     
     func closeButtonTapped() {
-        showPopup(forMainText: "타이머 만들기를 취소할까요?",
+        showPopup(forMainText: "타이머 설정을 취소할까요?",
                   forSubText: "지금까지 진행한 타이머 설정이\n사라져요",
                   forLeftButtonTitle: "닫기",
                   forRightButtonTitle: "취소",
