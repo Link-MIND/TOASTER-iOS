@@ -15,6 +15,7 @@ enum Config {
             static let tempToken = "TEMP_ACCESS_TOKEN"
             static let accessTokenKey = "ACCESS_TOKEN_KEY"
             static let refreshTokenKey = "REFRESH_TOKEN_KEY"
+            static let fcmTokenKey = "FCM_TOKEN_KEY"
             static let loginType = "LOGIN_TYPE"
             static let appleLogin = "APPLE_LOGIN"
             static let kakaoLogin = "KAKAO_LOGIN"
@@ -94,4 +95,10 @@ extension Config {
         return key
     }()
     
+    static let fcmTokenKey: String = {
+        guard let key = Config.infoDictionary[Keys.Plist.fcmTokenKey] as? String else {
+            fatalError("🍞⛔️APPLE_USER_ID is not set in plist for this configuration⛔️🍞")
+        }
+        return key
+    }()
 }
