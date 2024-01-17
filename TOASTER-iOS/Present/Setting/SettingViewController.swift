@@ -15,7 +15,7 @@ final class SettingViewController: UIViewController {
     // MARK: - Properties
     
     private let settingList = ["알림 설정", "1:1 문의", "이용약관", "로그아웃"]
-    private var isToggle: Bool = true {
+    private var isToggle: Bool = UserDefaults.standard.object(forKey: "isAppAlarmOn") as? Bool ?? true {
         didSet {
             setupWarningView()
         }
@@ -43,6 +43,7 @@ final class SettingViewController: UIViewController {
         setupStyle()
         setupHierarchy()
         setupLayout()
+        setupWarningView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
