@@ -27,11 +27,7 @@ final class AddLinkViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var linkSaveList: SaveLinkModel? {
-        didSet {
-            // homeView.collectionView.reloadData()
-        }
-    }
+    private var linkSaveList: SaveLinkModel? 
     
     private weak var delegate: AddLinkViewControllerPopDelegate?
     private weak var urldelegate: SelectClipViewControllerDelegate?
@@ -127,9 +123,6 @@ private extension AddLinkViewController {
         if (addLinkView.linkEmbedTextField.text?.count ?? 0) < 1 {
             addLinkView.emptyError()
         } else {
-            // TODO: - categoryId는 민재 오빠 API 연결 후에 받아오겠습니다
-            // postSaveLink(url: addLinkView.linkEmbedTextField.text ?? "", category: nil)
-            
             let selectClipViewController = SelectClipViewController()
             selectClipViewController.linkURL = addLinkView.linkEmbedTextField.text ?? "" 
             selectClipViewController.delegate = self
@@ -149,23 +142,3 @@ extension AddLinkViewController: SaveLinkButtonDelegate {
         delegate?.changeTabBarIndex()
     }
 }
-
- // MARK: - Network
-
-//extension AddLinkViewController {
-//    func postSaveLink(url: String, category: Int?) {
-//        let request = PostSaveLinkRequestDTO(linkUrl: url,
-//                                             categoryId: category)
-//        NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
-//            switch result {
-//            case .success:
-//                print(result)
-//            case .networkFail, .unAuthorized:
-//                self.changeViewController(viewController: LoginViewController())
-//            default:
-//                return
-//            }
-//        }
-//    }
-//    
-//}
