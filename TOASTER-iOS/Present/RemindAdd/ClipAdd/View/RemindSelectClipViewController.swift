@@ -108,8 +108,17 @@ private extension RemindSelectClipViewController {
             navigationController.setupNavigationBar(forType: type)
         }
     }
-        
+    
     func closeButtonTapped() {
+        showPopup(forMainText: "타이머 설정을 취소할까요?",
+                  forSubText: "지금까지 진행한 타이머 설정이\n사라져요",
+                  forLeftButtonTitle: "닫기",
+                  forRightButtonTitle: "취소",
+                  forRightButtonHandler: makeTimerCancle)
+    }
+        
+    func makeTimerCancle() {
+        dismiss(animated: false)
         navigationController?.popViewController(animated: true)
     }
     
