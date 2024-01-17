@@ -23,6 +23,12 @@ final class AddLinkViewController: UIViewController {
     
     // MARK: - Properties
     
+    private var linkSaveList: SaveLinkModel? {
+        didSet {
+            // homeView.collectionView.reloadData()
+        }
+    }
+    
     private weak var delegate: AddLinkViewControllerPopDelegate?
 
     // MARK: - UI Properties
@@ -45,6 +51,8 @@ final class AddLinkViewController: UIViewController {
         setupNavigationBar()
 
         navigationBarHidden(forHidden: true)
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -116,6 +124,7 @@ private extension AddLinkViewController {
         if (addLinkView.linkEmbedTextField.text?.count ?? 0) < 1 {
             addLinkView.emptyError()
         } else {
+            postSaveLink()
             let selectClipViewController = SelectClipViewController()
             selectClipViewController.delegate = self
             self.navigationController?.pushViewController(selectClipViewController, animated: true)
@@ -133,4 +142,24 @@ extension AddLinkViewController: SaveLinkButtonDelegate {
     func cancleLinkButtonTapped() {
         delegate?.changeTabBarIndex()
     }
+}
+
+ // MARK: - Network
+
+extension AddLinkViewController {
+    func postSaveLink() {
+        let request = PostSaveLinkRequestDTO(linkUrl: linkSaveList?.linkUrl ?? "",
+                                             categoryId: linkSaveList?.categoryId)
+        NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
+            switch result {
+            case .success:
+                print(result)
+            case .networkFail, .unAuthorized:
+                self.changeViewController(viewController: LoginViewController())
+            default:
+                return
+            }
+        }
+    }
+    
 }
