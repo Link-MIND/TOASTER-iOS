@@ -28,6 +28,11 @@ struct KeyChainService {
         return (accessResult: accessResult, refreshResult: refreshResult)
     }
     
+    static func saveFCMToken(fcmToken: String, key: String) -> Bool {
+        let result = saveFCMToken(token: fcmToken, key: key)
+        return result
+    }
+    
     // MARK: - static func load
     
     static func loadAccessToken(key: String) -> String? {
@@ -37,6 +42,11 @@ struct KeyChainService {
     
     static func loadRefreshToken(key: String) -> String? {
         let result = loadToken(key: key)
+        return result
+    }
+    
+    static func loadFCMToken(key: String) -> String? {
+        let result = loadFCMTokenString(key: key)
         return result
     }
     
@@ -66,6 +76,25 @@ struct KeyChainService {
     
     // MARK: - private static func
     
+    private static func saveFCMToken(token: String, key: String) -> Bool {
+        if let data = token.data(using: .utf8) {
+            let query: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword,
+                kSecAttrAccount as String: key,
+                kSecValueData as String: data
+            ]
+            
+            let status = SecItemAdd(query as CFDictionary, nil)
+            
+            if status == errSecSuccess {
+                print("🍞⛔️KeyChain - FCMToken 저장 성공⛔️🍞")
+            } else {
+                print("🍞⛔️KeyChain - FCMToken 저장 실패 (Error:\(status))⛔️🍞")
+            }
+        }
+        return false
+    }
+    
     private static func saveToken(token: String, key: String) -> Bool {
         if let data = token.data(using: .utf8) {
             let query: [String: Any] = [
@@ -73,7 +102,7 @@ struct KeyChainService {
                 kSecAttrAccount as String: key,
                 kSecValueData as String: data
             ]
-
+            
             let status = SecItemUpdate(query as CFDictionary, [kSecValueData as String: data] as CFDictionary)
             
             switch status {
@@ -116,6 +145,26 @@ struct KeyChainService {
         return false
     }
     
+    private static func loadFCMTokenString(key: String) -> String? {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key,
+            kSecReturnData as String: kCFBooleanTrue!,
+            kSecMatchLimit as String: kSecMatchLimitOne
+        ]
+        
+        var dataTypeRef: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
+        
+        if status == errSecSuccess, let retrievedData = dataTypeRef as? Data {
+            if let token = String(data: retrievedData, encoding: .utf8) {
+                print("🍞⛔️KeyChain - FCMToken 불러오기 성공⛔️🍞")
+                return token
+            }
+        }
+        return nil
+    }
+    
     private static func loadToken(key: String) -> String? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -128,7 +177,7 @@ struct KeyChainService {
         let status = SecItemCopyMatching(query as CFDictionary, &data)
         
         if status == errSecSuccess, let tokenData = data as? Data,
-            let token = String(data: tokenData, encoding: .utf8) {
+           let token = String(data: tokenData, encoding: .utf8) {
             
             if key == Config.accessTokenKey {
                 print("🍞⛔️KeyChain - AccessToken 불러오기 성공⛔️🍞")

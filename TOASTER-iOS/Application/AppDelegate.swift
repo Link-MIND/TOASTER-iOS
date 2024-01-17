@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var isLogin = false
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // MARK: - 푸시알림 설정
         
         FirebaseApp.configure()
         
@@ -28,9 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
         application.registerForRemoteNotifications()
         
-        // 기본 앱 알림 세팅 (true)
+        // MARK: - 앱 내 알림 기본 설정
+        
         UserDefaults.standard.set(true, forKey: "isAppAlarmOn")
         
+        // MARK: - 카카오 로그인 설정
+
         KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
         
         let result = KeyChainService.loadTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
@@ -126,32 +130,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: - MessagingDelegate
 extension AppDelegate: MessagingDelegate {
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
-        print("[Log] deviceToken :", deviceTokenString)
-        
-        Messaging.messaging().apnsToken = deviceToken
-    }
     
+    // FCM 토큰을 받았을 때 실행
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         if let token = fcmToken {
-            let dataDict: [String: String] = ["token": token]
-            
-            NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+            KeyChainService.saveFCMToken(fcmToken: token, key: Config.fcmTokenKey)
         }
     }
-    
-//    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-//        print("[Log] didReceive :", messaging)
-//    }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    // 앱이 실행중일 때, 화면이 켜져있을 때 실행
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.alert, .badge, .sound])
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        completionHandler()
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        // 받은 메시지 처리
     }
 }
