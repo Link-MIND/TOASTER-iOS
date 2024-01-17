@@ -14,8 +14,8 @@ struct GetWeeksLinkResponseDTO: Codable {
 }
 
 struct GetWeeksLinkResponseData: Codable {
-    let toastId: Int
-    let toastTitle: String
-    let toastImg: String?
-    let toastLink: String
+    let linkId: Int
+    let linkTitle: String
+    let linkImg: String?
+    let linkUrl: String
 }
