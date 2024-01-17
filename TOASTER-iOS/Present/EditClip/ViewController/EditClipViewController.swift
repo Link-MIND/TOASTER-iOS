@@ -105,7 +105,7 @@ private extension EditClipViewController {
     }
     
     func popupDeleteButtonTapped(categoryID: Int, index: Int) {
-        deleteCategoryAPI(requestBody: DeleteCategoryRequestDTO.init(deleteCategoryList: [categoryID]))
+        deleteCategoryAPI(deleteCategoryDto: categoryID)
     }
 }
 
@@ -258,8 +258,8 @@ extension EditClipViewController {
         }
     }
     
-    func deleteCategoryAPI(requestBody: DeleteCategoryRequestDTO) {
-        NetworkService.shared.clipService.deleteCategory(requestBody: requestBody) { result in
+    func deleteCategoryAPI(deleteCategoryDto: Int) {
+        NetworkService.shared.clipService.deleteCategory(deleteCategoryDto: deleteCategoryDto) { result in
             switch result {
             case .success:
                 self.getAllCategoryAPI()
