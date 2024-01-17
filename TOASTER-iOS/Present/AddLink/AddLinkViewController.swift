@@ -80,6 +80,12 @@ extension AddLinkViewController {
     func setupDelegate(forDelegate: AddLinkViewControllerPopDelegate) {
         delegate = forDelegate
     }
+    
+    // 클립보드 붙여넣기 Alert -> 붙여넣기 허용 클릭 후 자동 링크 임베드를 위한 함수
+    func embedURL(url: String) {
+        addLinkView.linkEmbedTextField.becomeFirstResponder()
+        addLinkView.linkEmbedTextField.text = url
+    }
 }
 
 // MARK: - Private extension
