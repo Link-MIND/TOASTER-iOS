@@ -33,6 +33,8 @@ final class HomeViewController: UIViewController {
         }
     }
     
+    // MARK: - UI Properties
+
     private let addClipBottomSheetView = AddClipBottomSheetView()
     private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
     
@@ -54,7 +56,37 @@ final class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate {}
+// MARK: - UICollectionViewDelegate
+
+extension HomeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 1:
+            if indexPath.item != 0 {
+                addClipCellTapped()
+            }
+        case 2:
+            let nextVC = LinkWebViewController()
+            nextVC.hidesBottomBarWhenPushed = true
+            if let data = weeklyLinkList?[indexPath.item] {
+                nextVC.setupDataBind(linkURL: data.toastLink)
+            }
+            self.navigationController?.pushViewController(nextVC, animated: true)
+        case 3:
+            let nextVC = LinkWebViewController()
+            nextVC.hidesBottomBarWhenPushed = true
+            if let data = recommendSiteList?[indexPath.item],
+               let url = data.siteUrl {
+                nextVC.setupDataBind(linkURL: url)
+            }
+            self.navigationController?.pushViewController(nextVC, animated: true)
+        default: break
+        }
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+
 extension HomeViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 4
@@ -110,12 +142,6 @@ extension HomeViewController: UICollectionViewDataSource {
             return cell
         default:
             return MainCollectionViewCell()
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 1 && indexPath.item != 0 {
-            addClipCellTapped()
         }
     }
     
@@ -231,6 +257,8 @@ private extension HomeViewController {
     
 }
 
+// MARK: - AddClipBottomSheetViewDelegate
+
 extension HomeViewController: AddClipBottomSheetViewDelegate {
     func callCheckAPI(text: String) {
         // getCheckCategoryAPI(categoryTitle: text)
@@ -253,12 +281,16 @@ extension HomeViewController: AddClipBottomSheetViewDelegate {
     }
 }
 
+// MARK: - UserClipCollectionViewCellDelegate
+
 extension HomeViewController: UserClipCollectionViewCellDelegate {
     func addClipCellTapped() {
         addClipBottom.modalPresentationStyle = .overFullScreen
         self.present(addClipBottom, animated: false)
     }
 }
+
+// MARK: - MainCollectionViewDelegate
 
 extension HomeViewController: MainCollectionViewDelegate {
     func searchButtonTapped() {

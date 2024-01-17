@@ -75,6 +75,15 @@ extension LinkWebViewController {
         }
         self.isRead = isRead
         self.toastId = id
+        toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, readLinkCheckButton, flexibleSpace, safariButton], animated: false)
+    }
+    
+    func setupDataBind(linkURL: String) {
+        if let url = URL(string: linkURL) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
+        toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, safariButton], animated: false)
     }
     
     /// KVO를 사용하여 estimatedProgress가 변경될 때 호출되는 메서드
@@ -110,7 +119,6 @@ private extension LinkWebViewController {
             $0.backgroundColor = .toasterWhite
             $0.setBackgroundImage(UIImage(), forToolbarPosition: .bottom, barMetrics: .default)
             $0.setShadowImage(UIImage(), forToolbarPosition: .bottom)
-            $0.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, readLinkCheckButton, flexibleSpace, safariButton], animated: false)
         }
         
         [backButton, forwardButton, safariButton].forEach {
