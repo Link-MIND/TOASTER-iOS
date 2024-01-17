@@ -135,7 +135,9 @@ private extension LoginViewController {
     func fetchTokenSocialLogin(token: String, socialType: String) async throws-> Bool {
         return try await withCheckedThrowingContinuation { continuation in
         
-            NetworkService.shared.authService.postSocialLogin(socialToken: token, requestBody: PostSocialLoginRequestDTO(socialType: socialType, fcmToken: nil)) { result in
+            NetworkService.shared.authService.postSocialLogin(socialToken: token, 
+                                                              requestBody: PostSocialLoginRequestDTO(socialType: socialType,
+                                                                                                     fcmToken: KeyChainService.loadFCMToken(key: Config.fcmTokenKey) ?? "")) { result in
                 switch result {
                 case .success(let response):
                     /// Decoding 하는 과정 중 생길 수 있는 오류

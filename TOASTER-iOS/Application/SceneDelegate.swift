@@ -25,6 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let navigationController = ToasterNavigationController(rootViewController: rootViewController)
         self.window = UIWindow(windowScene: windowScene)
+        self.window?.overrideUserInterfaceStyle = .light
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
     }

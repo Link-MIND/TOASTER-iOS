@@ -226,7 +226,7 @@ extension LinkWebViewController {
                     self.showToastMessage(width: 152, status: .check, message: "링크 열람 취소")
                 }
                 self.isRead = !self.isRead
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }

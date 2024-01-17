@@ -26,6 +26,8 @@ final class RemindTimerEditBottomSheetView: UIView {
     
     private let editButton: UIButton = UIButton()
     private let deleteButton: UIButton = UIButton()
+    private let editButtonLabel: UILabel = UILabel()
+    private let deleteButtonLabel: UILabel = UILabel()
     
     // MARK: - Life Cycles
     
@@ -60,9 +62,6 @@ private extension RemindTimerEditBottomSheetView {
         
         editButton.do {
             $0.backgroundColor = .toasterWhite
-            $0.setTitle("타이머 수정하기", for: .normal)
-            $0.setTitleColor(.black900, for: .normal)
-            $0.titleLabel?.font = .suitMedium(size: 16)
             $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             $0.makeRounded(radius: 12)
             $0.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
@@ -70,17 +69,28 @@ private extension RemindTimerEditBottomSheetView {
         
         deleteButton.do {
             $0.backgroundColor = .toasterWhite
-            $0.setTitle("삭제", for: .normal)
-            $0.setTitleColor(.toasterError, for: .normal)
-            $0.titleLabel?.font = .suitMedium(size: 16)
             $0.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             $0.makeRounded(radius: 12)
             $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        }
+        
+        editButtonLabel.do {
+            $0.text = "수정하기"
+            $0.textColor = .black900
+            $0.font = .suitMedium(size: 16)
+        }
+        
+        deleteButtonLabel.do {
+            $0.text = "삭제"
+            $0.textColor = .toasterError
+            $0.font = .suitMedium(size: 16)
         }
     }
     
     func setupHierarchy() {
         addSubviews(editButton, deleteButton)
+        editButton.addSubview(editButtonLabel)
+        deleteButton.addSubview(deleteButtonLabel)
     }
     
     func setupLayout() {
@@ -94,6 +104,13 @@ private extension RemindTimerEditBottomSheetView {
             $0.height.equalTo(54)
             $0.top.equalTo(editButton.snp.bottom).offset(1)
             $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        [editButtonLabel, deleteButtonLabel].forEach {
+            $0.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.leading.equalToSuperview().inset(20)
+            }
         }
     }
     

@@ -17,8 +17,6 @@ protocol SelectClipHeaderViewlDelegate: AnyObject {
 final class SelectClipHeaderView: UICollectionReusableView {
     
     // MARK: - Properties
-
-    var clipCount = 3
     
     weak var selectClipHeaderViewDelegate: SelectClipHeaderViewlDelegate?
 
@@ -45,6 +43,12 @@ final class SelectClipHeaderView: UICollectionReusableView {
     }
 }
 
+extension SelectClipHeaderView {
+    func bindData(count: Int) {
+        totalCountLabel.text = "전체 + (\(count))"
+    }
+}
+
 // MARK: - Private Extension
 
 private extension SelectClipHeaderView {
@@ -58,7 +62,6 @@ private extension SelectClipHeaderView {
         }
         
         totalCountLabel.do {
-            $0.text = "전체 (\(SelectClipModel.fetchDummyData().count))"
             $0.textColor = .gray500
             $0.font = .suitBold(size: 12)
         }

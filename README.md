@@ -12,8 +12,10 @@
 
 | [다예](https://github.com/yeahh315) | [민재](https://github.com/mini-min) | [준혁](https://github.com/Genesis2010) | [가현](https://github.com/mcrkgus) | 
 | :--: | :--: | :--: | :--: |
-| <img width="600" alt="다예" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/29ac865d-b9cb-42e4-9b38-855e4a518c8a"> | <img width="600" alt="민재" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/6f2dfb8a-333c-4aea-a307-d85fc3fd2e41"> | <img width="600" alt="준혁" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/74e2ca95-2045-4bf7-9975-02818db5886a"> | <img width="600" alt="가현" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/2ef93291-7ffb-49fc-a99e-1f083e0c5887"> |
+| <img width="500" alt="다예" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/0bee30c9-a064-4a69-82c6-88f804d58d40"> | <img width="500" alt="민재" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/7765cb00-68d9-4888-a6f3-1a1c4a893079"> | <img width="500" alt="준혁" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/7faccb46-38dc-4da3-9dee-ac3fbb506971"> | <img width="500" alt="가현" src="https://github.com/Link-MIND/TOASTER-iOS/assets/69389288/97e70799-93ed-4cd6-8a1c-519594930d66"> |
 | <p align = "center">`검색 페이지` `리마인드` | <p align = "center">`카테고리 페이지` `카테고리 세부` | <p align = "center">`소셜 로그인` `마이페이지` | <p align = "center">`메인 페이지` `링크 저장` |
+
+<br>
 
 ## 📦 Libraries
 | Library | Version | Description |
