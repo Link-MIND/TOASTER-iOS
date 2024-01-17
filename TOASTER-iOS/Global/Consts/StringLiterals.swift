@@ -19,14 +19,6 @@ enum StringLiterals {
             static let my = "MY"
         }
     }
-    
-    // MARK: - 네비게이션바와 관련된 String
-    
-    enum NavigationBar {
-        enum Title {
-            static let allClip = "전체 클립"
-        }
-    }
 
     // MARK: - 바텀시트와 관련된 String
 
