@@ -50,6 +50,21 @@ extension UIViewController {
         present(popupViewController, animated: false)
     }
     
+    /// 팝업 표출할 수 있도록 하는 메서드
+    func showConfirmationPopup(forMainText: String? = nil,
+                               forSubText: String? = nil,
+                               centerButtonTitle: String,
+                               centerButtonHandler: (() -> Void)? = nil) {
+        
+        let popupViewController = ToasterPopupViewController(mainText: forMainText,
+                                                             subText: forSubText,
+                                                             centerButtonTitle: centerButtonTitle,
+                                                             centerButtonHandler: centerButtonHandler)
+        
+        popupViewController.modalPresentationStyle = .overFullScreen
+        present(popupViewController, animated: false)
+    }
+    
     /// 토스트 메시지를 보여주는 메서드
     func showToastMessage(width: CGFloat, 
                           status: ToastStatus,
@@ -79,7 +94,7 @@ extension UIViewController {
         
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             if let window = windowScene.windows.first {
-                window.rootViewController = ToasterNavigationController(rootViewController: viewController) 
+                window.rootViewController = ToasterNavigationController(rootViewController: viewController)
                 print("🍞⛔️\(String(describing: type(of: viewController)))⛔️🍞")
             }
         }

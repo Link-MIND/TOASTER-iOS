@@ -15,7 +15,23 @@ final class HomeViewController: UIViewController {
     
     private let homeView = HomeView()
     
-    var clipCellData = dummyCategoryInfo
+    private var mainInfoList: MainInfoModel? {
+        didSet {
+            homeView.collectionView.reloadData()
+        }
+    }
+    
+    private var weeklyLinkList: WeeklyLinkModel? {
+        didSet {
+            homeView.collectionView.reloadData()
+        }
+    }
+    
+    private var recommendSiteList: RecommendSiteModel? {
+        didSet {
+            homeView.collectionView.reloadData()
+        }
+    }
     
     private let addClipBottomSheetView = AddClipBottomSheetView()
     private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
@@ -31,6 +47,10 @@ final class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+        
+        fetchMainPageData()
+        fetchWeeklyLinkData()
+        fetchRecommendSiteData()
     }
 }
 
@@ -45,11 +65,11 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            return clipCellData.count
+            return (mainInfoList?.mainCategoryListDto.count ?? 0) + 1
         case 2:
-            return 3
+            return weeklyLinkList?.toastId ?? 0
         case 3:
-            return 9
+            return 9 // 나중에 recommendSiteList.count 로 변경해줘야됨 어케해
         default:
             return 0
         }
@@ -59,23 +79,34 @@ extension HomeViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.className, for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell() }
-            // cell.configureCell() 서버 통신 이후 추가 예정
+            if let model = mainInfoList {
+                cell.bindData(forModel: model)
+            }
+            cell.mainCollectionViewDelegate = self
             return cell
         case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
-            if indexPath.row == 0 {
-                cell.configureCell(forModel: CategoryList(categoryId: 0, categroyTitle: "전체클립", toastNum: 100), icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
+            guard var cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
+            if indexPath.item == 0 {
+                cell.bindData(forModel: CategoryList(categoryId: 0, categroyTitle: "전체클립", toastNum: 100), icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
             } else {
-                cell.configureCell(forModel: dummyCategoryInfo[indexPath.row], icon: ImageLiterals.Home.clipFull.withTintColor(.black900))
+                if let model = mainInfoList {
+                    cell.bindData(forModel: model.mainCategoryListDto[indexPath.item - 1], icon: ImageLiterals.Home.clipFull.withTintColor(.black900))
+                }
             }
             return cell
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyLinkCollectionViewCell.className, for: indexPath) as? WeeklyLinkCollectionViewCell
             else { return UICollectionViewCell() }
+            if let model = weeklyLinkList {
+                cell.bindData(forModel: model)
+            }
             return cell
         case 3:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyRecommendCollectionViewCell.className, for: indexPath) as? WeeklyRecommendCollectionViewCell
             else { return UICollectionViewCell() }
+            if let model = recommendSiteList {
+                cell.bindData(forModel: model)
+            }
             return cell
         default:
             return MainCollectionViewCell()
@@ -83,7 +114,7 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == clipCellData.count - 1 {
+        if indexPath.section == 1 && indexPath.item != 0 {
             addClipCellTapped()
         }
     }
@@ -96,7 +127,9 @@ extension HomeViewController: UICollectionViewDataSource {
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeaderCollectionView.className, for: indexPath) as? HomeHeaderCollectionView else { return UICollectionReusableView() }
             switch indexPath.section {
             case 1:
-                header.configureHeader(forTitle: "토스터 님의 클립")
+                if let nickName = mainInfoList?.nickname {
+                    header.configureHeader(forTitle: nickName + " 님의 클립")
+                }
             case 2:
                 header.configureHeader(forTitle: "이주의 링크")
             case 3:
@@ -195,6 +228,7 @@ private extension HomeViewController {
         createCollectionView()
         setupDelegate()
     }
+    
 }
 
 extension HomeViewController: AddClipBottomSheetViewDelegate {
@@ -223,5 +257,84 @@ extension HomeViewController: UserClipCollectionViewCellDelegate {
     func addClipCellTapped() {
         addClipBottom.modalPresentationStyle = .overFullScreen
         self.present(addClipBottom, animated: false)
+    }
+}
+
+extension HomeViewController: MainCollectionViewDelegate {
+    func searchButtonTapped() {
+        let searchVC = SearchViewController()
+        self.navigationController?.pushViewController(searchVC, animated: true)
+    }
+}
+
+// MARK: - Network
+
+extension HomeViewController {
+    // 메인페이지 + 유저 정보 + 클립 조회 -> GET
+    func fetchMainPageData() {
+        NetworkService.shared.userService.getMainPage { result in
+            switch result {
+            case .success(let response):
+                var categoryList: [CategoryList] = []
+                response?.data.mainCategoryListDto.forEach {
+                    categoryList.append(CategoryList(categoryId: $0.categoryId,
+                                                     categroyTitle: $0.categoryTitle,
+                                                     toastNum: $0.toastNum))
+                }
+                if let data = response?.data {
+                    self.mainInfoList = MainInfoModel(nickname: data.nickname,
+                                                      readToastNum: data.readToastNum,
+                                                      allToastNum: data.allToastNum,
+                                                      mainCategoryListDto: categoryList)
+                }
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default:
+                return
+            }
+        }
+    }
+    
+    // 이주의 링크 -> GET
+    func fetchWeeklyLinkData() {
+        NetworkService.shared.toastService.getWeeksLink { result in
+            switch result {
+            case .success(let response):
+                if let data = response?.data {
+                    for idx in 0..<data.count {
+                        self.weeklyLinkList = WeeklyLinkModel(toastId: data[idx].toastId,
+                                                              toastTitle: data[idx].toastTitle,
+                                                              toastImg: data[idx].toastImg ?? "",
+                                                              toastLink: data[idx].toastLink)
+                    }
+                }
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default:
+                return
+            }
+        }
+    }
+    
+    // 추천 사이트 -> GET
+    func fetchRecommendSiteData() {
+        NetworkService.shared.searchService.getRecommendSite { result in
+            switch result {
+            case .success(let response):
+                if let data = response?.data {
+                    for idx in 0..<data.count {
+                        self.recommendSiteList = RecommendSiteModel(siteId: data[idx].siteId,
+                                                                    siteTitle: data[idx].siteTitle, 
+                                                                    siteUrl: data[idx].siteUrl,
+                                                                    siteImg: data[idx].siteImg,
+                                                                    siteSub: data[idx].siteSub)
+                    }
+                }
+            case .unAuthorized, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default:
+                return
+            }
+        }
     }
 }
