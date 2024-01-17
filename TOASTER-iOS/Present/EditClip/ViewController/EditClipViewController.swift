@@ -251,7 +251,7 @@ extension EditClipViewController {
             switch result {
             case .success(let response):
                 self.clipList = response
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }
@@ -266,7 +266,7 @@ extension EditClipViewController {
                 self.dismiss(animated: false) {
                     self.showToastMessage(width: 152, status: .check, message: "클립 삭제 완료")
                 }
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }
@@ -278,7 +278,7 @@ extension EditClipViewController {
             switch result {
             case .success:
                 self.getAllCategoryAPI()
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }
@@ -295,7 +295,7 @@ extension EditClipViewController {
                     self.editClipBottomSheetView.resetTextField()
                 }
                 self.getAllCategoryAPI()
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }
@@ -317,7 +317,7 @@ extension EditClipViewController {
                         }
                     }
                 }
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }

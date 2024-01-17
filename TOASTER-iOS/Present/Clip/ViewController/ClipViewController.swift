@@ -225,7 +225,7 @@ extension ClipViewController {
             switch result {
             case .success(let response):
                 self?.clipList = response
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self?.changeViewController(viewController: LoginViewController())
             default: return
             }
@@ -242,7 +242,7 @@ extension ClipViewController {
                     self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
                 }
                 self.getAllCategoryAPI()
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }
@@ -264,7 +264,7 @@ extension ClipViewController {
                         }
                     }
                 }
-            case .unAuthorized, .networkFail:
+            case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
             }
