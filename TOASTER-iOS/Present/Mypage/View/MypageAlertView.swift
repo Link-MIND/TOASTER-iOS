@@ -67,7 +67,7 @@ private extension MypageAlertView {
         }
         
         alertImage.snp.makeConstraints {
-            $0.top.equalTo(seperatorView.snp.bottom)
+            $0.top.equalTo(seperatorView.snp.bottom).offset(convertByHeightRatio(32))
             $0.centerX.equalToSuperview()
             $0.size.equalTo(200)
         }
