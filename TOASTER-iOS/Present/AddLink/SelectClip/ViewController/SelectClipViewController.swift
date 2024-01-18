@@ -244,6 +244,9 @@ extension SelectClipViewController {
                     self.navigationController?.popToRootViewController(animated: true)
                 case .networkFail, .unAuthorized, .notFound:
                     self.changeViewController(viewController: LoginViewController())
+                case .badRequest, .serverErr:
+                    self.navigationController?.popToRootViewController(animated: true)
+                    self.navigationController?.showToastMessage(width: 200, status: .warning, message: "링크 저장에 실패했어요!")
                 default:
                     return
                 }
