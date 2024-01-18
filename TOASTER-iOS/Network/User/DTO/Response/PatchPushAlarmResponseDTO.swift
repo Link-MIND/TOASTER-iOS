@@ -10,9 +10,9 @@ import Foundation
 struct PatchPushAlarmResponseDTO: Codable {
     let code: Int
     let message: String
-    let data: PatchPushAlarmResponseData
+    let data: PatchPushAlarmResponseData?
 }
 
 struct PatchPushAlarmResponseData: Codable {
-    let fcmIsAllowed: Bool
+    let isAllowed: Bool
 }

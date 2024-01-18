@@ -15,9 +15,11 @@ final class SettingViewController: UIViewController {
     // MARK: - Properties
     
     private let settingList = ["알림 설정", "1:1 문의", "이용약관", "로그아웃"]
-    private var isToggle: Bool = UserDefaults.standard.object(forKey: "isAppAlarmOn") as? Bool ?? true {
+    private var isToggle: Bool? = UserDefaults.standard.object(forKey: "isAppAlarmOn") as? Bool {
         didSet {
+            settingTableView.reloadData()            
             setupWarningView()
+            UserDefaults.standard.set(isToggle, forKey: "isAppAlarmOn")
         }
     }
     
@@ -134,15 +136,17 @@ private extension SettingViewController {
     }
     
     func setupWarningView() {
-        if isToggle {
-            settingTableView.snp.remakeConstraints {
-                $0.top.equalTo(view.safeAreaLayoutGuide)
-                $0.leading.trailing.bottom.equalToSuperview()
-            }
-        } else {
-            settingTableView.snp.remakeConstraints {
-                $0.top.equalTo(alertWarningView.snp.bottom)
-                $0.leading.trailing.bottom.equalToSuperview()
+        if let toggle = isToggle {
+            if toggle {
+                settingTableView.snp.remakeConstraints {
+                    $0.top.equalTo(view.safeAreaLayoutGuide)
+                    $0.leading.trailing.bottom.equalToSuperview()
+                }
+            } else {
+                settingTableView.snp.remakeConstraints {
+                    $0.top.equalTo(alertWarningView.snp.bottom)
+                    $0.leading.trailing.bottom.equalToSuperview()
+                }
             }
         }
     }
@@ -196,6 +200,18 @@ private extension SettingViewController {
             default:
                 print("🍞⛔️회원탈퇴 실패⛔️🍞")
                 self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 회원탈퇴가 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
+            }
+        }
+    }
+    
+    func patchAlarmSetting(toggle: Bool) {
+        NetworkService.shared.userService.patchPushAlarm(requestBody: PatchPushAlarmRequestDTO(allowedPush: toggle)) { result in
+            switch result {
+            case .success(let response):
+                self.isToggle = response?.data?.isAllowed
+            case .notFound, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default: break
             }
         }
     }
@@ -286,8 +302,7 @@ extension SettingViewController: UITableViewDataSource {
             if indexPath.row == 0 {
                 cell.showSwitch()
                 cell.setSwitchValueChangedHandler { isOn in
-                    self.isToggle = isOn
-                    UserDefaults.standard.set(isOn, forKey: "isAppAlarmOn")
+                    self.patchAlarmSetting(toggle: isOn)
                 }
             }
         default:
