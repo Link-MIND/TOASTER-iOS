@@ -21,6 +21,7 @@ final class AddLinkView: UIView {
     
     private let descriptLabel = UILabel()
     var linkEmbedTextField = UITextField()
+    private let clearButton = UIButton()
     
     let nextBottomButton = UIButton()
     let nextTopButton = UIButton()
@@ -81,9 +82,13 @@ private extension AddLinkView {
             $0.backgroundColor = .gray50
             $0.makeRounded(radius: 12)
             $0.inputAccessoryView = accessoryView
-            $0.clearButtonMode = .always
-            $0.addPadding(left: 15.0)
+            $0.addPadding(left: -15.0)
             $0.addTarget(self, action: #selector(self.textFieldDidChange), for: .touchUpInside)
+        }
+    
+        clearButton.do {
+            $0.setImage(ImageLiterals.Common.cancle, for: .normal)
+            $0.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         }
         
         nextBottomButton.do {
@@ -106,7 +111,8 @@ private extension AddLinkView {
     }
     
     func setupHierarchy() {
-        addSubviews(descriptLabel, linkEmbedTextField, nextBottomButton)
+        addSubviews(descriptLabel, linkEmbedTextField, nextBottomButton, clearButton)
+        clearButton.isHidden = true
         accessoryView.addSubview(nextTopButton)
     }
     
@@ -121,6 +127,11 @@ private extension AddLinkView {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(335)
             $0.height.equalTo(54)
+        }
+        
+        clearButton.snp.makeConstraints {
+            $0.top.equalTo(linkEmbedTextField.snp.top).inset(15)
+            $0.trailing.equalTo(linkEmbedTextField.snp.trailing).inset(15)
         }
         
         nextBottomButton.snp.makeConstraints {
@@ -144,6 +155,11 @@ private extension AddLinkView {
             keyboardHeight = keyboardSize.height
         }
     }
+    
+    @objc func cancelButtonTapped() {
+        linkEmbedTextField.text = ""
+        linkEmbedTextField.becomeFirstResponder()
+    }
 }
 
 // MARK: - Extension
@@ -154,6 +170,7 @@ extension AddLinkView: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         // 텍스트 필드에 입력이 시작될 때 호출되는 메서드
+        clearButton.isHidden = false
         nextTopButton.backgroundColor = .black850
         linkEmbedTextField.placeholder = nil
         // 여기서 타이머를 시작하고, 0.5초 후에 텍스트를 확인 후 텍스트필드 에러 처리

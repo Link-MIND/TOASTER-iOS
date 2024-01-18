@@ -116,7 +116,7 @@ extension ClipViewController: UICollectionViewDelegate {
         let nextVC = DetailClipViewController()
         if indexPath.item == 0 {
             nextVC.getDetailAllCategoryAPI(filter: .all)
-            nextVC.setupCategory(id: 0, name: "전체클립")
+            nextVC.setupCategory(id: 0, name: "전체 클립")
         } else {
             if let data = clipList?.data {
                 nextVC.getDetailCategoryAPI(categoryID: data.categories[indexPath.item-1].categoryId,
@@ -142,7 +142,7 @@ extension ClipViewController: UICollectionViewDataSource {
         if let clips = clipList?.data {
             if indexPath.item == 0 {
                 cell.configureCell(forModel: clips,
-                                   icon: ImageLiterals.TabBar.allClip.withTintColor(.black900), name: "전체클립")
+                                   icon: ImageLiterals.TabBar.allClip.withTintColor(.black900), name: "전체 클립")
             } else {
                 cell.configureCell(forModel: clips, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.item-1)
             }

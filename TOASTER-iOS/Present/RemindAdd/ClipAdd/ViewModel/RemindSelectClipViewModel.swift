@@ -39,7 +39,7 @@ extension RemindSelectClipViewModel {
             switch result {
             case .success(let response):
                 var clipDataList: [RemindClipModel] = [RemindClipModel(id: 0,
-                                                                       title: "전체",
+                                                                       title: "전체 클립",
                                                                        clipCount: response?.data.toastNumberInEntire ?? 0)]
                 response?.data.categories.forEach {
                     let clipData = RemindClipModel(id: $0.categoryId,

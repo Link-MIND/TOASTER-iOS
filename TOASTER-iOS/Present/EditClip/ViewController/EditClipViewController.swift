@@ -120,7 +120,7 @@ extension EditClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EditClipCollectionViewCell.className, for: indexPath) as? EditClipCollectionViewCell else { return UICollectionViewCell() }
         if indexPath.row == 0 {
-            cell.configureCell(forModel: GetAllCategoryData(categoryId: 0, categoryTitle: "전체클립", toastNum: 0),
+            cell.configureCell(forModel: GetAllCategoryData(categoryId: 0, categoryTitle: "전체 클립", toastNum: 0),
                                icon: ImageLiterals.Clip.pin, isFirst: true)
         } else {
             if let clips = clipList?.data {

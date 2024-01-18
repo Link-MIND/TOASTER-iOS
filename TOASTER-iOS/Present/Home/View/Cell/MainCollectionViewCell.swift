@@ -59,7 +59,11 @@ extension MainCollectionViewCell {
         countToastLabel.text = String(forModel.readToastNum) + " / " + String(forModel.allToastNum)
         countToastLabel.asFontColor(targetString: String(forModel.readToastNum), font: .suitBold(size: 20), color: .toasterPrimary)
         
-        linkProgressView.setProgress(Float(forModel.readToastNum)/Float(forModel.allToastNum), animated: true)
+        if forModel.readToastNum == 0 && forModel.allToastNum == 0 {
+            linkProgressView.setProgress(0.0, animated: true)
+        } else {
+            linkProgressView.setProgress(Float(forModel.readToastNum)/Float(forModel.allToastNum), animated: true)
+        }
     }
 }
 
@@ -138,7 +142,7 @@ private extension MainCollectionViewCell {
         
         linkProgressView.snp.makeConstraints {
             $0.top.equalTo(countToastLabel.snp.bottom).offset(5)
-            $0.leading.equalTo(userLabel.snp.leading)
+            $0.centerX.equalToSuperview()
             $0.width.equalTo(335)
             $0.height.equalTo(12)
         }
