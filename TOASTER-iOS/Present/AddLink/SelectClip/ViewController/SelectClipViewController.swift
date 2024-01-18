@@ -137,7 +137,18 @@ private extension SelectClipViewController {
 
 extension SelectClipViewController: UICollectionViewDelegate { 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.item != 0 {
+            if let cell = collectionView.cellForItem(at: .SubSequence(item: 0, section: 0)) {
+                cell.isSelected = false
+            }
+        }
         categoryID = selectedClip[indexPath.item].id
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item == 0 {
+            cell.isSelected = true
+        }
     }
 }
 
