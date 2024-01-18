@@ -333,7 +333,7 @@ extension HomeViewController {
                     }
                     self.mainInfoList = MainInfoModel(nickname: data.nickname,
                                                       readToastNum: data.readToastNum,
-                                                      allToastNum: data.allToastNum,
+                                                      allToastNum: data.readToastNum,
                                                       mainCategoryListDto: categoryList)
                 }
             case .unAuthorized, .networkFail:
