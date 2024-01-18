@@ -108,12 +108,14 @@ extension RemindViewModel {
                 response?.data.completedTimerList.forEach {
                     completedList.append(CompleteTimerModel(id: $0.timerId,
                                                             remindDay: $0.remindDate,
-                                                            remindTime: $0.remindTime,
+                                                            remindTime: $0.remindTime, 
+                                                            clipID: $0.categoryId,
                                                             clipName: $0.comment))
                 }
                 var waitList: [WaitTimerModel] = []
                 response?.data.waitingTimerList.forEach {
-                    waitList.append(WaitTimerModel(id: $0.timerId,
+                    waitList.append(WaitTimerModel(id: $0.timerId, 
+                                                   clipID: $0.categoryId,
                                                    clipName: $0.comment,
                                                    remindDay: $0.remindDates,
                                                    remindTime: $0.remindTime,

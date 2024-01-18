@@ -278,7 +278,23 @@ extension RemindViewController: RemindEditViewDelegate {
 
 // MARK: - UICollectionViewDelegate
 
-extension RemindViewController: UICollectionViewDelegate { }
+extension RemindViewController: UICollectionViewDelegate { 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let clipViewController = DetailClipViewController()
+        switch indexPath.section {
+        case 0:
+            let data = viewModel.timerData.completeTimerModelList[indexPath.item]
+            clipViewController.setupCategory(id: data.clipID,
+                                             name: data.clipName)
+        case 1:
+            let data = viewModel.timerData.waitTimerModelList[indexPath.item]
+            clipViewController.setupCategory(id: data.clipID,
+                                             name: data.clipName)
+        default: break
+        }
+        navigationController?.pushViewController(clipViewController, animated: true)
+    }
+}
 
 // MARK: - UICollectionViewDataSource
 
