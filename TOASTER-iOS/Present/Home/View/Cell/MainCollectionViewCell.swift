@@ -59,7 +59,7 @@ extension MainCollectionViewCell {
         countToastLabel.text = String(forModel.readToastNum) + " / " + String(forModel.allToastNum)
         countToastLabel.asFontColor(targetString: String(forModel.readToastNum), font: .suitBold(size: 20), color: .toasterPrimary)
         
-        linkProgressView.progress = Float(forModel.readToastNum)/Float(forModel.allToastNum)
+        linkProgressView.setProgress(Float(forModel.readToastNum)/Float(forModel.allToastNum), animated: true)
     }
 }
 
@@ -104,8 +104,9 @@ private extension MainCollectionViewCell {
         linkProgressView.do {
             $0.trackTintColor = .gray100
             $0.progressTintColor = .toasterPrimary
-            $0.makeRounded(radius: 8)
+            $0.makeRounded(radius: 6)
             $0.clipsToBounds = true
+            $0.subviews[1].makeRounded(radius: 6)
         }
     }
     
