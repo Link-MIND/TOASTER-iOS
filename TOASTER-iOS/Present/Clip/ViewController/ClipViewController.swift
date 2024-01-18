@@ -194,8 +194,12 @@ extension ClipViewController: ClipCollectionHeaderViewDelegate {
     }
     
     func addClipButtonTapped() {
-        addClipBottom.modalPresentationStyle = .overFullScreen
-        self.present(addClipBottom, animated: false)
+        if clipList?.data.categories.count ?? 0 >= 15 {
+            showToastMessage(width: 280, status: .warning, message: "클립은 최대 15개까지만 등록가능해요")
+        } else {
+            addClipBottom.modalPresentationStyle = .overFullScreen
+            self.present(addClipBottom, animated: false)
+        }
     }
 }
 
