@@ -29,6 +29,7 @@ final class RemindTimerAddViewController: UIViewController {
         didSet {
             repeatButtonLabel.text = selectedIndex.fetchDaysString()
             repeatButtonLabel.textColor = .toasterPrimary
+            repeatButtonLabel.font = .suitBold(size: 16)
             setupButton(forEnable: !selectedIndex.isEmpty)
         }
     }
@@ -83,6 +84,7 @@ extension RemindTimerAddViewController {
         buttonType = .add
         if let model = forModel {
             mainLabel.text = "\(model.title) 클립을"
+            mainLabel.font = .suitMedium(size: 18)
             mainLabel.asFont(targetString: model.title,
                              font: .suitSemiBold(size: 18))
             categoryID = forModel?.id
@@ -114,7 +116,6 @@ private extension RemindTimerAddViewController {
         }
         
         mainLabel.do {
-            $0.font = .suitMedium(size: 18)
             $0.textColor = .toasterBlack
         }
         

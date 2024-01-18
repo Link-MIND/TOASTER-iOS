@@ -39,9 +39,11 @@ extension TimerRepeatCollectionViewCell {
     func cellSelected(forSelect: Bool) {
         if forSelect {
             repeatLabel.textColor = .toasterPrimary
+            repeatLabel.font = .suitBold(size: 16)
             checkImageView.isHidden = false
         } else {
             repeatLabel.textColor = .black900
+            repeatLabel.font = .suitMedium(size: 16)
             checkImageView.isHidden = true
         }
     }
