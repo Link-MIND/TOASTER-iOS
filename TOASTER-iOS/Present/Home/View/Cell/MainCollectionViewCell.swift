@@ -142,7 +142,7 @@ private extension MainCollectionViewCell {
         
         linkProgressView.snp.makeConstraints {
             $0.top.equalTo(countToastLabel.snp.bottom).offset(5)
-            $0.leading.equalTo(userLabel.snp.leading)
+            $0.centerX.equalToSuperview()
             $0.width.equalTo(335)
             $0.height.equalTo(12)
         }
