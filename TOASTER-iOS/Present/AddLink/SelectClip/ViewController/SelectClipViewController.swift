@@ -224,18 +224,18 @@ extension SelectClipViewController: AddClipBottomSheetViewDelegate {
 extension SelectClipViewController {
     // 임베드한 링크, 선택한 클립 id - POST
     func postSaveLink(url: String, category: Int?) {
-        let request = PostSaveLinkRequestDTO(linkUrl: url,
-                                             categoryId: category)
-        NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
-            switch result {
-            case .success:
-                self.delegate?.saveLinkButtonTapped()
-                self.navigationController?.popToRootViewController(animated: true)
-            case .networkFail, .unAuthorized, .notFound:
-                self.changeViewController(viewController: LoginViewController())
-            default:
-                return
-            }
+            let request = PostSaveLinkRequestDTO(linkUrl: url,
+                                                 categoryId: category)
+            NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
+                switch result {
+                case .success:
+                    self.delegate?.saveLinkButtonTapped()
+                    self.navigationController?.popToRootViewController(animated: true)
+                case .networkFail, .unAuthorized, .notFound:
+                    self.changeViewController(viewController: LoginViewController())
+                default:
+                    return
+                }
         }
     }
     
@@ -244,7 +244,7 @@ extension SelectClipViewController {
         NetworkService.shared.clipService.getAllCategory { result in
             switch result {
             case .success(let response):
-                var clipDataList: [RemindClipModel] = [RemindClipModel(id: 0,
+                var clipDataList: [RemindClipModel] = [RemindClipModel(id: nil,
                                                                        title: "전체",
                                                                        clipCount: response?.data.toastNumberInEntire ?? 0)]
                 response?.data.categories.forEach {
