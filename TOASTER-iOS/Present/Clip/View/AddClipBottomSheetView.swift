@@ -94,6 +94,10 @@ extension AddClipBottomSheetView {
     func setupMessage(message: String) {
         errorMessage.text = message
     }
+    
+    func setupTextField(message: String) {
+        addClipTextField.text = message
+    }
 }
 
 // MARK: - Private Extensions
@@ -238,12 +242,6 @@ private extension AddClipBottomSheetView {
 // MARK: - UITextField Delegate
 
 extension AddClipBottomSheetView: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField.text?.count ?? 0 > 1 {
-            startTimer()
-        }
-    }
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         restartTimer()
         let newText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string

@@ -135,12 +135,13 @@ extension EditClipViewController: UICollectionViewDataSource {
                                    forRightButtonTitle: "삭제",
                                    forRightButtonHandler: { self.popupDeleteButtonTapped(categoryID: clips.categories[indexPath.row-1].categoryId, index: indexPath.row-1) })
                 }
-            }
-            
-            cell.changeTitleButtonTapped {
-                self.cellIndex = indexPath.item-1
-                self.editClipBottom.modalPresentationStyle = .overFullScreen
-                self.present(self.editClipBottom, animated: false)
+                
+                cell.changeTitleButtonTapped {
+                    self.cellIndex = indexPath.item-1
+                    self.editClipBottom.modalPresentationStyle = .overFullScreen
+                    self.present(self.editClipBottom, animated: false)
+                    self.editClipBottomSheetView.setupTextField(message: clips.categories[indexPath.item-1].categoryTitle)
+                }
             }
         }
         return cell
