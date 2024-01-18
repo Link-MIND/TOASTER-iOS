@@ -67,7 +67,7 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension DetailClipListCollectionViewCell {
-    func configureCell(forModel: GetDetailCategoryResponseData, index: Int) {
+    func configureCell(forModel: GetDetailCategoryResponseData, index: Int, isClipHidden: Bool) {
         modifiedButton.isHidden = false
         clipNameLabel.text = forModel.toastListDto[index].categoryTitle
         linkTitleLabel.text = forModel.toastListDto[index].toastTitle
@@ -76,7 +76,7 @@ extension DetailClipListCollectionViewCell {
         isReadDimmedView = forModel.toastListDto[index].isRead
         toastId = forModel.toastListDto[index].toastId
         
-        if forModel.toastListDto[index].categoryTitle != nil {
+        if forModel.toastListDto[index].categoryTitle != nil && !isClipHidden {
             clipNameLabel.text = forModel.toastListDto[index].categoryTitle
             isClipNameLabelHidden = false
         } else {

@@ -135,12 +135,13 @@ extension EditClipViewController: UICollectionViewDataSource {
                                    forRightButtonTitle: "삭제",
                                    forRightButtonHandler: { self.popupDeleteButtonTapped(categoryID: clips.categories[indexPath.row-1].categoryId, index: indexPath.row-1) })
                 }
-            }
-            
-            cell.changeTitleButtonTapped {
-                self.cellIndex = indexPath.item-1
-                self.editClipBottom.modalPresentationStyle = .overFullScreen
-                self.present(self.editClipBottom, animated: false)
+                
+                cell.changeTitleButtonTapped {
+                    self.cellIndex = indexPath.item-1
+                    self.editClipBottom.modalPresentationStyle = .overFullScreen
+                    self.present(self.editClipBottom, animated: false)
+                    self.editClipBottomSheetView.setupTextField(message: clips.categories[indexPath.item-1].categoryTitle)
+                }
             }
         }
         return cell
@@ -198,8 +199,8 @@ extension EditClipViewController: UICollectionViewDropDelegate {
         if let indexPath = coordinator.destinationIndexPath {
             destinationIndexPath = indexPath
         } else {
-            let row = collectionView.numberOfItems(inSection: 0)
-            destinationIndexPath = IndexPath(item: row, section: 0)
+            let item = collectionView.numberOfItems(inSection: 0)
+            destinationIndexPath = IndexPath(item: item-1, section: 0)
         }
         // 0번째 인덱스 드랍이 아닌 경우, 배열과 컬뷰 아이템 삭제, 삽입, reload까지 진행
         if destinationIndexPath.item != 0 {

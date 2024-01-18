@@ -192,7 +192,7 @@ private extension SettingViewController {
                 let result = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
                 
                 if result.access && result.refresh {
-                    self?.showConfirmationPopup(forMainText: "회원탈퇴", forSubText: "회원탈퇴가 완료되었습니다", centerButtonTitle: "확인", centerButtonHandler: self?.popupConfirmationButtonTapped)
+                    self?.showPopup(forMainText: "정말로 탈퇴하시겠어요?", forSubText: "회원 탈퇴 시 지금까지\n저장한 모든 링크가 사라져요.", forLeftButtonTitle: "네, 탈퇴할래요", forRightButtonTitle: "더 써볼래요", forLeftButtonHandler: self?.popupConfirmationButtonTapped, forRightButtonHandler: nil)
                 }
             case .notFound, .unProcessable, .networkFail:
                 print("🍞⛔️회원탈퇴 실패⛔️🍞")

@@ -48,7 +48,7 @@ final class RemindViewModel {
                                              waitTimerModelList: []) {
         didSet {
             switch remindViewType {
-            case .deviceOnAppOnExistData, .deviceOnAppOnNoneData :
+            case .deviceOnAppOnExistData, .deviceOnAppOnNoneData:
                 if timerData.completeTimerModelList.count == 0 &&
                     timerData.waitTimerModelList.count == 0 {
                         remindViewType = .deviceOnAppOnNoneData

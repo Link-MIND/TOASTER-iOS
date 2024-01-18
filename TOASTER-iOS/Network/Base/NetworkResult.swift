@@ -22,7 +22,7 @@ enum NetworkResult<T> {
     
     var stateDescription: String {
         switch self {
-        case .success(_): return "🍞🔥 SUCCESS 🔥🍞"
+        case .success: return "🍞🔥 SUCCESS 🔥🍞"
 
         case .networkFail: return "🍞🔥 NETWORK FAIL 🔥🍞"
         case .decodeErr: return "🍞🔥 DECODED_ERROR 🔥🍞"
