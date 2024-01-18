@@ -18,6 +18,7 @@ final class SearchViewController: UIViewController {
     
     private var isSearching: Bool = true {
         didSet {
+            emptyView.isHidden = isSearching
             searchButton.isHidden = !isSearching
             clearButton.isHidden = isSearching
             searchResultCollectionView.isHidden = isSearching
