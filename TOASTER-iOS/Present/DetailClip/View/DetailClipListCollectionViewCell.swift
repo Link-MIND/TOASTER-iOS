@@ -95,12 +95,19 @@ extension DetailClipListCollectionViewCell {
         linkTitleLabel.text = forModel.title
         linkTitleLabel.asFont(targetString: forText, font: .suitBold(size: 16))
         linkLabel.text = forModel.link
+        isReadDimmedView = forModel.isRead
         
         if let clipTitle = forModel.clipTitle {
             clipNameLabel.text = clipTitle
             isClipNameLabelHidden = false
         } else {
             isClipNameLabelHidden = true
+        }
+        
+        if let imageURL = forModel.imageURL {
+            linkImage.kf.setImage(with: URL(string: imageURL))
+        } else {
+            linkImage.image = ImageLiterals.Clip.thumb
         }
     }
 }

@@ -52,7 +52,8 @@ extension SearchViewModel {
                                                                       title: $0.toastTitle,
                                                                       link: $0.linkUrl,
                                                                       imageURL: $0.thumbnailUrl,
-                                                                      clipTitle: $0.categoryTitle))
+                                                                      clipTitle: $0.categoryTitle,
+                                                                      isRead: $0.isRead))
                 }
                 var clipList: [SearchResultClipModel] = []
                 response?.data?.categories.forEach {
