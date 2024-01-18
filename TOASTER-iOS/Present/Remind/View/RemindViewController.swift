@@ -25,6 +25,7 @@ final class RemindViewController: UIViewController {
     private let viewModel = RemindViewModel()
     
     private var selectedTimerID: Int?
+    private var viewType: RemindViewType?
     
     // MARK: - UI Properties
     
@@ -204,6 +205,7 @@ private extension RemindViewController {
     func reloadCollectionViewWithView(forType: RemindViewType) {
         timerCollectionView.reloadData()
         setupViewWithAlarm(forType: forType)
+        viewType = forType
     }
     
     func unAuthorizedAction() {
@@ -216,9 +218,15 @@ private extension RemindViewController {
     }
     
     func plusButtonTapped() {
-        let clipAddViewController = RemindSelectClipViewController()
-        clipAddViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(clipAddViewController, animated: true)
+        if let type = viewType {
+            switch viewType {
+            case .deviceOnAppOff: break
+            default:
+                let clipAddViewController = RemindSelectClipViewController()
+                clipAddViewController.hidesBottomBarWhenPushed = true
+                navigationController?.pushViewController(clipAddViewController, animated: true)
+            }
+        }
     }
     
     func deleteButtonTapped() {
