@@ -16,11 +16,13 @@ struct CompleteTimerModel {
     let id: Int
     let remindDay: String
     let remindTime: String
+    let clipID: Int
     let clipName: String
 }
 
 struct WaitTimerModel {
     let id: Int
+    let clipID: Int
     let clipName: String
     let remindDay: String
     let remindTime: String

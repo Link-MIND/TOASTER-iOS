@@ -37,13 +37,13 @@ final class RemindSelectClipViewController: UIViewController {
         setupLayout()
         setupDelegate()
         setupViewModel()
+        viewModel.fetchClipData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setupNavigationBar()
-        viewModel.fetchClipData()
     }
 }
 
@@ -131,7 +131,11 @@ private extension RemindSelectClipViewController {
 
 // MARK: - UICollectionViewDelegate
 
-extension RemindSelectClipViewController: UICollectionViewDelegate { }
+extension RemindSelectClipViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedClip = viewModel.clipData[indexPath.item]
+    }
+}
 
 // MARK: - UICollectionViewDataSource
 
@@ -144,10 +148,6 @@ extension RemindSelectClipViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RemindSelectClipCollectionViewCell.className, for: indexPath) as? RemindSelectClipCollectionViewCell else { return UICollectionViewCell() }
         cell.configureCell(forModel: viewModel.clipData[indexPath.item])
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedClip = viewModel.clipData[indexPath.item]
     }
 }
 

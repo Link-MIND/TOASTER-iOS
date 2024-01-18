@@ -15,9 +15,11 @@ final class SettingViewController: UIViewController {
     // MARK: - Properties
     
     private let settingList = ["알림 설정", "1:1 문의", "이용약관", "로그아웃"]
-    private var isToggle: Bool = UserDefaults.standard.object(forKey: "isAppAlarmOn") as? Bool ?? true {
+    private var isToggle: Bool? = UserDefaults.standard.object(forKey: "isAppAlarmOn") as? Bool {
         didSet {
+            settingTableView.reloadData()            
             setupWarningView()
+            UserDefaults.standard.set(isToggle, forKey: "isAppAlarmOn")
         }
     }
     
@@ -134,15 +136,17 @@ private extension SettingViewController {
     }
     
     func setupWarningView() {
-        if isToggle {
-            settingTableView.snp.remakeConstraints {
-                $0.top.equalTo(view.safeAreaLayoutGuide)
-                $0.leading.trailing.bottom.equalToSuperview()
-            }
-        } else {
-            settingTableView.snp.remakeConstraints {
-                $0.top.equalTo(alertWarningView.snp.bottom)
-                $0.leading.trailing.bottom.equalToSuperview()
+        if let toggle = isToggle {
+            if toggle {
+                settingTableView.snp.remakeConstraints {
+                    $0.top.equalTo(view.safeAreaLayoutGuide)
+                    $0.leading.trailing.bottom.equalToSuperview()
+                }
+            } else {
+                settingTableView.snp.remakeConstraints {
+                    $0.top.equalTo(alertWarningView.snp.bottom)
+                    $0.leading.trailing.bottom.equalToSuperview()
+                }
             }
         }
     }
@@ -200,6 +204,18 @@ private extension SettingViewController {
         }
     }
     
+    func patchAlarmSetting(toggle: Bool) {
+        NetworkService.shared.userService.patchPushAlarm(requestBody: PatchPushAlarmRequestDTO(allowedPush: toggle)) { result in
+            switch result {
+            case .success(let response):
+                self.isToggle = response?.data?.isAllowed
+            case .notFound, .networkFail:
+                self.changeViewController(viewController: LoginViewController())
+            default: break
+            }
+        }
+    }
+    
     func popupConfirmationButtonTapped() {
         self.changeViewController(viewController: LoginViewController())
     }
@@ -235,8 +251,11 @@ extension SettingViewController: UITableViewDelegate {
         if indexPath.section == 1 {
             switch indexPath.row {
             case 1:
-                // TODO: - 문의하기 기능 여기에다 붙입시다
-                print("문의하기 붙여")
+                let urlString = "https://open.kakao.com/o/sfN9Fr4f"
+                
+                if let url = URL(string: urlString) {
+                    UIApplication.shared.open(url)
+                }
             case 2:
                 let urlString = "https://hill-agenda-2b0.notion.site/0f83855ea17f4a67a3ff66b6507b229f"
                 
@@ -283,8 +302,7 @@ extension SettingViewController: UITableViewDataSource {
             if indexPath.row == 0 {
                 cell.showSwitch()
                 cell.setSwitchValueChangedHandler { isOn in
-                    self.isToggle = isOn
-                    UserDefaults.standard.set(isOn, forKey: "isAppAlarmOn")
+                    self.patchAlarmSetting(toggle: isOn)
                 }
             }
         default:
