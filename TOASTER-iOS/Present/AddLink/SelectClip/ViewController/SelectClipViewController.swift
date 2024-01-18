@@ -200,8 +200,12 @@ extension SelectClipViewController: UICollectionViewDelegateFlowLayout {
 
 extension SelectClipViewController: SelectClipHeaderViewlDelegate {
     func addClipCellTapped() {
-        addClipBottom.modalPresentationStyle = .overFullScreen
-        self.present(addClipBottom, animated: false)
+        if selectedClip.count > 15 {
+            showToastMessage(width: 280, status: .warning, message: "클립은 최대 15개까지만 등록가능해요")
+        } else {
+            addClipBottom.modalPresentationStyle = .overFullScreen
+            self.present(addClipBottom, animated: false)
+        }
     }
 }
 
