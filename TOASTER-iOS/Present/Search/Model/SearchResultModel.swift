@@ -18,6 +18,7 @@ struct SearchResultDetailClipModel {
     let link: String
     let imageURL: String?
     let clipTitle: String?
+    let isRead: Bool
 }
 
 struct SearchResultClipModel {

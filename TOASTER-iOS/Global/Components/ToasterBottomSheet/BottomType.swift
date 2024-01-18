@@ -20,11 +20,6 @@ enum BottomType {
     }
     
     var alignment: NSTextAlignment {
-        switch self {
-        case .white:
-            return .left
-        case .gray:
-            return .center
-        }
+        return .left
     }
 }
