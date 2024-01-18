@@ -13,7 +13,6 @@ final class HomeHeaderCollectionView: UICollectionReusableView {
     
     // MARK: - Properties
     
-    private var nickname: String = "김가현" // 서버 통신 이후 수정
     private let titleLabel = UILabel()
     
     // MARK: - Life Cycle
@@ -62,7 +61,7 @@ final class HomeHeaderCollectionView: UICollectionReusableView {
 
 extension HomeHeaderCollectionView {
     func configureHeader(forTitle: String) {
-        titleLabel.text = forTitle
-        titleLabel.asFont(targetString: nickname, font: .suitBold(size: 18))
+        titleLabel.text = "\(forTitle)님의 클립"
+        titleLabel.asFont(targetString: forTitle, font: .suitBold(size: 18))
     }
 }

@@ -173,7 +173,7 @@ extension HomeViewController: UICollectionViewDataSource {
             switch indexPath.section {
             case 1:
                 if let nickName = mainInfoList?.nickname {
-                    header.configureHeader(forTitle: nickName + " 님의 클립")
+                    header.configureHeader(forTitle: nickName)
                 }
             case 2:
                 header.configureHeader(forTitle: "이주의 링크")
