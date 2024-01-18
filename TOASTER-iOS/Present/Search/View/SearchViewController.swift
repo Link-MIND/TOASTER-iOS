@@ -224,7 +224,26 @@ extension SearchViewController: UITextFieldDelegate {
 
 // MARK: - UICollectionViewDelegate
 
-extension SearchViewController: UICollectionViewDelegate { }
+extension SearchViewController: UICollectionViewDelegate { 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            let data = viewModel.searchResultData.detailClipList[indexPath.item]
+            let webViewController = LinkWebViewController()
+            webViewController.setupDataBind(linkURL: data.link,
+                                            isRead: false,
+                                            id: data.iD)
+            navigationController?.pushViewController(webViewController, animated: true)
+        case 1:
+            let data = viewModel.searchResultData.clipList[indexPath.item]
+            let detailClipViewController = DetailClipViewController()
+            detailClipViewController.setupCategory(id: data.iD,
+                                                   name: data.title)
+            navigationController?.pushViewController(detailClipViewController, animated: true)
+        default: break
+        }
+    }
+}
 
 // MARK: - UICollectionViewDataSource
 
