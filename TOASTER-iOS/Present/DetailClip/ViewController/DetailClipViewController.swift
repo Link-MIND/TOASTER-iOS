@@ -135,7 +135,11 @@ extension DetailClipViewController: UICollectionViewDataSource {
         cell.detailClipListCollectionViewCellDelegate = self
         
         if let data = toastList?.data {
-            cell.configureCell(forModel: data, index: indexPath.row)
+            if categoryId == 0 {
+                cell.configureCell(forModel: data, index: indexPath.row, isClipHidden: false)
+            } else {
+                cell.configureCell(forModel: data, index: indexPath.row, isClipHidden: true)
+            }
         }
         
         deleteLinkBottomSheetView.setupDeleteLinkBottomSheetButtonAction {
