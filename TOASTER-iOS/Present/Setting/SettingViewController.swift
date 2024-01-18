@@ -216,8 +216,12 @@ private extension SettingViewController {
         }
     }
     
-    func popupConfirmationButtonTapped() {
+    func popupDeleteButtonTapped() {
         deleteAccount()
+    }
+    
+    func popupConfirmationButtonTapped() {
+        self.changeViewController(viewController: LoginViewController())
     }
 }
 
@@ -268,7 +272,7 @@ extension SettingViewController: UITableViewDelegate {
                 return
             }
         } else if indexPath.section == 2 {
-            self.showPopup(forMainText: "정말로 탈퇴하시겠어요?", forSubText: "회원 탈퇴 시 지금까지\n저장한 모든 링크가 사라져요.", forLeftButtonTitle: "네, 탈퇴할래요", forRightButtonTitle: "더 써볼래요", forLeftButtonHandler: self.popupConfirmationButtonTapped, forRightButtonHandler: nil)
+            self.showPopup(forMainText: "정말로 탈퇴하시겠어요?", forSubText: "회원 탈퇴 시 지금까지\n저장한 모든 링크가 사라져요.", forLeftButtonTitle: "네, 탈퇴할래요", forRightButtonTitle: "더 써볼래요", forLeftButtonHandler: self.popupDeleteButtonTapped, forRightButtonHandler: nil)
         }
     }
 }
