@@ -235,8 +235,11 @@ extension SettingViewController: UITableViewDelegate {
         if indexPath.section == 1 {
             switch indexPath.row {
             case 1:
-                // TODO: - 문의하기 기능 여기에다 붙입시다
-                print("문의하기 붙여")
+                let urlString = "https://open.kakao.com/o/sfN9Fr4f"
+                
+                if let url = URL(string: urlString) {
+                    UIApplication.shared.open(url)
+                }
             case 2:
                 let urlString = "https://hill-agenda-2b0.notion.site/0f83855ea17f4a67a3ff66b6507b229f"
                 
