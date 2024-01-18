@@ -174,7 +174,7 @@ extension AddLinkView: UITextFieldDelegate {
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
             // URL 유효 여부 판단 후 처리
             if let urlText = self?.linkEmbedTextField.text {
-                if urlText.prefix(4) == "http" {
+                if (urlText.prefix(8) == "https://") || (urlText.prefix(7) == "http://") {
                     self?.resetError()
                 } else {
                     self?.isValidLinkError()
