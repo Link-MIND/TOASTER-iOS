@@ -62,7 +62,7 @@ final class HomeHeaderCollectionView: UICollectionReusableView {
 extension HomeHeaderCollectionView {
     func configureHeader(forTitle: String, num: Int) {
         if num == 1 {
-            titleLabel.text = forTitle + "님의 링크"
+            titleLabel.text = forTitle + "님의 클립"
             titleLabel.font = .suitMedium(size: 18)
             titleLabel.asFont(targetString: forTitle, font: .suitBold(size: 18))
         } else {
