@@ -42,9 +42,7 @@ extension BaseTargetType {
         }
         return baseURL
     }
-    
-    // TODO: - 로그인 API 부착 후 토큰 로직 변경
-    
+        
     var headers: [String: String]? {
         var header = ["Content-Type": "application/json"]
         

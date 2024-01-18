@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-        var rootViewController = appDelegate.isLogin ? TabBarController() : LoginViewController()
+        let rootViewController = appDelegate.isLogin ? TabBarController() : LoginViewController()
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
