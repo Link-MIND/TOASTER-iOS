@@ -53,6 +53,7 @@ extension ClipListCollectionViewCell {
         clipNameLabel.text = forModel.title
         clipNameLabel.asFont(targetString: forText, font: .suitBold(size: 16))
         countLabel.text = "\(forModel.numberOfDetailClip)개"
+        clipImage.image = ImageLiterals.Clip.clipIcon
     }
 }
 
