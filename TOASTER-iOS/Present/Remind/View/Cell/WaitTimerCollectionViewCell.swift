@@ -113,6 +113,7 @@ private extension WaitTimerCollectionViewCell {
     func setupLayout() {
         infoStackView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(14)
+            $0.trailing.equalTo(toggleSwitch.snp.leading).offset(-14)
         }
         
         toggleSwitch.snp.makeConstraints {
