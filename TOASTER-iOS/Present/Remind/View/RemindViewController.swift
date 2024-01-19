@@ -218,7 +218,7 @@ private extension RemindViewController {
     }
     
     func plusButtonTapped() {
-        if let type = viewType {
+        if viewType != nil {
             switch viewType {
             case .deviceOnAppOff: break
             default:

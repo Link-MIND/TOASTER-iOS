@@ -71,7 +71,7 @@ final class APIInterceptor: RequestInterceptor {
                 if keyChainResult.accessResult == true && keyChainResult.refreshResult == true {
                     self?.isTokenRefreshed = true
                     
-                    guard var urlRequest = request.request
+                    guard request.request != nil
                     else {
                         completion(.doNotRetry)
                         return

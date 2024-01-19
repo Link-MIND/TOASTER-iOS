@@ -7,6 +7,7 @@ disabled_rules:
 - identifier_name
 - function_body_length
 - nesting
+- cyclomatic_complexity
 # 린트 과정에서 무시할 파일 경로
 excluded:
 - TOASTER-iOS/Application/AppDelegate.swift
