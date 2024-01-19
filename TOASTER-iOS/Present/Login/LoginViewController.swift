@@ -132,7 +132,7 @@ private extension LoginViewController {
     /// - Returns: Token 을 KeyChain 에 저장하여 최종적으로 Login 성공시 true,
     /// 서버 통신 중 NetworkResult 타입에 의거하여 success 이외 에 따른 결과는 false,
     /// 서버 통신 결과값을 Decoding 하는 과정 중 생길 수 있는 오류를 LoginError 타입으로 반환
-    func fetchTokenSocialLogin(token: String, socialType: String) async throws-> Bool {
+    func fetchTokenSocialLogin(token: String, socialType: String) async throws -> Bool {
         return try await withCheckedThrowingContinuation { continuation in
         
             NetworkService.shared.authService.postSocialLogin(socialToken: token, 
@@ -143,7 +143,6 @@ private extension LoginViewController {
                     /// Decoding 하는 과정 중 생길 수 있는 오류
                     guard let serverAccessToken = response?.data.accessToken, let serverRefreshToken = response?.data.refreshToken else { return continuation.resume(throwing: LoginError.failedReceiveToken) }
                     
-//                    let keyChainResult = KeyChainService.saveTokens(accessKey: Config.tempToken, refreshKey: Config.tempToken)
                     let keyChainResult = KeyChainService.saveTokens(accessKey: serverAccessToken, refreshKey: serverRefreshToken)
                     
                     if keyChainResult.accessResult == true && keyChainResult.refreshResult == true {

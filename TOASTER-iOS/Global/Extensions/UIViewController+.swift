@@ -66,7 +66,7 @@ extension UIViewController {
     }
     
     /// 토스트 메시지를 보여주는 메서드
-    func showToastMessage(width: CGFloat, 
+    func showToastMessage(width: CGFloat,
                           status: ToastStatus,
                           message: String) {
         
@@ -85,7 +85,7 @@ extension UIViewController {
     func changeViewController(viewController: UIViewController) {
         switch viewController {
         case is LoginViewController:
-            let _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
             
             // alret 관련 동작을 넣으면 좋을거 같습니다.
         default:

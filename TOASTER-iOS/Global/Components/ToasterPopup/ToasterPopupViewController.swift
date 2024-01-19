@@ -178,10 +178,10 @@ private extension ToasterPopupViewController {
         view.addSubview(popupStackView)
         popupStackView.addArrangedSubviews(labelStackView,
                                            buttonStackView)
-        if let _ = mainText {
+        if mainText != nil {
             labelStackView.addArrangedSubview(mainLabel)
         }
-        if let _ = subText {
+        if subText != nil {
             labelStackView.addArrangedSubview(subLabel)
         }
         buttonStackView.addArrangedSubviews(leftButton,
