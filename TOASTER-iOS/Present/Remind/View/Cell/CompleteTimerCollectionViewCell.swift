@@ -111,5 +111,9 @@ private extension CompleteTimerCollectionViewCell {
         toReadLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
+        
+        alarmIcon.snp.makeConstraints {
+            $0.height.width.equalTo(24)
+        }
     }
 }
