@@ -94,6 +94,7 @@ private extension CompleteTimerCollectionViewCell {
     func setupLayout() {
         timeStackView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(14)
+            $0.trailing.equalTo(toReadView.snp.leading).offset(-14)
         }
         
         subLabel.snp.makeConstraints {

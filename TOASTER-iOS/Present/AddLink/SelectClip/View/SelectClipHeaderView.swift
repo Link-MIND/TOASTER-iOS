@@ -45,7 +45,7 @@ final class SelectClipHeaderView: UICollectionReusableView {
 
 extension SelectClipHeaderView {
     func bindData(count: Int) {
-        totalCountLabel.text = "전체 + (\(count))"
+        totalCountLabel.text = "전체 (\(count))"
     }
 }
 

@@ -64,7 +64,8 @@ extension SearchViewModel {
                 self.searchResultData = SearchResultModel(detailClipList: detailClipList,
                                                           clipList: clipList)
             case .badRequest:
-                self.dataEmptyAction?()
+                self.searchResultData = SearchResultModel(detailClipList: [],
+                                                          clipList: [])
             case .unAuthorized:
                 self.unAuthorizedAction?()
             default: break
