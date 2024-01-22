@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ic_alert_18_dark.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
