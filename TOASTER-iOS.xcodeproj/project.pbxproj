@@ -17,6 +17,7 @@
 		390ADE652B585C8D00FE1E4B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 390ADE642B585C8D00FE1E4B /* GoogleService-Info.plist */; };
 		391908422B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391908412B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift */; };
 		391908442B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391908432B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift */; };
+		398ACFDC2B5E77FA00D5EE77 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 398ACFDB2B5E77FA00D5EE77 /* Colors.xcassets */; };
 		398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */; };
 		398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F52B456AF9001595E0 /* BottomType.swift */; };
 		398BE7FA2B467E4B001595E0 /* ClipListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F92B467E4B001595E0 /* ClipListCollectionViewCell.swift */; };
@@ -25,7 +26,6 @@
 		39B54E732B53C50300538DAE /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B54E722B53C50300538DAE /* SettingViewController.swift */; };
 		39B54E7A2B53D49900538DAE /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B54E792B53D49900538DAE /* SettingTableViewCell.swift */; };
 		39BC5B0B2B400602004024E6 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0A2B400602004024E6 /* .swiftlint.yml */; };
-		39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BC5B0C2B4046C1004024E6 /* ColorLiterals.swift */; };
 		39BC5B132B410EF3004024E6 /* SUIT-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0E2B410EF2004024E6 /* SUIT-Bold.otf */; };
 		39BC5B142B410EF3004024E6 /* SUIT-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0F2B410EF2004024E6 /* SUIT-Medium.otf */; };
 		39BC5B152B410EF3004024E6 /* SUIT-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B102B410EF2004024E6 /* SUIT-SemiBold.otf */; };
@@ -197,6 +197,7 @@
 		390ADE642B585C8D00FE1E4B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		391908412B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditPriorityCategoryRequestDTO.swift; sourceTree = "<group>"; };
 		391908432B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditNameCategoryRequestDTO.swift; sourceTree = "<group>"; };
+		398ACFDB2B5E77FA00D5EE77 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterToastMessageView.swift; sourceTree = "<group>"; };
 		398BE7F52B456AF9001595E0 /* BottomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomType.swift; sourceTree = "<group>"; };
 		398BE7F92B467E4B001595E0 /* ClipListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipListCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -205,7 +206,6 @@
 		39B54E722B53C50300538DAE /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		39B54E792B53D49900538DAE /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		39BC5B0A2B400602004024E6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		39BC5B0C2B4046C1004024E6 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		39BC5B0E2B410EF2004024E6 /* SUIT-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Bold.otf"; sourceTree = "<group>"; };
 		39BC5B0F2B410EF2004024E6 /* SUIT-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Medium.otf"; sourceTree = "<group>"; };
 		39BC5B102B410EF2004024E6 /* SUIT-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-SemiBold.otf"; sourceTree = "<group>"; };
@@ -412,6 +412,15 @@
 				390925CA2B4F049800487AA3 /* LinkWebNavigationView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		398ACFDA2B5E77C500D5EE77 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				6B6AE6572B3FF103000E2366 /* Assets.xcassets */,
+				398ACFDB2B5E77FA00D5EE77 /* Colors.xcassets */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		398BE7F12B45628F001595E0 /* ToasterToastMessage */ = {
@@ -636,8 +645,8 @@
 		6B6AE6802B3FF505000E2366 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				398ACFDA2B5E77C500D5EE77 /* Assets */,
 				6B6AE6852B3FF534000E2366 /* Fonts */,
-				6B6AE6572B3FF103000E2366 /* Assets.xcassets */,
 				6B6AE6592B3FF103000E2366 /* LaunchScreen.storyboard */,
 				3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */,
 				3F2FA1742B45C0AF00EDBF95 /* Config.swift */,
@@ -663,7 +672,6 @@
 			isa = PBXGroup;
 			children = (
 				6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */,
-				39BC5B0C2B4046C1004024E6 /* ColorLiterals.swift */,
 				39BC5B182B411037004024E6 /* FontLiterals.swift */,
 				830517642B42D996009FFB60 /* StringLiterals.swift */,
 			);
@@ -1398,6 +1406,7 @@
 			files = (
 				39BC5B0B2B400602004024E6 /* .swiftlint.yml in Resources */,
 				6B6AE65B2B3FF103000E2366 /* LaunchScreen.storyboard in Resources */,
+				398ACFDC2B5E77FA00D5EE77 /* Colors.xcassets in Resources */,
 				39BC5B142B410EF3004024E6 /* SUIT-Medium.otf in Resources */,
 				39BC5B172B410EF3004024E6 /* SUIT-Regular.otf in Resources */,
 				3FACF9BA2B50FEB4007E5A8F /* Config.xcconfig in Resources */,
@@ -1503,7 +1512,6 @@
 				39B54E7A2B53D49900538DAE /* SettingTableViewCell.swift in Sources */,
 				6BE6DA392B50636B008B06FA /* BaseAPIService.swift in Sources */,
 				6BE6DA572B50B44F008B06FA /* GetMyPageResponseDTO.swift in Sources */,
-				39BC5B0D2B4046C1004024E6 /* ColorLiterals.swift in Sources */,
 				6BE6DA182B4FF285008B06FA /* TimerRepeatDate.swift in Sources */,
 				6BE6D9F22B4EEBC3008B06FA /* RemindViewModel.swift in Sources */,
 				6B6AE64F2B3FF101000E2366 /* AppDelegate.swift in Sources */,
