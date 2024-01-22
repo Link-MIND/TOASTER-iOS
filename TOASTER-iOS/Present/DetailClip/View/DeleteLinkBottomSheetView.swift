@@ -59,7 +59,7 @@ private extension DeleteLinkBottomSheetView {
             
             var titleContainer = AttributeContainer()
             titleContainer.font = UIFont.suitMedium(size: 16)
-            configuration.attributedTitle = AttributedString(StringLiterals.BottomSheet.Button.delete, attributes: titleContainer)
+            configuration.attributedTitle = AttributedString(StringLiterals.Button.delete, attributes: titleContainer)
             
             $0.configuration = configuration
             $0.makeRounded(radius: 12)

@@ -81,7 +81,7 @@ private extension RemindTimerEditBottomSheetView {
         }
         
         deleteButtonLabel.do {
-            $0.text = "삭제"
+            $0.text = StringLiterals.Button.delete
             $0.textColor = .toasterError
             $0.font = .suitMedium(size: 16)
         }

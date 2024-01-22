@@ -92,8 +92,8 @@ private extension ClipViewController {
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                 hasRightButton: true,
-                                                                mainTitle: StringOrImageType.string(StringLiterals.Tabbar.Title.clip),
-                                                                rightButton: StringOrImageType.string(StringLiterals.Clip.Title.edit),
+                                                                mainTitle: StringOrImageType.string(StringLiterals.Tabbar.clip),
+                                                                rightButton: StringOrImageType.string("편집"),
                                                                 rightButtonAction: editButtonTapped)
         
         if let navigationController = navigationController as? ToasterNavigationController {
@@ -195,7 +195,7 @@ extension ClipViewController: ClipCollectionHeaderViewDelegate {
     
     func addClipButtonTapped() {
         if clipList?.data.categories.count ?? 0 >= 15 {
-            showToastMessage(width: 280, status: .warning, message: "클립은 최대 15개까지만 등록가능해요")
+            showToastMessage(width: 243, status: .warning, message: StringLiterals.ToastMessage.noticeMaxClip)
         } else {
             addClipBottom.modalPresentationStyle = .overFullScreen
             self.present(addClipBottom, animated: false)
@@ -243,7 +243,7 @@ extension ClipViewController {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.addClipBottomSheetView.resetTextField()
                     self.addClipBottom.hideBottomSheet()
-                    self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
+                    self.showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeAddClip)
                 }
                 self.getAllCategoryAPI()
             case .unAuthorized, .networkFail, .notFound:

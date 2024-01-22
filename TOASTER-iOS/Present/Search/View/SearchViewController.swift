@@ -93,7 +93,7 @@ private extension SearchViewController {
             $0.makeRounded(radius: 12)
             $0.addPadding(left: 12, right: 44)
             $0.backgroundColor = .gray50
-            $0.placeholder = "검색어를 입력해주세요"
+            $0.placeholder = StringLiterals.Placeholder.search
             $0.becomeFirstResponder()
         }
         

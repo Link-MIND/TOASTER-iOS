@@ -51,7 +51,7 @@ final class MainCollectionViewCell: UICollectionViewCell {
 
 extension MainCollectionViewCell {
     func bindData(forModel: MainInfoModel) {
-        userLabel.text = forModel.nickname + StringLiterals.Home.Main.subNickName
+        userLabel.text = "\(forModel.nickname)님"
         userLabel.asFont(targetString: forModel.nickname, font: .suitBold(size: 20))
         noticeLabel.text = "토스터로 " + String(forModel.readToastNum) + "개의 링크를\n잊지 않고 읽었어요!"
         noticeLabel.asFontColor(targetString: String(forModel.readToastNum) + "개의 링크", font: .suitExtraBold(size: 20), color: .toasterPrimary)
@@ -74,7 +74,7 @@ private extension MainCollectionViewCell {
         searchButton.do {
             $0.makeRounded(radius: 12)
             $0.setImage(ImageLiterals.Home.searchIcon, for: .normal)
-            $0.setTitle(StringLiterals.Home.Main.searchPlaceHolder, for: .normal)
+            $0.setTitle(StringLiterals.Placeholder.search, for: .normal)
             $0.setTitleColor(.gray400, for: .normal)
             $0.titleLabel?.font = .suitRegular(size: 16)
             $0.contentHorizontalAlignment = .left

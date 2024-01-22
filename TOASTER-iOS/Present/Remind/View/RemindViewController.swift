@@ -214,7 +214,7 @@ private extension RemindViewController {
     
     func deleteAction() {
         dismiss(animated: false)
-        self.showToastMessage(width: 165, status: .check, message: "타이머 삭제 완료")
+        self.showToastMessage(width: 165, status: .check, message: StringLiterals.ToastMessage.completeDeleteTimer)
     }
     
     func plusButtonTapped() {
@@ -278,8 +278,8 @@ extension RemindViewController: RemindEditViewDelegate {
         dismiss(animated: false)
         showPopup(forMainText: "타이머를 삭제하시겠어요?",
                   forSubText: "더 이상 해당 클립의 리마인드를 \n받을 수 없어요",
-                  forLeftButtonTitle: "취소",
-                  forRightButtonTitle: "삭제",
+                  forLeftButtonTitle: StringLiterals.Button.cancel,
+                  forRightButtonTitle: StringLiterals.Button.delete,
                   forRightButtonHandler: deleteButtonTapped)
     }
 }

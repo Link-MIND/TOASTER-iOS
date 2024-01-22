@@ -420,7 +420,7 @@ extension HomeViewController {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.addClipBottomSheetView.resetTextField()
                     self.addClipBottom.hideBottomSheet()
-                    self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
+                    self.showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeAddClip)
                 }
                 self.fetchMainPageData()
             case .networkFail, .unAuthorized, .notFound:

@@ -77,7 +77,7 @@ private extension AddLinkView {
         }
         
         linkEmbedTextField.do {
-            $0.placeholder = "복사한 링크를 붙여 넣어 주세요"
+            $0.placeholder = StringLiterals.Placeholder.copyLink
             $0.tintColor = .toasterPrimary
             $0.backgroundColor = .gray50
             $0.makeRounded(radius: 12)
@@ -92,14 +92,14 @@ private extension AddLinkView {
         }
         
         nextBottomButton.do {
-            $0.setTitle("다음", for: .normal)
+            $0.setTitle(StringLiterals.Button.next, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.backgroundColor = .gray200
             $0.makeRounded(radius: 12)
         }
         
         nextTopButton.do {
-            $0.setTitle("다음", for: .normal)
+            $0.setTitle(StringLiterals.Button.next, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.backgroundColor = .black850
         }
