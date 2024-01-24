@@ -240,9 +240,9 @@ extension LinkWebViewController {
             switch result {
             case .success:
                 if !self.isRead {
-                    self.showToastMessage(width: 152, status: .check, message: "링크 확인 완료")
+                    self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeReadLink)
                 } else {
-                    self.showToastMessage(width: 152, status: .check, message: "링크 열람 취소")
+                    self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.cancelReadLink)
                 }
                 self.isRead = !self.isRead
             case .unAuthorized, .networkFail, .notFound:

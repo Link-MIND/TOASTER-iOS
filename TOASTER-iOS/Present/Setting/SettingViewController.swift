@@ -173,13 +173,13 @@ private extension SettingViewController {
                 let result = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
                 
                 if result.access && result.refresh {
-                    self?.showConfirmationPopup(forMainText: "로그아웃", forSubText: "로그아웃이 완료되었습니다", centerButtonTitle: "확인", centerButtonHandler: self?.popupConfirmationButtonTapped)
+                    self?.showConfirmationPopup(forMainText: "로그아웃", forSubText: "로그아웃이 완료되었습니다", centerButtonTitle: StringLiterals.Button.okay, centerButtonHandler: self?.popupConfirmationButtonTapped)
                 }
             case .notFound, .networkFail:
                 print("🍞⛔️로그아웃 실패⛔️🍞")
-                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 로그아웃이 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 로그아웃이 실패하였습니다", centerButtonTitle: StringLiterals.Button.okay, centerButtonHandler: nil)
             default:
-                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 로그아웃이 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 로그아웃이 실패하였습니다", centerButtonTitle: StringLiterals.Button.okay, centerButtonHandler: nil)
                 print("🍞⛔️로그아웃 실패⛔️🍞")
             }
         }
@@ -196,10 +196,10 @@ private extension SettingViewController {
                 }
             case .notFound, .unProcessable, .networkFail:
                 print("🍞⛔️회원탈퇴 실패⛔️🍞")
-                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 회원탈퇴가 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 회원탈퇴가 실패하였습니다", centerButtonTitle: StringLiterals.Button.okay, centerButtonHandler: nil)
             default:
                 print("🍞⛔️회원탈퇴 실패⛔️🍞")
-                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 회원탈퇴가 실패하였습니다", centerButtonTitle: "확인", centerButtonHandler: nil)
+                self?.showConfirmationPopup(forMainText: "네트워크 연결 오류", forSubText: "네트워크 오류로 회원탈퇴가 실패하였습니다", centerButtonTitle: StringLiterals.Button.okay, centerButtonHandler: nil)
             }
         }
     }

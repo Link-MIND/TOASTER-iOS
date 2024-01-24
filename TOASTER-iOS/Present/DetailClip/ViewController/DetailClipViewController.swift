@@ -33,7 +33,7 @@ final class DetailClipViewController: UIViewController {
     private let detailClipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     private let deleteLinkBottomSheetView = DeleteLinkBottomSheetView()
-    private lazy var bottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: StringLiterals.BottomSheet.Title.modified, height: 72, insertView: deleteLinkBottomSheetView)
+    private lazy var bottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 72, insertView: deleteLinkBottomSheetView)
     
     // MARK: - Life Cycle
     
@@ -146,7 +146,7 @@ extension DetailClipViewController: UICollectionViewDataSource {
             self.deleteLinkAPI(toastId: self.toastId)
             self.bottom.hideBottomSheet()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self.showToastMessage(width: 152, status: .check, message: StringLiterals.Toast.Message.completeDeleteLink)
+                self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeDeleteLink)
             }
         }
         return cell

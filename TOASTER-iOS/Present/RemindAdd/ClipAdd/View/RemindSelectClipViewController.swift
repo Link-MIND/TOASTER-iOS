@@ -61,7 +61,7 @@ private extension RemindSelectClipViewController {
         nextButton.do {
             $0.makeRounded(radius: 12)
             $0.backgroundColor = .gray200
-            $0.setTitle("다음", for: .normal)
+            $0.setTitle(StringLiterals.Button.next, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
             $0.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
@@ -112,8 +112,8 @@ private extension RemindSelectClipViewController {
     func closeButtonTapped() {
         showPopup(forMainText: "타이머 설정을 취소할까요?",
                   forSubText: "지금까지 진행한 타이머 설정이\n사라져요",
-                  forLeftButtonTitle: "닫기",
-                  forRightButtonTitle: "취소",
+                  forLeftButtonTitle: StringLiterals.Button.close,
+                  forRightButtonTitle: StringLiterals.Button.cancel,
                   forRightButtonHandler: makeTimerCancle)
     }
         

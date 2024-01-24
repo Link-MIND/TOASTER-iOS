@@ -170,7 +170,7 @@ private extension RemindTimerAddViewController {
         
         completeButton.do {
             $0.makeRounded(radius: 12)
-            $0.setTitle("완료", for: .normal)
+            $0.setTitle(StringLiterals.Button.complete, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitSemiBold(size: 16)
             
@@ -276,20 +276,20 @@ private extension RemindTimerAddViewController {
     
     func patchSuccessAction() {
         self.navigationController?.popToRootViewController(animated: true)
-        self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 설정 완료!")
+        self.navigationController?.showToastMessage(width: 169, status: .check, message: StringLiterals.ToastMessage.completeSetTimer)
     }
     
     func editSuccessAction() {
         self.navigationController?.popToRootViewController(animated: true)
-        self.navigationController?.showToastMessage(width: 169, status: .check, message: "타이머 수정 완료!")
+        self.navigationController?.showToastMessage(width: 169, status: .check, message: StringLiterals.ToastMessage.completeEditTimer)
     }
     
     func unProcessableAction() {
-        self.showToastMessage(width: 297, status: .warning, message: "한 클립당 하나의 타이머만 설정 가능해요")
+        self.showToastMessage(width: 297, status: .warning, message: StringLiterals.ToastMessage.noticeSetTimer)
     }
     
     func badRequestAction() {
-        self.showToastMessage(width: 297, status: .warning, message: "타이머는 최대 다섯 개까지 설정 가능해요")
+        self.showToastMessage(width: 297, status: .warning, message: StringLiterals.ToastMessage.noticeMaxTimer)
     }
     
     func setupNavigationBar() {
@@ -327,8 +327,8 @@ private extension RemindTimerAddViewController {
     func closeButtonTapped() {
         showPopup(forMainText: "타이머 설정을 취소할까요?",
                   forSubText: "지금까지 진행한 타이머 설정이\n사라져요",
-                  forLeftButtonTitle: "닫기",
-                  forRightButtonTitle: "취소",
+                  forLeftButtonTitle: StringLiterals.Button.close,
+                  forRightButtonTitle: StringLiterals.Button.cancel,
                   forRightButtonHandler: makeTimerCancle)
     }
     

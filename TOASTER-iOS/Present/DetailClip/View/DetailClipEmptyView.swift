@@ -44,7 +44,7 @@ private extension DetailClipEmptyView {
         }
         
         emptyLabel.do {
-            $0.text = StringLiterals.Clip.Title.detailEmptyLabel
+            $0.text = "아직 클립에 저장된 링크가 없어요\n아래 + 버튼을 통해 링크를 저장해보세요!"
             $0.numberOfLines = 2
             $0.textColor = .gray500
             $0.font = .suitRegular(size: 16)

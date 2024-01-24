@@ -53,7 +53,7 @@ private extension LoginViewController {
         }
         
         titleLabel.do {
-            $0.text = StringLiterals.Login.Title.subTitle
+            $0.text = StringLiterals.Login.subTitle
             $0.textColor = .black900
             $0.font = .suitBold(size: 18)
             $0.numberOfLines = 0

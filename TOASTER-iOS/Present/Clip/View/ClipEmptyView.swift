@@ -44,7 +44,7 @@ private extension ClipEmptyView {
         }
         
         emptyLabel.do {
-            $0.text = StringLiterals.Clip.Title.emptyLabel
+            $0.text = "클립을 추가해\n링크를 정리해보세요!"
             $0.numberOfLines = 2
             $0.textColor = .gray500
             $0.font = .suitRegular(size: 16)

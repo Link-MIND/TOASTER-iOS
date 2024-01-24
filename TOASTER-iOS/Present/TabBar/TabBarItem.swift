@@ -46,11 +46,11 @@ enum TabBarItem: CaseIterable {
     // 탭 별 제목
     var itemTitle: String? {
         switch self {
-        case .home: return StringLiterals.Tabbar.Title.home
-        case .clip: return StringLiterals.Tabbar.Title.clip
+        case .home: return StringLiterals.Tabbar.home
+        case .clip: return StringLiterals.Tabbar.clip
         case .plus: return nil
-        case .timer: return StringLiterals.Tabbar.Title.timer
-        case .my: return StringLiterals.Tabbar.Title.my
+        case .timer: return StringLiterals.Tabbar.timer
+        case .my: return StringLiterals.Tabbar.my
         }
     }
     

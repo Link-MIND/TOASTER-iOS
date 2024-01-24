@@ -107,7 +107,7 @@ private extension AddClipBottomSheetView {
         backgroundColor = .toasterWhite
         
         addClipTextField.do {
-            $0.attributedPlaceholder = NSAttributedString(string: StringLiterals.BottomSheet.Placeholder.addClip,
+            $0.attributedPlaceholder = NSAttributedString(string: StringLiterals.Placeholder.addClip,
                                                           attributes: [.foregroundColor: UIColor.gray400,
                                                                        .font: UIFont.suitRegular(size: 16)])
             $0.addPadding(left: 14, right: 44)
@@ -121,7 +121,7 @@ private extension AddClipBottomSheetView {
         
         addClipButton.do {
             isButtonClicked = false
-            $0.setTitle(StringLiterals.BottomSheet.Button.complete, for: .normal)
+            $0.setTitle(StringLiterals.Button.okay, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
             $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)

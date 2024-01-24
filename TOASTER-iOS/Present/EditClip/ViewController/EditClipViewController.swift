@@ -131,8 +131,8 @@ extension EditClipViewController: UICollectionViewDataSource {
                 cell.leadingButtonTapped {
                     self.showPopup(forMainText: "‘\(clips.categories[indexPath.row-1].categoryTitle)’ 클립을 삭제하시겠어요?",
                                    forSubText: "지금까지 저장된 모든 링크가 사라져요",
-                                   forLeftButtonTitle: "닫기",
-                                   forRightButtonTitle: "삭제",
+                                   forLeftButtonTitle: StringLiterals.Button.close,
+                                   forRightButtonTitle: StringLiterals.Button.delete,
                                    forRightButtonHandler: { self.popupDeleteButtonTapped(categoryID: clips.categories[indexPath.row-1].categoryId, index: indexPath.row-1) })
                 }
                 
@@ -265,7 +265,7 @@ extension EditClipViewController {
             case .success:
                 self.getAllCategoryAPI()
                 self.dismiss(animated: false) {
-                    self.showToastMessage(width: 152, status: .check, message: "클립 삭제 완료")
+                    self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeDeleteClip)
                 }
             case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
@@ -292,7 +292,7 @@ extension EditClipViewController {
             case .success:
                 self.editClipBottom.hideBottomSheet()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.showToastMessage(width: 157, status: .check, message: "클립 수정 완료!")
+                    self.showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeEditClip)
                     self.editClipBottomSheetView.resetTextField()
                 }
                 self.getAllCategoryAPI()

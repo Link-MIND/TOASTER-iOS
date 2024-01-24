@@ -35,7 +35,7 @@ private extension TabBarController {
         view.backgroundColor = .toasterBackground
         tabBar.backgroundColor = .toasterWhite
         tabBar.unselectedItemTintColor = .gray150
-        tabBar.tintColor = .black950
+        tabBar.tintColor = .black900
     }
     
     func addTabBarController() {

@@ -13,9 +13,9 @@ enum SocialLoginType {
     var title: String {
         switch self {
         case .kakao:
-            return "카카오 계정으로 시작하기"
+            return StringLiterals.Login.kakaoButton
         case .apple:
-            return "Apple 계정으로 시작하기"
+            return StringLiterals.Login.appleButton
         }
     }
     

@@ -114,8 +114,8 @@ private extension AddLinkViewController {
     func closeButtonTapped() {
         showPopup(forMainText: "링크 저장을 취소하시겠어요?",
                   forSubText: "저장 중인 링크가 사라져요",
-                  forLeftButtonTitle: "닫기",
-                  forRightButtonTitle: "삭제",
+                  forLeftButtonTitle: StringLiterals.Button.close,
+                  forRightButtonTitle: StringLiterals.Button.delete,
                   forRightButtonHandler: rightButtonTapped)
     }
     

@@ -87,7 +87,7 @@ private extension MypageHeaderView {
         }
         
         bottomSubTitleLabel.do {
-            $0.text = StringLiterals.Mypage.Title.bottomTitle
+            $0.text = "지금까지 읽은 링크 수"
             $0.font = .suitRegular(size: 18)
             $0.textColor = .black900
         }
@@ -98,7 +98,7 @@ private extension MypageHeaderView {
         }
         
         readLinkCountUnitLabel.do {
-            $0.text = StringLiterals.Mypage.Title.unit
+            $0.text = "개"
             $0.font = .suitMedium(size: 16)
             $0.textColor = .black900
         }
@@ -114,13 +114,13 @@ private extension MypageHeaderView {
         
         openLinkLabel.do {
             $0.textColor = .gray400
-            $0.text = StringLiterals.Mypage.Title.openLink
+            $0.text = "이번주 열람한 링크"
             $0.font = .suitMedium(size: 14)
         }
         
         saveLinkLabel.do {
             $0.textColor = .gray400
-            $0.text = StringLiterals.Mypage.Title.saveLink
+            $0.text = "이번주 저장한 링크"
             $0.font = .suitMedium(size: 14)
         }
         

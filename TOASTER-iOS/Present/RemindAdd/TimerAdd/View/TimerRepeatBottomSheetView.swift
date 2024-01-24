@@ -80,7 +80,7 @@ private extension TimerRepeatBottomSheetView {
         nextButton.do {
             $0.backgroundColor = .black850
             $0.makeRounded(radius: 12)
-            $0.setTitle("다음", for: .normal)
+            $0.setTitle(StringLiterals.Button.next, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
             $0.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)

@@ -68,7 +68,7 @@ private extension SelectClipHeaderView {
         
         addClipButton.do {
             $0.setImage(ImageLiterals.Clip.orangeplus, for: .normal)
-            $0.setTitle(StringLiterals.Clip.Title.addClip, for: .normal)
+            $0.setTitle("클립 추가", for: .normal)
             $0.setTitleColor(.toasterPrimary, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 12)
             $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)

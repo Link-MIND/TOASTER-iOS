@@ -71,7 +71,7 @@ private extension SelectClipViewController {
         completeButton.do {
             $0.makeRounded(radius: 12)
             $0.backgroundColor = .black850
-            $0.setTitle("완료", for: .normal)
+            $0.setTitle(StringLiterals.Button.complete, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
             $0.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
@@ -117,8 +117,8 @@ private extension SelectClipViewController {
     func closeButtonTapped() {
         showPopup(forMainText: "링크 저장을 취소하시겠어요?",
                   forSubText: "저장 중인 링크가 사라져요",
-                  forLeftButtonTitle: "닫기",
-                  forRightButtonTitle: "삭제",
+                  forLeftButtonTitle: StringLiterals.Button.close,
+                  forRightButtonTitle: StringLiterals.Button.delete,
                   forRightButtonHandler: rightButtonTapped)
     }
     
@@ -201,7 +201,7 @@ extension SelectClipViewController: UICollectionViewDelegateFlowLayout {
 extension SelectClipViewController: SelectClipHeaderViewlDelegate {
     func addClipCellTapped() {
         if selectedClip.count > 15 {
-            showToastMessage(width: 280, status: .warning, message: "클립은 최대 15개까지만 등록가능해요")
+            showToastMessage(width: 243, status: .warning, message: StringLiterals.ToastMessage.noticeMaxClip)
         } else {
             addClipBottom.modalPresentationStyle = .overFullScreen
             self.present(addClipBottom, animated: false)
@@ -229,7 +229,7 @@ extension SelectClipViewController: AddClipBottomSheetViewDelegate {
     func dismissButtonTapped() {
         addClipBottom.hideBottomSheet()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
+            self.showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeAddClip)
             self.addClipBottomSheetView.resetTextField()
         }
     }
@@ -286,7 +286,7 @@ extension SelectClipViewController {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.addClipBottomSheetView.resetTextField()
                     self.addClipBottom.hideBottomSheet()
-                    self.showToastMessage(width: 157, status: .check, message: "클립 생성 완료!")
+                    self.showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeAddClip)
                 }
                 self.fetchClipData()
             case .networkFail, .unAuthorized, .notFound:
