@@ -206,7 +206,7 @@ extension EditClipViewController: UICollectionViewDropDelegate {
             collectionView.performBatchUpdates {
                 let sourceItem = clipList.clips.remove(at: sourceIndexPath.item - 1)
                 clipList.clips.insert(sourceItem, at: destinationIndexPath.item-1)
-                patchEditPriorityCategoryAPI(requestBody: PatchEditPriorityCategoryRequestDTO(categoryId: clipList.clips[destinationIndexPath.item-1].id, newPriority: destinationIndexPath.item-1))
+                patchEditPriorityCategoryAPI(requestBody: ClipPriorityEditModel(id: clipList.clips[destinationIndexPath.item-1].id, priority: destinationIndexPath.item-1))
                 collectionView.deleteItems(at: [sourceIndexPath])
                 collectionView.insertItems(at: [destinationIndexPath])
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
@@ -233,7 +233,8 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
     }
     
     func dismissButtonTapped(title: String) {
-        patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO(categoryId: clipList.clips[cellIndex].id, newTitle: title))
+        patchEditaNameCategoryAPI(requestBody: ClipNameEditModel(id: clipList.clips[cellIndex].id,
+                                                                 title: title))
     }
 }
 
@@ -275,8 +276,9 @@ extension EditClipViewController {
         }
     }
     
-    func patchEditPriorityCategoryAPI(requestBody: PatchEditPriorityCategoryRequestDTO) {
-        NetworkService.shared.clipService.patchEditPriorityCategory(requestBody: requestBody) { result in
+    func patchEditPriorityCategoryAPI(requestBody: ClipPriorityEditModel) {
+        NetworkService.shared.clipService.patchEditPriorityCategory(requestBody: PatchEditPriorityCategoryRequestDTO(categoryId: requestBody.id,
+                                                                                                                     newPriority: requestBody.priority)) { result in
             switch result {
             case .success:
                 self.getAllCategoryAPI()
@@ -287,8 +289,9 @@ extension EditClipViewController {
         }
     }
     
-    func patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO) {
-        NetworkService.shared.clipService.patchEditNameCategory(requestBody: requestBody) { result in
+    func patchEditaNameCategoryAPI(requestBody: ClipNameEditModel) {
+        NetworkService.shared.clipService.patchEditNameCategory(requestBody: PatchEditNameCategoryRequestDTO(categoryId: requestBody.id,
+                                                                                                             newTitle: requestBody.title)) { result in
             switch result {
             case .success:
                 self.editClipBottom.hideBottomSheet()

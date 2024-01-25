@@ -17,6 +17,7 @@
 		3909A0622B62185E005A4546 /* ClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3909A0612B62185E005A4546 /* ClipModel.swift */; };
 		3909A0652B622A36005A4546 /* DetailClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3909A0642B622A36005A4546 /* DetailClipModel.swift */; };
 		3909A06D2B62375E005A4546 /* LinkReadEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3909A06C2B62375E005A4546 /* LinkReadEditModel.swift */; };
+		3909A0702B6239F8005A4546 /* ClipPriorityEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3909A06F2B6239F8005A4546 /* ClipPriorityEditModel.swift */; };
 		390ADE652B585C8D00FE1E4B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 390ADE642B585C8D00FE1E4B /* GoogleService-Info.plist */; };
 		391908422B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391908412B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift */; };
 		391908442B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391908432B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift */; };
@@ -200,6 +201,7 @@
 		3909A0612B62185E005A4546 /* ClipModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipModel.swift; sourceTree = "<group>"; };
 		3909A0642B622A36005A4546 /* DetailClipModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClipModel.swift; sourceTree = "<group>"; };
 		3909A06C2B62375E005A4546 /* LinkReadEditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkReadEditModel.swift; sourceTree = "<group>"; };
+		3909A06F2B6239F8005A4546 /* ClipPriorityEditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipPriorityEditModel.swift; sourceTree = "<group>"; };
 		390ADE642B585C8D00FE1E4B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		391908412B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditPriorityCategoryRequestDTO.swift; sourceTree = "<group>"; };
 		391908432B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditNameCategoryRequestDTO.swift; sourceTree = "<group>"; };
@@ -445,6 +447,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		3909A06E2B62397C005A4546 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3909A06F2B6239F8005A4546 /* ClipPriorityEditModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		398ACFDA2B5E77C500D5EE77 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -530,6 +540,7 @@
 		39EF95FD2B501BC400F301FC /* EditClip */ = {
 			isa = PBXGroup;
 			children = (
+				3909A06E2B62397C005A4546 /* Model */,
 				39F404EE2B510499008809E2 /* View */,
 				39B54E742B53C7E300538DAE /* ViewController */,
 			);
@@ -1522,6 +1533,7 @@
 				6BE6DA942B546FCB008B06FA /* PostCreateTimerRequestDTO.swift in Sources */,
 				6BE6DA042B4F2AF5008B06FA /* RemindSelectClipCollectionViewCell.swift in Sources */,
 				39EF96042B5020D600F301FC /* EditClipCollectionViewCell.swift in Sources */,
+				3909A0702B6239F8005A4546 /* ClipPriorityEditModel.swift in Sources */,
 				6BE6DA962B547037008B06FA /* PatchEditTimerRequestDTO.swift in Sources */,
 				39B54E732B53C50300538DAE /* SettingViewController.swift in Sources */,
 				39BE4BC22B4ABBB0002B471D /* DeleteLinkBottomSheetView.swift in Sources */,
