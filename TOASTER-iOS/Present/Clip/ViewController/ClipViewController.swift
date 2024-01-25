@@ -14,16 +14,12 @@ final class ClipViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var clipList: GetAllCategoryResponseDTO? {
+    private var clipList: ClipModel = ClipModel(allClipToastCount: 0, clips: []) {
         didSet {
+            clipEmptyView.isHidden = !clipList.clips.isEmpty
             clipListCollectionView.reloadData()
-            if let data = clipList?.data {
-                clipCount = data.categories.count
-                setupEmptyView()
-            }
         }
     }
-    private var clipCount: Int = 0
     
     // MARK: - UI Properties
     
@@ -85,10 +81,6 @@ private extension ClipViewController {
         addClipBottomSheetView.addClipBottomSheetViewDelegate = self
     }
     
-    func setupEmptyView() {
-        clipEmptyView.isHidden = clipCount > 0 ? true : false
-    }
-    
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                 hasRightButton: true,
@@ -103,7 +95,8 @@ private extension ClipViewController {
     
     func editButtonTapped() {
         let editClipViewController = EditClipViewController()
-        if let clipList = clipList { editClipViewController.setupDataBind(getAllCategoryResponseDTO: clipList) }
+        // editClipViewController.setupDataBind(getAllCategoryResponseDTO: clipList)
+//        if let clipList = clipList { editClipViewController.setupDataBind(getAllCategoryResponseDTO: clipList) }
         editClipViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(editClipViewController, animated: false)
     }
@@ -118,12 +111,10 @@ extension ClipViewController: UICollectionViewDelegate {
             nextVC.getDetailAllCategoryAPI(filter: .all)
             nextVC.setupCategory(id: 0, name: "전체 클립")
         } else {
-            if let data = clipList?.data {
-                nextVC.getDetailCategoryAPI(categoryID: data.categories[indexPath.item-1].categoryId,
-                                            filter: .all)
-                nextVC.setupCategory(id: data.categories[indexPath.item-1].categoryId,
-                                     name: data.categories[indexPath.item-1].categoryTitle)
-            }
+            nextVC.getDetailCategoryAPI(categoryID: clipList.clips[indexPath.item-1].id,
+                                        filter: .all)
+            nextVC.setupCategory(id: clipList.clips[indexPath.item-1].id,
+                                 name: clipList.clips[indexPath.item-1].title)
         }
         nextVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
@@ -134,18 +125,16 @@ extension ClipViewController: UICollectionViewDelegate {
 
 extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return clipCount + 1
+        return clipList.clips.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell else { return UICollectionViewCell() }
-        if let clips = clipList?.data {
-            if indexPath.item == 0 {
-                cell.configureCell(forModel: clips,
-                                   icon: ImageLiterals.TabBar.allClip.withTintColor(.black900), name: "전체 클립")
-            } else {
-                cell.configureCell(forModel: clips, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.item-1)
-            }
+        
+        if indexPath.item == 0 {
+            cell.configureCell(forModel: clipList, icon: ImageLiterals.TabBar.allClip.withTintColor(.black900), name: "전체 클립")
+        } else {
+            cell.configureCell(forModel: clipList, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.item-1)
         }
         return cell
     }
@@ -154,7 +143,7 @@ extension ClipViewController: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
             headerView.isDetailClipView(isHidden: false)
-            headerView.setupDataBind(count: clipCount+1)
+            headerView.setupDataBind(count: clipList.clips.count + 1)
             headerView.clipCollectionHeaderViewDelegate = self
             return headerView
         }
@@ -194,7 +183,7 @@ extension ClipViewController: ClipCollectionHeaderViewDelegate {
     }
     
     func addClipButtonTapped() {
-        if clipList?.data.categories.count ?? 0 >= 15 {
+        if clipList.clips.count >= 15 {
             showToastMessage(width: 243, status: .warning, message: StringLiterals.ToastMessage.noticeMaxClip)
         } else {
             addClipBottom.modalPresentationStyle = .overFullScreen
@@ -228,7 +217,15 @@ extension ClipViewController {
         NetworkService.shared.clipService.getAllCategory { [weak self] result in
             switch result {
             case .success(let response):
-                self?.clipList = response
+                var allClipToastCount = response?.data.toastNumberInEntire
+                var clips = [AllClipModel]()
+                response?.data.categories.forEach {
+                    clips.append(AllClipModel(id: $0.categoryId,
+                                              title: $0.categoryTitle,
+                                              toastCount: $0.toastNum))
+                }
+                self?.clipList = ClipModel(allClipToastCount: allClipToastCount ?? 0,
+                                           clips: clips)
             case .unAuthorized, .networkFail, .notFound:
                 self?.changeViewController(viewController: LoginViewController())
             default: return

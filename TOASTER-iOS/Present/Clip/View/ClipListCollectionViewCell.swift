@@ -37,15 +37,15 @@ final class ClipListCollectionViewCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension ClipListCollectionViewCell {
-    func configureCell(forModel: GetAllCategoryResponseData, icon: UIImage, name: String) {
+    func configureCell(forModel: ClipModel, icon: UIImage, name: String) {
         clipNameLabel.text = name
-        countLabel.text = "\(forModel.toastNumberInEntire)개"
+        countLabel.text = "\(forModel.allClipToastCount)개"
         clipImage.image = icon
     }
     
-    func configureCell(forModel: GetAllCategoryResponseData, icon: UIImage, index: Int) {
-        clipNameLabel.text = forModel.categories[index].categoryTitle
-        countLabel.text = "\(forModel.categories[index].toastNum)개"
+    func configureCell(forModel: ClipModel, icon: UIImage, index: Int) {
+        clipNameLabel.text = forModel.clips[index].title
+        countLabel.text = "\(forModel.clips[index].toastCount)개"
         clipImage.image = icon
     }
     
