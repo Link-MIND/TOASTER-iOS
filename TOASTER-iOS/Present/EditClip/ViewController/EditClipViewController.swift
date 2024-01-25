@@ -232,8 +232,8 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
         editClipBottom.changeHeightBottomSheet(height: 198)
     }
     
-    func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
-        patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO(categoryId: clipList.clips[cellIndex].id, newTitle: text.categoryTitle))
+    func dismissButtonTapped(title: String) {
+        patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO(categoryId: clipList.clips[cellIndex].id, newTitle: title))
     }
 }
 
