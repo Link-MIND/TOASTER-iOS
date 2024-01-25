@@ -15,6 +15,7 @@
 		390925C72B4EF66C00487AA3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 390925C62B4EF66C00487AA3 /* WebKit.framework */; };
 		390925CB2B4F049800487AA3 /* LinkWebNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390925CA2B4F049800487AA3 /* LinkWebNavigationView.swift */; };
 		3909A0622B62185E005A4546 /* ClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3909A0612B62185E005A4546 /* ClipModel.swift */; };
+		3909A0652B622A36005A4546 /* DetailClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3909A0642B622A36005A4546 /* DetailClipModel.swift */; };
 		390ADE652B585C8D00FE1E4B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 390ADE642B585C8D00FE1E4B /* GoogleService-Info.plist */; };
 		391908422B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391908412B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift */; };
 		391908442B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391908432B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift */; };
@@ -196,6 +197,7 @@
 		390925C62B4EF66C00487AA3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		390925CA2B4F049800487AA3 /* LinkWebNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWebNavigationView.swift; sourceTree = "<group>"; };
 		3909A0612B62185E005A4546 /* ClipModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipModel.swift; sourceTree = "<group>"; };
+		3909A0642B622A36005A4546 /* DetailClipModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClipModel.swift; sourceTree = "<group>"; };
 		390ADE642B585C8D00FE1E4B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		391908412B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditPriorityCategoryRequestDTO.swift; sourceTree = "<group>"; };
 		391908432B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditNameCategoryRequestDTO.swift; sourceTree = "<group>"; };
@@ -420,6 +422,14 @@
 			isa = PBXGroup;
 			children = (
 				3909A0612B62185E005A4546 /* ClipModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3909A0632B622A28005A4546 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3909A0642B622A36005A4546 /* DetailClipModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -777,6 +787,7 @@
 		6B6AE68E2B3FF590000E2366 /* DetailClip */ = {
 			isa = PBXGroup;
 			children = (
+				3909A0632B622A28005A4546 /* Model */,
 				39BE4BB12B4ABA70002B471D /* View */,
 				39BE4BB02B4ABA6A002B471D /* ViewController */,
 			);
@@ -1578,6 +1589,7 @@
 				6B6AE6962B3FF5B5000E2366 /* AddLinkViewController.swift in Sources */,
 				6BE6DA1D2B4FF5A4008B06FA /* TimerRepeatCollectionViewCell.swift in Sources */,
 				6B6AE68D2B3FF58D000E2366 /* RemindViewController.swift in Sources */,
+				3909A0652B622A36005A4546 /* DetailClipModel.swift in Sources */,
 				6BE6DA142B4FDDE7008B06FA /* RemindAlarmOffBottomSheetView.swift in Sources */,
 				39C3926B2B491F47005B2B0F /* NSObject+.swift in Sources */,
 				6BE6DA0F2B4F3716008B06FA /* RemindTimerAddViewController.swift in Sources */,
