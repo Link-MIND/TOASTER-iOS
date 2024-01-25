@@ -95,8 +95,7 @@ private extension ClipViewController {
     
     func editButtonTapped() {
         let editClipViewController = EditClipViewController()
-        // editClipViewController.setupDataBind(getAllCategoryResponseDTO: clipList)
-//        if let clipList = clipList { editClipViewController.setupDataBind(getAllCategoryResponseDTO: clipList) }
+        editClipViewController.setupDataBind(clipModel: clipList)
         editClipViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(editClipViewController, animated: false)
     }
@@ -125,7 +124,7 @@ extension ClipViewController: UICollectionViewDelegate {
 
 extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return clipList.clips.count + 1
+        return clipList.clips.count+1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -217,7 +216,7 @@ extension ClipViewController {
         NetworkService.shared.clipService.getAllCategory { [weak self] result in
             switch result {
             case .success(let response):
-                var allClipToastCount = response?.data.toastNumberInEntire
+                let allClipToastCount = response?.data.toastNumberInEntire
                 var clips = [AllClipModel]()
                 response?.data.categories.forEach {
                     clips.append(AllClipModel(id: $0.categoryId,

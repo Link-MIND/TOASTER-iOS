@@ -9,7 +9,7 @@ import Foundation
 
 struct ClipModel {
     let allClipToastCount: Int
-    let clips: [AllClipModel]
+    var clips: [AllClipModel]
 }
 
 struct AllClipModel {

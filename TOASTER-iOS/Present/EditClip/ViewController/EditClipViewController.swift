@@ -15,7 +15,7 @@ final class EditClipViewController: UIViewController {
     // MARK: - Properties
     
     private var cellIndex: Int = 0
-    private var clipList: GetAllCategoryResponseDTO? {
+    private var clipList: ClipModel = ClipModel(allClipToastCount: 0, clips: []) {
         didSet {
             editClipCollectionView.reloadData()
         }
@@ -52,8 +52,8 @@ final class EditClipViewController: UIViewController {
 // MARK: - Extensions
 
 extension EditClipViewController {
-    func setupDataBind(getAllCategoryResponseDTO: GetAllCategoryResponseDTO) {
-        clipList = getAllCategoryResponseDTO
+    func setupDataBind(clipModel: ClipModel) {
+        clipList = clipModel
     }
 }
 
@@ -113,35 +113,33 @@ private extension EditClipViewController {
 
 extension EditClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let data = clipList?.data { return data.categories.count+1 }
-        return 1
+        return clipList.clips.count+1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EditClipCollectionViewCell.className, for: indexPath) as? EditClipCollectionViewCell else { return UICollectionViewCell() }
         if indexPath.row == 0 {
-            cell.configureCell(forModel: GetAllCategoryData(categoryId: 0, categoryTitle: "전체 클립", toastNum: 0),
-                               icon: ImageLiterals.Clip.pin, isFirst: true)
+            cell.configureCell(forModel: AllClipModel(id: 0,
+                                                      title: "전체 클립",
+                                                      toastCount: 0),
+                               icon: ImageLiterals.Clip.pin,
+                               isFirst: true)
         } else {
-            if let clips = clipList?.data {
-                cell.configureCell(forModel: clips.categories[indexPath.row-1],
-                                   icon: ImageLiterals.Clip.delete,
-                                   isFirst: false)
-                
-                cell.leadingButtonTapped {
-                    self.showPopup(forMainText: "‘\(clips.categories[indexPath.row-1].categoryTitle)’ 클립을 삭제하시겠어요?",
-                                   forSubText: "지금까지 저장된 모든 링크가 사라져요",
-                                   forLeftButtonTitle: StringLiterals.Button.close,
-                                   forRightButtonTitle: StringLiterals.Button.delete,
-                                   forRightButtonHandler: { self.popupDeleteButtonTapped(categoryID: clips.categories[indexPath.row-1].categoryId, index: indexPath.row-1) })
-                }
-                
-                cell.changeTitleButtonTapped {
-                    self.cellIndex = indexPath.item-1
-                    self.editClipBottom.modalPresentationStyle = .overFullScreen
-                    self.present(self.editClipBottom, animated: false)
-                    self.editClipBottomSheetView.setupTextField(message: clips.categories[indexPath.item-1].categoryTitle)
-                }
+            cell.configureCell(forModel: clipList.clips[indexPath.item-1],
+                               icon: ImageLiterals.Clip.delete,
+                               isFirst: false)
+            cell.leadingButtonTapped {
+                self.showPopup(forMainText: "‘\(self.clipList.clips[indexPath.item-1].title)’ 클립을 삭제하시겠어요?",
+                               forSubText: "지금까지 저장된 모든 링크가 사라져요",
+                               forLeftButtonTitle: StringLiterals.Button.close,
+                               forRightButtonTitle: StringLiterals.Button.delete,
+                               forRightButtonHandler: { self.popupDeleteButtonTapped(categoryID: self.clipList.clips[indexPath.item-1].id, index: indexPath.item-1) })
+            }
+            cell.changeTitleButtonTapped {
+                self.cellIndex = indexPath.item-1
+                self.editClipBottom.modalPresentationStyle = .overFullScreen
+                self.present(self.editClipBottom, animated: false)
+                self.editClipBottomSheetView.setupTextField(message: self.clipList.clips[indexPath.item-1].title)
             }
         }
         return cell
@@ -206,12 +204,9 @@ extension EditClipViewController: UICollectionViewDropDelegate {
         if destinationIndexPath.item != 0 {
             guard let item = coordinator.items.first, let sourceIndexPath = item.sourceIndexPath else { return }
             collectionView.performBatchUpdates {
-                if var clips = clipList?.data {
-                    let sourceItem = clips.categories.remove(at: sourceIndexPath.item - 1)
-                    clips.categories.insert(sourceItem, at: destinationIndexPath.item - 1)
-                    clipList?.data.categories = clips.categories
-                    patchEditPriorityCategoryAPI(requestBody: PatchEditPriorityCategoryRequestDTO(categoryId: clips.categories[destinationIndexPath.item-1].categoryId, newPriority: destinationIndexPath.item-1))
-                }
+                let sourceItem = clipList.clips.remove(at: sourceIndexPath.item - 1)
+                clipList.clips.insert(sourceItem, at: destinationIndexPath.item-1)
+                patchEditPriorityCategoryAPI(requestBody: PatchEditPriorityCategoryRequestDTO(categoryId: clipList.clips[destinationIndexPath.item-1].id, newPriority: destinationIndexPath.item-1))
                 collectionView.deleteItems(at: [sourceIndexPath])
                 collectionView.insertItems(at: [destinationIndexPath])
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
@@ -238,9 +233,7 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
     }
     
     func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
-        if let data = clipList?.data {
-            patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO(categoryId: data.categories[cellIndex].categoryId, newTitle: text.categoryTitle))
-        }
+        patchEditaNameCategoryAPI(requestBody: PatchEditNameCategoryRequestDTO(categoryId: clipList.clips[cellIndex].id, newTitle: text.categoryTitle))
     }
 }
 
@@ -251,7 +244,15 @@ extension EditClipViewController {
         NetworkService.shared.clipService.getAllCategory { result in
             switch result {
             case .success(let response):
-                self.clipList = response
+                let allClipToastCount = response?.data.toastNumberInEntire
+                var clips = [AllClipModel]()
+                response?.data.categories.forEach {
+                    clips.append(AllClipModel(id: $0.categoryId,
+                                              title: $0.categoryTitle,
+                                              toastCount: $0.toastNum))
+                }
+                self.clipList = ClipModel(allClipToastCount: allClipToastCount ?? 0,
+                                          clips: clips)
             case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
