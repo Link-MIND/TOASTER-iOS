@@ -10,12 +10,12 @@ import Foundation
 struct GetAllCategoryResponseDTO: Codable {
     let code: Int
     let message: String
-    var data: GetAllCategoryResponseData
+    let data: GetAllCategoryResponseData
 }
 
 struct GetAllCategoryResponseData: Codable {
     let toastNumberInEntire: Int
-    var categories: [GetAllCategoryData]
+    let categories: [GetAllCategoryData]
 }
 
 struct GetAllCategoryData: Codable {

@@ -16,7 +16,7 @@ final class EditClipCollectionViewCell: UICollectionViewCell {
     
     private var leadingButtonAction: (() -> Void)?
     private var changeTitleButtonAction: (() -> Void)?
-        
+    
     // MARK: - UI Components
     
     private let leadingButton = UIButton()
@@ -42,8 +42,8 @@ final class EditClipCollectionViewCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension EditClipCollectionViewCell {
-    func configureCell(forModel: GetAllCategoryData, icon: UIImage, isFirst: Bool) {
-        clipTitleLabel.text = forModel.categoryTitle
+    func configureCell(forModel: AllClipModel, icon: UIImage, isFirst: Bool) {
+        clipTitleLabel.text = forModel.title
         leadingButton.setImage(icon, for: .normal)
         changeTitleButton.isHidden = isFirst
     }

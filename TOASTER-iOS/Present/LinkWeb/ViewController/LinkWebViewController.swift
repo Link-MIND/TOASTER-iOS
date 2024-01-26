@@ -197,7 +197,7 @@ private extension LinkWebViewController {
     /// 툴바 링크 확인 완료 버튼 클릭 시
     @objc func checkReadInWeb() {
         if let toastId = toastId {
-            patchOpenLinkAPI(requestBody: PatchOpenLinkRequestDTO(toastId: toastId, isRead: !isRead))
+            patchOpenLinkAPI(requestBody: LinkReadEditModel(toastId: toastId, isRead: !isRead))
         }
     }
     
@@ -235,8 +235,9 @@ extension LinkWebViewController: WKNavigationDelegate {
 // MARK: - Network
 
 extension LinkWebViewController {
-    func patchOpenLinkAPI(requestBody: PatchOpenLinkRequestDTO) {
-        NetworkService.shared.toastService.patchOpenLink(requestBody: requestBody) { result in
+    func patchOpenLinkAPI(requestBody: LinkReadEditModel) {
+        NetworkService.shared.toastService.patchOpenLink(requestBody: PatchOpenLinkRequestDTO(toastId: requestBody.toastId,
+                                                                                              isRead: requestBody.isRead)) { result in
             switch result {
             case .success:
                 if !self.isRead {

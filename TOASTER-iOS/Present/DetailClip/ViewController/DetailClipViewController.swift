@@ -16,13 +16,11 @@ final class DetailClipViewController: UIViewController {
     private var categoryId: Int = 0
     private var categoryName: String = ""
     private var toastId: Int = 0
-    private var clipCount: Int = 0
     private var segmentIndex: Int = 0
-    private var toastList: GetDetailCategoryResponseDTO? {
+    private var toastList: DetailClipModel = DetailClipModel(allToastCount: 0, toastList: []) {
         didSet {
-            clipCount = toastList?.data.toastListDto.count ?? 0
+            detailClipEmptyView.isHidden = !toastList.toastList.isEmpty
             detailClipListCollectionView.reloadData()
-            setupEmptyView()
         }
     }
     
@@ -105,12 +103,6 @@ private extension DetailClipViewController {
         detailClipSegmentedControlView.detailClipSegmentedDelegate = self
     }
     
-    func setupEmptyView() {
-        if let data = toastList?.data {
-            detailClipEmptyView.isHidden = data.allToastNum > 0 ? true : false
-        }
-    }
-    
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
                                                                 hasRightButton: false,
@@ -127,21 +119,17 @@ private extension DetailClipViewController {
 
 extension DetailClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return toastList?.data.toastListDto.count ?? 0
+        return toastList.toastList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell else { return UICollectionViewCell() }
         cell.detailClipListCollectionViewCellDelegate = self
-        
-        if let data = toastList?.data {
-            if categoryId == 0 {
-                cell.configureCell(forModel: data, index: indexPath.row, isClipHidden: false)
-            } else {
-                cell.configureCell(forModel: data, index: indexPath.row, isClipHidden: true)
-            }
+        if categoryId == 0 {
+            cell.configureCell(forModel: toastList, index: indexPath.item, isClipHidden: false)
+        } else {
+            cell.configureCell(forModel: toastList, index: indexPath.item, isClipHidden: true)
         }
-        
         deleteLinkBottomSheetView.setupDeleteLinkBottomSheetButtonAction {
             self.deleteLinkAPI(toastId: self.toastId)
             self.bottom.hideBottomSheet()
@@ -155,7 +143,7 @@ extension DetailClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
         headerView.isDetailClipView(isHidden: true)
-        headerView.setupDataBind(count: clipCount)
+        headerView.setupDataBind(count: toastList.toastList.count)
         return headerView
     }
 }
@@ -166,11 +154,9 @@ extension DetailClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = LinkWebViewController()
         nextVC.hidesBottomBarWhenPushed = true
-        if let data = toastList?.data {
-            nextVC.setupDataBind(linkURL: data.toastListDto[indexPath.row].linkUrl,
-                                 isRead: data.toastListDto[indexPath.row].isRead,
-                                 id: data.toastListDto[indexPath.row].toastId)
-        }
+        nextVC.setupDataBind(linkURL: toastList.toastList[indexPath.item].url,
+                             isRead: toastList.toastList[indexPath.item].isRead,
+                             id: toastList.toastList[indexPath.item].id)
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
@@ -245,7 +231,18 @@ extension DetailClipViewController {
         NetworkService.shared.clipService.getDetailAllCategory(filter: filter) { result in
             switch result {
             case .success(let response):
-                self.toastList = response
+                let allToastCount = response?.data.allToastNum
+                var toasts = [ToastListModel]()
+                response?.data.toastListDto.forEach {
+                    toasts.append(ToastListModel(id: $0.toastId,
+                                                 title: $0.toastTitle,
+                                                 url: $0.linkUrl,
+                                                 isRead: $0.isRead,
+                                                 clipTitle: $0.categoryTitle,
+                                                 imageURL: $0.thumbnailUrl))
+                }
+                self.toastList = DetailClipModel(allToastCount: allToastCount ?? 0,
+                                                 toastList: toasts)
             case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
@@ -257,7 +254,18 @@ extension DetailClipViewController {
         NetworkService.shared.clipService.getDetailCategory(categoryID: categoryID, filter: filter) { result in
             switch result {
             case .success(let response):
-                self.toastList = response
+                let allToastCount = response?.data.allToastNum
+                var toasts = [ToastListModel]()
+                response?.data.toastListDto.forEach {
+                    toasts.append(ToastListModel(id: $0.toastId,
+                                                 title: $0.toastTitle,
+                                                 url: $0.linkUrl,
+                                                 isRead: $0.isRead,
+                                                 clipTitle: $0.categoryTitle,
+                                                 imageURL: $0.thumbnailUrl))
+                }
+                self.toastList = DetailClipModel(allToastCount: allToastCount ?? 0,
+                                                 toastList: toasts)
             case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return

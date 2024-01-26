@@ -67,23 +67,23 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension DetailClipListCollectionViewCell {
-    func configureCell(forModel: GetDetailCategoryResponseData, index: Int, isClipHidden: Bool) {
+    func configureCell(forModel: DetailClipModel, index: Int, isClipHidden: Bool) {
         modifiedButton.isHidden = false
-        clipNameLabel.text = forModel.toastListDto[index].categoryTitle
-        linkTitleLabel.text = forModel.toastListDto[index].toastTitle
-        linkLabel.text = forModel.toastListDto[index].linkUrl
-        isClipNameLabelHidden = forModel.toastListDto[index].categoryTitle != nil ? true : false
-        isReadDimmedView = forModel.toastListDto[index].isRead
-        toastId = forModel.toastListDto[index].toastId
+        clipNameLabel.text = forModel.toastList[index].clipTitle
+        linkTitleLabel.text = forModel.toastList[index].title
+        linkLabel.text = forModel.toastList[index].url
+        isClipNameLabelHidden = forModel.toastList[index].clipTitle != nil ? true : false
+        isReadDimmedView = forModel.toastList[index].isRead
+        toastId = forModel.toastList[index].id
         
-        if forModel.toastListDto[index].categoryTitle != nil && !isClipHidden {
-            clipNameLabel.text = forModel.toastListDto[index].categoryTitle
+        if forModel.toastList[index].clipTitle != nil && !isClipHidden {
+            clipNameLabel.text = forModel.toastList[index].clipTitle
             isClipNameLabelHidden = false
         } else {
             isClipNameLabelHidden = true
         }
         
-        if let imageURL = forModel.toastListDto[index].thumbnailUrl {
+        if let imageURL = forModel.toastList[index].imageURL {
             linkImage.kf.setImage(with: URL(string: imageURL))
         } else {
             linkImage.image = ImageLiterals.Clip.thumb

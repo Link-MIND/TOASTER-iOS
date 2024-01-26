@@ -291,8 +291,8 @@ extension HomeViewController: AddClipBottomSheetViewDelegate {
         addClipBottom.changeHeightBottomSheet(height: 198)
     }
     
-    func dismissButtonTapped(text: PostAddCategoryRequestDTO) {
-        postAddCategoryAPI(requestBody: text)
+    func dismissButtonTapped(title: String) {
+        postAddCategoryAPI(requestBody: title)
     }
 }
 
@@ -413,8 +413,8 @@ extension HomeViewController {
         }
     }
     
-    func postAddCategoryAPI(requestBody: PostAddCategoryRequestDTO) {
-        NetworkService.shared.clipService.postAddCategory(requestBody: requestBody) { result in
+    func postAddCategoryAPI(requestBody: String) {
+        NetworkService.shared.clipService.postAddCategory(requestBody: PostAddCategoryRequestDTO(categoryTitle: requestBody)) { result in
             switch result {
             case .success:
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {

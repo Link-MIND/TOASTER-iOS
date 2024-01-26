@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 protocol AddClipBottomSheetViewDelegate: AnyObject {
-    func dismissButtonTapped(text: PostAddCategoryRequestDTO)
+    func dismissButtonTapped(title: String)
     func addHeightBottom()
     func minusHeightBottom()
     func callCheckAPI(text: String)
@@ -230,7 +230,7 @@ private extension AddClipBottomSheetView {
     
     @objc
     func buttonTapped() {
-        addClipBottomSheetViewDelegate?.dismissButtonTapped(text: PostAddCategoryRequestDTO.init(categoryTitle: addClipTextField.text ?? ""))
+        addClipBottomSheetViewDelegate?.dismissButtonTapped(title: addClipTextField.text ?? "")
     }
     
     @objc
