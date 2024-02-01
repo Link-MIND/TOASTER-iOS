@@ -206,12 +206,10 @@ extension EditClipViewController: UICollectionViewDropDelegate {
             collectionView.performBatchUpdates {
                 let sourceItem = clipList.clips.remove(at: sourceIndexPath.item - 1)
                 clipList.clips.insert(sourceItem, at: destinationIndexPath.item-1)
-                patchEditPriorityCategoryAPI(requestBody: ClipPriorityEditModel(id: clipList.clips[destinationIndexPath.item-1].id, priority: destinationIndexPath.item-1))
                 collectionView.deleteItems(at: [sourceIndexPath])
                 collectionView.insertItems(at: [destinationIndexPath])
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-            } completion: { _ in
-                collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+                self.patchEditPriorityCategoryAPI(requestBody: ClipPriorityEditModel(id: self.clipList.clips[destinationIndexPath.item-1].id, priority: destinationIndexPath.item-1))
             }
         }
     }
@@ -278,12 +276,12 @@ extension EditClipViewController {
     
     func patchEditPriorityCategoryAPI(requestBody: ClipPriorityEditModel) {
         NetworkService.shared.clipService.patchEditPriorityCategory(requestBody: PatchEditPriorityCategoryRequestDTO(categoryId: requestBody.id,
-                                                                                                                     newPriority: requestBody.priority)) { result in
+                                                                                                                     newPriority: requestBody.priority)) { [weak self] result in
             switch result {
             case .success:
-                self.getAllCategoryAPI()
+                self?.editClipCollectionView.reloadData()
             case .unAuthorized, .networkFail, .notFound:
-                self.changeViewController(viewController: LoginViewController())
+                self?.changeViewController(viewController: LoginViewController())
             default: return
             }
         }
