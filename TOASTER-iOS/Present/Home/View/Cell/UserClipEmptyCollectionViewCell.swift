@@ -34,6 +34,7 @@ final class UserClipEmptyCollectionViewCell: UICollectionViewCell {
     
     func setView() {
         setupStyle()
+        setupLayer()
         setupHierarchy()
         setupLayout()
     }
@@ -44,8 +45,7 @@ final class UserClipEmptyCollectionViewCell: UICollectionViewCell {
 private extension UserClipEmptyCollectionViewCell {
     func setupStyle() {
         backgroundColor = .clear
-        self.makeRounded(radius: 12)
-        
+                
         addClipImage.do {
             $0.image = ImageLiterals.Home.addBtn
         }
@@ -72,5 +72,23 @@ private extension UserClipEmptyCollectionViewCell {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(addClipImage.snp.bottom).offset(1)
         }
+    }
+    
+    // Button 테두리 점선 Custom
+    func setupLayer() {
+        let customLayer = CAShapeLayer()
+        let frameSize = self.frame.size
+        let shapeRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
+        
+        customLayer.bounds = shapeRect
+        customLayer.position = CGPoint(x: frameSize.width/2, y: frameSize.height/2)
+        customLayer.fillColor = UIColor.clear.cgColor
+        customLayer.strokeColor = UIColor.gray100.cgColor
+        customLayer.lineWidth = 2
+        customLayer.lineJoin = CAShapeLayerLineJoin.round
+        customLayer.lineDashPattern = [4, 2]
+        customLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: 12).cgPath
+        
+        self.layer.addSublayer(customLayer)
     }
 }
