@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 import Then
 
+// MARK: - 클립 추가 Empty Cell
+
 final class UserClipEmptyCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
