@@ -82,7 +82,7 @@ private extension AddLinkView {
             $0.backgroundColor = .gray50
             $0.makeRounded(radius: 12)
             $0.inputAccessoryView = accessoryView
-            $0.addPadding(left: -15.0)
+            $0.addPadding(left: 14, right: 42)
             $0.addTarget(self, action: #selector(self.textFieldDidChange), for: .touchUpInside)
         }
     
@@ -131,7 +131,7 @@ private extension AddLinkView {
         
         clearButton.snp.makeConstraints {
             $0.top.equalTo(linkEmbedTextField.snp.top).inset(15)
-            $0.trailing.equalTo(linkEmbedTextField.snp.trailing).inset(15)
+            $0.trailing.equalTo(linkEmbedTextField.snp.trailing).inset(14)
         }
         
         nextBottomButton.snp.makeConstraints {
