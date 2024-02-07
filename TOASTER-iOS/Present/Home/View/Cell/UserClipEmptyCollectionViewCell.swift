@@ -88,7 +88,7 @@ private extension UserClipEmptyCollectionViewCell {
         customLayer.strokeColor = UIColor.gray100.cgColor
         customLayer.lineWidth = 2
         customLayer.lineJoin = CAShapeLayerLineJoin.round
-        customLayer.lineDashPattern = [4, 2]
+        customLayer.lineDashPattern = [4, 4]
         customLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: 12).cgPath
         
         self.layer.addSublayer(customLayer)
