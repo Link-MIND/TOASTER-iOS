@@ -134,8 +134,8 @@ extension ClipViewController: UICollectionViewDelegate {
         if indexPath.item == 0 {
             nextVC.setupCategory(id: 0, name: "전체 클립")
         } else {
-            nextVC.setupCategory(id: viewModel.clipList.clips[indexPath.item-1].id,
-                                 name: viewModel.clipList.clips[indexPath.item-1].title)
+            nextVC.setupCategory(id: viewModel.clipList.clips[indexPath.item - 1].id,
+                                 name: viewModel.clipList.clips[indexPath.item - 1].title)
         }
         nextVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
@@ -146,7 +146,7 @@ extension ClipViewController: UICollectionViewDelegate {
 
 extension ClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.clipList.clips.count+1
+        return viewModel.clipList.clips.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -155,7 +155,7 @@ extension ClipViewController: UICollectionViewDataSource {
         if indexPath.item == 0 {
             cell.configureCell(forModel: viewModel.clipList, icon: ImageLiterals.TabBar.allClip.withTintColor(.black900), name: "전체 클립")
         } else {
-            cell.configureCell(forModel: viewModel.clipList, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.item-1)
+            cell.configureCell(forModel: viewModel.clipList, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.item - 1)
         }
         return cell
     }

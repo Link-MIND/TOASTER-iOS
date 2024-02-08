@@ -157,21 +157,22 @@ extension EditClipViewController: UICollectionViewDataSource {
                                icon: ImageLiterals.Clip.pin,
                                isFirst: true)
         } else {
-            cell.configureCell(forModel: viewModel.clipList.clips[indexPath.item-1],
+            cell.configureCell(forModel: viewModel.clipList.clips[indexPath.item - 1],
                                icon: ImageLiterals.Clip.delete,
                                isFirst: false)
             cell.leadingButtonTapped {
-                self.showPopup(forMainText: "‘\(self.viewModel.clipList.clips[indexPath.item-1].title)’ 클립을 삭제하시겠어요?",
+                self.showPopup(forMainText: "‘\(self.viewModel.clipList.clips[indexPath.item - 1].title)’ 클립을 삭제하시겠어요?",
                                forSubText: "지금까지 저장된 모든 링크가 사라져요",
                                forLeftButtonTitle: StringLiterals.Button.close,
                                forRightButtonTitle: StringLiterals.Button.delete,
-                               forRightButtonHandler: { self.popupDeleteButtonTapped(categoryID: self.viewModel.clipList.clips[indexPath.item-1].id, index: indexPath.item-1) })
+                               forRightButtonHandler: { self.popupDeleteButtonTapped(categoryID: self.viewModel.clipList.clips[indexPath.item - 1].id,
+                                                                                     index: indexPath.item - 1) })
             }
             cell.changeTitleButtonTapped {
-                self.viewModel.cellIndex = indexPath.item-1
+                self.viewModel.cellIndex = indexPath.item - 1
                 self.editClipBottom.modalPresentationStyle = .overFullScreen
                 self.present(self.editClipBottom, animated: false)
-                self.editClipBottomSheetView.setupTextField(message: self.viewModel.clipList.clips[indexPath.item-1].title)
+                self.editClipBottomSheetView.setupTextField(message: self.viewModel.clipList.clips[indexPath.item - 1].title)
             }
         }
         return cell
@@ -230,18 +231,19 @@ extension EditClipViewController: UICollectionViewDropDelegate {
             destinationIndexPath = indexPath
         } else {
             let item = collectionView.numberOfItems(inSection: 0)
-            destinationIndexPath = IndexPath(item: item-1, section: 0)
+            destinationIndexPath = IndexPath(item: item - 1, section: 0)
         }
         // 0번째 인덱스 드랍이 아닌 경우, 배열과 컬뷰 아이템 삭제, 삽입, reload까지 진행
         if destinationIndexPath.item != 0 {
             guard let item = coordinator.items.first, let sourceIndexPath = item.sourceIndexPath else { return }
             collectionView.performBatchUpdates {
                 let sourceItem = viewModel.clipList.clips.remove(at: sourceIndexPath.item - 1)
-                viewModel.clipList.clips.insert(sourceItem, at: destinationIndexPath.item-1)
+                viewModel.clipList.clips.insert(sourceItem, at: destinationIndexPath.item - 1)
                 collectionView.deleteItems(at: [sourceIndexPath])
                 collectionView.insertItems(at: [destinationIndexPath])
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-                self.viewModel.patchEditPriorityCategoryAPI(requestBody: ClipPriorityEditModel(id: self.viewModel.clipList.clips[destinationIndexPath.item-1].id, priority: destinationIndexPath.item-1))
+                self.viewModel.patchEditPriorityCategoryAPI(requestBody: ClipPriorityEditModel(id: self.viewModel.clipList.clips[destinationIndexPath.item - 1].id,
+                                                                                               priority: destinationIndexPath.item - 1))
             }
         }
     }
