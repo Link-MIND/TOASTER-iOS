@@ -11,21 +11,9 @@ import SnapKit
 
 final class DetailClipViewController: UIViewController {
     
-    // MARK: - Properties
-    
-    private var categoryId: Int = 0
-    private var categoryName: String = ""
-    private var toastId: Int = 0
-    private var segmentIndex: Int = 0
-    private var toastList: DetailClipModel = DetailClipModel(allToastCount: 0, toastList: []) {
-        didSet {
-            detailClipEmptyView.isHidden = !toastList.toastList.isEmpty
-            detailClipListCollectionView.reloadData()
-        }
-    }
-    
     // MARK: - UI Properties
     
+    private let viewModel = DetailClipViewModel()
     private let detailClipSegmentedControlView = DetailClipSegmentedControlView()
     private let detailClipEmptyView = DetailClipEmptyView()
     private let detailClipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -43,6 +31,7 @@ final class DetailClipViewController: UIViewController {
         setupLayout()
         setupRegisterCell()
         setupDelegate()
+        setupViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,8 +46,8 @@ final class DetailClipViewController: UIViewController {
 
 extension DetailClipViewController {
     func setupCategory(id: Int, name: String) {
-        categoryId = id
-        categoryName = name
+        viewModel.categoryId = id
+        viewModel.categoryName = name
     }
 }
 
@@ -103,10 +92,24 @@ private extension DetailClipViewController {
         detailClipSegmentedControlView.detailClipSegmentedDelegate = self
     }
     
+    func setupViewModel() {
+        viewModel.setupDataChangeAction(changeAction: reloadCollectionView,
+                                        forUnAuthorizedAction: unAuthorizedAction)
+    }
+    
+    func reloadCollectionView(isHidden: Bool) {
+        detailClipListCollectionView.reloadData()
+        detailClipEmptyView.isHidden = isHidden
+    }
+    
+    func unAuthorizedAction() {
+        changeViewController(viewController: LoginViewController())
+    }
+    
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
                                                                 hasRightButton: false,
-                                                                mainTitle: StringOrImageType.string(categoryName),
+                                                                mainTitle: StringOrImageType.string(viewModel.categoryName),
                                                                 rightButton: StringOrImageType.string("어쩌구"), rightButtonAction: {})
         
         if let navigationController = navigationController as? ToasterNavigationController {
@@ -119,19 +122,19 @@ private extension DetailClipViewController {
 
 extension DetailClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return toastList.toastList.count
+        return viewModel.toastList.toastList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell else { return UICollectionViewCell() }
         cell.detailClipListCollectionViewCellDelegate = self
-        if categoryId == 0 {
-            cell.configureCell(forModel: toastList, index: indexPath.item, isClipHidden: false)
+        if viewModel.categoryId == 0 {
+            cell.configureCell(forModel: viewModel.toastList, index: indexPath.item, isClipHidden: false)
         } else {
-            cell.configureCell(forModel: toastList, index: indexPath.item, isClipHidden: true)
+            cell.configureCell(forModel: viewModel.toastList, index: indexPath.item, isClipHidden: true)
         }
         deleteLinkBottomSheetView.setupDeleteLinkBottomSheetButtonAction {
-            self.deleteLinkAPI(toastId: self.toastId)
+            self.viewModel.deleteLinkAPI(toastId: self.viewModel.toastId)
             self.bottom.hideBottomSheet()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeDeleteLink)
@@ -143,7 +146,7 @@ extension DetailClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
         headerView.isDetailClipView(isHidden: true)
-        headerView.setupDataBind(count: toastList.toastList.count)
+        headerView.setupDataBind(count: viewModel.toastList.toastList.count)
         return headerView
     }
 }
@@ -154,9 +157,9 @@ extension DetailClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = LinkWebViewController()
         nextVC.hidesBottomBarWhenPushed = true
-        nextVC.setupDataBind(linkURL: toastList.toastList[indexPath.item].url,
-                             isRead: toastList.toastList[indexPath.item].isRead,
-                             id: toastList.toastList[indexPath.item].id)
+        nextVC.setupDataBind(linkURL: viewModel.toastList.toastList[indexPath.item].url,
+                             isRead: viewModel.toastList.toastList[indexPath.item].isRead,
+                             id: viewModel.toastList.toastList[indexPath.item].id)
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
@@ -189,111 +192,39 @@ extension DetailClipViewController: UICollectionViewDelegateFlowLayout {
 
 extension DetailClipViewController: DetailClipSegmentedDelegate {
     func setupAllLink() {
-        segmentIndex = 0
-        if categoryId == 0 {
-            getDetailAllCategoryAPI(filter: .all)
+        viewModel.segmentIndex = 0
+        if viewModel.categoryId == 0 {
+            viewModel.getDetailAllCategoryAPI(filter: .all)
         } else {
-            getDetailCategoryAPI(categoryID: categoryId, filter: .all)
+            viewModel.getDetailCategoryAPI(categoryID: viewModel.categoryId, filter: .all)
         }
     }
     
     func setupReadLink() {
-        segmentIndex = 1
-        if categoryId == 0 {
-            getDetailAllCategoryAPI(filter: .read)
+        viewModel.segmentIndex = 1
+        if viewModel.categoryId == 0 {
+            viewModel.getDetailAllCategoryAPI(filter: .read)
         } else {
-            getDetailCategoryAPI(categoryID: categoryId, filter: .read)
+            viewModel.getDetailCategoryAPI(categoryID: viewModel.categoryId, filter: .read)
         }
     }
     
     func setupNotReadLink() {
-        segmentIndex = 2
-        if categoryId == 0 {
-            getDetailAllCategoryAPI(filter: .unread)
+        viewModel.segmentIndex = 2
+        if viewModel.categoryId == 0 {
+            viewModel.getDetailAllCategoryAPI(filter: .unread)
         } else {
-            getDetailCategoryAPI(categoryID: categoryId, filter: .unread)
+            viewModel.getDetailCategoryAPI(categoryID: viewModel.categoryId, filter: .unread)
         }
     }
 }
+
+// MARK: - DetailClipListCollectionViewCell Delegate
 
 extension DetailClipViewController: DetailClipListCollectionViewCellDelegate {
     func modifiedButtonTapped(toastId: Int) {
-        self.toastId = toastId
+        viewModel.toastId = toastId
         bottom.modalPresentationStyle = .overFullScreen
         present(bottom, animated: false)
-    }
-}
-
-// MARK: - Network
-
-extension DetailClipViewController {
-    func getDetailAllCategoryAPI(filter: DetailCategoryFilter) {
-        NetworkService.shared.clipService.getDetailAllCategory(filter: filter) { result in
-            switch result {
-            case .success(let response):
-                let allToastCount = response?.data.allToastNum
-                var toasts = [ToastListModel]()
-                response?.data.toastListDto.forEach {
-                    toasts.append(ToastListModel(id: $0.toastId,
-                                                 title: $0.toastTitle,
-                                                 url: $0.linkUrl,
-                                                 isRead: $0.isRead,
-                                                 clipTitle: $0.categoryTitle,
-                                                 imageURL: $0.thumbnailUrl))
-                }
-                self.toastList = DetailClipModel(allToastCount: allToastCount ?? 0,
-                                                 toastList: toasts)
-            case .unAuthorized, .networkFail, .notFound:
-                self.changeViewController(viewController: LoginViewController())
-            default: return
-            }
-        }
-    }
-    
-    func getDetailCategoryAPI(categoryID: Int, filter: DetailCategoryFilter) {
-        NetworkService.shared.clipService.getDetailCategory(categoryID: categoryID, filter: filter) { result in
-            switch result {
-            case .success(let response):
-                let allToastCount = response?.data.allToastNum
-                var toasts = [ToastListModel]()
-                response?.data.toastListDto.forEach {
-                    toasts.append(ToastListModel(id: $0.toastId,
-                                                 title: $0.toastTitle,
-                                                 url: $0.linkUrl,
-                                                 isRead: $0.isRead,
-                                                 clipTitle: $0.categoryTitle,
-                                                 imageURL: $0.thumbnailUrl))
-                }
-                self.toastList = DetailClipModel(allToastCount: allToastCount ?? 0,
-                                                 toastList: toasts)
-            case .unAuthorized, .networkFail, .notFound:
-                self.changeViewController(viewController: LoginViewController())
-            default: return
-            }
-        }
-    }
-    
-    func deleteLinkAPI(toastId: Int) {
-        NetworkService.shared.toastService.deleteLink(toastId: toastId) { result in
-            switch result {
-            case .success:
-                if self.categoryId == 0 {
-                    switch self.segmentIndex {
-                    case 0: self.getDetailAllCategoryAPI(filter: .all)
-                    case 1: self.getDetailAllCategoryAPI(filter: .read)
-                    default: self.getDetailAllCategoryAPI(filter: .unread)
-                    }
-                } else {
-                    switch self.segmentIndex {
-                    case 0: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .all)
-                    case 1: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .read)
-                    default: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .unread)
-                    }
-                }
-            case .unAuthorized, .networkFail, .notFound:
-                self.changeViewController(viewController: LoginViewController())
-            default: return
-            }
-        }
     }
 }

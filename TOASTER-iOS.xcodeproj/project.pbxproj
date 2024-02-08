@@ -27,6 +27,10 @@
 		398BE7FA2B467E4B001595E0 /* ClipListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F92B467E4B001595E0 /* ClipListCollectionViewCell.swift */; };
 		398BE7FC2B468F80001595E0 /* ClipCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7FB2B468F80001595E0 /* ClipCollectionHeaderView.swift */; };
 		398BE7FE2B46C164001595E0 /* AddClipBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7FD2B46C164001595E0 /* AddClipBottomSheetView.swift */; };
+		39A843C52B736039007A4D75 /* ClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A843C42B736039007A4D75 /* ClipViewModel.swift */; };
+		39A843CA2B74512B007A4D75 /* DetailClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A843C92B74512B007A4D75 /* DetailClipViewModel.swift */; };
+		39A843CE2B745B3A007A4D75 /* DetailClipPropertyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A843CD2B745B3A007A4D75 /* DetailClipPropertyType.swift */; };
+		39A843D12B746420007A4D75 /* EditClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A843D02B746420007A4D75 /* EditClipViewModel.swift */; };
 		39B54E732B53C50300538DAE /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B54E722B53C50300538DAE /* SettingViewController.swift */; };
 		39B54E7A2B53D49900538DAE /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B54E792B53D49900538DAE /* SettingTableViewCell.swift */; };
 		39BC5B0B2B400602004024E6 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0A2B400602004024E6 /* .swiftlint.yml */; };
@@ -211,6 +215,10 @@
 		398BE7F92B467E4B001595E0 /* ClipListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipListCollectionViewCell.swift; sourceTree = "<group>"; };
 		398BE7FB2B468F80001595E0 /* ClipCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipCollectionHeaderView.swift; sourceTree = "<group>"; };
 		398BE7FD2B46C164001595E0 /* AddClipBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClipBottomSheetView.swift; sourceTree = "<group>"; };
+		39A843C42B736039007A4D75 /* ClipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipViewModel.swift; sourceTree = "<group>"; };
+		39A843C92B74512B007A4D75 /* DetailClipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClipViewModel.swift; sourceTree = "<group>"; };
+		39A843CD2B745B3A007A4D75 /* DetailClipPropertyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClipPropertyType.swift; sourceTree = "<group>"; };
+		39A843D02B746420007A4D75 /* EditClipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClipViewModel.swift; sourceTree = "<group>"; };
 		39B54E722B53C50300538DAE /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		39B54E792B53D49900538DAE /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		39BC5B0A2B400602004024E6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -394,7 +402,7 @@
 			children = (
 				3909A0692B6236FE005A4546 /* Model */,
 				390925C92B4F047500487AA3 /* View */,
-				390925C82B4F046A00487AA3 /* ViewController */,
+				39A843D72B7485DF007A4D75 /* ViewController */,
 			);
 			path = LinkWeb;
 			sourceTree = "<group>";
@@ -405,14 +413,6 @@
 				390925C62B4EF66C00487AA3 /* WebKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		390925C82B4F046A00487AA3 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				390925C32B4EF64100487AA3 /* LinkWebViewController.swift */,
-			);
-			path = ViewController;
 			sourceTree = "<group>";
 		};
 		390925C92B4F047500487AA3 /* View */ = {
@@ -485,12 +485,80 @@
 		398BE7F82B467E23001595E0 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				398BE7F92B467E4B001595E0 /* ClipListCollectionViewCell.swift */,
+				6B6AE6922B3FF5A9000E2366 /* ClipViewController.swift */,
+				39A843C62B7364B0007A4D75 /* Component */,
+				39A843C72B7364C4007A4D75 /* Cell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		39A843C32B73602C007A4D75 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				39A843C42B736039007A4D75 /* ClipViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		39A843C62B7364B0007A4D75 /* Component */ = {
+			isa = PBXGroup;
+			children = (
 				398BE7FB2B468F80001595E0 /* ClipCollectionHeaderView.swift */,
 				398BE7FD2B46C164001595E0 /* AddClipBottomSheetView.swift */,
 				39E794F82B479C8600F16A38 /* ClipEmptyView.swift */,
 			);
-			path = View;
+			path = Component;
+			sourceTree = "<group>";
+		};
+		39A843C72B7364C4007A4D75 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				398BE7F92B467E4B001595E0 /* ClipListCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		39A843C82B745116007A4D75 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				39A843C92B74512B007A4D75 /* DetailClipViewModel.swift */,
+				39A843CD2B745B3A007A4D75 /* DetailClipPropertyType.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		39A843CB2B74513A007A4D75 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				39BE4BBD2B4ABB7C002B471D /* DetailClipSegmentedControlView.swift */,
+				39BE4BBF2B4ABB9E002B471D /* DetailClipEmptyView.swift */,
+				39BE4BC12B4ABBB0002B471D /* DeleteLinkBottomSheetView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		39A843CC2B74514D007A4D75 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				39BE4BB52B4ABA97002B471D /* DetailClipListCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		39A843CF2B74640D007A4D75 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				39A843D02B746420007A4D75 /* EditClipViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		39A843D72B7485DF007A4D75 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				390925C32B4EF64100487AA3 /* LinkWebViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		39B54E712B53C4F100538DAE /* Setting */ = {
@@ -502,39 +570,14 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
-		39B54E742B53C7E300538DAE /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				39EF95FE2B501BD600F301FC /* EditClipViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		39BE4BB02B4ABA6A002B471D /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				6B6AE68F2B3FF59C000E2366 /* DetailClipViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
 		39BE4BB12B4ABA70002B471D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				39BE4BB52B4ABA97002B471D /* DetailClipListCollectionViewCell.swift */,
-				39BE4BBD2B4ABB7C002B471D /* DetailClipSegmentedControlView.swift */,
-				39BE4BBF2B4ABB9E002B471D /* DetailClipEmptyView.swift */,
-				39BE4BC12B4ABBB0002B471D /* DeleteLinkBottomSheetView.swift */,
+				6B6AE68F2B3FF59C000E2366 /* DetailClipViewController.swift */,
+				39A843CB2B74513A007A4D75 /* Component */,
+				39A843CC2B74514D007A4D75 /* Cell */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		39E794F72B479AE300F16A38 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				6B6AE6922B3FF5A9000E2366 /* ClipViewController.swift */,
-			);
-			path = ViewController;
 			sourceTree = "<group>";
 		};
 		39EF95FD2B501BC400F301FC /* EditClip */ = {
@@ -542,7 +585,7 @@
 			children = (
 				3909A06E2B62397C005A4546 /* Model */,
 				39F404EE2B510499008809E2 /* View */,
-				39B54E742B53C7E300538DAE /* ViewController */,
+				39A843CF2B74640D007A4D75 /* ViewModel */,
 			);
 			path = EditClip;
 			sourceTree = "<group>";
@@ -550,6 +593,7 @@
 		39F404EE2B510499008809E2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				39EF95FE2B501BD600F301FC /* EditClipViewController.swift */,
 				39EF96032B5020D600F301FC /* EditClipCollectionViewCell.swift */,
 				39EF96002B501E8A00F301FC /* EditClipNoticeView.swift */,
 			);
@@ -811,7 +855,7 @@
 			children = (
 				3909A0632B622A28005A4546 /* Model */,
 				39BE4BB12B4ABA70002B471D /* View */,
-				39BE4BB02B4ABA6A002B471D /* ViewController */,
+				39A843C82B745116007A4D75 /* ViewModel */,
 			);
 			path = DetailClip;
 			sourceTree = "<group>";
@@ -821,7 +865,7 @@
 			children = (
 				3909A0602B62141B005A4546 /* Model */,
 				398BE7F82B467E23001595E0 /* View */,
-				39E794F72B479AE300F16A38 /* ViewController */,
+				39A843C32B73602C007A4D75 /* ViewModel */,
 			);
 			path = Clip;
 			sourceTree = "<group>";
@@ -1519,6 +1563,7 @@
 				3FE828352B54E58E00F10732 /* APIInterceptor.swift in Sources */,
 				6B6AE6932B3FF5A9000E2366 /* ClipViewController.swift in Sources */,
 				3F2FA17F2B4A31E900EDBF95 /* SocialLoginTokenModel.swift in Sources */,
+				39A843CE2B745B3A007A4D75 /* DetailClipPropertyType.swift in Sources */,
 				6BE6DA8C2B546CA9008B06FA /* GetWeeksLinkResponseDTO.swift in Sources */,
 				6BE6DA0B2B4F3063008B06FA /* RemindSelectClipViewModel.swift in Sources */,
 				6BE6DA4D2B50B1EB008B06FA /* UserTargetType.swift in Sources */,
@@ -1545,6 +1590,7 @@
 				6BE6DA512B50B309008B06FA /* PatchPushAlarmRequestDTO.swift in Sources */,
 				830517962B4D21BB009FFB60 /* CompositioinalFactory.swift in Sources */,
 				6BE6D9E82B4EA773008B06FA /* RemindCollectionFooterView.swift in Sources */,
+				39A843CA2B74512B007A4D75 /* DetailClipViewModel.swift in Sources */,
 				83CFC3392B568BE700A2EB2B /* RecommendSiteModel.swift in Sources */,
 				391908442B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift in Sources */,
 				6BE6D9F42B4EF568008B06FA /* RemindTimerEditBottomSheetView.swift in Sources */,
@@ -1556,6 +1602,7 @@
 				6BE6D9E42B4EA125008B06FA /* WaitTimerCollectionViewCell.swift in Sources */,
 				6BE6D9D42B4DE479008B06FA /* RemindTimerEmptyView.swift in Sources */,
 				39B54E7A2B53D49900538DAE /* SettingTableViewCell.swift in Sources */,
+				39A843C52B736039007A4D75 /* ClipViewModel.swift in Sources */,
 				6BE6DA392B50636B008B06FA /* BaseAPIService.swift in Sources */,
 				6BE6DA572B50B44F008B06FA /* GetMyPageResponseDTO.swift in Sources */,
 				6BE6DA182B4FF285008B06FA /* TimerRepeatDate.swift in Sources */,
@@ -1626,6 +1673,7 @@
 				3FBFDEC02B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift in Sources */,
 				390925CB2B4F049800487AA3 /* LinkWebNavigationView.swift in Sources */,
 				398BE7FA2B467E4B001595E0 /* ClipListCollectionViewCell.swift in Sources */,
+				39A843D12B746420007A4D75 /* EditClipViewModel.swift in Sources */,
 				6BE6DA552B50B43E008B06FA /* GetSettingPageResponseDTO.swift in Sources */,
 				830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */,
 				390925C42B4EF64100487AA3 /* LinkWebViewController.swift in Sources */,
