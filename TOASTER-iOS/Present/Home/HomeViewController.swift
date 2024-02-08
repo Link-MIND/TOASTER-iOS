@@ -65,8 +65,6 @@ extension HomeViewController: UICollectionViewDelegate {
             if let data = mainInfoList?.mainCategoryListDto {
                 if indexPath.item < data.count {
                     let nextVC = DetailClipViewController()
-                    //nextVC.getDetailCategoryAPI(categoryID: data[indexPath.item].categoryId,
-                    //                            filter: .all)
                     nextVC.setupCategory(id: data[indexPath.item].categoryId,
                                          name: data[indexPath.item].categroyTitle)
                     nextVC.hidesBottomBarWhenPushed = true
