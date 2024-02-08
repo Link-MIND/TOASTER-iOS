@@ -127,7 +127,7 @@ private extension MainCollectionViewCell {
         
         userLabel.snp.makeConstraints {
             $0.top.equalTo(searchButton.snp.bottom).offset(18)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(22)
         }
         
         noticeLabel.snp.makeConstraints {
@@ -142,8 +142,7 @@ private extension MainCollectionViewCell {
         
         linkProgressView.snp.makeConstraints {
             $0.top.equalTo(countToastLabel.snp.bottom).offset(5)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(335)
+            $0.leading.trailing.equalTo(userLabel)
             $0.height.equalTo(12)
         }
     }
