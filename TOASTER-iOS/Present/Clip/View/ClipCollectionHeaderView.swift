@@ -58,8 +58,8 @@ extension ClipCollectionHeaderView {
         }
     }
     
-    func setupDataBind(count: Int) {
-        clipCountLabel.text = "전체 (\(count))"
+    func setupDataBind(title: String, count: Int) {
+        clipCountLabel.text = "\(title) (\(count))"
     }
 }
 
