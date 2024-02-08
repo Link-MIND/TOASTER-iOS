@@ -70,9 +70,18 @@ private extension ClipCollectionHeaderView {
         backgroundColor = .toasterBackground
         
         searchBarButton.do {
-            $0.setImage(ImageLiterals.Clip.searchbar, for: .normal)
-            $0.contentMode = .scaleAspectFill
-            $0.clipsToBounds = true
+            $0.makeRounded(radius: 12)
+            $0.setImage(ImageLiterals.Home.searchIcon, for: .normal)
+            $0.setTitle(StringLiterals.Placeholder.search, for: .normal)
+            $0.setTitleColor(.gray400, for: .normal)
+            $0.titleLabel?.font = .suitRegular(size: 16)
+            $0.contentHorizontalAlignment = .left
+            $0.imageView?.contentMode = .scaleAspectFit
+            $0.semanticContentAttribute = .forceLeftToRight
+            var configuration = UIButton.Configuration.filled()
+            configuration.imagePadding = 8
+            configuration.baseBackgroundColor = .gray50
+            $0.configuration = configuration
             $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
         

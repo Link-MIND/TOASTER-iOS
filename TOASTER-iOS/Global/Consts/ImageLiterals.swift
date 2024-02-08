@@ -47,7 +47,6 @@ enum ImageLiterals {
     
     enum Clip {
         static var rightarrow: UIImage { .load(name: "ic_arrow_18") }
-        static var searchbar: UIImage {.load(name: "search_bar") }
         static var orangeplus: UIImage { .load(name: "ic_plus_18_orange") }
         static var clipEmpty: UIImage { .load(name: "clip_empty") }
         static var detailClipEmpty: UIImage { .load(name: "detail_clip_empty") }
