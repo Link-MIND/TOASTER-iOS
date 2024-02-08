@@ -89,9 +89,9 @@ enum ImageLiterals {
     // MARK: - Web
     
     enum Web {
-        static var backArrow: UIImage { .load(systemName: "arrow.backward") }
-        static var forwardArrow: UIImage { .load(systemName: "arrow.forward") }
-        static var document: UIImage { .load(systemName: "doc.text.fill") }
+        static var backArrow: UIImage { .load(name: "ic_arrow2_back_24") }
+        static var forwardArrow: UIImage { .load(name: "ic_arrow2_forward_24") }
+        static var document: UIImage { .load(name: "ic_read") }
         static var safari: UIImage { .load(name: "ic_safari_24") }
         static var reload: UIImage { .load(name: "ic_reload_24") }
     }
