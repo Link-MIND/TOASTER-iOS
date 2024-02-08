@@ -184,6 +184,7 @@ private extension LinkWebViewController {
     @objc func goBackInWeb() {
         if webView.canGoBack {
             webView.goBack()
+            canGoBack = webView.canGoBack
         }
     }
     
@@ -191,6 +192,7 @@ private extension LinkWebViewController {
     @objc func goForwardInWeb() {
         if webView.canGoForward {
             webView.goForward()
+            canGoForward = webView.canGoForward
         }
     }
     
