@@ -236,9 +236,8 @@ extension LinkWebViewController: WKNavigationDelegate {
 
 extension LinkWebViewController {
     func patchOpenLinkAPI(requestBody: LinkReadEditModel) {
-        NetworkService.shared.toastService.patchOpenLink(
-            requestBody: PatchOpenLinkRequestDTO(toastId: requestBody.toastId,
-                                                 isRead: requestBody.isRead)) { result in
+        NetworkService.shared.toastService.patchOpenLink(requestBody: PatchOpenLinkRequestDTO(toastId: requestBody.toastId,
+                                                                                              isRead: requestBody.isRead)) { result in
             switch result {
             case .success:
                 if !self.isRead {
