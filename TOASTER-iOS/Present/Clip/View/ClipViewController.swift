@@ -132,11 +132,8 @@ extension ClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = DetailClipViewController()
         if indexPath.item == 0 {
-            nextVC.getDetailAllCategoryAPI(filter: .all)
             nextVC.setupCategory(id: 0, name: "전체 클립")
         } else {
-            nextVC.getDetailCategoryAPI(categoryID: viewModel.clipList.clips[indexPath.item-1].id,
-                                        filter: .all)
             nextVC.setupCategory(id: viewModel.clipList.clips[indexPath.item-1].id,
                                  name: viewModel.clipList.clips[indexPath.item-1].title)
         }

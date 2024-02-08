@@ -28,7 +28,7 @@ final class ClipViewModel: NSObject {
     }
 }
 
-// MARK: - Network
+// MARK: - Extensions
 
 extension ClipViewModel {
     func setupDataChangeAction(changeAction: @escaping DataChangeAction,
