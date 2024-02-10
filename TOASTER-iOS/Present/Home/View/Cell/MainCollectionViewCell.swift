@@ -150,5 +150,4 @@ private extension MainCollectionViewCell {
     @objc func buttonTapped() {
         mainCollectionViewDelegate?.searchButtonTapped()
     }
-    
 }
