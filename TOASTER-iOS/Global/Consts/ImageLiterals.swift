@@ -105,7 +105,7 @@ enum ImageLiterals {
     
     enum Home {
         static var clipDefault: UIImage { .load(name: "ic_all_clip_24") }
-        static var clipFull: UIImage { .load(name: "ic_clip_full_24") }
+        static var clipFull: UIImage { .load(name: "ic_clip_24") }
         static var linkThumbNail: UIImage { .load(name: "img_thumbnail") }
         static var siteThumbNail: UIImage { .load(name: "img_bmsite") }
         static var addBtn: UIImage { .load(name: "btn_plus") }
