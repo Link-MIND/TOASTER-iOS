@@ -55,7 +55,7 @@ final class HomeFooterCollectionView: UICollectionReusableView {
     
     private func setupLayout() {
         divideView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(7)
+            //$0.top.equalToSuperview().offset(24)
             $0.width.equalToSuperview()
             $0.height.equalTo(4)
         }
