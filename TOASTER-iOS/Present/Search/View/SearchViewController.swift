@@ -272,13 +272,16 @@ extension SearchViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell,
                     let text = searchTextField.text else { return UICollectionViewCell() }
             cell.configureCell(forModel: viewModel.searchResultData.detailClipList[indexPath.item],
-                               forText: text)
+                               forText: text.lowercased())
+            cell.configureCell(forModel: viewModel.searchResultData.detailClipList[indexPath.item],
+                               forText: text.uppercased())
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell,
                   let text = searchTextField.text
             else { return UICollectionViewCell() }
-            cell.configureCell(forModel: viewModel.searchResultData.clipList[indexPath.item], forText: text)
+            cell.configureCell(forModel: viewModel.searchResultData.clipList[indexPath.item], forText: text.lowercased())
+            cell.configureCell(forModel: viewModel.searchResultData.clipList[indexPath.item], forText: text.uppercased())
             return cell
         default:
             return UICollectionViewCell()
