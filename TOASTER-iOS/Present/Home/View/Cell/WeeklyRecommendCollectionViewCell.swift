@@ -60,18 +60,15 @@ private extension WeeklyRecommendCollectionViewCell {
         self.makeRounded(radius: 8)
         
         brandImage.do {
-            $0.image = ImageLiterals.Home.siteThumbNail
             $0.makeRounded(radius: 20)
         }
         
         titleLabel.do {
-            $0.text = "Title" // 서버 통신 이후 dummyData로 뺄 것
             $0.font = .suitBold(size: 12)
             $0.textColor = .gray800
         }
         
         subLabel.do {
-            $0.text = "sub" // 서버 통신 이후 dummyData로 뺄 것
             $0.font = .suitMedium(size: 10)
             $0.textColor = .gray400
         }
