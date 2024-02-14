@@ -131,7 +131,7 @@ private extension MainCollectionViewCell {
         }
         
         noticeLabel.snp.makeConstraints {
-            $0.top.equalTo(userLabel.snp.bottom).offset(5)
+            $0.top.equalTo(userLabel.snp.bottom).offset(4)
             $0.leading.equalTo(userLabel.snp.leading)
         }
         
@@ -141,8 +141,8 @@ private extension MainCollectionViewCell {
         }
         
         linkProgressView.snp.makeConstraints {
-            $0.top.equalTo(countToastLabel.snp.bottom).offset(5)
-            $0.leading.trailing.equalTo(userLabel)
+            $0.top.equalTo(countToastLabel.snp.bottom).offset(6)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(12)
         }
     }
@@ -150,5 +150,4 @@ private extension MainCollectionViewCell {
     @objc func buttonTapped() {
         mainCollectionViewDelegate?.searchButtonTapped()
     }
-    
 }

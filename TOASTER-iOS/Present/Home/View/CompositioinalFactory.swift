@@ -52,7 +52,7 @@ enum CompositionalFactory {
         
         // Footer
         section.boundarySupplementaryItems = [
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(12)), elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(4)), elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
         ]
         return section
     }
@@ -80,8 +80,8 @@ enum CompositionalFactory {
         
         // Header, Footer
         section.boundarySupplementaryItems = [
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top),
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(20)), elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(46)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top),
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(17)), elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
         ]
         return section
     }
