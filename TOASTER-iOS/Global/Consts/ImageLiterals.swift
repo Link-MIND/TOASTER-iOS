@@ -47,7 +47,6 @@ enum ImageLiterals {
     
     enum Clip {
         static var rightarrow: UIImage { .load(name: "ic_arrow_18") }
-        static var searchbar: UIImage {.load(name: "search_bar") }
         static var orangeplus: UIImage { .load(name: "ic_plus_18_orange") }
         static var clipEmpty: UIImage { .load(name: "clip_empty") }
         static var detailClipEmpty: UIImage { .load(name: "detail_clip_empty") }
@@ -89,9 +88,9 @@ enum ImageLiterals {
     // MARK: - Web
     
     enum Web {
-        static var backArrow: UIImage { .load(systemName: "arrow.backward") }
-        static var forwardArrow: UIImage { .load(systemName: "arrow.forward") }
-        static var document: UIImage { .load(systemName: "doc.text.fill") }
+        static var backArrow: UIImage { .load(name: "ic_arrow2_back_24") }
+        static var forwardArrow: UIImage { .load(name: "ic_arrow2_forward_24") }
+        static var document: UIImage { .load(name: "ic_read") }
         static var safari: UIImage { .load(name: "ic_safari_24") }
         static var reload: UIImage { .load(name: "ic_reload_24") }
     }

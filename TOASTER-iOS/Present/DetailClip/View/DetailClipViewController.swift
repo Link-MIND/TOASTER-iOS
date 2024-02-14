@@ -146,7 +146,16 @@ extension DetailClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
         headerView.isDetailClipView(isHidden: true)
-        headerView.setupDataBind(count: viewModel.toastList.toastList.count)
+        if viewModel.segmentIndex == 0 {
+            headerView.setupDataBind(title: "전체",
+                                     count: viewModel.toastList.toastList.count)
+        } else if viewModel.segmentIndex == 1 {
+            headerView.setupDataBind(title: "열람",
+                                     count: viewModel.toastList.toastList.count)
+        } else {
+            headerView.setupDataBind(title: "미열람",
+                                     count: viewModel.toastList.toastList.count)
+        }
         return headerView
     }
 }

@@ -33,7 +33,7 @@ enum CompositionalFactory {
     
     static func createMainSection() -> NSCollectionLayoutSection {
         let itemFractionalWidthFraction = 1.0
-        let itemInset: CGFloat = 1
+        let itemInset: CGFloat = 0
         
         // item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalWidthFraction),
