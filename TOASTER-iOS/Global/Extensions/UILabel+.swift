@@ -13,8 +13,7 @@ extension UILabel {
     func asFont(targetString: String, font: UIFont) {
         let originText = text ?? ""
         let attributedString = NSMutableAttributedString(string: originText)
-        let rangeOptions: NSString.CompareOptions = [.caseInsensitive, .diacriticInsensitive]
-        let range = (originText as NSString).range(of: targetString, options: rangeOptions)
+        let range = (originText as NSString).range(of: targetString, options: .caseInsensitive)
         attributedString.addAttribute(.font, value: font, range: range)
         attributedText = attributedString
     }
