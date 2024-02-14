@@ -226,7 +226,7 @@ extension SearchViewController: UITextFieldDelegate {
 
 // MARK: - UICollectionViewDelegate
 
-extension SearchViewController: UICollectionViewDelegate { 
+extension SearchViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
@@ -272,16 +272,13 @@ extension SearchViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell,
                     let text = searchTextField.text else { return UICollectionViewCell() }
             cell.configureCell(forModel: viewModel.searchResultData.detailClipList[indexPath.item],
-                               forText: text.lowercased())
-            cell.configureCell(forModel: viewModel.searchResultData.detailClipList[indexPath.item],
-                               forText: text.uppercased())
+                               forText: text)
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell,
                   let text = searchTextField.text
             else { return UICollectionViewCell() }
-            cell.configureCell(forModel: viewModel.searchResultData.clipList[indexPath.item], forText: text.lowercased())
-            cell.configureCell(forModel: viewModel.searchResultData.clipList[indexPath.item], forText: text.uppercased())
+            cell.configureCell(forModel: viewModel.searchResultData.clipList[indexPath.item],forText: text)
             return cell
         default:
             return UICollectionViewCell()
