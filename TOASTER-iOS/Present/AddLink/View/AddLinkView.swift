@@ -125,7 +125,7 @@ private extension AddLinkView {
         linkEmbedTextField.snp.makeConstraints {
             $0.top.equalTo(descriptLabel.snp.bottom).offset(12)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(335)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(54)
         }
         
