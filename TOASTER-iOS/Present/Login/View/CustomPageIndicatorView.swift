@@ -23,9 +23,7 @@ final class CustomPageIndicatorView: UIView {
     }
     
     // MARK: - UI Properties
-    
-    private let currentIndicator = UIView()
-    private let anotherIndicator = UIView()
+
     private let horizontalStackView = UIStackView()
 
     // MARK: - Life Cycles
@@ -56,16 +54,6 @@ private extension CustomPageIndicatorView {
             $0.distribution = .equalSpacing
             $0.alignment = .center
             $0.spacing = 6
-        }
-        
-        currentIndicator.do {
-            $0.makeRounded(radius: self.frame.height / 2)
-            $0.backgroundColor = .toasterPrimary
-        }
-        
-        anotherIndicator.do {
-            $0.makeRounded(radius: self.frame.height / 2)
-            $0.backgroundColor = .gray150
         }
     }
     
