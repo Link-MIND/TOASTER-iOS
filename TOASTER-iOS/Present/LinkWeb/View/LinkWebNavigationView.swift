@@ -75,7 +75,7 @@ private extension LinkWebNavigationView {
         
         reloadButton.do {
             $0.tintColor = .gray800
-            $0.setImage(ImageLiterals.Web.reload, for: .normal)
+            $0.setImage(.icReload24, for: .normal)
             $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
     }
