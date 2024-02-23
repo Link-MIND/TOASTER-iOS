@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 import Moya
 
@@ -67,5 +68,15 @@ final class MoyaPlugin: PluginType {
         log.append("\(error.failureReason ?? error.errorDescription ?? "unknown error")\n")
         log.append("<-- END HTTP 🍞🍞🍞")
         print(log)
+        
+        // 네트워크 연결 오류 Alert창 표출
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let delegate = windowScene.delegate as? SceneDelegate,
+           let rootViewController = delegate.window?.rootViewController {
+            rootViewController.showConfirmationPopup(
+                forMainText: "네트워크 연결 오류",
+                forSubText: "네트워크 오류로\n서비스 접속이 불가능해요",
+                centerButtonTitle: StringLiterals.Button.okay)
+        }
     }
 }
