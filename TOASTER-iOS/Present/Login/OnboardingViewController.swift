@@ -69,7 +69,11 @@ private extension OnboardingViewController {
     }
     
     func setupHierarchy() {
-        onboardType == .fourth ? view.addSubviews(titleLabel, titleLogoImage, onboardingImage) : view.addSubviews(titleLabel, onboardingImage)
+        if onboardType == .fourth {
+            view.addSubviews(titleLabel, titleLogoImage, onboardingImage)
+        } else {
+            view.addSubviews(titleLabel, onboardingImage)
+        }
     }
     
     func setupLayout() {
