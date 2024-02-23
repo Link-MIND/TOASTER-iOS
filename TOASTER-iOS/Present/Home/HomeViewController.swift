@@ -136,9 +136,9 @@ extension HomeViewController: UICollectionViewDataSource {
                 
                 if let model = mainInfoList?.mainCategoryListDto {
                     if indexPath.item == 0 {
-                        cell.bindData(forModel: model[indexPath.item], icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
+                        cell.bindData(forModel: model[indexPath.item], icon: .icAllClip24.withTintColor(.black900))
                     } else {
-                        cell.bindData(forModel: model[indexPath.item], icon: ImageLiterals.Home.clipFull)
+                        cell.bindData(forModel: model[indexPath.item], icon: .icClipFull24)
                     }
                 }
                 return cell

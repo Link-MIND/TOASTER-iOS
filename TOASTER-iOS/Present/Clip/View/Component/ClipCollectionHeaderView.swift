@@ -71,7 +71,7 @@ private extension ClipCollectionHeaderView {
         
         searchBarButton.do {
             $0.makeRounded(radius: 12)
-            $0.setImage(ImageLiterals.Home.searchIcon, for: .normal)
+            $0.setImage(.icSearch20, for: .normal)
             $0.setTitle(StringLiterals.Placeholder.search, for: .normal)
             $0.setTitleColor(.gray400, for: .normal)
             $0.titleLabel?.font = .suitRegular(size: 16)
