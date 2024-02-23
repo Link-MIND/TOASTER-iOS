@@ -9,6 +9,9 @@ import Foundation
 
 enum StringLiterals {
     enum Login {
+        static let onboarding1 = "복사한 링크를\n손쉽게 저장하고"
+        static let onboarding2 = "타이머를 설정하고\n링크를 리마인드 받아요"
+        static let onboarding3 = "나의 링크 열람 현황까지\n한 눈에!"
         static let subTitle = "더 이상 링크를 태우지 마세요\n토스트 먹듯이 간편하게,"
         static let appleButton = "Apple 계정으로 시작하기"
         static let kakaoButton = "카카오 계정으로 시작하기"

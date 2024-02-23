@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "wordmark.png",
+      "filename" : "loginTitle.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "wordmark@2x.png",
+      "filename" : "loginTitle@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "wordmark@3x.png",
+      "filename" : "loginTitle@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
