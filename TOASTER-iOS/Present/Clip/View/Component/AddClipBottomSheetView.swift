@@ -135,7 +135,7 @@ private extension AddClipBottomSheetView {
         
         clearButton.do {
             $0.isHidden = true
-            $0.setImage(ImageLiterals.Search.searchCancle, for: .normal)
+            $0.setImage(.icSearchCancle, for: .normal)
             $0.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         }
     }

@@ -80,12 +80,12 @@ private extension SearchViewController {
         }
         
         searchButton.do {
-            $0.setImage(ImageLiterals.Search.searchIcon, for: .normal)
+            $0.setImage(.icSearch20, for: .normal)
             $0.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         }
         
         clearButton.do {
-            $0.setImage(ImageLiterals.Search.searchCancle, for: .normal)
+            $0.setImage(.icSearchCancle, for: .normal)
             $0.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         }
         
