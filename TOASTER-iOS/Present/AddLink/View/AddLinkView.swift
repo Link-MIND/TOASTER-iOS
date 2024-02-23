@@ -87,7 +87,7 @@ private extension AddLinkView {
         }
     
         clearButton.do {
-            $0.setImage(ImageLiterals.Common.cancle, for: .normal)
+            $0.setImage(.icCancle24, for: .normal)
             $0.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         }
         

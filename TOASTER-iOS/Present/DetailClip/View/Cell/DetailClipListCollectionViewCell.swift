@@ -142,7 +142,7 @@ private extension DetailClipListCollectionViewCell {
         }
         
         modifiedButton.do {
-            $0.setImage(ImageLiterals.Common.more, for: .normal)
+            $0.setImage(.icMore24, for: .normal)
         }
         
         dimmedView.do {

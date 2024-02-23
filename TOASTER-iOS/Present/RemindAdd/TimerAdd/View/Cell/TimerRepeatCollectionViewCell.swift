@@ -12,7 +12,7 @@ final class TimerRepeatCollectionViewCell: UICollectionViewCell {
     // MARK: - UI Properties
     
     private let repeatLabel: UILabel = UILabel()
-    private let checkImageView: UIImageView = UIImageView(image: ImageLiterals.Common.checkRed18)
+    private let checkImageView: UIImageView = UIImageView(image: .icCheck18)
     
     // MARK: - Life Cycle
     

@@ -14,15 +14,6 @@ enum ImageLiterals {
     enum Common {
         static var check: UIImage { .load(systemName: "checkmark.circle.fill") }
         static var exclamation: UIImage { .load(systemName: "exclamationmark.circle.fill") }
-        static var close: UIImage { .load(name: "ic_close_24") }
-        static var arrowLeft: UIImage { .load(name: "ic_arrow_left_24") }
-        static var setting: UIImage { .load(name: "ic_settings_24") }
-        static var plus: UIImage { .load(name: "ic_plus_24") }
-        static var checkRed18: UIImage { .load(name: "ic_check_18") }
-        static var rightArrow20: UIImage { .load(name: "ic_arrow_20") }
-        static var more: UIImage { .load(name: "ic_more_24") }
-        static var alert: UIImage { .load(name: "ic_alert_18_dark") } 
-        static var cancle: UIImage { .load(name: "ic_cancle_24") }
     }
     
     // MARK: - TabBar

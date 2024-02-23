@@ -251,7 +251,7 @@ private extension HomeViewController {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                 hasRightButton: true,
                                                                 mainTitle: StringOrImageType.image(ImageLiterals.Logo.wordmark),
-                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.setting),
+                                                                rightButton: StringOrImageType.image(.icSettings24),
                                                                 rightButtonAction: rightButtonTapped)
         
         if let navigationController = navigationController as? ToasterNavigationController {

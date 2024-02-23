@@ -18,7 +18,7 @@ final class AlarmOffStateButton: UIButton {
     private let titleIcon: UIImageView = UIImageView(image: ImageLiterals.Remind.alarmDisabled)
     private let mainTitleLabel: UILabel = UILabel()
     
-    private let nextIcon: UIImageView = UIImageView(image: ImageLiterals.Common.rightArrow20)
+    private let nextIcon: UIImageView = UIImageView(image: .icArrow20)
     
     private let subLabel: UILabel = UILabel()
     

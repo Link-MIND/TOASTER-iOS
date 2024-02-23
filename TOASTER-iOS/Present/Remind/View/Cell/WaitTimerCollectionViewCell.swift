@@ -100,7 +100,7 @@ private extension WaitTimerCollectionViewCell {
         }
         
         editButton.do {
-            $0.setImage(ImageLiterals.Common.more, for: .normal)
+            $0.setImage(.icMore24, for: .normal)
             $0.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         }
     }
