@@ -60,7 +60,7 @@ private extension LoginViewController {
         }
         
         loginImageView.do {
-            $0.image = ImageLiterals.Login.loginLogo
+            $0.image = .imgLogin
             $0.contentMode = .scaleAspectFit
         }
     }
