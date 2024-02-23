@@ -16,12 +16,6 @@ enum ImageLiterals {
         static var exclamation: UIImage { .load(systemName: "exclamationmark.circle.fill") }
     }
     
-    // MARK: - EmptyView
-    
-    enum EmptyView {
-        static var searchEmpty: UIImage { .load(name: "img_search") }
-    }
-    
     // MARK: - Logo
     
     enum Logo {
