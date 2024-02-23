@@ -73,11 +73,9 @@ private extension CustomPageIndicatorView {
             let newIndicator = UIView()
             newIndicator.backgroundColor = .gray150
             newIndicator.makeRounded(radius: 4)
-            newIndicator.clipsToBounds = true
             
             newIndicator.snp.makeConstraints {
-                $0.height.equalTo(8)
-                $0.width.equalTo(8)
+                $0.size.equalTo(8)
             }
             
             indicators.append(newIndicator)
