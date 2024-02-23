@@ -48,7 +48,7 @@ private extension LoginViewController {
         view.backgroundColor = .white
         
         titleLogoImageView.do {
-            $0.image = ImageLiterals.Logo.wordmark
+            $0.image = .wordmark
             $0.contentMode = .scaleAspectFit
         }
         
