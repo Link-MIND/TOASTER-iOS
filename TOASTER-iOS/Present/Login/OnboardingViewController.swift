@@ -59,7 +59,7 @@ private extension OnboardingViewController {
         }
         
         titleLogoImage.do {
-            $0.image = UIImage(resource: .wordmark)
+            $0.image = UIImage(resource: .loginTitle)
             $0.contentMode = .scaleAspectFit
         }
         
