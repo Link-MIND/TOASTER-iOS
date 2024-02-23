@@ -60,7 +60,7 @@ extension MypageHeaderView {
         readLinkCountLabel.text = "\(model.allReadToast)"
         thisWeakOpenLinkCountLabel.text = "\(model.thisWeekendRead)"
         thisWeakSaveLinkCountLabel.text = "\(model.thisWeekendSaved)"
-        profileImageView.image = ImageLiterals.Mypage.profile
+        profileImageView.image = .profile
     }
 }
 

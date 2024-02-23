@@ -16,13 +16,6 @@ enum ImageLiterals {
         static var exclamation: UIImage { .load(systemName: "exclamationmark.circle.fill") }
     }
     
-    // MARK: - Mypage
-    
-    enum Mypage {
-        static var profile: UIImage { .load(name: "profile") }
-        static var alarm: UIImage { .load(name: "img_alarm") }
-    }
-    
     enum Home {
         static var clipDefault: UIImage { .load(name: "ic_all_clip_24") }
         static var clipFull: UIImage { .load(name: "ic_clip_full_24") }
