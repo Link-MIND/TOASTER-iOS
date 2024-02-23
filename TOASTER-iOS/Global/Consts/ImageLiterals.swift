@@ -16,17 +16,6 @@ enum ImageLiterals {
         static var exclamation: UIImage { .load(systemName: "exclamationmark.circle.fill") }
     }
     
-    // MARK: - TabBar
-    
-    enum TabBar {
-        static var home: UIImage { .load(name: "ic_home_24") }
-        static var allClip: UIImage { .load(name: "ic_all_clip_24") }
-        static var clip: UIImage { .load(name: "ic_clip_full_24") }
-        static var plus: UIImage { .load(name: "fab_plus") }
-        static var timer: UIImage { .load(name: "ic_timer_24") }
-        static var my: UIImage { .load(name: "ic_my_24") }
-    }
-    
     // MARK: - Search
     
     enum Search {

@@ -153,9 +153,9 @@ extension ClipViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ClipListCollectionViewCell.className, for: indexPath) as? ClipListCollectionViewCell else { return UICollectionViewCell() }
         
         if indexPath.item == 0 {
-            cell.configureCell(forModel: viewModel.clipList, icon: ImageLiterals.TabBar.allClip.withTintColor(.black900), name: "전체 클립")
+            cell.configureCell(forModel: viewModel.clipList, icon: .icAllClip24.withTintColor(.black900), name: "전체 클립")
         } else {
-            cell.configureCell(forModel: viewModel.clipList, icon: ImageLiterals.TabBar.clip.withTintColor(.black900), index: indexPath.item - 1)
+            cell.configureCell(forModel: viewModel.clipList, icon: .icClipFull24.withTintColor(.black900), index: indexPath.item - 1)
         }
         return cell
     }
