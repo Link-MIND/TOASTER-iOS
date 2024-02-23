@@ -16,13 +16,6 @@ enum ImageLiterals {
         static var exclamation: UIImage { .load(systemName: "exclamationmark.circle.fill") }
     }
     
-    enum Remind {
-        static var alarmOff: UIImage { .load(name: "img_alarm_ios") }
-        static var timerEmpty: UIImage { .load(name: "img_timer") }
-        static var alarmDisabled: UIImage { .load(name: "alarm_disabled_20") }
-        static var alarmAbled: UIImage { .load(name: "ic_alarm_24") }
-    }
-    
     // MARK: - Web
     
     enum Web {

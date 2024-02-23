@@ -15,7 +15,7 @@ final class AlarmOffStateButton: UIButton {
     // MARK: - UI Properties
     
     private let titleStackView: UIStackView = UIStackView()
-    private let titleIcon: UIImageView = UIImageView(image: ImageLiterals.Remind.alarmDisabled)
+    private let titleIcon: UIImageView = UIImageView(image: .alarmDisabled20)
     private let mainTitleLabel: UILabel = UILabel()
     
     private let nextIcon: UIImageView = UIImageView(image: .icArrow20)
