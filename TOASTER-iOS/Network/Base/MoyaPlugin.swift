@@ -6,9 +6,9 @@
 //
 
 import Foundation
+import UIKit
 
 import Moya
-import UIKit
 
 final class MoyaPlugin: PluginType {
     
