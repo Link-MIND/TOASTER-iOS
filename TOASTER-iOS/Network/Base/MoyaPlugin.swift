@@ -69,12 +69,14 @@ final class MoyaPlugin: PluginType {
         log.append("<-- END HTTP 🍞🍞🍞")
         print(log)
         
-        let popupViewController = ToasterPopupViewController(mainText: "네트워크 연결 오류", subText: "네트워크 오류로\n서비스 접속이 불가능해요", centerButtonTitle: StringLiterals.Button.okay, centerButtonHandler: nil)
+        // 네트워크 연결 오류 Alert창 표출
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let delegate = windowScene.delegate as? SceneDelegate,
            let rootViewController = delegate.window?.rootViewController {
-            popupViewController.modalPresentationStyle = .overFullScreen
-            rootViewController.present(popupViewController, animated: false)
+            rootViewController.showConfirmationPopup(
+                forMainText: "네트워크 연결 오류",
+                forSubText: "네트워크 오류로\n서비스 접속이 불가능해요",
+                centerButtonTitle: StringLiterals.Button.okay)
         }
     }
 }
