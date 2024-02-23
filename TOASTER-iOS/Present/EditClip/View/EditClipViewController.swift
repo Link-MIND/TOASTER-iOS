@@ -154,11 +154,11 @@ extension EditClipViewController: UICollectionViewDataSource {
             cell.configureCell(forModel: AllClipModel(id: 0,
                                                       title: "전체 클립",
                                                       toastCount: 0),
-                               icon: ImageLiterals.Clip.pin,
+                               icon: .icPin24,
                                isFirst: true)
         } else {
             cell.configureCell(forModel: viewModel.clipList.clips[indexPath.item - 1],
-                               icon: ImageLiterals.Clip.delete,
+                               icon: .icDelete28,
                                isFirst: false)
             cell.leadingButtonTapped {
                 self.showPopup(forMainText: "‘\(self.viewModel.clipList.clips[indexPath.item - 1].title)’ 클립을 삭제하시겠어요?",

@@ -16,20 +16,6 @@ enum ImageLiterals {
         static var exclamation: UIImage { .load(systemName: "exclamationmark.circle.fill") }
     }
     
-    // MARK: - Clip
-    
-    enum Clip {
-        static var rightarrow: UIImage { .load(name: "ic_arrow_18") }
-        static var orangeplus: UIImage { .load(name: "ic_plus_18_orange") }
-        static var clipEmpty: UIImage { .load(name: "clip_empty") }
-        static var detailClipEmpty: UIImage { .load(name: "detail_clip_empty") }
-        static var thumb: UIImage { .load(name: "img_thumbnail") }
-        static var clipIcon: UIImage { .load(name: "ic_clip_24_black") }
-        static var delete: UIImage { .load(name: "ic_delete_28") }
-        static var pin: UIImage { .load(name: "ic_pin_24") }
-        static var edit: UIImage { .load(name: "ic_edit_24") }
-    }
-    
     // MARK: - EmptyView
     
     enum EmptyView {

@@ -55,7 +55,7 @@ final class RemindTimerAddViewController: UIViewController {
     private let repeatLabel: UILabel = UILabel()
     private let setupRepeatButton: UIButton = UIButton()
     private let repeatButtonLabel: UILabel = UILabel()
-    private let repeatButtonImageView: UIImageView = UIImageView(image: ImageLiterals.Clip.rightarrow)
+    private let repeatButtonImageView: UIImageView = UIImageView(image: .icArrow18)
     
     private let completeButton: UIButton = UIButton()
     

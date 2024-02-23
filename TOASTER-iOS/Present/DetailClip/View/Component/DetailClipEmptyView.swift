@@ -40,7 +40,7 @@ private extension DetailClipEmptyView {
         backgroundColor = .toasterBackground
         
         emptyImage.do {
-            $0.image = ImageLiterals.Clip.detailClipEmpty
+            $0.image = .detailClipEmpty
         }
         
         emptyLabel.do {
