@@ -13,9 +13,9 @@ enum ToastStatus {
     var icon: UIImage {
         switch self {
         case .check:
-            return ImageLiterals.Common.check
+            return .icCheck18White
         case .warning:
-            return ImageLiterals.Common.exclamation
+            return .icAlert18White
         }
     }
 }
