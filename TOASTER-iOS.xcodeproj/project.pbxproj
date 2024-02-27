@@ -185,6 +185,8 @@
 		830517A72B4D7225009FFB60 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517A62B4D7225009FFB60 /* HomeView.swift */; };
 		830517AA2B4D95E9009FFB60 /* HomeFooterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517A92B4D95E9009FFB60 /* HomeFooterCollectionView.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
+		8309F5882B8DCEAC00A1420A /* SelectClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309F5872B8DCEAC00A1420A /* SelectClipViewModel.swift */; };
+		8309F58A2B8DCEC200A1420A /* AddLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309F5892B8DCEC200A1420A /* AddLinkViewModel.swift */; };
 		8315CD842B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */; };
 		8315CD862B517DBF0061F377 /* AddLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD852B517DBF0061F377 /* AddLinkView.swift */; };
 		8315CD8C2B54782F0061F377 /* SelectClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */; };
@@ -358,8 +360,10 @@
 		830517A62B4D7225009FFB60 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		830517A92B4D95E9009FFB60 /* HomeFooterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFooterCollectionView.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		8309F5872B8DCEAC00A1420A /* SelectClipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipViewModel.swift; sourceTree = "<group>"; };
+		8309F5892B8DCEC200A1420A /* AddLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLinkViewModel.swift; sourceTree = "<group>"; };
 		8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClipEmptyCollectionViewCell.swift; sourceTree = "<group>"; };
-		8315CD852B517DBF0061F377 /* AddLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddLinkView.swift; path = View/AddLinkView.swift; sourceTree = "<group>"; };
+		8315CD852B517DBF0061F377 /* AddLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLinkView.swift; sourceTree = "<group>"; };
 		8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipViewController.swift; sourceTree = "<group>"; };
 		8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipHeaderView.swift; sourceTree = "<group>"; };
 		8315CD902B5521F70061F377 /* SelectClipModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipModel.swift; sourceTree = "<group>"; };
@@ -875,10 +879,8 @@
 		6B6AE6942B3FF5AB000E2366 /* AddLink */ = {
 			isa = PBXGroup;
 			children = (
+				8309F5832B8DCE3200A1420A /* LinkEmbed */,
 				8315CD882B5478050061F377 /* SelectClip */,
-				6B6AE6952B3FF5B5000E2366 /* AddLinkViewController.swift */,
-				8315CD852B517DBF0061F377 /* AddLinkView.swift */,
-				83CFC33A2B57324700A2EB2B /* SaveLinkModel.swift */,
 			);
 			path = AddLink;
 			sourceTree = "<group>";
@@ -1373,12 +1375,47 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		8309F5832B8DCE3200A1420A /* LinkEmbed */ = {
+			isa = PBXGroup;
+			children = (
+				8309F5862B8DCE8100A1420A /* Model */,
+				8309F5852B8DCE7B00A1420A /* View */,
+				8309F5842B8DCE7400A1420A /* ViewModel */,
+			);
+			path = LinkEmbed;
+			sourceTree = "<group>";
+		};
+		8309F5842B8DCE7400A1420A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8309F5892B8DCEC200A1420A /* AddLinkViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		8309F5852B8DCE7B00A1420A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8315CD852B517DBF0061F377 /* AddLinkView.swift */,
+				6B6AE6952B3FF5B5000E2366 /* AddLinkViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8309F5862B8DCE8100A1420A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				83CFC33A2B57324700A2EB2B /* SaveLinkModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		8315CD882B5478050061F377 /* SelectClip */ = {
 			isa = PBXGroup;
 			children = (
 				8315CD922B5522590061F377 /* Model */,
 				8315CD932B55226A0061F377 /* View */,
-				8315CD942B5522760061F377 /* ViewController */,
+				8315CD942B5522760061F377 /* ViewModel */,
 			);
 			path = SelectClip;
 			sourceTree = "<group>";
@@ -1394,17 +1431,18 @@
 		8315CD932B55226A0061F377 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */,
 				8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		8315CD942B5522760061F377 /* ViewController */ = {
+		8315CD942B5522760061F377 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */,
+				8309F5872B8DCEAC00A1420A /* SelectClipViewModel.swift */,
 			);
-			path = ViewController;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1569,6 +1607,7 @@
 				39A843CE2B745B3A007A4D75 /* DetailClipPropertyType.swift in Sources */,
 				6BE6DA8C2B546CA9008B06FA /* GetWeeksLinkResponseDTO.swift in Sources */,
 				6BE6DA0B2B4F3063008B06FA /* RemindSelectClipViewModel.swift in Sources */,
+				8309F58A2B8DCEC200A1420A /* AddLinkViewModel.swift in Sources */,
 				6BE6DA4D2B50B1EB008B06FA /* UserTargetType.swift in Sources */,
 				6B6AE6932B3FF5A9000E2366 /* ClipViewController.swift in Sources */,
 				6BE6DAAF2B547A81008B06FA /* SearchAPIService.swift in Sources */,
@@ -1622,6 +1661,7 @@
 				6BE6DA652B50BA4F008B06FA /* PostAddCategoryRequestDTO.swift in Sources */,
 				6BE6D9DE2B4E9054008B06FA /* AlarmOffStateButton.swift in Sources */,
 				390247AA2B58016C00F9A86A /* PatchOpenLinkRequestDTO.swift in Sources */,
+				8309F5882B8DCEAC00A1420A /* SelectClipViewModel.swift in Sources */,
 				39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */,
 				390247AC2B58263C00F9A86A /* MypageAlertView.swift in Sources */,
 				6BE6DAB12B547BE1008B06FA /* GetMainPageSearchResponseDTO.swift in Sources */,
