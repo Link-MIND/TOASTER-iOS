@@ -26,7 +26,7 @@ final class RemindSelectClipCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Properties
     
-    private let clipImageView: UIImageView = UIImageView(image: ImageLiterals.Clip.clipIcon)
+    private let clipImageView: UIImageView = UIImageView(image: .icClip24Black)
     private let clipTitleLabel: UILabel = UILabel()
     private let clipCountLabel: UILabel = UILabel()
     
@@ -99,14 +99,14 @@ private extension RemindSelectClipCollectionViewCell {
     }
     
     func setupSelected() {
-        clipImageView.image = ImageLiterals.Clip.clipIcon.withTintColor(.toasterPrimary)
+        clipImageView.image = .icClip24Black.withTintColor(.toasterPrimary)
         [clipTitleLabel, clipCountLabel].forEach {
             $0.textColor = .toasterPrimary
         }
     }
     
     func setupDeselected() {
-        clipImageView.image = ImageLiterals.Clip.clipIcon
+        clipImageView.image = .icClip24Black
         clipTitleLabel.textColor = .toasterBlack
         clipCountLabel.textColor = .gray600
     }

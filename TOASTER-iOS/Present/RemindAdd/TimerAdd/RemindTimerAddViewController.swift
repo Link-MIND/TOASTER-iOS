@@ -55,7 +55,7 @@ final class RemindTimerAddViewController: UIViewController {
     private let repeatLabel: UILabel = UILabel()
     private let setupRepeatButton: UIButton = UIButton()
     private let repeatButtonLabel: UILabel = UILabel()
-    private let repeatButtonImageView: UIImageView = UIImageView(image: ImageLiterals.Clip.rightarrow)
+    private let repeatButtonImageView: UIImageView = UIImageView(image: .icArrow18)
     
     private let completeButton: UIButton = UIButton()
     
@@ -296,7 +296,7 @@ private extension RemindTimerAddViewController {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
                                                                 hasRightButton: true,
                                                                 mainTitle: StringOrImageType.string("타이머 설정"),
-                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.close),
+                                                                rightButton: StringOrImageType.image(.icClose24),
                                                                 rightButtonAction: closeButtonTapped)
         
         if let navigationController = navigationController as? ToasterNavigationController {

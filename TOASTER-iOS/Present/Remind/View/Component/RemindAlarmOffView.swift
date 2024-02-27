@@ -45,7 +45,7 @@ private extension RemindAlarmOffView {
         backgroundColor = .clear
         
         alarmOffImageView.do {
-            $0.image = ImageLiterals.Remind.alarmOff
+            $0.image = .imgAlarmIos
         }
         
         alarmOffLabel.do {

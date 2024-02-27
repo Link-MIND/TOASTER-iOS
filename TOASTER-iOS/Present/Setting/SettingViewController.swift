@@ -71,7 +71,7 @@ private extension SettingViewController {
         }
         
         warningImage.do {
-            $0.image = ImageLiterals.Common.alert
+            $0.image = .icAlert18Dark
             $0.contentMode = .scaleAspectFit
         }
         
@@ -127,7 +127,7 @@ private extension SettingViewController {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
                                                                 hasRightButton: false,
                                                                 mainTitle: StringOrImageType.string("설정"),
-                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.setting),
+                                                                rightButton: StringOrImageType.image(.icSettings24),
                                                                 rightButtonAction: {})
         
         if let navigationController = navigationController as? ToasterNavigationController {

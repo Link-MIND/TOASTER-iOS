@@ -125,7 +125,7 @@ private extension ToasterBottomSheetViewController {
         }
         
         closeButton.do {
-            $0.setImage(ImageLiterals.Common.close, for: .normal)
+            $0.setImage(.icClose24, for: .normal)
         }
     }
     

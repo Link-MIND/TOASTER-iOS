@@ -40,7 +40,7 @@ private extension ClipEmptyView {
         backgroundColor = .toasterBackground
         
         emptyImage.do {
-            $0.image = ImageLiterals.Clip.clipEmpty
+            $0.image = .clipEmpty
         }
         
         emptyLabel.do {

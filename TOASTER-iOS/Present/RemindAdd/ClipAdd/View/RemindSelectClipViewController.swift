@@ -101,7 +101,7 @@ private extension RemindSelectClipViewController {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                 hasRightButton: true,
                                                                 mainTitle: StringOrImageType.string("알림받을 클립 선택"),
-                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.close),
+                                                                rightButton: StringOrImageType.image(.icClose24),
                                                                 rightButtonAction: closeButtonTapped)
         
         if let navigationController = navigationController as? ToasterNavigationController {

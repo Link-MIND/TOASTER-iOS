@@ -61,7 +61,7 @@ private extension MypageViewController {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                 hasRightButton: true,
                                                                 mainTitle: StringOrImageType.string(StringLiterals.Tabbar.my),
-                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.setting),
+                                                                rightButton: StringOrImageType.image(.icSettings24),
                                                                 rightButtonAction: settingButtonTapped)
         
         if let navigationController = navigationController as? ToasterNavigationController {

@@ -107,7 +107,6 @@
 		6B6AE6A82B3FF6D5000E2366 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6A72B3FF6D5000E2366 /* UITextField+.swift */; };
 		6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6A92B3FF6EA000E2366 /* UIStackView+.swift */; };
 		6B6AE6AC2B3FF6F7000E2366 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6AB2B3FF6F7000E2366 /* UIColor+.swift */; };
-		6B6AE6AE2B3FF721000E2366 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */; };
 		6BC4935E2B4414B400544249 /* ToasterPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC4935D2B4414B400544249 /* ToasterPopupViewController.swift */; };
 		6BC493682B45D7B100544249 /* ToasterNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC493672B45D7B100544249 /* ToasterNavigationController.swift */; };
 		6BC4936C2B48633700544249 /* ToasterNavigationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC4936B2B48633700544249 /* ToasterNavigationType.swift */; };
@@ -282,7 +281,6 @@
 		6B6AE6A72B3FF6D5000E2366 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		6B6AE6A92B3FF6EA000E2366 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		6B6AE6AB2B3FF6F7000E2366 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
-		6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
 		6BC4935D2B4414B400544249 /* ToasterPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterPopupViewController.swift; sourceTree = "<group>"; };
 		6BC493672B45D7B100544249 /* ToasterNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterNavigationController.swift; sourceTree = "<group>"; };
 		6BC4936B2B48633700544249 /* ToasterNavigationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterNavigationType.swift; sourceTree = "<group>"; };
@@ -764,7 +762,6 @@
 		6B6AE6822B3FF510000E2366 /* Consts */ = {
 			isa = PBXGroup;
 			children = (
-				6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */,
 				39BC5B182B411037004024E6 /* FontLiterals.swift */,
 				830517642B42D996009FFB60 /* StringLiterals.swift */,
 			);
@@ -1689,7 +1686,6 @@
 				6BE6DA552B50B43E008B06FA /* GetSettingPageResponseDTO.swift in Sources */,
 				830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */,
 				390925C42B4EF64100487AA3 /* LinkWebViewController.swift in Sources */,
-				6B6AE6AE2B3FF721000E2366 /* ImageLiterals.swift in Sources */,
 				6B6AE6A42B3FF6B0000E2366 /* UIViewController+.swift in Sources */,
 				39EF96012B501E8A00F301FC /* EditClipNoticeView.swift in Sources */,
 				8315CD8E2B547EE30061F377 /* SelectClipHeaderView.swift in Sources */,

@@ -81,7 +81,7 @@ private extension EditClipCollectionViewCell {
         }
         
         changeTitleButton.do {
-            $0.setImage(ImageLiterals.Clip.edit, for: .normal)
+            $0.setImage(.icEdit24, for: .normal)
             $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
     }

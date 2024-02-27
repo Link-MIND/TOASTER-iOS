@@ -43,7 +43,7 @@ private extension MypageAlertView {
         }
         
         alertImage.do {
-            $0.image = ImageLiterals.Mypage.alarm
+            $0.image = .imgAlarm
             $0.contentMode = .scaleAspectFit
         }
         

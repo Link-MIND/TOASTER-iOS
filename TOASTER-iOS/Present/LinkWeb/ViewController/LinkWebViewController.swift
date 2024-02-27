@@ -44,10 +44,10 @@ final class LinkWebViewController: UIViewController {
     private let toolBar = UIToolbar()
     
     private let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    private lazy var backButton = UIBarButtonItem(image: ImageLiterals.Web.backArrow, style: .plain, target: self, action: #selector(goBackInWeb))
-    private lazy var forwardButton = UIBarButtonItem(image: ImageLiterals.Web.forwardArrow, style: .plain, target: self, action: #selector(goForwardInWeb))
-    private lazy var readLinkCheckButton = UIBarButtonItem(image: ImageLiterals.Web.document, style: .plain, target: self, action: #selector(checkReadInWeb))
-    private lazy var safariButton = UIBarButtonItem(image: ImageLiterals.Web.safari, style: .plain, target: self, action: #selector(openInSafari))
+    private lazy var backButton = UIBarButtonItem(image: .icArrow2Back24, style: .plain, target: self, action: #selector(goBackInWeb))
+    private lazy var forwardButton = UIBarButtonItem(image: .icArrow2Forward24, style: .plain, target: self, action: #selector(goForwardInWeb))
+    private lazy var readLinkCheckButton = UIBarButtonItem(image: .icRead, style: .plain, target: self, action: #selector(checkReadInWeb))
+    private lazy var safariButton = UIBarButtonItem(image: .icSafari24, style: .plain, target: self, action: #selector(openInSafari))
     
     // MARK: - Life Cycle
     

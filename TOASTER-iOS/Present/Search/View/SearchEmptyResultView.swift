@@ -37,7 +37,7 @@ private extension SearchEmptyResultView {
         backgroundColor = .clear
         
         emptyImageView.do {
-            $0.image = ImageLiterals.EmptyView.searchEmpty
+            $0.image = .imgSearch
         }
         
         emptyLabel.do {
