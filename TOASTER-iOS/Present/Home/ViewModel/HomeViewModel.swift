@@ -32,13 +32,12 @@ final class HomeViewModel {
     var weeklyLinkList: [WeeklyLinkModel] = [WeeklyLinkModel(toastId: 0, toastTitle: "", toastImg: "", toastLink: "")]{
         didSet {
             dataChangeAction?(!weeklyLinkList.isEmpty)
-           // homeView.collectionView.reloadData()
         }
     }
     
-    var recommendSiteList: [RecommendSiteModel]? {
+    var recommendSiteList: [RecommendSiteModel] = [RecommendSiteModel(siteId: 0, siteTitle: nil ?? "", siteUrl: nil ?? "", siteImg: nil ?? "", siteSub: nil ?? "")] {
         didSet {
-            // homeView.collectionView.reloadData()
+            dataChangeAction?(!recommendSiteList.isEmpty)
         }
     }
     
@@ -58,9 +57,6 @@ extension HomeViewModel {
         textFieldEditAction = editAction
         moveBottomAction = moveAction
     }
-    
-    
-    // 서버 통신한 부분 넣기
     
     func fetchMainPageData() {
         NetworkService.shared.userService.getMainPage { result in
@@ -83,11 +79,6 @@ extension HomeViewModel {
                                                       readToastNum: data.readToastNum,
                                                       allToastNum: data.allToastNum,
                                                       mainCategoryListDto: categoryList)
-                    
-//                    self.mainInfoList.mainInfoModelList = MainInfoModel(nickname: data.nickname,
-//                                                      readToastNum: data.readToastNum,
-//                                                      allToastNum: data.allToastNum,
-//                                                      mainCategoryListDto: categoryList)
                 }
             case .unAuthorized, .networkFail:
                 self.unAuthorizedAction?()
