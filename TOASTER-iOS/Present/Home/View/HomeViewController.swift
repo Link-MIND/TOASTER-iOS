@@ -66,8 +66,8 @@ extension HomeViewController: UICollectionViewDelegate {
         case 3:
             let nextVC = LinkWebViewController()
             nextVC.hidesBottomBarWhenPushed = true
-            if let data = viewModel.recommendSiteList?[indexPath.item],
-               let url = data.siteUrl {
+            let data = viewModel.recommendSiteList[indexPath.item]
+                if let url = data.siteUrl {
                 nextVC.setupDataBind(linkURL: url)
             }
             self.navigationController?.pushViewController(nextVC, animated: true)
@@ -94,7 +94,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case 2:
             return viewModel.weeklyLinkList.count
         case 3:
-            return viewModel.recommendSiteList?.count ?? 0
+            return viewModel.recommendSiteList.count
         default:
             return 0
         }
@@ -139,9 +139,9 @@ extension HomeViewController: UICollectionViewDataSource {
         case 3:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyRecommendCollectionViewCell.className, for: indexPath) as? WeeklyRecommendCollectionViewCell
             else { return UICollectionViewCell() }
-            if let model = viewModel.recommendSiteList {
+            let model = viewModel.recommendSiteList
                 cell.bindData(forModel: model[indexPath.item])
-            }
+            
             return cell
         default:
             return MainCollectionViewCell()
