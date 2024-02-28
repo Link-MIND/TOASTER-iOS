@@ -27,13 +27,14 @@ final class AddLinkViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var linkSaveList: SaveLinkModel? 
+    //private var linkSaveList: SaveLinkModel?
     
     private weak var delegate: AddLinkViewControllerPopDelegate?
     private weak var urldelegate: SelectClipViewControllerDelegate?
     
     // MARK: - UI Properties
     
+    private var addLinkViewModel = AddLinkViewModel()
     private var addLinkView = AddLinkView()
     
     // MARK: - Life Cycle
