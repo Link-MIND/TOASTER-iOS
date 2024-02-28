@@ -159,8 +159,8 @@ extension RemindViewModel {
 private extension RemindViewModel {
     /// 기기 설정과 앱 설정에 따른 viewType을 업데이트하는 함수
     func setupAlarm(forDeviceAlarm: Bool?) {
-        if let deviceAlarm = forDeviceAlarm {
-            if deviceAlarm == false {    // device 알람이 꺼져있을 때
+        if let forDeviceAlarm {
+            if forDeviceAlarm == false {    // device 알람이 꺼져있을 때
                 if appAlarmSetting == false {     // device 알람이 꺼져있고, 앱 알람도 꺼져있을 때
                     remindViewType = .deviceOffAppOff
                 } else {                          // device 알람이 꺼져있고, 앱 알람이 켜져있을 때

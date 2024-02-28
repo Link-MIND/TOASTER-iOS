@@ -86,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func checkKakaoLogin(completion: @escaping (Bool) -> Void) {
         if (AuthApi.hasToken()) {
             UserApi.shared.accessTokenInfo { (_, error) in
-                if let error = error {
+                if let error {
                     if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true {
                         // 로그인 필요
                         print("토큰 만료, 카카오 로그인 필요")
@@ -133,8 +133,8 @@ extension AppDelegate: MessagingDelegate {
     
     // FCM 토큰을 받았을 때 실행
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        if let token = fcmToken {
-            let _ = KeyChainService.saveFCMToken(fcmToken: token, key: Config.fcmTokenKey)
+        if let fcmToken {
+            let _ = KeyChainService.saveFCMToken(fcmToken: fcmToken, key: Config.fcmTokenKey)
         }
     }
 }

@@ -266,9 +266,9 @@ extension RemindViewController: RemindEditViewDelegate {
     func editTimer(forID: Int?) {
         selectedTimerID = forID
         dismiss(animated: false)
-        if let id = forID {
+        if let forID {
             let editViewController = RemindTimerAddViewController()
-            editViewController.configureView(forTimerID: id)
+            editViewController.configureView(forTimerID: forID)
             navigationController?.pushViewController(editViewController, animated: true)
         }
     }

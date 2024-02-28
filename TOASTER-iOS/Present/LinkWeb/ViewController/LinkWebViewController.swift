@@ -198,7 +198,7 @@ private extension LinkWebViewController {
     
     /// 툴바 링크 확인 완료 버튼 클릭 시
     @objc func checkReadInWeb() {
-        if let toastId = toastId {
+        if let toastId {
             patchOpenLinkAPI(requestBody: LinkReadEditModel(toastId: toastId, isRead: !isRead))
         }
     }

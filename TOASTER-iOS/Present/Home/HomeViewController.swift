@@ -120,8 +120,8 @@ extension HomeViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.className, for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell() }
-            if let model = mainInfoList {
-                cell.bindData(forModel: model)
+            if let mainInfoList {
+                cell.bindData(forModel: mainInfoList)
             }
             cell.mainCollectionViewDelegate = self
             return cell
@@ -146,15 +146,15 @@ extension HomeViewController: UICollectionViewDataSource {
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyLinkCollectionViewCell.className, for: indexPath) as? WeeklyLinkCollectionViewCell
             else { return UICollectionViewCell() }
-            if let model = weeklyLinkList {
-                cell.bindData(forModel: model[indexPath.item])
+            if let weeklyLinkList {
+                cell.bindData(forModel: weeklyLinkList[indexPath.item])
             }
             return cell
         case 3:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyRecommendCollectionViewCell.className, for: indexPath) as? WeeklyRecommendCollectionViewCell
             else { return UICollectionViewCell() }
-            if let model = recommendSiteList {
-                cell.bindData(forModel: model[indexPath.item])
+            if let recommendSiteList {
+                cell.bindData(forModel: recommendSiteList[indexPath.item])
             }
             return cell
         default:

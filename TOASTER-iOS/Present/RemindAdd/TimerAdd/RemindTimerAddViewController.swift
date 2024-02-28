@@ -82,12 +82,12 @@ final class RemindTimerAddViewController: UIViewController {
 extension RemindTimerAddViewController {
     func configureView(forModel: RemindClipModel?) {
         buttonType = .add
-        if let model = forModel {
-            mainLabel.text = "\(model.title) 클립을"
+        if let forModel {
+            mainLabel.text = "\(forModel.title) 클립을"
             mainLabel.font = .suitMedium(size: 18)
-            mainLabel.asFont(targetString: model.title,
+            mainLabel.asFont(targetString: forModel.title,
                              font: .suitSemiBold(size: 18))
-            categoryID = forModel?.id
+            categoryID = forModel.id
         }
     }
     
