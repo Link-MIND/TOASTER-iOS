@@ -368,13 +368,13 @@ private extension RemindTimerAddViewController {
         
         switch buttonType {
         case .add:
-            guard let categoryID = categoryID else { return }
+            guard let categoryID else { return }
             self.viewModel.postClipData(forClipID: categoryID,
                                         forModel: RemindTimerAddModel(clipTitle: "", 
                                                                       remindTime: dateString,
                                                                       remindDates: Array(selectedIndex)))
         case .edit:
-            guard let timerID = timerID else { return }
+            guard let timerID else { return }
             self.viewModel.editClipData(forModel: RemindTimerEditModel(remindID: timerID,
                                                                        remindTime: dateString,
                                                                        remindDates: Array(selectedIndex)))

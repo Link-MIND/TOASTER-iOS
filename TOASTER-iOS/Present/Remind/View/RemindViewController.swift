@@ -230,13 +230,13 @@ private extension RemindViewController {
     }
     
     func deleteButtonTapped() {
-        guard let id = selectedTimerID else { return }
-        viewModel.deleteTimerData(timerID: id)
+        guard let selectedTimerID else { return }
+        viewModel.deleteTimerData(timerID: selectedTimerID)
     }
     
     func toggleAction(forTimerID: Int?) {
-        guard let id = forTimerID else { return }
-        viewModel.patchTimerData(timerID: id)
+        guard let forTimerID else { return }
+        viewModel.patchTimerData(timerID: forTimerID)
     }
     
     @objc func editAlarmButtonTapped() {
