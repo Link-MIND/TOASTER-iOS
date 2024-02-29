@@ -24,25 +24,15 @@ final class SelectClipViewModel {
     
     // MARK: - Data
     
-    // GET
     var selectedClip: [RemindClipModel] = [] {
         didSet {
             dataChangeAction?(!selectedClip.isEmpty)
-            // completeButton.backgroundColor = .toasterBlack
-            // clipSelectCollectionView.reloadData()
         }
     }
     
-//    var clipData: [RemindClipModel] = [] {
-//        didSet {
-//            dataChangeAction?(!clipData.isEmpty)
-//        }
-//    }
-//    
     init() {
         fetchClipData()
     }
-    
 }
 
 // MARK: - extension
@@ -64,19 +54,19 @@ extension SelectClipViewModel {
     
     // 임베드한 링크, 선택한 클립 id - POST
     func postSaveLink(url: String, category: Int?) {
-            let request = PostSaveLinkRequestDTO(linkUrl: url,
-                                                 categoryId: category)
-            NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
-                switch result {
-                case .success:
-                    self.saveLinkAction?()
-                case .networkFail, .unAuthorized, .notFound:
-                    self.unAuthorizedAction?()
-                case .badRequest, .serverErr:
-                    self.saveFailAction?()
-                default:
-                    return
-                }
+        let request = PostSaveLinkRequestDTO(linkUrl: url,
+                                             categoryId: category)
+        NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
+            switch result {
+            case .success:
+                self.saveLinkAction?()
+            case .networkFail, .unAuthorized, .notFound:
+                self.unAuthorizedAction?()
+            case .badRequest, .serverErr:
+                self.saveFailAction?()
+            default:
+                return
+            }
         }
     }
     

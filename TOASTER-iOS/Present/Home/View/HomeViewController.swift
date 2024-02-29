@@ -17,7 +17,10 @@ final class HomeViewController: UIViewController {
     private let homeView = HomeView()
     
     private let addClipBottomSheetView = AddClipBottomSheetView()
-    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
+    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white,
+                                                                      bottomTitle: "클립 추가",
+                                                                      height: 198, 
+                                                                      insertView: addClipBottomSheetView)
     
     // MARK: - Life Cycle
     
@@ -44,30 +47,27 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1:
-            //mainInfoList?.mainCategoryListDto
             let data = viewModel.mainInfoList.mainCategoryListDto
-                if indexPath.item < data.count {
-                    let nextVC = DetailClipViewController()
-                    nextVC.setupCategory(id: data[indexPath.item].categoryId,
-                                         name: data[indexPath.item].categroyTitle)
-                    nextVC.hidesBottomBarWhenPushed = true
-                    self.navigationController?.pushViewController(nextVC, animated: true)
-                } else {
-                    addClipCellTapped()
-                }
-            
+            if indexPath.item < data.count {
+                let nextVC = DetailClipViewController()
+                nextVC.setupCategory(id: data[indexPath.item].categoryId,
+                                     name: data[indexPath.item].categroyTitle)
+                nextVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(nextVC, animated: true)
+            } else {
+                addClipCellTapped()
+            }
         case 2:
             let nextVC = LinkWebViewController()
             nextVC.hidesBottomBarWhenPushed = true
             let data = viewModel.weeklyLinkList[indexPath.item]
-                nextVC.setupDataBind(linkURL: data.toastLink)
-            
+            nextVC.setupDataBind(linkURL: data.toastLink)
             self.navigationController?.pushViewController(nextVC, animated: true)
         case 3:
             let nextVC = LinkWebViewController()
             nextVC.hidesBottomBarWhenPushed = true
             let data = viewModel.recommendSiteList[indexPath.item]
-                if let url = data.siteUrl {
+            if let url = data.siteUrl {
                 nextVC.setupDataBind(linkURL: url)
             }
             self.navigationController?.pushViewController(nextVC, animated: true)
@@ -88,7 +88,6 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            // guard let count = mainInfoList?.mainCategoryListDto.count else { return 1 }
             let count = viewModel.mainInfoList.mainCategoryListDto.count
             return min(count + 1, 4)
         case 2:
@@ -99,49 +98,49 @@ extension HomeViewController: UICollectionViewDataSource {
             return 0
         }
     }
-
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.className, for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell() }
-            // let model = viewModel.mainInfoList.mainInfoModelList[indexPath.item]
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.className,
+                                                                for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell() }
+            
             let model = viewModel.mainInfoList
             cell.bindData(forModel: model)
             cell.mainCollectionViewDelegate = self
             return cell
         case 1:
-            //let lastIndex = viewModel.mainInfoList.mainInfoModelList[indexPath.item].mainCategoryListDto.count
             let lastIndex = viewModel.mainInfoList.mainCategoryListDto.count
-            
             if indexPath.item == lastIndex && lastIndex < 4 {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipEmptyCollectionViewCell.className, for: indexPath) as? UserClipEmptyCollectionViewCell else { return UICollectionViewCell() }
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipEmptyCollectionViewCell.className,
+                                                                    for: indexPath) as? UserClipEmptyCollectionViewCell else { return UICollectionViewCell() }
                 return cell
             } else {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className, for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
-                
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className,
+                                                                    for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
                 let model = viewModel.mainInfoList.mainCategoryListDto
-                    if indexPath.item == 0 {
-                        cell.bindData(forModel: model[indexPath.item], icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
-                    } else {
-                        cell.bindData(forModel: model[indexPath.item], icon: ImageLiterals.Home.clipFull)
-                    }
-                
+                if indexPath.item == 0 {
+                    cell.bindData(forModel: model[indexPath.item],
+                                  icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
+                } else {
+                    cell.bindData(forModel: model[indexPath.item],
+                                  icon: ImageLiterals.Home.clipFull)
+                }
                 return cell
             }
         case 2:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyLinkCollectionViewCell.className, for: indexPath) as? WeeklyLinkCollectionViewCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyLinkCollectionViewCell.className,
+                                                                for: indexPath) as? WeeklyLinkCollectionViewCell
             else { return UICollectionViewCell() }
             let model = viewModel.weeklyLinkList
-                cell.bindData(forModel: model[indexPath.item])
-            
+            cell.bindData(forModel: model[indexPath.item])
             return cell
         case 3:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyRecommendCollectionViewCell.className, for: indexPath) as? WeeklyRecommendCollectionViewCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyRecommendCollectionViewCell.className,
+                                                                for: indexPath) as? WeeklyRecommendCollectionViewCell
             else { return UICollectionViewCell() }
             let model = viewModel.recommendSiteList
-                cell.bindData(forModel: model[indexPath.item])
-            
+            cell.bindData(forModel: model[indexPath.item])
             return cell
         default:
             return MainCollectionViewCell()
@@ -149,25 +148,36 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     // Header, Footer
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
+            
             // header
         case UICollectionView.elementKindSectionHeader:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeaderCollectionView.className, for: indexPath) as? HomeHeaderCollectionView else { return UICollectionReusableView() }
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                               withReuseIdentifier: HomeHeaderCollectionView.className,
+                                                                               for: indexPath) as? HomeHeaderCollectionView else { return UICollectionReusableView() }
             switch indexPath.section {
             case 1:
                 let nickName = viewModel.mainInfoList.nickname
-                    header.configureHeader(forTitle: nickName, num: indexPath.section)
-                
+                header.configureHeader(forTitle: nickName,
+                                       num: indexPath.section)
             case 2:
-                header.configureHeader(forTitle: "이주의 링크", num: indexPath.section)
+                header.configureHeader(forTitle: "이주의 링크",
+                                       num: indexPath.section)
             case 3:
-                header.configureHeader(forTitle: "이주의 추천 사이트", num: indexPath.section)
+                header.configureHeader(forTitle: "이주의 추천 사이트",
+                                       num: indexPath.section)
             default: break
             }
             return header
+            
+            // footer
         case UICollectionView.elementKindSectionFooter:
-            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeFooterCollectionView.className, for: indexPath) as? HomeFooterCollectionView else { return UICollectionReusableView() }
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                               withReuseIdentifier: HomeFooterCollectionView.className,
+                                                                               for: indexPath) as? HomeFooterCollectionView else { return UICollectionReusableView() }
             return footer
         default:
             return UICollectionReusableView()
@@ -175,12 +185,16 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     // Header 크기 지정
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: 335, height: 40)
     }
     
     // Footer 크기 지정
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.width, height: 4)
     }
 }
@@ -233,7 +247,7 @@ private extension HomeViewController {
         homeView.collectionView.dataSource = self
     }
     
-    // ViewModel 
+    // ViewModel
     func setupViewModel() {
         viewModel.setupDataChangeAction(changeAction: reloadCollectionView,
                                         forUnAuthorizedAction: unAuthorizedAction,
@@ -252,7 +266,10 @@ private extension HomeViewController {
     func moveBottomAction(isDuplicated: Bool) {
         if isDuplicated {
             addHeightBottom()
-            addClipBottomSheetView.changeTextField(addButton: false, border: true, error: true, clearButton: true)
+            addClipBottomSheetView.changeTextField(addButton: false,
+                                                   border: true,
+                                                   error: true,
+                                                   clearButton: true)
             addClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
         } else {
             minusHeightBottom()
@@ -262,7 +279,9 @@ private extension HomeViewController {
     func addClipAction() {
         addClipBottomSheetView.resetTextField()
         addClipBottom.hideBottomSheet()
-        showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeAddClip)
+        showToastMessage(width: 157,
+                         status: .check,
+                         message: StringLiterals.ToastMessage.completeAddClip)
     }
     
     func setupNavigationBar() {
@@ -289,7 +308,6 @@ private extension HomeViewController {
         createCollectionView()
         setupDelegate()
     }
-    
 }
 
 // MARK: - AddClipBottomSheetViewDelegate
@@ -328,121 +346,4 @@ extension HomeViewController: MainCollectionViewDelegate {
         let searchVC = SearchViewController()
         self.navigationController?.pushViewController(searchVC, animated: true)
     }
-}
-
-// MARK: - Network
-
-extension HomeViewController {
-    // 메인페이지 + 유저 정보 + 클립 조회 -> GET
-//    func fetchMainPageData() {
-//        NetworkService.shared.userService.getMainPage { result in
-//            switch result {
-//            case .success(let response):
-//                if let data = response?.data {
-//                    var categoryList: [CategoryList] = [CategoryList(categoryId: 0,
-//                                                                     categroyTitle: "전체 클립",
-//                                                                     toastNum: data.allToastNum)]
-//                    data.mainCategoryListDto.forEach {
-//                        categoryList.append(CategoryList(categoryId: $0.categoryId,
-//                                                         categroyTitle: $0.categoryTitle,
-//                                                         toastNum: $0.toastNum))
-//                    }
-//                    self.mainInfoList = MainInfoModel(nickname: data.nickname,
-//                                                      readToastNum: data.readToastNum,
-//                                                      allToastNum: data.allToastNum,
-//                                                      mainCategoryListDto: categoryList)
-//                }
-//            case .unAuthorized, .networkFail:
-//                self.changeViewController(viewController: LoginViewController())
-//            default:
-//                return
-//            }
-//        }
-//    }
-//    
-//    // 이주의 링크 -> GET
-//    func fetchWeeklyLinkData() {
-//        NetworkService.shared.toastService.getWeeksLink { result in
-//            switch result {
-//            case .success(let response):
-//                var list: [WeeklyLinkModel] = []
-//                if let data = response?.data {
-//                    for idx in 0..<data.count {
-//                        list.append(WeeklyLinkModel(toastId: data[idx].linkId,
-//                                                    toastTitle: data[idx].linkTitle,
-//                                                    toastImg: data[idx].linkImg ?? "",
-//                                                    toastLink: data[idx].linkUrl))
-//                    }
-//                    self.weeklyLinkList = list
-//                }
-//            case .unAuthorized, .networkFail:
-//                self.changeViewController(viewController: LoginViewController())
-//            default:
-//                return
-//            }
-//        }
-//    }
-//    
-//    // 추천 사이트 -> GET
-//    func fetchRecommendSiteData() {
-//        NetworkService.shared.searchService.getRecommendSite { result in
-//            switch result {
-//            case .success(let response):
-//                var list: [RecommendSiteModel] = []
-//                if let data = response?.data {
-//                    for idx in 0..<data.count {
-//                        list.append(RecommendSiteModel(siteId: data[idx].siteId,
-//                                                       siteTitle: data[idx].siteTitle,
-//                                                       siteUrl: data[idx].siteUrl,
-//                                                       siteImg: data[idx].siteImg,
-//                                                       siteSub: data[idx].siteSub))
-//                    }
-//                    self.recommendSiteList = list
-//                }
-//            case .unAuthorized, .networkFail:
-//                self.changeViewController(viewController: LoginViewController())
-//            default:
-//                return
-//            }
-//        }
-//    }
-//    
-//    func getCheckCategoryAPI(categoryTitle: String) {
-//        NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle) { result in
-//            switch result {
-//            case .success(let response):
-//                if let data = response?.data.isDupicated {
-//                    if categoryTitle.count != 16 {
-//                        if data {
-//                            self.addHeightBottom()
-//                            self.addClipBottomSheetView.changeTextField(addButton: false, border: true, error: true, clearButton: true)
-//                            self.addClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
-//                        } else {
-//                            self.minusHeightBottom()
-//                        }
-//                    }
-//                }
-//            case .unAuthorized, .networkFail, .notFound:
-//                self.changeViewController(viewController: LoginViewController())
-//            default: return
-//            }
-//        }
-//    }
-//    
-//    func postAddCategoryAPI(requestBody: String) {
-//        NetworkService.shared.clipService.postAddCategory(requestBody: PostAddCategoryRequestDTO(categoryTitle: requestBody)) { result in
-//            switch result {
-//            case .success:
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-//                    self.addClipBottomSheetView.resetTextField()
-//                    self.addClipBottom.hideBottomSheet()
-//                    self.showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeAddClip)
-//                }
-//                self.fetchMainPageData()
-//            case .networkFail, .unAuthorized, .notFound:
-//                self.changeViewController(viewController: LoginViewController())
-//            default: return
-//            }
-//        }
-//    }
 }

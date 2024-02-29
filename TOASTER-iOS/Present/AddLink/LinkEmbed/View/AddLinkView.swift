@@ -56,7 +56,7 @@ final class AddLinkView: UIView {
         linkEmbedTextField.delegate = self
         linkEmbedTextField.resignFirstResponder()
     }
-
+    
     @objc func textFieldDidChange() {
         nextBottomButton.backgroundColor = .black850
         nextBottomButton.isEnabled = true
@@ -85,7 +85,7 @@ private extension AddLinkView {
             $0.addPadding(left: 14, right: 42)
             $0.addTarget(self, action: #selector(self.textFieldDidChange), for: .touchUpInside)
         }
-    
+        
         clearButton.do {
             $0.setImage(ImageLiterals.Common.cancle, for: .normal)
             $0.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
@@ -172,13 +172,17 @@ extension AddLinkView: UITextFieldDelegate {
         clearButton.isHidden = false
         nextTopButton.backgroundColor = .black850
         linkEmbedTextField.placeholder = nil
+        
         // 여기서 타이머를 시작하고, 0.5초 후에 텍스트를 확인 후 텍스트필드 에러 처리
         if textField.text?.count ?? 0 > 1 {
             startTimer()
         }
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, 
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        
         // 입력이 발생할 때마다 호출되는 메서드
         // 여기서 타이머를 재시작
         restartTimer()

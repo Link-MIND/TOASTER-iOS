@@ -22,20 +22,29 @@ final class HomeViewModel {
     
     // MARK: - Data
     
-    var mainInfoList: MainInfoModel = MainInfoModel(nickname: "", readToastNum: 0, allToastNum: 0, mainCategoryListDto: []) {
+    var mainInfoList: MainInfoModel = MainInfoModel(nickname: "", 
+                                                    readToastNum: 0,
+                                                    allToastNum: 0,
+                                                    mainCategoryListDto: []) {
         didSet {
             dataChangeAction?(!mainInfoList.mainCategoryListDto.isEmpty)
-      //      dataChangeAction?(!mainInfoList.nickname.count )
         }
     }
     
-    var weeklyLinkList: [WeeklyLinkModel] = [WeeklyLinkModel(toastId: 0, toastTitle: "", toastImg: "", toastLink: "")]{
+    var weeklyLinkList: [WeeklyLinkModel] = [WeeklyLinkModel(toastId: 0, 
+                                                             toastTitle: "",
+                                                             toastImg: "",
+                                                             toastLink: "")] {
         didSet {
             dataChangeAction?(!weeklyLinkList.isEmpty)
         }
     }
     
-    var recommendSiteList: [RecommendSiteModel] = [RecommendSiteModel(siteId: 0, siteTitle: nil ?? "", siteUrl: nil ?? "", siteImg: nil ?? "", siteSub: nil ?? "")] {
+    var recommendSiteList: [RecommendSiteModel] = [RecommendSiteModel(siteId: 0, 
+                                                                      siteTitle: nil ?? "",
+                                                                      siteUrl: nil ?? "",
+                                                                      siteImg: nil ?? "",
+                                                                      siteSub: nil ?? "")] {
         didSet {
             dataChangeAction?(!recommendSiteList.isEmpty)
         }
@@ -71,10 +80,6 @@ extension HomeViewModel {
                                                          categroyTitle: $0.categoryTitle,
                                                          toastNum: $0.toastNum))
                     }
-//                    var _: [MainInfoModel] = [MainInfoModel(nickname: data.nickname,
-//                                                                       readToastNum: data.readToastNum,
-//                                                                       allToastNum: data.allToastNum,
-//                                                                       mainCategoryListDto: categoryList)]
                     self.mainInfoList = MainInfoModel(nickname: data.nickname,
                                                       readToastNum: data.readToastNum,
                                                       allToastNum: data.allToastNum,

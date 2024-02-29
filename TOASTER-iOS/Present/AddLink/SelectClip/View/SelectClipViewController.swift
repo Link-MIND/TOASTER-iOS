@@ -24,14 +24,16 @@ final class SelectClipViewController: UIViewController {
     private let clipSelectCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let completeButton: UIButton = UIButton()
     private let addClipBottomSheetView = AddClipBottomSheetView()
-    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
+    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, 
+                                                                      bottomTitle: "클립 추가",
+                                                                      height: 198,
+                                                                      insertView: addClipBottomSheetView)
     
     private var selectedClipTapped: RemindClipModel? {
         didSet {
             completeButton.backgroundColor = .toasterBlack
         }
     }
-    
     
     // MARK: - Life Cycle
     
@@ -44,7 +46,6 @@ final class SelectClipViewController: UIViewController {
         setupDelegate()
         
         setupViewModel()
-        // viewModel.fetchClipData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +53,6 @@ final class SelectClipViewController: UIViewController {
         
         setupNavigationBar()
         viewModel.fetchClipData()
-        //viewModel.
     }
 }
 
@@ -63,9 +63,12 @@ private extension SelectClipViewController {
         view.backgroundColor = .toasterBackground
         
         clipSelectCollectionView.do {
-            $0.register(RemindSelectClipCollectionViewCell.self, forCellWithReuseIdentifier: RemindSelectClipCollectionViewCell.className)
+            $0.register(RemindSelectClipCollectionViewCell.self, 
+                        forCellWithReuseIdentifier: RemindSelectClipCollectionViewCell.className)
             
-            $0.register(SelectClipHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SelectClipHeaderView.className)
+            $0.register(SelectClipHeaderView.self, 
+                        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                        withReuseIdentifier: SelectClipHeaderView.className)
             
             $0.backgroundColor = .toasterBackground
         }
@@ -81,7 +84,8 @@ private extension SelectClipViewController {
     }
     
     func setupHierarchy() {
-        view.addSubviews(clipSelectCollectionView, completeButton)
+        view.addSubviews(clipSelectCollectionView, 
+                         completeButton)
     }
     
     func setupLayout() {
@@ -125,7 +129,10 @@ private extension SelectClipViewController {
     func moveBottomAction(isDuplicated: Bool) {
         if isDuplicated {
             addHeightBottom()
-            addClipBottomSheetView.changeTextField(addButton: false, border: true, error: true, clearButton: true)
+            addClipBottomSheetView.changeTextField(addButton: false, 
+                                                   border: true,
+                                                   error: true,
+                                                   clearButton: true)
             addClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
         } else {
             minusHeightBottom()
@@ -135,7 +142,9 @@ private extension SelectClipViewController {
     func addClipAction() {
         addClipBottomSheetView.resetTextField()
         addClipBottom.hideBottomSheet()
-        showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeAddClip)
+        showToastMessage(width: 157, 
+                         status: .check,
+                         message: StringLiterals.ToastMessage.completeAddClip)
     }
     
     func saveLinkAction() {
@@ -145,9 +154,11 @@ private extension SelectClipViewController {
     
     func saveFailAction() {
         self.navigationController?.popToRootViewController(animated: true)
-        self.navigationController?.showToastMessage(width: 200, status: .warning, message: "링크 저장에 실패했어요!")
+        self.navigationController?.showToastMessage(width: 200, 
+                                                    status: .warning,
+                                                    message: "링크 저장에 실패했어요!")
     }
-       
+    
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
                                                                 hasRightButton: true,
@@ -175,8 +186,8 @@ private extension SelectClipViewController {
     }
     
     @objc func completeButtonTapped() {
-        //nextViewController.configureView(forModel: selectedClip)
-        viewModel.postSaveLink(url: linkURL, category: categoryID)
+        viewModel.postSaveLink(url: linkURL, 
+                               category: categoryID)
     }
 }
 
@@ -192,7 +203,9 @@ extension SelectClipViewController: UICollectionViewDelegate {
         categoryID = viewModel.selectedClip[indexPath.item].id
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, 
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
         if indexPath.item == 0 {
             cell.isSelected = true
         }
@@ -214,7 +227,9 @@ extension SelectClipViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SelectClipHeaderView.className, for: indexPath) as? SelectClipHeaderView else { return UICollectionReusableView() }
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, 
+                                                                                   withReuseIdentifier: SelectClipHeaderView.className,
+                                                                                   for: indexPath) as? SelectClipHeaderView else { return UICollectionReusableView() }
             headerView.selectClipHeaderViewDelegate = self
             headerView.setupView()
             headerView.bindData(count: viewModel.selectedClip.count)
@@ -224,7 +239,9 @@ extension SelectClipViewController: UICollectionViewDataSource {
     }
     
     // Header 크기 지정
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, 
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: 335, height: 68)
     }
 }
@@ -232,15 +249,21 @@ extension SelectClipViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension SelectClipViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, 
+                        layout collectionViewLayout: UICollectionViewLayout, 
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.convertByWidthRatio(335), height: 52)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, 
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, 
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
 }
@@ -248,7 +271,9 @@ extension SelectClipViewController: UICollectionViewDelegateFlowLayout {
 extension SelectClipViewController: SelectClipHeaderViewlDelegate {
     func addClipCellTapped() {
         if viewModel.selectedClip.count > 15 {
-            showToastMessage(width: 243, status: .warning, message: StringLiterals.ToastMessage.noticeMaxClip)
+            showToastMessage(width: 243, 
+                             status: .warning, 
+                             message: StringLiterals.ToastMessage.noticeMaxClip)
         } else {
             addClipBottom.modalPresentationStyle = .overFullScreen
             self.present(addClipBottom, animated: false)
@@ -276,7 +301,9 @@ extension SelectClipViewController: AddClipBottomSheetViewDelegate {
     func dismissButtonTapped() {
         addClipBottom.hideBottomSheet()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeAddClip)
+            self.showToastMessage(width: 157, 
+                                  status: .check,
+                                  message: StringLiterals.ToastMessage.completeAddClip)
             self.addClipBottomSheetView.resetTextField()
         }
     }

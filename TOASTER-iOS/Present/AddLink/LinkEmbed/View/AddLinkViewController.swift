@@ -27,14 +27,11 @@ final class AddLinkViewController: UIViewController {
     
     // MARK: - Properties
     
-    //private var linkSaveList: SaveLinkModel?
-    
     private weak var delegate: AddLinkViewControllerPopDelegate?
     private weak var urldelegate: SelectClipViewControllerDelegate?
     
     // MARK: - UI Properties
     
-    private var addLinkViewModel = AddLinkViewModel()
     private var addLinkView = AddLinkView()
     
     // MARK: - Life Cycle
@@ -51,8 +48,7 @@ final class AddLinkViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupNavigationBar()
-
-        navigationBarHidden(forHidden: true) 
+        navigationBarHidden(forHidden: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -131,7 +127,7 @@ private extension AddLinkViewController {
             addLinkView.emptyError()
         } else {
             let selectClipViewController = SelectClipViewController()
-            selectClipViewController.linkURL = addLinkView.linkEmbedTextField.text ?? "" 
+            selectClipViewController.linkURL = addLinkView.linkEmbedTextField.text ?? ""
             selectClipViewController.delegate = self
             self.navigationController?.pushViewController(selectClipViewController, animated: true)
         }
@@ -142,7 +138,9 @@ private extension AddLinkViewController {
 extension AddLinkViewController: SaveLinkButtonDelegate {
     func saveLinkButtonTapped() {
         delegate?.changeTabBarIndex()
-        navigationController?.showToastMessage(width: 157, status: .check, message: "링크 저장 완료!")
+        navigationController?.showToastMessage(width: 157,
+                                               status: .check,
+                                               message: "링크 저장 완료!")
     }
     
     func cancleLinkButtonTapped() {

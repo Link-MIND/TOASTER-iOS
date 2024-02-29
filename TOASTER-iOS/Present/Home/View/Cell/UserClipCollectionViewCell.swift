@@ -90,7 +90,9 @@ private extension UserClipCollectionViewCell {
     }
     
     func setupHierarchy() {
-        addSubviews(clipImage, titleLabel, countLabel)
+        addSubviews(clipImage, 
+                    titleLabel,
+                    countLabel)
     }
     
     func setupLayout() {

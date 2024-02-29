@@ -52,12 +52,17 @@ final class MainCollectionViewCell: UICollectionViewCell {
 extension MainCollectionViewCell {
     func bindData(forModel: MainInfoModel) {
         userLabel.text = "\(forModel.nickname)님"
-        userLabel.asFont(targetString: forModel.nickname, font: .suitBold(size: 20))
+        userLabel.asFont(targetString: forModel.nickname, 
+                         font: .suitBold(size: 20))
         noticeLabel.text = "토스터로 " + String(forModel.readToastNum) + "개의 링크를\n잊지 않고 읽었어요!"
-        noticeLabel.asFontColor(targetString: String(forModel.readToastNum) + "개의 링크", font: .suitExtraBold(size: 20), color: .toasterPrimary)
+        noticeLabel.asFontColor(targetString: String(forModel.readToastNum) + "개의 링크", 
+                                font: .suitExtraBold(size: 20),
+                                color: .toasterPrimary)
         
         countToastLabel.text = String(forModel.readToastNum) + " / " + String(forModel.allToastNum)
-        countToastLabel.asFontColor(targetString: String(forModel.readToastNum), font: .suitBold(size: 20), color: .toasterPrimary)
+        countToastLabel.asFontColor(targetString: String(forModel.readToastNum), 
+                                    font: .suitBold(size: 20),
+                                    color: .toasterPrimary)
         
         if forModel.readToastNum == 0 && forModel.allToastNum == 0 {
             linkProgressView.setProgress(0.0, animated: true)
@@ -115,7 +120,11 @@ private extension MainCollectionViewCell {
     }
     
     func setupHierarchy() {
-        addSubviews(searchButton, userLabel, noticeLabel, countToastLabel, linkProgressView)
+        addSubviews(searchButton, 
+                    userLabel,
+                    noticeLabel,
+                    countToastLabel,
+                    linkProgressView)
     }
     
     func setupLayout() {

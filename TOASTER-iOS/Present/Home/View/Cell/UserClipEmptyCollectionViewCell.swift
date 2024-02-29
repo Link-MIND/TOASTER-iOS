@@ -47,7 +47,7 @@ final class UserClipEmptyCollectionViewCell: UICollectionViewCell {
 private extension UserClipEmptyCollectionViewCell {
     func setupStyle() {
         backgroundColor = .clear
-                
+        
         addClipImage.do {
             $0.image = ImageLiterals.Home.addBtn
         }
@@ -80,10 +80,14 @@ private extension UserClipEmptyCollectionViewCell {
     func setupLayer() {
         let customLayer = CAShapeLayer()
         let frameSize = self.frame.size
-        let shapeRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
+        let shapeRect = CGRect(x: 0, 
+                               y: 0,
+                               width: frameSize.width,
+                               height: frameSize.height)
         
         customLayer.bounds = shapeRect
-        customLayer.position = CGPoint(x: frameSize.width/2, y: frameSize.height/2)
+        customLayer.position = CGPoint(x: frameSize.width/2, 
+                                       y: frameSize.height/2)
         customLayer.fillColor = UIColor.clear.cgColor
         customLayer.strokeColor = UIColor.gray100.cgColor
         customLayer.lineWidth = 2

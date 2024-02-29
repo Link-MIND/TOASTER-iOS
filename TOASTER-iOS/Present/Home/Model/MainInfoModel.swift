@@ -7,11 +7,6 @@
 
 import Foundation
 
-//struct MainModel {
-//    var mainInfoModelList: [MainInfoModel]
-//    let categoryList: [CategoryList]
-//}
-
 struct MainInfoModel {
     let nickname: String
     let readToastNum: Int

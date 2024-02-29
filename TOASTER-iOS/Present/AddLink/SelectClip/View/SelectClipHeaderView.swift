@@ -19,7 +19,7 @@ final class SelectClipHeaderView: UICollectionReusableView {
     // MARK: - Properties
     
     weak var selectClipHeaderViewDelegate: SelectClipHeaderViewlDelegate?
-
+    
     // MARK: - UI Properties
     
     private let desciptLabel = UILabel()
@@ -27,7 +27,7 @@ final class SelectClipHeaderView: UICollectionReusableView {
     private let addClipButton = UIButton()
     
     // MARK: - Life Cycle
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -37,7 +37,7 @@ final class SelectClipHeaderView: UICollectionReusableView {
         setupHierarchy()
         setupLayout()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -54,7 +54,7 @@ extension SelectClipHeaderView {
 private extension SelectClipHeaderView {
     func setupStyle() {
         backgroundColor = .toasterBackground
-    
+        
         desciptLabel.do {
             $0.text = "클립을 선택해주세요"
             $0.textColor = .black900
@@ -76,7 +76,9 @@ private extension SelectClipHeaderView {
     }
     
     func setupHierarchy() {
-        addSubviews(desciptLabel, totalCountLabel, addClipButton)
+        addSubviews(desciptLabel, 
+                    totalCountLabel,
+                    addClipButton)
     }
     
     func setupLayout() {
@@ -95,7 +97,7 @@ private extension SelectClipHeaderView {
             $0.trailing.equalToSuperview().inset(20)
         }
     }
-
+    
     @objc func buttonTapped() {
         selectClipHeaderViewDelegate?.addClipCellTapped()
     }
