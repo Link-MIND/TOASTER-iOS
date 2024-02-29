@@ -16,7 +16,6 @@ final class SelectClipViewModel {
     private var dataEmptyAction: DataChangeAction?
     private var moveBottomAction: DataChangeAction?
     
-    
     typealias NormalChangeAction = () -> Void
     private var unAuthorizedAction: NormalChangeAction?
     private var textFieldEditAction: NormalChangeAction?
@@ -28,23 +27,23 @@ final class SelectClipViewModel {
     // GET
     var selectedClip: [RemindClipModel] = [] {
         didSet {
+            dataChangeAction?(!selectedClip.isEmpty)
             // completeButton.backgroundColor = .toasterBlack
             // clipSelectCollectionView.reloadData()
         }
     }
     
-    var clipData: [RemindClipModel] = [] {
-        didSet {
-            dataChangeAction?(!clipData.isEmpty)
-        }
-    }
-    
+//    var clipData: [RemindClipModel] = [] {
+//        didSet {
+//            dataChangeAction?(!clipData.isEmpty)
+//        }
+//    }
+//    
     init() {
         fetchClipData()
     }
     
 }
-
 
 // MARK: - extension
 
@@ -95,7 +94,7 @@ extension SelectClipViewModel {
                                                    clipCount: $0.toastNum)
                     clipDataList.append(clipData)
                 }
-                self.clipData = clipDataList
+                self.selectedClip = clipDataList
             case .networkFail, .unAuthorized, .notFound:
                 self.unAuthorizedAction?()
             default: break
@@ -125,13 +124,6 @@ extension SelectClipViewModel {
                 if let data = response?.data.isDupicated {
                     if categoryTitle.count != 16 {
                         self.moveBottomAction?(data)
-//                        if data {
-//                            self.addHeightBottom()
-//                            self.addClipBottomSheetView.changeTextField(addButton: false, border: true, error: true, clearButton: true)
-//                            self.addClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
-//                        } else {
-//                            self.minusHeightBottom()
-//                        }
                     }
                 }
             case .networkFail, .unAuthorized, .notFound:

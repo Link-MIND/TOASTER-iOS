@@ -26,6 +26,13 @@ final class SelectClipViewController: UIViewController {
     private let addClipBottomSheetView = AddClipBottomSheetView()
     private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
     
+    private var selectedClipTapped: RemindClipModel? {
+        didSet {
+            completeButton.backgroundColor = .toasterBlack
+        }
+    }
+    
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -37,14 +44,15 @@ final class SelectClipViewController: UIViewController {
         setupDelegate()
         
         setupViewModel()
-        viewModel.fetchClipData()
+        // viewModel.fetchClipData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setupNavigationBar()
-//        viewModel.fetchClipData()
+        viewModel.fetchClipData()
+        //viewModel.
     }
 }
 
@@ -167,6 +175,7 @@ private extension SelectClipViewController {
     }
     
     @objc func completeButtonTapped() {
+        //nextViewController.configureView(forModel: selectedClip)
         viewModel.postSaveLink(url: linkURL, category: categoryID)
     }
 }
@@ -272,88 +281,3 @@ extension SelectClipViewController: AddClipBottomSheetViewDelegate {
         }
     }
 }
-
-//
-//// MARK: - Network
-//extension SelectClipViewController {
-//    // 임베드한 링크, 선택한 클립 id - POST
-//    func postSaveLink(url: String, category: Int?) {
-//            let request = PostSaveLinkRequestDTO(linkUrl: url,
-//                                                 categoryId: category)
-//            NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
-//                switch result {
-//                case .success:
-//                    self.delegate?.saveLinkButtonTapped()
-//                    self.navigationController?.popToRootViewController(animated: true)
-//                case .networkFail, .unAuthorized, .notFound:
-//                    self.changeViewController(viewController: LoginViewController())
-//                case .badRequest, .serverErr:
-//                    self.navigationController?.popToRootViewController(animated: true)
-//                    self.navigationController?.showToastMessage(width: 200, status: .warning, message: "링크 저장에 실패했어요!")
-//                default:
-//                    return
-//                }
-//        }
-//    }
-//    
-//    // 클립 정보 - GET
-//    func fetchClipData() {
-//        NetworkService.shared.clipService.getAllCategory { result in
-//            switch result {
-//            case .success(let response):
-//                var clipDataList: [RemindClipModel] = [RemindClipModel(id: nil,
-//                                                                       title: "전체 클립",
-//                                                                       clipCount: response?.data.toastNumberInEntire ?? 0)]
-//                response?.data.categories.forEach {
-//                    let clipData = RemindClipModel(id: $0.categoryId,
-//                                                   title: $0.categoryTitle,
-//                                                   clipCount: $0.toastNum)
-//                    clipDataList.append(clipData)
-//                }
-//                self.viewModel.selectedClip = clipDataList
-//            case .networkFail, .unAuthorized, .notFound:
-//                self.changeViewController(viewController: LoginViewController())
-//            default: break
-//            }
-//        }
-//    }
-//    
-//    func postAddCategoryAPI(requestBody: String) {
-//        NetworkService.shared.clipService.postAddCategory(requestBody: PostAddCategoryRequestDTO(categoryTitle: requestBody)) { result in
-//            switch result {
-//            case .success:
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-//                    self.addClipBottomSheetView.resetTextField()
-//                    self.addClipBottom.hideBottomSheet()
-//                    self.showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeAddClip)
-//                }
-//                self.fetchClipData()
-//            case .networkFail, .unAuthorized, .notFound:
-//                self.changeViewController(viewController: LoginViewController())
-//            default: return
-//            }
-//        }
-//    }
-//    
-//    func getCheckCategoryAPI(categoryTitle: String) {
-//        NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle) { result in
-//            switch result {
-//            case .success(let response):
-//                if let data = response?.data.isDupicated {
-//                    if categoryTitle.count != 16 {
-//                        if data {
-//                            self.addHeightBottom()
-//                            self.addClipBottomSheetView.changeTextField(addButton: false, border: true, error: true, clearButton: true)
-//                            self.addClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
-//                        } else {
-//                            self.minusHeightBottom()
-//                        }
-//                    }
-//                }
-//            case .networkFail, .unAuthorized, .notFound:
-//                self.changeViewController(viewController: LoginViewController())
-//            default: return
-//            }
-//        }
-//    }  
-//}
