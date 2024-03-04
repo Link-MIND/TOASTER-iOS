@@ -23,7 +23,8 @@ final class EditClipViewModel: NSObject {
     // MARK: - Data
     
     var cellIndex: Int = 0
-    var clipList: ClipModel = ClipModel(allClipToastCount: 0, clips: []) {
+    var clipList: ClipModel = ClipModel(allClipToastCount: 0,
+                                        clips: []) {
         didSet {
             dataChangeAction?()
         }
@@ -66,7 +67,8 @@ extension EditClipViewModel {
     }
     
     func deleteCategoryAPI(deleteCategoryDto: Int) {
-        NetworkService.shared.clipService.deleteCategory(deleteCategoryDto: deleteCategoryDto) { result in
+        NetworkService.shared.clipService.deleteCategory(
+            deleteCategoryDto: deleteCategoryDto) { result in
             switch result {
             case .success:
                 self.getAllCategoryAPI()
@@ -80,8 +82,9 @@ extension EditClipViewModel {
     
     func patchEditPriorityCategoryAPI(requestBody: ClipPriorityEditModel) {
         NetworkService.shared.clipService.patchEditPriorityCategory(
-            requestBody: PatchEditPriorityCategoryRequestDTO(categoryId: requestBody.id,
-                                                                newPriority: requestBody.priority)) { [weak self] result in
+            requestBody: PatchEditPriorityCategoryRequestDTO(
+                categoryId: requestBody.id,
+                newPriority: requestBody.priority)) { [weak self] result in
             switch result {
             case .success:
                 self?.dataChangeAction?()
@@ -94,8 +97,9 @@ extension EditClipViewModel {
     
     func patchEditaNameCategoryAPI(requestBody: ClipNameEditModel) {
         NetworkService.shared.clipService.patchEditNameCategory(
-            requestBody: PatchEditNameCategoryRequestDTO(categoryId: requestBody.id,
-                                                            newTitle: requestBody.title)) { result in
+            requestBody: PatchEditNameCategoryRequestDTO(
+                categoryId: requestBody.id,
+                newTitle: requestBody.title)) { result in
             switch result {
             case .success:
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

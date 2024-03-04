@@ -44,7 +44,7 @@ final class RemindViewModel {
     
     // MARK: - Data
 
-    var timerData: RemindModel = RemindModel(completeTimerModelList: [],
+    private(set) var timerData: RemindModel = RemindModel(completeTimerModelList: [],
                                              waitTimerModelList: []) {
         didSet {
             switch remindViewType {

@@ -24,7 +24,7 @@ final class DetailClipViewModel: NSObject {
     var categoryName: String = ""
     var segmentIndex: Int = 0
     
-    var toastList: DetailClipModel = DetailClipModel(allToastCount: 0, toastList: []) {
+    private(set) var toastList: DetailClipModel = DetailClipModel(allToastCount: 0, toastList: []) {
         didSet {
             dataChangeAction?(!toastList.toastList.isEmpty)
         }

@@ -21,7 +21,7 @@ final class RemindTimerAddViewModel {
     
     // MARK: - Data
     
-    var remindAddData: RemindTimerAddModel? {
+    private(set) var remindAddData: RemindTimerAddModel? {
         didSet {
             dataChangeAction?()
         }

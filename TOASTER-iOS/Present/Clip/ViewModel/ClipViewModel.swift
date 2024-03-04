@@ -21,7 +21,7 @@ final class ClipViewModel: NSObject {
         
     // MARK: - Data
     
-    var clipList: ClipModel = ClipModel(allClipToastCount: 0, clips: []) {
+    private(set) var clipList: ClipModel = ClipModel(allClipToastCount: 0, clips: []) {
         didSet {
             dataChangeAction?(!clipList.clips.isEmpty)
         }

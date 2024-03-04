@@ -16,7 +16,7 @@ final class RemindSelectClipViewModel {
     
     // MARK: - Data
 
-    var clipData: [RemindClipModel] = [] {
+    private(set) var clipData: [RemindClipModel] = [] {
         didSet {
             dataChangeAction?()
         }

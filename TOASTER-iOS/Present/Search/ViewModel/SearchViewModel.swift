@@ -18,8 +18,8 @@ final class SearchViewModel: NSObject {
     
     // MARK: - Data
     
-    var searchResultData: SearchResultModel = SearchResultModel(detailClipList: [],
-                                                                clipList: []) {
+    private(set) var searchResultData: SearchResultModel = SearchResultModel(detailClipList: [],
+                                                                             clipList: []) {
         didSet {
             if searchResultData.clipList.count == 0 &&
                 searchResultData.detailClipList.count == 0 {

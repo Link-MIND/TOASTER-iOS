@@ -27,7 +27,7 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    lazy var isClipNameLabelHidden: Bool = clipNameLabel.isHidden {
+    private lazy var isClipNameLabelHidden: Bool = clipNameLabel.isHidden {
         didSet {
             clipNameLabel.isHidden = isClipNameLabelHidden
             clipNameLabel.snp.updateConstraints {
