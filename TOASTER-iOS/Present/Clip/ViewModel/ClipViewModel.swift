@@ -46,14 +46,13 @@ extension ClipViewModel {
             switch result {
             case .success(let response):
                 let allClipToastCount = response?.data.toastNumberInEntire
-                var clips = [AllClipModel]()
-                response?.data.categories.forEach {
-                    clips.append(AllClipModel(id: $0.categoryId,
-                                              title: $0.categoryTitle,
-                                              toastCount: $0.toastNum))
+                let clips = response?.data.categories.map {
+                    AllClipModel(id: $0.categoryId,
+                                title: $0.categoryTitle,
+                                toastCount: $0.toastNum)
                 }
                 self?.clipList = ClipModel(allClipToastCount: allClipToastCount ?? 0,
-                                           clips: clips)
+                                           clips: clips ?? [])
             case .unAuthorized, .networkFail, .notFound:
                 self?.unAuthorizedAction?()
             default: return

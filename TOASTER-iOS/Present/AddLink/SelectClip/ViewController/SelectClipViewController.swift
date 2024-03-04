@@ -262,16 +262,12 @@ extension SelectClipViewController {
         NetworkService.shared.clipService.getAllCategory { result in
             switch result {
             case .success(let response):
-                var clipDataList: [RemindClipModel] = [RemindClipModel(id: nil,
-                                                                       title: "전체 클립",
-                                                                       clipCount: response?.data.toastNumberInEntire ?? 0)]
-                response?.data.categories.forEach {
-                    let clipData = RemindClipModel(id: $0.categoryId,
-                                                   title: $0.categoryTitle,
-                                                   clipCount: $0.toastNum)
-                    clipDataList.append(clipData)
+                let clipDataList = response?.data.categories.map {
+                    RemindClipModel(id: $0.categoryId,
+                                    title: $0.categoryTitle,
+                                    clipCount: $0.toastNum)
                 }
-                self.selectedClip = clipDataList
+                self.selectedClip = clipDataList ?? []
             case .networkFail, .unAuthorized, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: break

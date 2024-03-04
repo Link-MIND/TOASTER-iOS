@@ -46,23 +46,22 @@ extension SearchViewModel {
         NetworkService.shared.searchService.getMainPageSearch(searchText: forText) { result in
             switch result {
             case .success(let response):
-                var detailClipList: [SearchResultDetailClipModel] = []
-                response?.data?.toasts.forEach {
-                    detailClipList.append(SearchResultDetailClipModel(iD: $0.toastId,
-                                                                      title: $0.toastTitle,
-                                                                      link: $0.linkUrl,
-                                                                      imageURL: $0.thumbnailUrl,
-                                                                      clipTitle: $0.categoryTitle,
-                                                                      isRead: $0.isRead))
+                let detailClipList = response?.data?.toasts.map {
+                    SearchResultDetailClipModel(iD: $0.toastId,
+                                                title: $0.toastTitle,
+                                                link: $0.linkUrl,
+                                                imageURL: $0.thumbnailUrl,
+                                                clipTitle: $0.categoryTitle,
+                                                isRead: $0.isRead)
                 }
-                var clipList: [SearchResultClipModel] = []
-                response?.data?.categories.forEach {
-                    clipList.append(SearchResultClipModel(iD: $0.categoryId,
-                                                          title: $0.title,
-                                                          numberOfDetailClip: $0.toastNum))
+                let clipList = response?.data?.categories.map {
+                    SearchResultClipModel(iD: $0.categoryId,
+                                          title: $0.title,
+                                          numberOfDetailClip: $0.toastNum)
                 }
-                self.searchResultData = SearchResultModel(detailClipList: detailClipList,
-                                                          clipList: clipList)
+                self.searchResultData = SearchResultModel(
+                    detailClipList: detailClipList ?? [],
+                    clipList: clipList ?? [])
             case .badRequest:
                 self.searchResultData = SearchResultModel(detailClipList: [],
                                                           clipList: [])

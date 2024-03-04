@@ -58,17 +58,16 @@ extension DetailClipViewModel {
             switch result {
             case .success(let response):
                 let allToastCount = response?.data.allToastNum
-                var toasts = [ToastListModel]()
-                response?.data.toastListDto.forEach {
-                    toasts.append(ToastListModel(id: $0.toastId,
-                                                 title: $0.toastTitle,
-                                                 url: $0.linkUrl,
-                                                 isRead: $0.isRead,
-                                                 clipTitle: $0.categoryTitle,
-                                                 imageURL: $0.thumbnailUrl))
+                let toasts = response?.data.toastListDto.map {
+                    ToastListModel(id: $0.toastId,
+                                    title: $0.toastTitle,
+                                    url: $0.linkUrl,
+                                    isRead: $0.isRead,
+                                    clipTitle: $0.categoryTitle,
+                                    imageURL: $0.thumbnailUrl)
                 }
                 self.toastList = DetailClipModel(allToastCount: allToastCount ?? 0,
-                                                 toastList: toasts)
+                                                 toastList: toasts ?? [])
             case .unAuthorized, .networkFail, .notFound:
                 self.unAuthorizedAction?()
             default: return
@@ -81,17 +80,16 @@ extension DetailClipViewModel {
             switch result {
             case .success(let response):
                 let allToastCount = response?.data.allToastNum
-                var toasts = [ToastListModel]()
-                response?.data.toastListDto.forEach {
-                    toasts.append(ToastListModel(id: $0.toastId,
-                                                 title: $0.toastTitle,
-                                                 url: $0.linkUrl,
-                                                 isRead: $0.isRead,
-                                                 clipTitle: $0.categoryTitle,
-                                                 imageURL: $0.thumbnailUrl))
+                let toasts = response?.data.toastListDto.map {
+                    ToastListModel(id: $0.toastId,
+                                    title: $0.toastTitle,
+                                    url: $0.linkUrl,
+                                    isRead: $0.isRead,
+                                    clipTitle: $0.categoryTitle,
+                                    imageURL: $0.thumbnailUrl)
                 }
                 self.toastList = DetailClipModel(allToastCount: allToastCount ?? 0,
-                                                 toastList: toasts)
+                                                 toastList: toasts ?? [])
             case .unAuthorized, .networkFail, .notFound:
                 self.unAuthorizedAction?()
             default: return

@@ -11,7 +11,7 @@ import UserNotifications
 final class RemindViewModel {
     
     // MARK: - Properties
-
+    
     typealias DataChangeAction = (RemindViewType) -> Void
     private var dataChangeAction: DataChangeAction?
     
@@ -43,18 +43,18 @@ final class RemindViewModel {
     }
     
     // MARK: - Data
-
+    
     private(set) var timerData: RemindModel = RemindModel(completeTimerModelList: [],
-                                             waitTimerModelList: []) {
+                                                          waitTimerModelList: []) {
         didSet {
             switch remindViewType {
             case .deviceOnAppOnExistData, .deviceOnAppOnNoneData:
                 if timerData.completeTimerModelList.count == 0 &&
                     timerData.waitTimerModelList.count == 0 {
-                        remindViewType = .deviceOnAppOnNoneData
-                    } else {
-                        remindViewType = .deviceOnAppOnExistData
-                    }
+                    remindViewType = .deviceOnAppOnNoneData
+                } else {
+                    remindViewType = .deviceOnAppOnExistData
+                }
             default: break
             }
         }
@@ -104,25 +104,23 @@ extension RemindViewModel {
         NetworkService.shared.timerService.getTimerMainpage { result in
             switch result {
             case .success(let response):
-                var completedList: [CompleteTimerModel] = []
-                response?.data.completedTimerList.forEach {
-                    completedList.append(CompleteTimerModel(id: $0.timerId,
-                                                            remindDay: $0.remindDate,
-                                                            remindTime: $0.remindTime, 
-                                                            clipID: $0.categoryId,
-                                                            clipName: $0.comment))
+                let completedList = response?.data.completedTimerList.map {
+                    CompleteTimerModel(id: $0.timerId,
+                                       remindDay: $0.remindDate,
+                                       remindTime: $0.remindTime,
+                                       clipID: $0.categoryId,
+                                       clipName: $0.comment)
                 }
-                var waitList: [WaitTimerModel] = []
-                response?.data.waitingTimerList.forEach {
-                    waitList.append(WaitTimerModel(id: $0.timerId, 
-                                                   clipID: $0.categoryId,
-                                                   clipName: $0.comment,
-                                                   remindDay: $0.remindDates,
-                                                   remindTime: $0.remindTime,
-                                                   isEnable: $0.isAlarm))
+                let waitList = response?.data.waitingTimerList.map {
+                    WaitTimerModel(id: $0.timerId,
+                                   clipID: $0.categoryId,
+                                   clipName: $0.comment,
+                                   remindDay: $0.remindDates,
+                                   remindTime: $0.remindTime,
+                                   isEnable: $0.isAlarm)
                 }
-                self.timerData = RemindModel(completeTimerModelList: completedList,
-                                             waitTimerModelList: waitList)
+                self.timerData = RemindModel(completeTimerModelList: completedList ?? [],
+                                             waitTimerModelList: waitList ?? [])
             case .unAuthorized, .networkFail:
                 self.unAuthorizedAction?()
             default: break

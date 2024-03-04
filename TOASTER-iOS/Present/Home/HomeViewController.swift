@@ -321,13 +321,10 @@ extension HomeViewController {
             switch result {
             case .success(let response):
                 if let data = response?.data {
-                    var categoryList: [CategoryList] = [CategoryList(categoryId: 0,
-                                                                     categroyTitle: "전체 클립",
-                                                                     toastNum: data.allToastNum)]
-                    data.mainCategoryListDto.forEach {
-                        categoryList.append(CategoryList(categoryId: $0.categoryId,
-                                                         categroyTitle: $0.categoryTitle,
-                                                         toastNum: $0.toastNum))
+                    let categoryList = data.mainCategoryListDto.map {
+                        CategoryList(categoryId: $0.categoryId,
+                                     categroyTitle: $0.categoryTitle,
+                                     toastNum: $0.toastNum)
                     }
                     self.mainInfoList = MainInfoModel(nickname: data.nickname,
                                                       readToastNum: data.readToastNum,
@@ -347,16 +344,13 @@ extension HomeViewController {
         NetworkService.shared.toastService.getWeeksLink { result in
             switch result {
             case .success(let response):
-                var list: [WeeklyLinkModel] = []
-                if let data = response?.data {
-                    for idx in 0..<data.count {
-                        list.append(WeeklyLinkModel(toastId: data[idx].linkId,
-                                                    toastTitle: data[idx].linkTitle,
-                                                    toastImg: data[idx].linkImg ?? "",
-                                                    toastLink: data[idx].linkUrl))
-                    }
-                    self.weeklyLinkList = list
+                let list = response?.data.map {
+                    WeeklyLinkModel(toastId: $0.linkId,
+                                    toastTitle: $0.linkTitle,
+                                    toastImg: $0.linkImg ?? "",
+                                    toastLink: $0.linkUrl)
                 }
+                self.weeklyLinkList = list
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
             default:
@@ -370,17 +364,15 @@ extension HomeViewController {
         NetworkService.shared.searchService.getRecommendSite { result in
             switch result {
             case .success(let response):
-                var list: [RecommendSiteModel] = []
-                if let data = response?.data {
-                    for idx in 0..<data.count {
-                        list.append(RecommendSiteModel(siteId: data[idx].siteId,
-                                                       siteTitle: data[idx].siteTitle,
-                                                       siteUrl: data[idx].siteUrl,
-                                                       siteImg: data[idx].siteImg,
-                                                       siteSub: data[idx].siteSub))
-                    }
-                    self.recommendSiteList = list
+                let list = response?.data.map {
+                    RecommendSiteModel(siteId: $0.siteId,
+                                       siteTitle: $0.siteTitle,
+                                       siteUrl: $0.siteUrl,
+                                       siteImg: $0.siteImg,
+                                       siteSub: $0.siteSub)
+                    
                 }
+                self.recommendSiteList = list
             case .unAuthorized, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
             default:
