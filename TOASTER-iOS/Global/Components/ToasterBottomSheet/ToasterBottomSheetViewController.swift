@@ -62,10 +62,11 @@ final class ToasterBottomSheetViewController: UIViewController {
 
 // MARK: - Networks
 
+@MainActor
 extension ToasterBottomSheetViewController {
     /// 바텀 시트 표출
     func showBottomSheet() {
-        DispatchQueue.main.async {
+        Task {
             self.updateBottomSheetLayout()
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut, animations: {
                 self.dimmedBackView.backgroundColor = .black900.withAlphaComponent(0.5)
@@ -76,7 +77,7 @@ extension ToasterBottomSheetViewController {
     
     /// 바텀 시트 내리기
     func hideBottomSheet() {
-        DispatchQueue.main.async {
+        Task {
             self.bottomSheetView.snp.remakeConstraints {
                 $0.bottom.leading.trailing.equalToSuperview()
             }
@@ -94,7 +95,7 @@ extension ToasterBottomSheetViewController {
     
     /// 바텀 시트 올라와있는 상태에서 높이 변화 시키기
     func changeHeightBottomSheet(height: CGFloat) {
-        DispatchQueue.main.async {
+        Task {
             self.bottomSheetView.snp.remakeConstraints {
                 $0.bottom.leading.trailing.equalToSuperview()
                 $0.top.equalToSuperview().inset(self.view.frame.height - self.keyboardHeight - height)
