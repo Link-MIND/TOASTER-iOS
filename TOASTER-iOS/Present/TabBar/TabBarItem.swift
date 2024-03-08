@@ -15,15 +15,15 @@ enum TabBarItem: CaseIterable {
     var normalItem: UIImage? {
         switch self {
         case .home:
-            return ImageLiterals.TabBar.home.withTintColor(.gray150)
+            return .icHome24.withTintColor(.gray150)
         case .clip:
-            return ImageLiterals.TabBar.clip.withTintColor(.gray150)
+            return .icClipFull24.withTintColor(.gray150)
         case .plus:
-            return ImageLiterals.TabBar.plus
+            return .fabPlus
         case .timer:
-            return ImageLiterals.TabBar.timer.withTintColor(.gray150)
+            return .icTimer24.withTintColor(.gray150)
         case .my:
-            return ImageLiterals.TabBar.my.withTintColor(.gray150)
+            return .icMy24.withTintColor(.gray150)
         }
     }
     
@@ -31,15 +31,15 @@ enum TabBarItem: CaseIterable {
     var selectedItem: UIImage? {
         switch self {
         case .home:
-            return ImageLiterals.TabBar.home.withTintColor(.black900)
+            return .icHome24.withTintColor(.black900)
         case .clip:
-            return ImageLiterals.TabBar.clip.withTintColor(.black900)
+            return .icClipFull24.withTintColor(.black900)
         case .plus:
-            return ImageLiterals.TabBar.plus
+            return .fabPlus
         case .timer:
-            return ImageLiterals.TabBar.timer.withTintColor(.black900)
+            return .icTimer24.withTintColor(.black900)
         case .my:
-            return ImageLiterals.TabBar.my.withTintColor(.black900)
+            return .icMy24.withTintColor(.black900)
         }
     }
     

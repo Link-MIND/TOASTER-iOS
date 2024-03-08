@@ -86,7 +86,7 @@ extension DetailClipListCollectionViewCell {
         if let imageURL = forModel.toastList[index].imageURL {
             linkImage.kf.setImage(with: URL(string: imageURL))
         } else {
-            linkImage.image = ImageLiterals.Clip.thumb
+            linkImage.image = .imgThumbnail
         }
     }
     
@@ -107,7 +107,7 @@ extension DetailClipListCollectionViewCell {
         if let imageURL = forModel.imageURL {
             linkImage.kf.setImage(with: URL(string: imageURL))
         } else {
-            linkImage.image = ImageLiterals.Clip.thumb
+            linkImage.image = .imgThumbnail
         }
     }
 }
@@ -142,7 +142,7 @@ private extension DetailClipListCollectionViewCell {
         }
         
         modifiedButton.do {
-            $0.setImage(ImageLiterals.Common.more, for: .normal)
+            $0.setImage(.icMore24, for: .normal)
         }
         
         dimmedView.do {

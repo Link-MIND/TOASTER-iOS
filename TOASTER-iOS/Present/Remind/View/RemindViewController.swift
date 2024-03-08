@@ -124,7 +124,7 @@ private extension RemindViewController {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                 hasRightButton: true,
                                                                 mainTitle: StringOrImageType.string("TIMER"),
-                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.plus),
+                                                                rightButton: StringOrImageType.image(.icPlus24),
                                                                 rightButtonAction: plusButtonTapped)
         
         if let navigationController = navigationController as? ToasterNavigationController {

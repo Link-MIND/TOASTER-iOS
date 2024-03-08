@@ -60,9 +60,12 @@
 		3F2FA1812B4A32A200EDBF95 /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FA1802B4A32A200EDBF95 /* LogoutUseCase.swift */; };
 		3F617CB52B4EC2EE00956E69 /* MypageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F617CB42B4EC2EE00956E69 /* MypageHeaderView.swift */; };
 		3F617CB82B4ECB6000956E69 /* MypageUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F617CB72B4ECB6000956E69 /* MypageUserModel.swift */; };
+		3F6CD49D2B86229A00DEC113 /* CustomPageIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6CD49C2B86229A00DEC113 /* CustomPageIndicatorView.swift */; };
+		3FA56CD72B85C76B00B9FCFE /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA56CD62B85C76B00B9FCFE /* OnboardingViewController.swift */; };
 		3FACF9B82B4FE306007E5A8F /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */; };
 		3FACF9BA2B50FEB4007E5A8F /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */; };
 		3FBFDEC02B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBFDEBF2B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift */; };
+		3FE28DC22B879B1400B6AED8 /* OnboardingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE28DC12B879B1400B6AED8 /* OnboardingType.swift */; };
 		3FE828352B54E58E00F10732 /* APIInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE828342B54E58E00F10732 /* APIInterceptor.swift */; };
 		6B0E85C32B561746001BC15F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6B0E85C22B561746001BC15F /* FirebaseAnalytics */; };
 		6B0E85C52B561746001BC15F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 6B0E85C42B561746001BC15F /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -104,7 +107,6 @@
 		6B6AE6A82B3FF6D5000E2366 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6A72B3FF6D5000E2366 /* UITextField+.swift */; };
 		6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6A92B3FF6EA000E2366 /* UIStackView+.swift */; };
 		6B6AE6AC2B3FF6F7000E2366 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6AB2B3FF6F7000E2366 /* UIColor+.swift */; };
-		6B6AE6AE2B3FF721000E2366 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */; };
 		6BC4935E2B4414B400544249 /* ToasterPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC4935D2B4414B400544249 /* ToasterPopupViewController.swift */; };
 		6BC493682B45D7B100544249 /* ToasterNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC493672B45D7B100544249 /* ToasterNavigationController.swift */; };
 		6BC4936C2B48633700544249 /* ToasterNavigationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC4936B2B48633700544249 /* ToasterNavigationType.swift */; };
@@ -250,10 +252,13 @@
 		3F2FA1802B4A32A200EDBF95 /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
 		3F617CB42B4EC2EE00956E69 /* MypageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageHeaderView.swift; sourceTree = "<group>"; };
 		3F617CB72B4ECB6000956E69 /* MypageUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageUserModel.swift; sourceTree = "<group>"; };
+		3F6CD49C2B86229A00DEC113 /* CustomPageIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageIndicatorView.swift; sourceTree = "<group>"; };
+		3FA56CD62B85C76B00B9FCFE /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
 		3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		3FBFDEBF2B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthenticateAdapter.swift; sourceTree = "<group>"; };
 		3FBFDEC12B4D3BBD00C58393 /* TOASTER-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TOASTER-iOS.entitlements"; sourceTree = "<group>"; };
+		3FE28DC12B879B1400B6AED8 /* OnboardingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingType.swift; sourceTree = "<group>"; };
 		3FE828342B54E58E00F10732 /* APIInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInterceptor.swift; sourceTree = "<group>"; };
 		6B0E85D82B564913001BC15F /* RemindTimerAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindTimerAddViewModel.swift; sourceTree = "<group>"; };
 		6B0E85DB2B564949001BC15F /* RemindTimerAddModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindTimerAddModel.swift; sourceTree = "<group>"; };
@@ -278,7 +283,6 @@
 		6B6AE6A72B3FF6D5000E2366 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		6B6AE6A92B3FF6EA000E2366 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		6B6AE6AB2B3FF6F7000E2366 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
-		6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
 		6BC4935D2B4414B400544249 /* ToasterPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterPopupViewController.swift; sourceTree = "<group>"; };
 		6BC493672B45D7B100544249 /* ToasterNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterNavigationController.swift; sourceTree = "<group>"; };
 		6BC4936B2B48633700544249 /* ToasterNavigationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterNavigationType.swift; sourceTree = "<group>"; };
@@ -608,6 +612,7 @@
 			isa = PBXGroup;
 			children = (
 				3F2BFAC82B40370D00DA76B7 /* SocialLoginButtonView.swift */,
+				3F6CD49C2B86229A00DEC113 /* CustomPageIndicatorView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -761,7 +766,6 @@
 		6B6AE6822B3FF510000E2366 /* Consts */ = {
 			isa = PBXGroup;
 			children = (
-				6B6AE6AD2B3FF721000E2366 /* ImageLiterals.swift */,
 				39BC5B182B411037004024E6 /* FontLiterals.swift */,
 				830517642B42D996009FFB60 /* StringLiterals.swift */,
 			);
@@ -910,9 +914,11 @@
 				3F2FA1832B4CFCA400EDBF95 /* Adapter */,
 				3F2FA1822B4CFC8C00EDBF95 /* UseCase */,
 				3F2BFAC72B4036E200DA76B7 /* View */,
+				3FA56CD62B85C76B00B9FCFE /* OnboardingViewController.swift */,
 				6B6AE69E2B3FF5D7000E2366 /* LoginViewController.swift */,
 				3F2BFACA2B40373C00DA76B7 /* SocialLoginType.swift */,
 				3F2FA17A2B4928A200EDBF95 /* LoginError.swift */,
+				3FE28DC12B879B1400B6AED8 /* OnboardingType.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1577,6 +1583,7 @@
 				39BC5B192B411037004024E6 /* FontLiterals.swift in Sources */,
 				39E794F92B479C8600F16A38 /* ClipEmptyView.swift in Sources */,
 				39BE4BC02B4ABB9E002B471D /* DetailClipEmptyView.swift in Sources */,
+				3F6CD49D2B86229A00DEC113 /* CustomPageIndicatorView.swift in Sources */,
 				6BE6DAB32B547BEF008B06FA /* GetRecommendSiteResponseDTO.swift in Sources */,
 				6B6AE6532B3FF101000E2366 /* ViewController.swift in Sources */,
 				6B6AE6902B3FF59C000E2366 /* DetailClipViewController.swift in Sources */,
@@ -1660,6 +1667,7 @@
 				6BE6DA012B4F2ACA008B06FA /* RemindSelectClipViewController.swift in Sources */,
 				6BE6DA592B50B45E008B06FA /* PatchPushAlarmResponseDTO.swift in Sources */,
 				39BE4BB62B4ABA97002B471D /* DetailClipListCollectionViewCell.swift in Sources */,
+				3FE28DC22B879B1400B6AED8 /* OnboardingType.swift in Sources */,
 				3F617CB52B4EC2EE00956E69 /* MypageHeaderView.swift in Sources */,
 				6BE6DA9C2B54752B008B06FA /* GetTimerMainpageResponseDTO.swift in Sources */,
 				6B6AE6AA2B3FF6EA000E2366 /* UIStackView+.swift in Sources */,
@@ -1700,6 +1708,7 @@
 				3FACF9B82B4FE306007E5A8F /* KeyChainService.swift in Sources */,
 				3F2FA1812B4A32A200EDBF95 /* LogoutUseCase.swift in Sources */,
 				6BE6D9D62B4E8935008B06FA /* RemindAlarmOffView.swift in Sources */,
+				3FA56CD72B85C76B00B9FCFE /* OnboardingViewController.swift in Sources */,
 				83CFC33B2B57324700A2EB2B /* SaveLinkModel.swift in Sources */,
 				3FBFDEC02B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift in Sources */,
 				390925CB2B4F049800487AA3 /* LinkWebNavigationView.swift in Sources */,
@@ -1708,7 +1717,6 @@
 				6BE6DA552B50B43E008B06FA /* GetSettingPageResponseDTO.swift in Sources */,
 				830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */,
 				390925C42B4EF64100487AA3 /* LinkWebViewController.swift in Sources */,
-				6B6AE6AE2B3FF721000E2366 /* ImageLiterals.swift in Sources */,
 				6B6AE6A42B3FF6B0000E2366 /* UIViewController+.swift in Sources */,
 				39EF96012B501E8A00F301FC /* EditClipNoticeView.swift in Sources */,
 				8315CD8E2B547EE30061F377 /* SelectClipHeaderView.swift in Sources */,

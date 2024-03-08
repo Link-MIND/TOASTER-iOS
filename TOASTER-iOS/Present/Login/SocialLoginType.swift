@@ -40,9 +40,9 @@ enum SocialLoginType {
     var logoImage: UIImage {
         switch self {
         case .kakao:
-            return ImageLiterals.Login.kakaoLogo
+            return .icKakaoLogin24
         case .apple:
-            return ImageLiterals.Login.appleLogo
+            return .icAppleLogin24
         }
     }
 }

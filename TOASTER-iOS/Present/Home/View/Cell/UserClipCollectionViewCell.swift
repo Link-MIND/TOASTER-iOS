@@ -75,7 +75,7 @@ private extension UserClipCollectionViewCell {
         self.makeRounded(radius: 12)
         
         clipImage.do {
-            $0.image = ImageLiterals.Home.clipFull
+            $0.image = .icClipFull24
         }
         
         titleLabel.do {

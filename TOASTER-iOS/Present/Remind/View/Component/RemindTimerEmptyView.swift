@@ -70,7 +70,7 @@ private extension RemindTimerEmptyView {
         backgroundColor = .clear
         
         emptyImageView.do {
-            $0.image = ImageLiterals.Remind.timerEmpty
+            $0.image = .imgTimer
         }
         
         emptyLabel.do {

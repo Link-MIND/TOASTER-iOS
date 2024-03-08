@@ -15,14 +15,15 @@ final class LoginViewController: UIViewController {
     // MARK: - Properties
     
     var loginUseCase: LoginUseCase?
+    private var currentIndex = 0
     
     // MARK: - UI Properties
     
     private let kakaoSocialLoginButtonView = SocialLoginButtonView(type: .kakao)
     private let appleSocialLoginButtonView = SocialLoginButtonView(type: .apple)
-    private let titleLogoImageView = UIImageView()
-    private let titleLabel = UILabel()
-    private let loginImageView = UIImageView()
+    private let socialLoginButtonStackView = UIStackView()
+    private let onboardingPageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+    private let customPageIndicatorView = CustomPageIndicatorView()
     
     // MARK: - Life Cycle
 
@@ -32,7 +33,9 @@ final class LoginViewController: UIViewController {
         setupStyle()
         setupHierarchy()
         setupLayout()
+        setupDelegate()
         setupAddTarget()
+        selectedViewControllerSetting()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,62 +48,46 @@ final class LoginViewController: UIViewController {
 
 private extension LoginViewController {
     func setupStyle() {
-        view.backgroundColor = .white
-        
-        titleLogoImageView.do {
-            $0.image = ImageLiterals.Logo.wordmark
-            $0.contentMode = .scaleAspectFit
-        }
-        
-        titleLabel.do {
-            $0.text = StringLiterals.Login.subTitle
-            $0.textColor = .black900
-            $0.font = .suitBold(size: 18)
-            $0.numberOfLines = 0
-        }
-        
-        loginImageView.do {
-            $0.image = ImageLiterals.Login.loginLogo
-            $0.contentMode = .scaleAspectFit
+        view.backgroundColor = .gray50
+
+        socialLoginButtonStackView.do {
+            $0.axis = .vertical
+            $0.distribution = .fillEqually
+            $0.spacing = 12
         }
     }
     
     func setupHierarchy() {
-        view.addSubviews(titleLogoImageView, titleLabel, loginImageView, kakaoSocialLoginButtonView, appleSocialLoginButtonView)
+        addChild(onboardingPageViewController)
+        view.addSubviews(onboardingPageViewController.view, customPageIndicatorView, socialLoginButtonStackView)
+        socialLoginButtonStackView.addArrangedSubviews(appleSocialLoginButtonView, kakaoSocialLoginButtonView)
+    }
+
+    func setupLayout() {
+        onboardingPageViewController.view.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(customPageIndicatorView.snp.top)
+        }
+        
+        customPageIndicatorView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(socialLoginButtonStackView.snp.top).inset(view.convertByHeightRatio(-52))
+            $0.height.equalTo(8)
+        }
+          
+        socialLoginButtonStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(view.convertByHeightRatio(26))
+            $0.height.equalTo(136) // Button height(62 * 2) + StackView Spacing(12)
+        }
+        
+        onboardingPageViewController.didMove(toParent: self)
     }
     
-    func setupLayout() {
-        titleLogoImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(view.convertByHeightRatio(115))
-            $0.leading.equalToSuperview().offset(32)
-            $0.height.equalTo(39)
-            $0.width.equalTo(215)
-        }
-        
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLogoImageView.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(32)
-            $0.height.equalTo(45)
-        }
-        
-        loginImageView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(view.convertByHeightRatio(60))
-            $0.centerX.equalToSuperview()
-            $0.height.equalTo(loginImageView.snp.height).multipliedBy(304/294)
-            $0.bottom.equalTo(appleSocialLoginButtonView.snp.top).inset(-10)
-        }
-        
-        appleSocialLoginButtonView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalTo(kakaoSocialLoginButtonView.snp.top).inset(-12)
-            $0.height.equalTo(62)
-        }
-        
-        kakaoSocialLoginButtonView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(34)
-            $0.height.equalTo(62)
-        }
+    private func setupDelegate() {
+        onboardingPageViewController.dataSource = self
+        onboardingPageViewController.delegate = self
     }
     
     func setupAddTarget() {
@@ -158,6 +145,12 @@ private extension LoginViewController {
             }
         }
     }
+    
+    func createOnboardingViewController(index: Int) -> OnboardingViewController? {
+        guard index >= 0, index < OnboardingType.allCases.count else { return nil }
+        let onboardType = OnboardingType.allCases[index]
+        return OnboardingViewController(onboardType: onboardType)
+    }
 
     // MARK: - @objc
     
@@ -206,6 +199,43 @@ private extension LoginViewController {
             } catch let error {
                 print("Apple Login Error:", error)
             }
+        }
+    }
+}
+
+// MARK: - UIPageViewController Delegate
+
+extension LoginViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    
+    // 이전 페이지를 가져오는 메서드
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let currentVC = viewController as? OnboardingViewController, let currentIndex = OnboardingType.allCases.firstIndex(of: currentVC.onboardType), currentIndex > 0 else { return nil }
+
+        let newIndex = currentIndex - 1
+        return createOnboardingViewController(index: newIndex)
+    }
+    
+    // 다음 페이지를 가져오는 메서드
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let currentVC = viewController as? OnboardingViewController, let currentIndex = OnboardingType.allCases.firstIndex(of: currentVC.onboardType), currentIndex < OnboardingType.allCases.count - 1  else { return nil }
+                
+        let newIndex = currentIndex + 1
+        return createOnboardingViewController(index: newIndex)
+    }
+    
+    // 페이지 전환 애니메이션이 완료되었을 때 호출되는 메서드
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        guard completed, let currentVC = pageViewController.viewControllers?.first as? OnboardingViewController, let currentIndex = OnboardingType.allCases.firstIndex(of: currentVC.onboardType) else {
+            return
+        }
+        self.currentIndex = currentIndex
+        customPageIndicatorView.changeCurrentPageIndex(index: currentIndex)
+    }
+    
+    // 초기 화면을 설정하는 메서드
+    func selectedViewControllerSetting() {
+        if let selectViewController = createOnboardingViewController(index: 0) {
+            onboardingPageViewController.setViewControllers([selectViewController], direction: .forward, animated: false)
         }
     }
 }

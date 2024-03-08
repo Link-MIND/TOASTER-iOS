@@ -6,12 +6,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "wordmark (1).png",
+      "filename" : "wordmark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "wordmark (2).png",
+      "filename" : "wordmark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

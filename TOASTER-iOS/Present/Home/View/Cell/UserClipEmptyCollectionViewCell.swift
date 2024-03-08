@@ -49,7 +49,7 @@ private extension UserClipEmptyCollectionViewCell {
         backgroundColor = .clear
         
         addClipImage.do {
-            $0.image = ImageLiterals.Home.addBtn
+            $0.image = .btnPlus
         }
         
         addClipLabel.do {

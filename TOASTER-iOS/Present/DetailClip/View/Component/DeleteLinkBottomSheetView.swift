@@ -49,7 +49,7 @@ extension DeleteLinkBottomSheetView {
 
 private extension DeleteLinkBottomSheetView {
     func setupStyle() {
-        backgroundColor = .toasterBackground
+        backgroundColor = .gray50
         
         deleteButton.do {
             var configuration = UIButton.Configuration.filled()

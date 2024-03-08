@@ -94,7 +94,7 @@ private extension ToasterNavigationController {
         }
         
         backButton.do {
-            $0.setImage(ImageLiterals.Common.arrowLeft, for: .normal)
+            $0.setImage(.icArrowLeft24, for: .normal)
             $0.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         }
         

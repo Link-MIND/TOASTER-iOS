@@ -96,7 +96,7 @@ private extension AddLinkViewController {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                 hasRightButton: true,
                                                                 mainTitle: StringOrImageType.string("링크 저장"),
-                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.close),
+                                                                rightButton: StringOrImageType.image(.icClose24),
                                                                 rightButtonAction: closeButtonTapped)
         
         if let navigationController = navigationController as? ToasterNavigationController {
