@@ -22,7 +22,7 @@ final class HomeViewModel {
     
     // MARK: - Data
     
-    var mainInfoList: MainInfoModel = MainInfoModel(nickname: "", 
+    private(set) var mainInfoList: MainInfoModel = MainInfoModel(nickname: "",
                                                     readToastNum: 0,
                                                     allToastNum: 0,
                                                     mainCategoryListDto: []) {
@@ -31,7 +31,7 @@ final class HomeViewModel {
         }
     }
     
-    var weeklyLinkList: [WeeklyLinkModel] = [WeeklyLinkModel(toastId: 0, 
+    private(set) var weeklyLinkList: [WeeklyLinkModel] = [WeeklyLinkModel(toastId: 0,
                                                              toastTitle: "",
                                                              toastImg: "",
                                                              toastLink: "")] {
@@ -40,7 +40,7 @@ final class HomeViewModel {
         }
     }
     
-    var recommendSiteList: [RecommendSiteModel] = [RecommendSiteModel(siteId: 0, 
+    private(set) var recommendSiteList: [RecommendSiteModel] = [RecommendSiteModel(siteId: 0, 
                                                                       siteTitle: nil ?? "",
                                                                       siteUrl: nil ?? "",
                                                                       siteImg: nil ?? "",
@@ -49,8 +49,6 @@ final class HomeViewModel {
             dataChangeAction?(!recommendSiteList.isEmpty)
         }
     }
-    
-    
 }
 
 // MARK: - extension

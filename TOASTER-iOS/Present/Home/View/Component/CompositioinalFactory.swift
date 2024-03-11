@@ -61,7 +61,8 @@ enum CompositionalFactory {
         section.boundarySupplementaryItems = [
             NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                           heightDimension: .absolute(4)),
-                                                        elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)]
+                                                        elementKind: UICollectionView.elementKindSectionFooter, 
+                                                        alignment: .bottom)]
         return section
     }
     
@@ -97,10 +98,12 @@ enum CompositionalFactory {
         section.boundarySupplementaryItems = [
             NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                           heightDimension: .absolute(46)),
-                                                        elementKind: UICollectionView.elementKindSectionHeader, alignment: .top),
+                                                        elementKind: UICollectionView.elementKindSectionHeader, 
+                                                        alignment: .top),
             NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                           heightDimension: .absolute(17)),
-                                                        elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)]
+                                                        elementKind: UICollectionView.elementKindSectionFooter, 
+                                                        alignment: .bottom)]
         return section
     }
     
@@ -125,7 +128,8 @@ enum CompositionalFactory {
             heightDimension: .estimated(600)
         )
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
-                                                     subitem: item, count: 5)
+                                                     subitem: item, 
+                                                     count: 5)
         
         // section
         let section = NSCollectionLayoutSection(group: group)
@@ -138,10 +142,12 @@ enum CompositionalFactory {
         section.boundarySupplementaryItems = [
             NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                           heightDimension: .absolute(50)),
-                                                        elementKind: UICollectionView.elementKindSectionHeader, alignment: .top),
+                                                        elementKind: UICollectionView.elementKindSectionHeader, 
+                                                        alignment: .top),
             NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                           heightDimension: .absolute(20)),
-                                                        elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)]
+                                                        elementKind: UICollectionView.elementKindSectionFooter, 
+                                                        alignment: .bottom)]
         return section
     }
     
@@ -181,7 +187,8 @@ enum CompositionalFactory {
         section.boundarySupplementaryItems = [
             NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                                           heightDimension: .absolute(50)),
-                                                        elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)]
+                                                        elementKind: UICollectionView.elementKindSectionHeader, 
+                                                        alignment: .top)]
         return section
     }
 }

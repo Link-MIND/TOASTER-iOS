@@ -121,10 +121,10 @@ extension HomeViewController: UICollectionViewDataSource {
                 let model = viewModel.mainInfoList.mainCategoryListDto
                 if indexPath.item == 0 {
                     cell.bindData(forModel: model[indexPath.item],
-                                  icon: ImageLiterals.Home.clipDefault.withTintColor(.black900))
+                                  icon: .icAllClip24.withTintColor(.black900))
                 } else {
                     cell.bindData(forModel: model[indexPath.item],
-                                  icon: ImageLiterals.Home.clipFull)
+                                  icon: .icClipFull24)
                 }
                 return cell
             }
@@ -287,8 +287,8 @@ private extension HomeViewController {
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
                                                                 hasRightButton: true,
-                                                                mainTitle: StringOrImageType.image(ImageLiterals.Logo.wordmark),
-                                                                rightButton: StringOrImageType.image(ImageLiterals.Common.setting),
+                                                                mainTitle: StringOrImageType.image(.wordmark),
+                                                                rightButton: StringOrImageType.image(.icSettings24),
                                                                 rightButtonAction: rightButtonTapped)
         
         if let navigationController = navigationController as? ToasterNavigationController {
