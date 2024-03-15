@@ -74,7 +74,9 @@ private extension WeeklyLinkCollectionViewCell {
     }
     
     func setupHierarchy() {
-        addSubviews(linkImage, linkTitleLabel, linkLabel)
+        addSubviews(linkImage, 
+                    linkTitleLabel,
+                    linkLabel)
     }
     
     func setupLayout() {

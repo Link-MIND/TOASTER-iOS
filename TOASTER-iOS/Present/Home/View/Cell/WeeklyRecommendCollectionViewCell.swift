@@ -75,7 +75,9 @@ private extension WeeklyRecommendCollectionViewCell {
     }
     
     func setupHierarchy() {
-        addSubviews(brandImage, titleLabel, subLabel)
+        addSubviews(brandImage, 
+                    titleLabel,
+                    subLabel)
     }
     
     func setupLayout() {
