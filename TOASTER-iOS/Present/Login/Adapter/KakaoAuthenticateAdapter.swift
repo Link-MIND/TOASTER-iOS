@@ -40,7 +40,7 @@ final class KakaoAuthenticateAdapter: NSObject, AuthenticationAdapterProtocol {
     func logout() async throws -> Bool {
         return try await withCheckedThrowingContinuation { continuation in
             UserApi.shared.logout {(error) in
-                if let error = error {
+                if let error {
                     print(error)
                     continuation.resume(throwing: error)
                 } else {
@@ -56,7 +56,7 @@ final class KakaoAuthenticateAdapter: NSObject, AuthenticationAdapterProtocol {
     func getLoginToken() async throws -> SocialLoginTokenModel {
         return try await withCheckedThrowingContinuation { continuation in
             UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-                if let error = error {
+                if let error {
                     print(error)
                     continuation.resume(throwing: error)
                 } else {
@@ -76,7 +76,7 @@ final class KakaoAuthenticateAdapter: NSObject, AuthenticationAdapterProtocol {
     func getTokenKakaoAccount() async throws -> SocialLoginTokenModel {
         return try await withCheckedThrowingContinuation { continuation in
             UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-                if let error = error {
+                if let error {
                     print(error)
                     continuation.resume(throwing: error)
                 } else {

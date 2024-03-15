@@ -15,8 +15,8 @@ final class HomeView: UIView {
     // MARK: - Properties
     
     private let collectionViewLayout = CompositionalFactory.create()
-    lazy var collectionView = UICollectionView(frame: .zero, 
-                                               collectionViewLayout: collectionViewLayout)
+    private(set) lazy var collectionView = UICollectionView(frame: .zero, 
+                                                            collectionViewLayout: collectionViewLayout)
     
     // MARK: - Life Cycle
     

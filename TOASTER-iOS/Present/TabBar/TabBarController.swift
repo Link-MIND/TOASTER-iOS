@@ -39,16 +39,15 @@ private extension TabBarController {
     }
     
     func addTabBarController() {
-        var viewControllers = [UIViewController]()
-        for item in TabBarItem.allCases {
+        let viewControllers = TabBarItem.allCases.map {
             let currentViewController = createViewController(
-                title: item.itemTitle ?? "",
-                image: item.normalItem ?? UIImage(),
-                selectedImage: item.selectedItem ?? UIImage(),
-                viewController: item.targetViewController,
-                inset: item == TabBarItem.plus ? UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0) : nil
+                title: $0.itemTitle ?? "",
+                image: $0.normalItem ?? UIImage(),
+                selectedImage: $0.selectedItem ?? UIImage(),
+                viewController: $0.targetViewController,
+                inset: $0 == TabBarItem.plus ? UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0) : nil
             )
-            viewControllers.append(currentViewController)
+            return currentViewController
         }
         setViewControllers(viewControllers, animated: false)
     }

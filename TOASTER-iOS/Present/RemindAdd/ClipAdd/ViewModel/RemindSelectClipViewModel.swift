@@ -16,7 +16,7 @@ final class RemindSelectClipViewModel {
     
     // MARK: - Data
 
-    var clipData: [RemindClipModel] = [] {
+    private(set) var clipData: [RemindClipModel] = [] {
         didSet {
             dataChangeAction?()
         }
@@ -38,16 +38,12 @@ extension RemindSelectClipViewModel {
         NetworkService.shared.clipService.getAllCategory { result in
             switch result {
             case .success(let response):
-                var clipDataList: [RemindClipModel] = [RemindClipModel(id: 0,
-                                                                       title: "전체 클립",
-                                                                       clipCount: response?.data.toastNumberInEntire ?? 0)]
-                response?.data.categories.forEach {
-                    let clipData = RemindClipModel(id: $0.categoryId,
-                                                   title: $0.categoryTitle,
-                                                   clipCount: $0.toastNum)
-                    clipDataList.append(clipData)
+                let clipDataList = response?.data.categories.map {
+                    RemindClipModel(id: $0.categoryId,
+                                    title: $0.categoryTitle,
+                                    clipCount: $0.toastNum)
                 }
-                self.clipData = clipDataList
+                self.clipData = clipDataList ?? []
             default: break
             }
         }

@@ -99,7 +99,7 @@ private extension LoginViewController {
     /// - Returns: SocialLogin 을 통해 반환받은 Token 을 SocialLoginTokenModel 로 반환,
     /// Social Login Adapter 가 할당되지 않았을 때 LoginError 반환
     func attemptLogin() async throws -> SocialLoginTokenModel {
-        guard let loginUseCase = self.loginUseCase else {
+        guard let loginUseCase else {
             throw LoginError.notSettingUsecase
         }
         

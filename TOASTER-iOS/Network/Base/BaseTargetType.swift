@@ -59,11 +59,11 @@ extension BaseTargetType {
     }
     
     var task: Task {
-        if let parameter = queryParameter {
-            return .requestParameters(parameters: parameter, encoding: URLEncoding.default)
+        if let queryParameter {
+            return .requestParameters(parameters: queryParameter, encoding: URLEncoding.default)
         }
-        if let parameter = requestBodyParameter {
-            return .requestJSONEncodable(parameter)
+        if let requestBodyParameter {
+            return .requestJSONEncodable(requestBodyParameter)
         }
         return .requestPlain
     }

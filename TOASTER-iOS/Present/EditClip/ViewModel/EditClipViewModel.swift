@@ -23,7 +23,8 @@ final class EditClipViewModel: NSObject {
     // MARK: - Data
     
     var cellIndex: Int = 0
-    var clipList: ClipModel = ClipModel(allClipToastCount: 0, clips: []) {
+    var clipList: ClipModel = ClipModel(allClipToastCount: 0,
+                                        clips: []) {
         didSet {
             dataChangeAction?()
         }
@@ -50,14 +51,13 @@ extension EditClipViewModel {
             switch result {
             case .success(let response):
                 let allClipToastCount = response?.data.toastNumberInEntire
-                var clips = [AllClipModel]()
-                response?.data.categories.forEach {
-                    clips.append(AllClipModel(id: $0.categoryId,
-                                              title: $0.categoryTitle,
-                                              toastCount: $0.toastNum))
+                let clips = response?.data.categories.map {
+                    AllClipModel(id: $0.categoryId,
+                                 title: $0.categoryTitle,
+                                 toastCount: $0.toastNum)
                 }
                 self.clipList = ClipModel(allClipToastCount: allClipToastCount ?? 0,
-                                          clips: clips)
+                                          clips: clips ?? [])
             case .unAuthorized, .networkFail, .notFound:
                 self.unAuthorizedAction?()
             default: return
@@ -66,7 +66,8 @@ extension EditClipViewModel {
     }
     
     func deleteCategoryAPI(deleteCategoryDto: Int) {
-        NetworkService.shared.clipService.deleteCategory(deleteCategoryDto: deleteCategoryDto) { result in
+        NetworkService.shared.clipService.deleteCategory(
+            deleteCategoryDto: deleteCategoryDto) { result in
             switch result {
             case .success:
                 self.getAllCategoryAPI()
@@ -80,8 +81,9 @@ extension EditClipViewModel {
     
     func patchEditPriorityCategoryAPI(requestBody: ClipPriorityEditModel) {
         NetworkService.shared.clipService.patchEditPriorityCategory(
-            requestBody: PatchEditPriorityCategoryRequestDTO(categoryId: requestBody.id,
-                                                                newPriority: requestBody.priority)) { [weak self] result in
+            requestBody: PatchEditPriorityCategoryRequestDTO(
+                categoryId: requestBody.id,
+                newPriority: requestBody.priority)) { [weak self] result in
             switch result {
             case .success:
                 self?.dataChangeAction?()
@@ -94,8 +96,9 @@ extension EditClipViewModel {
     
     func patchEditaNameCategoryAPI(requestBody: ClipNameEditModel) {
         NetworkService.shared.clipService.patchEditNameCategory(
-            requestBody: PatchEditNameCategoryRequestDTO(categoryId: requestBody.id,
-                                                            newTitle: requestBody.title)) { result in
+            requestBody: PatchEditNameCategoryRequestDTO(
+                categoryId: requestBody.id,
+                newTitle: requestBody.title)) { result in
             switch result {
             case .success:
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

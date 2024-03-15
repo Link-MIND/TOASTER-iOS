@@ -224,24 +224,24 @@ private extension ToasterPopupViewController {
     }
     
     @objc func leftButtonTapped() {
-        if let action = leftButtonHandler {
-            action()
+        if let leftButtonHandler {
+            leftButtonHandler()
         } else {
             cancleAction()
         }
     }
     
     @objc func rightButtonTapped() {
-        if let action = rightButtonHandler {
-            action()
+        if let rightButtonHandler {
+            rightButtonHandler()
         } else {
             cancleAction()
         }
     }
     
     @objc func centerButtonTapped() {
-        if let action = centerButtonHandler {
-            action()
+        if let centerButtonHandler {
+            centerButtonHandler()
         } else {
             cancleAction()
         }

@@ -53,8 +53,8 @@ extension RemindCollectionHeaderView {
     func configureHeader(forTitle: String, 
                          forTimerCount: Int? = nil) {
         titleLabel.text = forTitle
-        if let count = forTimerCount {
-            timerCount = count
+        if let forTimerCount {
+            timerCount = forTimerCount
             countView.isHidden = false
         } else {
             countView.isHidden = true

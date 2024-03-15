@@ -13,12 +13,12 @@ extension UITextField {
     /// - Parameter left: 왼쪽에 추가할 패딩 너비
     /// - Parameter right: 오른쪽에 추가할 패딩 너비
     func addPadding(left: CGFloat? = nil, right: CGFloat? = nil) {
-        if let leftPadding = left {
-            leftView = UIView(frame: CGRect(x: 0, y: 0, width: leftPadding, height: 0))
+        if let left {
+            leftView = UIView(frame: CGRect(x: 0, y: 0, width: left, height: 0))
             leftViewMode = .always
         }
-        if let rightPadding = right {
-            rightView = UIView(frame: CGRect(x: 0, y: 0, width: rightPadding, height: 0))
+        if let right {
+            rightView = UIView(frame: CGRect(x: 0, y: 0, width: right, height: 0))
             rightViewMode = .always
         }
     }
