@@ -31,6 +31,7 @@ enum StringLiterals {
         static let close = "닫기"
         static let cancel = "취소"
         static let next = "다음"
+        static let editTitle = "제목 편집"
     }
     
     enum Placeholder {
