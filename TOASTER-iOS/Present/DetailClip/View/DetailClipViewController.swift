@@ -19,7 +19,7 @@ final class DetailClipViewController: UIViewController {
     private let detailClipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     private let deleteLinkBottomSheetView = DeleteLinkBottomSheetView()
-    private lazy var bottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 72, insertView: deleteLinkBottomSheetView)
+    private lazy var bottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 126, insertView: deleteLinkBottomSheetView)
     
     // MARK: - Life Cycle
     
