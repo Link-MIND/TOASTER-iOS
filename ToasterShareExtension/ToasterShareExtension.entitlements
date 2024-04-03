@@ -6,5 +6,9 @@
 	<array>
 		<string>group.TeamLinkMIND.TOASTER-iOS</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)group.TeamLinkMIND.TOASTER-iOS.KeyChain</string>
+	</array>
 </dict>
 </plist>
