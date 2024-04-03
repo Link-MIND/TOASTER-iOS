@@ -19,12 +19,12 @@ extension UILabel {
     }
     
     func asFont(targetStrings: [String], font: UIFont) {
-        guard let originText = text else { return }
-        let attributedString = NSMutableAttributedString(string: originText)
+        guard let text else { return }
+        let attributedString = NSMutableAttributedString(string: text)
         
         // 대상 문자열들을 반복하여 폰트를 변경
         for targetString in targetStrings {
-            let range = (originText as NSString).range(of: targetString, options: .caseInsensitive)
+            let range = (text as NSString).range(of: targetString, options: .caseInsensitive)
             attributedString.addAttribute(.font, value: font, range: range)
         }
         
@@ -51,7 +51,7 @@ extension UILabel {
     
     /// UILabel 간격 조정
     func setLineSpacing(spacing: CGFloat) {
-        guard let text = text else { return }
+        guard let text else { return }
         
         let attributeString = NSMutableAttributedString(string: text)
         let style = NSMutableParagraphStyle()

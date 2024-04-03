@@ -82,12 +82,12 @@ final class RemindTimerAddViewController: UIViewController {
 extension RemindTimerAddViewController {
     func configureView(forModel: RemindClipModel?) {
         buttonType = .add
-        if let model = forModel {
-            mainLabel.text = "\(model.title) 클립을"
+        if let forModel {
+            mainLabel.text = "\(forModel.title) 클립을"
             mainLabel.font = .suitMedium(size: 18)
-            mainLabel.asFont(targetString: model.title,
+            mainLabel.asFont(targetString: forModel.title,
                              font: .suitSemiBold(size: 18))
-            categoryID = forModel?.id
+            categoryID = forModel.id
         }
     }
     
@@ -368,13 +368,13 @@ private extension RemindTimerAddViewController {
         
         switch buttonType {
         case .add:
-            guard let categoryID = categoryID else { return }
+            guard let categoryID else { return }
             self.viewModel.postClipData(forClipID: categoryID,
                                         forModel: RemindTimerAddModel(clipTitle: "", 
                                                                       remindTime: dateString,
                                                                       remindDates: Array(selectedIndex)))
         case .edit:
-            guard let timerID = timerID else { return }
+            guard let timerID else { return }
             self.viewModel.editClipData(forModel: RemindTimerEditModel(remindID: timerID,
                                                                        remindTime: dateString,
                                                                        remindDates: Array(selectedIndex)))

@@ -136,8 +136,8 @@ private extension SettingViewController {
     }
     
     func setupWarningView() {
-        if let toggle = isToggle {
-            if toggle {
+        if let isToggle {
+            if isToggle {
                 settingTableView.snp.remakeConstraints {
                     $0.top.equalTo(view.safeAreaLayoutGuide)
                     $0.leading.trailing.bottom.equalToSuperview()
