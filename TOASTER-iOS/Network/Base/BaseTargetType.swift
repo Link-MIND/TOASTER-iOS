@@ -9,13 +9,17 @@ import Foundation
 
 import Moya
 
+enum TokenHealthType {
+    case accessToken
+    case refreshToken
+}
+
 ///  헤더에 들어가는 토큰의 상태에 따른 Type
 enum HeaderType {
     case socialTokenHeader(socialToken: String)
     case accessTokenHeader
     case refreshTokenHeader
-    case accessTokenHealthHeader
-    case refreshTokenHealthHeader
+    case tokenHealthHeader(tokenHealthType: TokenHealthType)
 }
 
 /// 각 API에 따라 공통된 Path 값 (존재하지 않는 경우 빈 String 값)
@@ -55,10 +59,13 @@ extension BaseTargetType {
             header["accessToken"] = KeyChainService.loadAccessToken(key: Config.accessTokenKey)
         case .refreshTokenHeader:
             header["refreshToken"] = KeyChainService.loadRefreshToken(key: Config.refreshTokenKey)
-        case .accessTokenHealthHeader:
-            header["token"] = KeyChainService.loadAccessToken(key: Config.accessTokenKey)
-        case .refreshTokenHealthHeader:
-            header["token"] = KeyChainService.loadRefreshToken(key: Config.refreshTokenKey)
+        case .tokenHealthHeader(let tokenHealthType):
+            switch tokenHealthType {
+            case .accessToken:
+                header["token"] = KeyChainService.loadAccessToken(key: Config.accessTokenKey)
+            case .refreshToken:
+                header["token"] = KeyChainService.loadAccessToken(key: Config.accessTokenKey)
+            }
         }
         
         return header
