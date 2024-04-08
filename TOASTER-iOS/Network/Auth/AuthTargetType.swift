@@ -15,6 +15,7 @@ enum AuthTargetType {
     case postRefreshToken
     case postLogout
     case deleteWithdraw
+    case postTokenHealth(tokenType: TokenHealthType)
 }
 
 extension AuthTargetType: BaseTargetType {
@@ -23,6 +24,7 @@ extension AuthTargetType: BaseTargetType {
         switch self {
         case .postSocialLogin(let socialToken, _): return .socialTokenHeader(socialToken: socialToken)
         case .postRefreshToken: return .refreshTokenHeader
+        case .postTokenHealth(let tokenType): return .tokenHealthHeader(tokenHealthType: tokenType)
         default: return .accessTokenHeader
         }
     }
@@ -44,6 +46,7 @@ extension AuthTargetType: BaseTargetType {
         case .postRefreshToken: return utilPath.rawValue + "/token"
         case .postLogout: return utilPath.rawValue + "/sign-out"
         case .deleteWithdraw: return utilPath.rawValue + "/withdraw"
+        case .postTokenHealth: return utilPath.rawValue + "/token/health"
         }
     }
     
@@ -53,6 +56,7 @@ extension AuthTargetType: BaseTargetType {
         case .postRefreshToken: return .post
         case .postLogout: return .post
         case .deleteWithdraw: return .delete
+        case .postTokenHealth: return .post
         }
     }
 }
