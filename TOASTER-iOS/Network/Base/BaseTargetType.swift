@@ -64,7 +64,7 @@ extension BaseTargetType {
             case .accessToken:
                 header["token"] = KeyChainService.loadAccessToken(key: Config.accessTokenKey)
             case .refreshToken:
-                header["token"] = KeyChainService.loadAccessToken(key: Config.accessTokenKey)
+                header["token"] = KeyChainService.loadAccessToken(key: Config.refreshTokenKey)
             }
         }
         
