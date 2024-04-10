@@ -11,7 +11,7 @@ import Social
 import SnapKit
 import Then
 
-@objc(Share2ViewController)
+@objc(ShareViewController)
 class ShareViewController: UIViewController {
 
     // MARK: - Properties
@@ -60,9 +60,11 @@ class ShareViewController: UIViewController {
         print("viewDidAppear View height: \(self.view.frame.size.height)")
         
         if isUseShareExtension {
+            // 상단 Title 높이 + 데이터 개수 * cell 높이 + 하단 버튼 + SafeArea
             let calculateBottomSheetHeight = titleHeight + (viewModel.clipData.count) * 54 + 116
             
             let bottomSheetHeight = { () -> Int in
+                // 화면에 보여줄 크키보다 Sheet 높이가 커질 경우 (데이터가 많을 경우)
                 if Int(self.view.frame.height) < calculateBottomSheetHeight {
                     print("높이 초과")
                     self.clipSelectCollectionView.isScrollEnabled = true
@@ -213,14 +215,9 @@ private extension ShareViewController {
             switch result {
             case .success(let response):
                 self?.isUseShareExtension = true
-                if let responseData = response?.data {
-                    print("AccessTokenHealth", responseData.tokenHealth)
-                }
-                
             case .unAuthorized, .networkFail:
                 self?.isUseShareExtension = false
                 self?.showAlert()
-                
             default:
                 self?.isUseShareExtension = false
                 self?.showAlert()
@@ -231,19 +228,11 @@ private extension ShareViewController {
     func postSaveLink(url: String, category: Int?) {
         let request = PostSaveLinkRequestDTO(linkUrl: url,
                                              categoryId: category)
-        NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
+        NetworkService.shared.toastService.postSaveLink(requestBody: request) { [weak self] result in
             switch result {
             case .success:
                 print("저장 성공")
-                self.extensionContext?.completeRequest(returningItems: nil, completionHandler: { [weak self] (success) in
-                    if success {
-//                        UIView.animate(withDuration: 0.3, animations: {
-//                            self?.view.transform = CGAffineTransform(translationX: 0, y: self?.view.frame.height ?? 0.0)
-//                        }, completion: nil)
-    //                            self?.dismiss(animated: true, completion: nil) // Share Extension 닫기
-                        }
-                    })
-                
+                self?.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
             case .networkFail, .unAuthorized, .notFound:
                 print("저장 실패")
             case .badRequest, .serverErr:
@@ -255,7 +244,7 @@ private extension ShareViewController {
     }
 }
 
-// MARK: - 로그인 유무 Alert
+// MARK: - Alert
 
 private extension ShareViewController {
     func showAlert() {
