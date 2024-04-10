@@ -23,12 +23,19 @@ final class RemindSelectClipCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+
+    var isShareExtension = false {
+        didSet {
+            updateRoundedStyle()
+        }
+    }
     
     // MARK: - UI Properties
     
     private let clipImageView: UIImageView = UIImageView(image: .icClip24Black)
     private let clipTitleLabel: UILabel = UILabel()
     private let clipCountLabel: UILabel = UILabel()
+    private let separatorView = UIView()
     
     // MARK: - Life Cycle
         
@@ -48,14 +55,23 @@ final class RemindSelectClipCollectionViewCell: UICollectionViewCell {
 // MARK: - Extension
 
 extension RemindSelectClipCollectionViewCell {
-    func configureCell(forModel: RemindClipModel) {
+    func configureCell(forModel: RemindClipModel, icon: UIImage) {
         clipTitleLabel.text = forModel.title
         clipCountLabel.text = "\(forModel.clipCount)개"
+        clipImageView.image = isSelected == true ? icon.withTintColor(.toasterPrimary) : icon
     }
     
-    func configureCell(forModel: SelectClipModel) {
+    func configureCell(forModel: SelectClipModel, icon: UIImage) {
         clipTitleLabel.text = forModel.title
         clipCountLabel.text = "\(forModel.clipCount)개"
+        clipImageView.image = isSelected == true ? icon.withTintColor(.toasterPrimary) : icon
+    }
+    
+    func configureCell(forModel: RemindClipModel, icon: UIImage, isShareExtension: Bool) {
+        clipTitleLabel.text = forModel.title
+        clipCountLabel.text = "\(forModel.clipCount)개"
+        clipImageView.image = isSelected == true ? icon.withTintColor(.toasterPrimary) : icon
+        self.isShareExtension = isShareExtension
     }
 }
 
@@ -64,7 +80,6 @@ extension RemindSelectClipCollectionViewCell {
 private extension RemindSelectClipCollectionViewCell {
     func setupStyle() {
         backgroundColor = .toasterWhite
-        makeRounded(radius: 12)
         
         clipTitleLabel.do {
             $0.font = .suitSemiBold(size: 16)
@@ -75,6 +90,8 @@ private extension RemindSelectClipCollectionViewCell {
             $0.font = .suitSemiBold(size: 14)
             $0.textColor = .gray600
         }
+        
+        updateRoundedStyle()
     }
     
     func setupHierarchy() {
@@ -99,15 +116,33 @@ private extension RemindSelectClipCollectionViewCell {
     }
     
     func setupSelected() {
-        clipImageView.image = .icClip24Black.withTintColor(.toasterPrimary)
+        if clipTitleLabel.text == "전체 클립" {
+            clipImageView.image = .icAllClip24.withTintColor(.toasterPrimary)
+        } else {
+            clipImageView.image = .icClip24Black.withTintColor(.toasterPrimary)
+        }
+        
         [clipTitleLabel, clipCountLabel].forEach {
             $0.textColor = .toasterPrimary
         }
     }
     
     func setupDeselected() {
-        clipImageView.image = .icClip24Black
+        if clipTitleLabel.text == "전체 클립" {
+            clipImageView.image = .icAllClip24
+        } else {
+            clipImageView.image = .icClip24Black
+        }
+
         clipTitleLabel.textColor = .toasterBlack
         clipCountLabel.textColor = .gray600
+    }
+    
+    func updateRoundedStyle() {
+        if isShareExtension {
+            makeRounded(radius: 0)
+        } else {
+            makeRounded(radius: 12)
+        }
     }
 }

@@ -50,17 +50,14 @@
 		39EF96012B501E8A00F301FC /* EditClipNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF96002B501E8A00F301FC /* EditClipNoticeView.swift */; };
 		39EF96042B5020D600F301FC /* EditClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF96032B5020D600F301FC /* EditClipCollectionViewCell.swift */; };
 		3F1F26182BAA8E7D004F75CE /* SUIT-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0E2B410EF2004024E6 /* SUIT-Bold.otf */; };
-		3F1F261A2BAA967D004F75CE /* SelectClipBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F26192BAA967D004F75CE /* SelectClipBottomSheetView.swift */; };
 		3F1F261B2BAA9820004F75CE /* RemindSelectClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA032B4F2AF5008B06FA /* RemindSelectClipCollectionViewCell.swift */; };
 		3F1F261C2BAA9887004F75CE /* RemindSelectClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA0A2B4F3063008B06FA /* RemindSelectClipViewModel.swift */; };
 		3F1F261D2BAA98C8004F75CE /* RemindClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA062B4F2FC5008B06FA /* RemindClipModel.swift */; };
 		3F1F261F2BAAAED7004F75CE /* ToastStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39049C8C2B43EEF400C9196E /* ToastStatus.swift */; };
 		3F1F26202BAAB34B004F75CE /* SelectClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD902B5521F70061F377 /* SelectClipModel.swift */; };
 		3F1F26222BAAB395004F75CE /* ToasterToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */; };
-		3F1F26262BAAC231004F75CE /* Share2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F26252BAAC231004F75CE /* Share2ViewController.swift */; };
+		3F1F26262BAAC231004F75CE /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F26252BAAC231004F75CE /* ShareViewController.swift */; };
 		3F1F26292BAADE01004F75CE /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FA1742B45C0AF00EDBF95 /* Config.swift */; };
-		3F1F262B2BAC0B37004F75CE /* ClipSelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F262A2BAC0B37004F75CE /* ClipSelectTableViewCell.swift */; };
-		3F1F262D2BAC530B004F75CE /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F262C2BAC530B004F75CE /* EntryViewController.swift */; };
 		3F2BFAC92B40370D00DA76B7 /* SocialLoginButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BFAC82B40370D00DA76B7 /* SocialLoginButtonView.swift */; };
 		3F2BFACB2B40373C00DA76B7 /* SocialLoginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BFACA2B40373C00DA76B7 /* SocialLoginType.swift */; };
 		3F2FA1752B45C0AF00EDBF95 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FA1742B45C0AF00EDBF95 /* Config.swift */; };
@@ -75,8 +72,6 @@
 		3F3ED27A2BA1A25B004E79F0 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */; };
 		3F3ED27B2BA1A298004E79F0 /* BaseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA1F2B504433008B06FA /* BaseTargetType.swift */; };
 		3F3ED27C2BA1A29F004E79F0 /* BaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA382B50636B008B06FA /* BaseAPIService.swift */; };
-		3F3ED27D2BA1A2A2004E79F0 /* MoyaPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA332B50594B008B06FA /* MoyaPlugin.swift */; };
-		3F3ED27E2BA1A2A6004E79F0 /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA352B5059CE008B06FA /* NetworkResult.swift */; };
 		3F3ED27F2BA1A2A9004E79F0 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA482B50ADC2008B06FA /* NetworkService.swift */; };
 		3F3ED2802BA1A2B0004E79F0 /* APIInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE828342B54E58E00F10732 /* APIInterceptor.swift */; };
 		3F3ED2812BA1A3F5004E79F0 /* ClipAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA602B50B742008B06FA /* ClipAPIService.swift */; };
@@ -141,6 +136,9 @@
 		3FACF9B82B4FE306007E5A8F /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */; };
 		3FACF9BA2B50FEB4007E5A8F /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */; };
 		3FBFDEC02B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBFDEBF2B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift */; };
+		3FE00F082BC5076200CC821E /* PostTokenHealthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8654E2BBD799600A9DB8F /* PostTokenHealthResponseDTO.swift */; };
+		3FE00F0B2BC6328900CC821E /* MoyaPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE00F0A2BC6328900CC821E /* MoyaPlugin.swift */; };
+		3FE00F0C2BC632A500CC821E /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA352B5059CE008B06FA /* NetworkResult.swift */; };
 		3FE28DC22B879B1400B6AED8 /* OnboardingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE28DC12B879B1400B6AED8 /* OnboardingType.swift */; };
 		3FE828352B54E58E00F10732 /* APIInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE828342B54E58E00F10732 /* APIInterceptor.swift */; };
 		3FF2BF092BA17492001D7DC1 /* ToasterShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3FF2BEFF2BA17492001D7DC1 /* ToasterShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -344,10 +342,7 @@
 		39EF95FE2B501BD600F301FC /* EditClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClipViewController.swift; sourceTree = "<group>"; };
 		39EF96002B501E8A00F301FC /* EditClipNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClipNoticeView.swift; sourceTree = "<group>"; };
 		39EF96032B5020D600F301FC /* EditClipCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClipCollectionViewCell.swift; sourceTree = "<group>"; };
-		3F1F26192BAA967D004F75CE /* SelectClipBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipBottomSheetView.swift; sourceTree = "<group>"; };
-		3F1F26252BAAC231004F75CE /* Share2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Share2ViewController.swift; sourceTree = "<group>"; };
-		3F1F262A2BAC0B37004F75CE /* ClipSelectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipSelectTableViewCell.swift; sourceTree = "<group>"; };
-		3F1F262C2BAC530B004F75CE /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
+		3F1F26252BAAC231004F75CE /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		3F2BFAC82B40370D00DA76B7 /* SocialLoginButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginButtonView.swift; sourceTree = "<group>"; };
 		3F2BFACA2B40373C00DA76B7 /* SocialLoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginType.swift; sourceTree = "<group>"; };
 		3F2FA1742B45C0AF00EDBF95 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -367,6 +362,7 @@
 		3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		3FBFDEBF2B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthenticateAdapter.swift; sourceTree = "<group>"; };
 		3FBFDEC12B4D3BBD00C58393 /* TOASTER-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TOASTER-iOS.entitlements"; sourceTree = "<group>"; };
+		3FE00F0A2BC6328900CC821E /* MoyaPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaPlugin.swift; sourceTree = "<group>"; };
 		3FE28DC12B879B1400B6AED8 /* OnboardingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingType.swift; sourceTree = "<group>"; };
 		3FE828342B54E58E00F10732 /* APIInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInterceptor.swift; sourceTree = "<group>"; };
 		3FF2BEFF2BA17492001D7DC1 /* ToasterShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ToasterShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -786,10 +782,8 @@
 			children = (
 				3F7D91712BA18C93004A022F /* ToasterShareExtension.entitlements */,
 				3FF2BF062BA17492001D7DC1 /* Info.plist */,
-				3F1F26192BAA967D004F75CE /* SelectClipBottomSheetView.swift */,
-				3F1F26252BAAC231004F75CE /* Share2ViewController.swift */,
-				3F1F262A2BAC0B37004F75CE /* ClipSelectTableViewCell.swift */,
-				3F1F262C2BAC530B004F75CE /* EntryViewController.swift */,
+				3F1F26252BAAC231004F75CE /* ShareViewController.swift */,
+				3FE00F0A2BC6328900CC821E /* MoyaPlugin.swift */,
 			);
 			path = ToasterShareExtension;
 			sourceTree = "<group>";
@@ -1765,15 +1759,16 @@
 				3F7D917A2BA1A05F004A022F /* UIView+.swift in Sources */,
 				3F3ED2AE2BA1CD10004E79F0 /* BottomType.swift in Sources */,
 				3F3ED2822BA1A3F8004E79F0 /* ClipTargetType.swift in Sources */,
+				3FE00F0C2BC632A500CC821E /* NetworkResult.swift in Sources */,
 				3F3ED2832BA1A3FD004E79F0 /* GetAllCategoryResponseDTO.swift in Sources */,
 				3F1F261C2BAA9887004F75CE /* RemindSelectClipViewModel.swift in Sources */,
 				3F3ED28F2BA1A45F004E79F0 /* UserAPIService.swift in Sources */,
 				3F3ED2902BA1A45F004E79F0 /* PatchPushAlarmResponseDTO.swift in Sources */,
-				3F1F261A2BAA967D004F75CE /* SelectClipBottomSheetView.swift in Sources */,
 				3F3ED2912BA1A45F004E79F0 /* UserTargetType.swift in Sources */,
 				3F3ED2922BA1A45F004E79F0 /* GetSettingPageResponseDTO.swift in Sources */,
 				3F3ED2932BA1A45F004E79F0 /* GetMyPageResponseDTO.swift in Sources */,
 				3F3ED2B62BA1D6C8004E79F0 /* UILabel+.swift in Sources */,
+				3FE00F0B2BC6328900CC821E /* MoyaPlugin.swift in Sources */,
 				3F1F261B2BAA9820004F75CE /* RemindSelectClipCollectionViewCell.swift in Sources */,
 				3F3ED29E2BA1A478004E79F0 /* TimerAPIService.swift in Sources */,
 				3F3ED29F2BA1A478004E79F0 /* GetTimerMainpageResponseDTO.swift in Sources */,
@@ -1787,11 +1782,9 @@
 				3F3ED2972BA1A46E004E79F0 /* GetWeeksLinkResponseDTO.swift in Sources */,
 				3F3ED29B2BA1A475004E79F0 /* PatchEditTimerRequestDTO.swift in Sources */,
 				3F3ED29C2BA1A475004E79F0 /* PatchEditTimerTitleRequestDTO.swift in Sources */,
-				3F1F262D2BAC530B004F75CE /* EntryViewController.swift in Sources */,
 				3F3ED29D2BA1A475004E79F0 /* PostCreateTimerRequestDTO.swift in Sources */,
-				3F1F262B2BAC0B37004F75CE /* ClipSelectTableViewCell.swift in Sources */,
 				3F3ED2982BA1A46E004E79F0 /* ToasterTargetType.swift in Sources */,
-				3F1F26262BAAC231004F75CE /* Share2ViewController.swift in Sources */,
+				3F1F26262BAAC231004F75CE /* ShareViewController.swift in Sources */,
 				3F1F26222BAAB395004F75CE /* ToasterToastMessageView.swift in Sources */,
 				3F3ED2992BA1A46E004E79F0 /* PatchOpenLinkResponseDTO.swift in Sources */,
 				3F3ED29A2BA1A46E004E79F0 /* ToasterAPIService.swift in Sources */,
@@ -1805,6 +1798,7 @@
 				3F3ED2A52BA1A47E004E79F0 /* SearchAPIService.swift in Sources */,
 				3F3ED2962BA1A46B004E79F0 /* PostSaveLinkRequestDTO.swift in Sources */,
 				3F3ED2882BA1A400004E79F0 /* PatchEditPriorityCategoryRequestDTO.swift in Sources */,
+				3FE00F082BC5076200CC821E /* PostTokenHealthResponseDTO.swift in Sources */,
 				3F3ED2842BA1A3FD004E79F0 /* GetCheckCategoryResponseDTO.swift in Sources */,
 				3F3ED2852BA1A3FD004E79F0 /* GetDetailCategoryResponseDTO.swift in Sources */,
 				3F3ED2802BA1A2B0004E79F0 /* APIInterceptor.swift in Sources */,
@@ -1813,9 +1807,7 @@
 				3F3ED27C2BA1A29F004E79F0 /* BaseAPIService.swift in Sources */,
 				3F3ED2B32BA1D59D004E79F0 /* ClipListCollectionViewCell.swift in Sources */,
 				3F3ED2B72BA1D897004E79F0 /* SearchResultModel.swift in Sources */,
-				3F3ED27D2BA1A2A2004E79F0 /* MoyaPlugin.swift in Sources */,
 				3F3ED2812BA1A3F5004E79F0 /* ClipAPIService.swift in Sources */,
-				3F3ED27E2BA1A2A6004E79F0 /* NetworkResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
