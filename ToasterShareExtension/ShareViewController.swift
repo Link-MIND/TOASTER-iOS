@@ -12,7 +12,7 @@ import SnapKit
 import Then
 
 @objc(Share2ViewController)
-class Share2ViewController: UIViewController {
+class ShareViewController: UIViewController {
 
     // MARK: - Properties
     private var urlString = ""
@@ -23,9 +23,14 @@ class Share2ViewController: UIViewController {
             nextBottomButton.backgroundColor = .toasterBlack
         }
     }
-    private let titleHeight = 64
-    var sharingData:NSExtensionContext!
     
+    private var titleHeight: Int {
+        return isUseShareExtension ? 64 : 0
+    }
+    
+    private let appURL = "TOASTER://"
+    private var isUseShareExtension = false
+
     // MARK: - UI Components
     
     private let titleLabel = UILabel()
@@ -38,9 +43,6 @@ class Share2ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = true
-        
-        view.backgroundColor = .clear
         
         getUrl()
         setupStyle()
@@ -50,103 +52,47 @@ class Share2ViewController: UIViewController {
         setupButton()
         setupRegisterCell()
         setupViewModel()
-//        showAlert()
-    }
-    
-    func showAlert() {
-        let alert = UIAlertController(title: "로그인이 필요한 서비스예요", message: "로그인 세션이 만료되었거나\n서비스 가입이 필요해요.\n앱으로 이동하시겠어요?", preferredStyle: .alert)
-     
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-        let cancelAction = UIAlertAction(title: "취소", style: .destructive, handler: nil)
-        
-        alert.addAction(cancelAction)
-        alert.addAction(okAction)
-        
-        present(alert, animated: true, completion: nil)
-    }
-    
-//    @objc func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
-//        if gesture.direction == .down {
-//            // ViewController를 내리는 동작 수행
-//            self.hideExtensionWithCompletionHandler(completion: { _ in
-//                self.sharingData?.completeRequest(returningItems: nil, completionHandler: nil)
-//            })
-//        }
-//    }
-//    
-//    @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
-//        let translation = gesture.translation(in: view)
-//        print(translation.y)
-//        if gesture.state == .ended {
-//            
-////            UIView.animate(withDuration: 0.3, animations: {
-////                self.navigationController!.view.transform = CGAffineTransform(translationX: 0, y: translation.y)
-////            }, completion: nil)
-//            
-//            if translation.y > 0 {
-//                // ViewController를 내리는 동작 수행
-//                print(translation.y)
-//                self.hideExtensionWithCompletionHandler(completion: { _ in
-//                    self.sharingData?.completeRequest(returningItems: nil, completionHandler: nil)
-//                })
-//            }
-//        }
-//    }
-//    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        getUrl()
-//        print("viewWillAppear View height: \(self.view.frame.size.height)")
-//        self.view.transform = CGAffineTransform(translationX: 0, y: self.view.frame.size.height)
-//            UIView.animate(withDuration: 0.3, animations: { () -> Void in
-//                self.view.transform = .identity
-//            })
+        fetchCheckTokenHealth()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("viewDidAppear View height: \(self.view.frame.size.height)")
         
-        let calculateBottomSheetHeight = titleHeight + (viewModel.clipData.count) * 54 + 116
-        
-        let bottomSheetHeight = { () -> Int in
-            if Int(self.view.frame.height) < calculateBottomSheetHeight {
-                print("높이 초과")
-                self.clipSelectCollectionView.isScrollEnabled = true
-                return Int(self.view.frame.height)
-            } else {
-                print("높이 이하")
-                return calculateBottomSheetHeight
+        if isUseShareExtension {
+            let calculateBottomSheetHeight = titleHeight + (viewModel.clipData.count) * 54 + 116
+            
+            let bottomSheetHeight = { () -> Int in
+                if Int(self.view.frame.height) < calculateBottomSheetHeight {
+                    print("높이 초과")
+                    self.clipSelectCollectionView.isScrollEnabled = true
+                    return Int(self.view.frame.height)
+                } else {
+                    print("높이 이하")
+                    return calculateBottomSheetHeight
+                }
+            }
+            
+            bottomSheetView.snp.remakeConstraints {
+                $0.height.equalTo(bottomSheetHeight())
+                $0.bottom.leading.trailing.equalToSuperview()
+            }
+
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseInOut, animations: {
+                    self.view.layoutIfNeeded()
+                })
             }
         }
-        
-        bottomSheetView.snp.remakeConstraints {
-            $0.height.equalTo(bottomSheetHeight())
-            $0.bottom.leading.trailing.equalToSuperview()
-        }
-        
-        DispatchQueue.main.async { // curveEaseInOut
-            UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseInOut, animations: {
-//                self.view.backgroundColor = .black900.withAlphaComponent(0.5)
-                self.view.layoutIfNeeded()
-            })
-        }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-//        print("viewDidLayoutSubviews")
-    }
-    
-    deinit {
-        print("Share2ViewController deinit")
     }
 }
 
 // MARK: - Private Extensions
 
-private extension Share2ViewController {
+private extension ShareViewController {
     func setupStyle() {
+        view.backgroundColor = .clear
+        
         titleLabel.do {
             $0.font = .suitBold(size: 18)
             $0.textColor = .toasterBlack
@@ -232,25 +178,10 @@ private extension Share2ViewController {
     }
     
     func reloadCollectionView() {
-        print("실행")
         clipSelectCollectionView.reloadData()
-        
-        let fullViewHeight = view.bounds.height
-        let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.height
-   
-        print("전체 높이: ", self.view.frame.size.height)
-        print("safeArea:", safeAreaHeight)
-        print("디바이스 높이", view.getDeviceHeight())
-        let calculateBottomSheetHeight = titleHeight + (viewModel.clipData.count) * 54 + 116
-        print("바텀 시트 높이", calculateBottomSheetHeight)
-        
-        let calculateBottomSheetHeight1 = titleHeight + (viewModel.clipData.count) * 54 + 116
-
     }
     
     @objc func hideBottomSheetAction(_ sender: UIButton) {
-        print("버튼 눌르기")
-
         UIView.animate(withDuration: 0.3, animations: {
             self.view.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
         }, completion: { _ in
@@ -258,29 +189,41 @@ private extension Share2ViewController {
         })
     }
     
-    func hideExtensionWithCompletionHandler(completion: @escaping (Bool) -> Void) {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.navigationController!.view.transform = CGAffineTransform(translationX: 0, y: self.navigationController!.view.frame.size.height)
-        }, completion: completion)
-    }
-    
     @objc func nextButtonTapped(_ sender: UIButton) {
         postSaveLink(url: urlString, category: categoryID)
     }
     
+    // 웹 사이트 URL 를 받아올 수 있는 메서드
     func getUrl() {
         if let item = extensionContext?.inputItems.first as? NSExtensionItem,
             let itemProvider = item.attachments?.first as? NSItemProvider,
             itemProvider.hasItemConformingToTypeIdentifier("public.url") {
             itemProvider.loadItem(forTypeIdentifier: "public.url", options: nil) { [weak self] (url, error) in
                 if let shareURL = url as? URL {
-                   // do what you want to do with shareURL
-                   print(shareURL.absoluteString)
                     self?.urlString = shareURL.absoluteString
                } else {
-                   // handle error
                    print("Error loading URL: \(error?.localizedDescription ?? "")")
                }
+            }
+        }
+    }
+    
+    func fetchCheckTokenHealth() {
+        NetworkService.shared.authService.postTokenHealth(tokenType: .accessToken) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.isUseShareExtension = true
+                if let responseData = response?.data {
+                    print("AccessTokenHealth", responseData.tokenHealth)
+                }
+                
+            case .unAuthorized, .networkFail:
+                self?.isUseShareExtension = false
+                self?.showAlert()
+                
+            default:
+                self?.isUseShareExtension = false
+                self?.showAlert()
             }
         }
     }
@@ -293,22 +236,18 @@ private extension Share2ViewController {
             case .success:
                 print("저장 성공")
                 self.extensionContext?.completeRequest(returningItems: nil, completionHandler: { [weak self] (success) in
-                                if success {
-                                    UIView.animate(withDuration: 0.3, animations: {
-                                        self?.view.transform = CGAffineTransform(translationX: 0, y: self?.view.frame.height ?? 0.0)
-                                    }, completion: nil)
-        //                            self?.dismiss(animated: true, completion: nil) // Share Extension 닫기
+                    if success {
+//                        UIView.animate(withDuration: 0.3, animations: {
+//                            self?.view.transform = CGAffineTransform(translationX: 0, y: self?.view.frame.height ?? 0.0)
+//                        }, completion: nil)
+    //                            self?.dismiss(animated: true, completion: nil) // Share Extension 닫기
                         }
                     })
                 
             case .networkFail, .unAuthorized, .notFound:
                 print("저장 실패")
-//                        self.changeViewController(viewController: LoginViewController())
-//                    self.navigationController?.showToastMessage(width: 200, status: .warning, message: "링크 저장에 실패했어요!")
             case .badRequest, .serverErr:
                 print("저장 실패")
-//                        self.navigationController?.popToRootViewController(animated: true)
-//                        self.navigationController?.showToastMessage(width: 200, status: .warning, message: "링크 저장에 실패했어요!")
             default:
                 return
             }
@@ -316,20 +255,52 @@ private extension Share2ViewController {
     }
 }
 
-extension Share2ViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 54
+// MARK: - 로그인 유무 Alert
+
+private extension ShareViewController {
+    func showAlert() {
+        let alert = UIAlertController(title: "로그인이 필요한 서비스예요", message: "로그인 세션이 만료되었거나\n서비스 가입이 필요해요.\n앱으로 이동하시겠어요?", preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: { _ in self.openMyApp() })
+        let cancelAction = UIAlertAction(title: "취소", style: .destructive, handler: { _ in self.cancelButtonAction() })
+        
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedClip = viewModel.clipData[indexPath.item]
-        categoryID = viewModel.clipData[indexPath.item].id
+    func cancelButtonAction() {
+        self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+    }
+}
+
+// MARK: - URL Scheme ( 외부에서 앱 실행 )
+
+private extension ShareViewController {
+    
+    func openMyApp() {
+        self.extensionContext?.completeRequest(returningItems: nil, completionHandler: { _ in
+            guard let url = URL(string: self.appURL) else { return }
+            _ = self.openURL(url)
+        })
+    }
+    
+    @objc func openURL(_ url: URL) -> Bool {
+        var responder: UIResponder? = self
+        while responder != nil {
+            if let application = responder as? UIApplication {
+                return application.perform(#selector(openURL(_:)), with: url) != nil
+            }
+            responder = responder?.next
+        }
+        return false
     }
 }
 
 // MARK: - UICollectionViewDelegate
 
-extension Share2ViewController: UICollectionViewDelegate {
+extension ShareViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedClip = viewModel.clipData[indexPath.item]
         categoryID = viewModel.clipData[indexPath.item].id
@@ -338,23 +309,27 @@ extension Share2ViewController: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDataSource
 
-extension Share2ViewController: UICollectionViewDataSource {
+extension ShareViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        print("데이터 개수: ", viewModel.clipData.count)
         return viewModel.clipData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RemindSelectClipCollectionViewCell.className, for: indexPath) as? RemindSelectClipCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureCell(forModel: viewModel.clipData[indexPath.item])
+        
+        if indexPath.item == 0 {
+            cell.configureCell(forModel: viewModel.clipData[indexPath.item], icon: .icAllClip24, isShareExtension: true)
+        } else {
+            cell.configureCell(forModel: viewModel.clipData[indexPath.item], icon: .icClip24Black, isShareExtension: true)
+        }
+        
         return cell
     }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension Share2ViewController: UICollectionViewDelegateFlowLayout {
+extension ShareViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.convertByWidthRatio(335), height: 54)
     }
@@ -368,6 +343,6 @@ extension Share2ViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 1
     }
 }
