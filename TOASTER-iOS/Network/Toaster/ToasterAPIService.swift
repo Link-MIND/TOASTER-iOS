@@ -17,6 +17,8 @@ protocol ToasterAPIServiceProtocol {
     func deleteLink(toastId: Int,
                     completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
     func getWeeksLink(completion: @escaping (NetworkResult<GetWeeksLinkResponseDTO>) -> Void)
+    func patchEditLinkTitle(requestBody: PatchEditLinkTitleRequestDTO,
+                            completion: @escaping (NetworkResult<PatchEditLinkTitleRequestDTO>) -> Void)
 }
 
 final class ToasterAPIService: BaseAPIService, ToasterAPIServiceProtocol {
@@ -84,6 +86,23 @@ final class ToasterAPIService: BaseAPIService, ToasterAPIServiceProtocol {
             case .failure(let error):
                 if let response = error.response {
                     let networkResult: NetworkResult<GetWeeksLinkResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
+            }
+        }
+    }
+    
+    func patchEditLinkTitle(requestBody: PatchEditLinkTitleRequestDTO, 
+                            completion: @escaping (NetworkResult<PatchEditLinkTitleRequestDTO>) -> Void) {
+        provider.request(.patchEditLinkTitle(requestBody: requestBody)) { result in
+            switch result {
+            case .success(let response):
+                let networkResult: NetworkResult<PatchEditLinkTitleRequestDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                print(networkResult.stateDescription)
+                completion(networkResult)
+            case .failure(let error):
+                if let response = error.response {
+                    let networkResult: NetworkResult<PatchEditLinkTitleRequestDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
                     completion(networkResult)
                 }
             }

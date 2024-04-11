@@ -160,7 +160,8 @@ extension DetailClipViewController: UICollectionViewDataSource {
             }
         }
         deleteLinkBottomSheetView.setupEditLinkTitleBottomSheetButtonAction {
-            //self.viewModel.patchEditLinkTitleAPI(toastId: self.viewModel.toastId, title: editLinkBottomSheetView.)
+            self.viewModel.patchEditLinkTitleAPI(toastId: self.viewModel.toastId,
+                                                 title: self.viewModel.linkTitle)
             print("🎃", self.viewModel.toastList)
             self.bottom.hideBottomSheet()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -264,5 +265,27 @@ extension DetailClipViewController: DetailClipListCollectionViewCellDelegate {
         viewModel.toastId = toastId
         bottom.modalPresentationStyle = .overFullScreen
         present(bottom, animated: false)
+    }
+}
+
+// MARK: - AddClipBottomSheetView Delegate
+
+extension DetailClipViewController: EditLinkBottomSheetViewDelegate {
+    func callCheckAPI(filter: DetailCategoryFilter) {
+        viewModel.getDetailAllCategoryAPI(filter: filter)
+    }
+    
+    func addHeightBottom() {
+        editLinkBottom.changeHeightBottomSheet(height: 219)
+    }
+    
+    func minusHeightBottom() {
+        editLinkBottom.changeHeightBottomSheet(height: 198)
+    }
+    
+    func dismissButtonTapped(title: String) {
+        editLinkBottom.hideBottomSheet()
+        viewModel.patchEditLinkTitleAPI(toastId: viewModel.toastId,
+                                        title: title)
     }
 }

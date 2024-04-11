@@ -14,7 +14,7 @@ protocol EditLinkBottomSheetViewDelegate: AnyObject {
     func dismissButtonTapped(title: String)
     func addHeightBottom()
     func minusHeightBottom()
-    func callCheckAPI(text: String)
+    func callCheckAPI(filter: DetailCategoryFilter)
 }
 
 final class EditLinkBottomSheetView: UIView {

@@ -9,5 +9,5 @@ import Foundation
 
 struct PatchEditLinkTitleRequestDTO: Codable {
     let toastId: Int
-    let newTitle: String
+    let title: String
 }
