@@ -16,6 +16,8 @@ protocol AuthAPIServiceProtocol {
     func postRefreshToken(completion: @escaping (NetworkResult<PostRefreshTokenResponseDTO>) -> Void)
     func postLogout(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
     func deleteWithdraw(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
+    func postTokenHealth(tokenType: TokenHealthType,
+                         completion: @escaping (NetworkResult<PostTokenHealthResponseDTO>) -> Void)
 }
 
 final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
@@ -82,6 +84,23 @@ final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
             case .failure(let error):
                 if let response = error.response {
                     let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
+            }
+        }
+    }
+    
+    func postTokenHealth(tokenType: TokenHealthType,
+                         completion: @escaping (NetworkResult<PostTokenHealthResponseDTO>) -> Void) {
+        provider.request(.postTokenHealth(tokenType: tokenType)) { result in
+            switch result {
+            case .success(let response):
+                let networkResult: NetworkResult<PostTokenHealthResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                print(networkResult.stateDescription)
+                completion(networkResult)
+            case .failure(let error):
+                if let response = error.response {
+                    let networkResult: NetworkResult<PostTokenHealthResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
                     completion(networkResult)
                 }
             }
