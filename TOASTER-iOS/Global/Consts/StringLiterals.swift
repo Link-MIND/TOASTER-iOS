@@ -53,6 +53,4 @@ enum StringLiterals {
         static let noticeSetTimer = "한 클립당 하나의 타이머만 설정 가능해요"
         static let noticeMaxTimer = "타이머는 최대 다섯 개까지 설정 가능해요"
     }
-    
-    static let appStoreLink = "https://apps.apple.com/kr/app/toaster-%ED%86%A0%EC%8A%A4%ED%84%B0-%EB%A7%81%ED%81%AC-%EC%95%84%EC%B9%B4%EC%9D%B4%EB%B9%99-%EB%A6%AC%EB%A7%88%EC%9D%B8%EB%93%9C/id6476194200"
 }

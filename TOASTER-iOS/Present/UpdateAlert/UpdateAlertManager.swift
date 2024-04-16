@@ -22,8 +22,14 @@ final class UpdateAlertManager {
         
         let updateAction = UIAlertAction(title: "업데이트",
                                          style: .default) {_ in
-            if let url = URL(string: StringLiterals.appStoreLink) {
-                UIApplication.shared.open(url)
+            if let url = URL(
+                string: "itms-apps://itunes.apple.com/app/6476194200"),
+               UIApplication.shared.canOpenURL(url) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         alertViewController.addAction(updateAction)
