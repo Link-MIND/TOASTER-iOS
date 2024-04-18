@@ -15,8 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     let updateAlertManager = UpdateAlertManager()
     
-    func checkUpdate(rootViewController: UIViewController) {
-        if let updateStatus = updateAlertManager.checkUpdateAlertNeeded() {
+    func checkUpdate(rootViewController: UIViewController) async {
+        if let updateStatus = await updateAlertManager.checkUpdateAlertNeeded() {
             updateAlertManager.showUpdateAlert(type: updateStatus,
                                                on: rootViewController)
         }
@@ -35,7 +35,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.overrideUserInterfaceStyle = .light
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
-        checkUpdate(rootViewController: rootViewController)
+        Task {
+            await checkUpdate(rootViewController: rootViewController)
+        }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

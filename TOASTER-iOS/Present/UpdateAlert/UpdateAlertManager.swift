@@ -37,29 +37,38 @@ final class UpdateAlertManager {
     }
     
     /// iTunes API를 사용하여 앱스토어의 현재 앱 버전 불러오기
-    func checkAppStoreVersion() -> String {
-        guard let url = URL(string: "https://itunes.apple.com/lookup?id=\(appId)&country=kr"),
-              let data = try? Data(contentsOf: url),
-              let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any],
-              let results = json["results"] as? [[String: Any]],
-              let appStoreVersion = results[0]["version"] as? String else {
-            return ""
+    func checkAppStoreVersion() async -> String {
+        guard let url = URL(string: "https://itunes.apple.com/lookup?id=\(appId)&country=kr") else { return "" }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            if let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any],
+               let results = json["results"] as? [[String: Any]],
+               let appStoreVersion = results[0]["version"] as? String { return appStoreVersion }
+        } catch {
+            print("앱스토어 버전을 가져오지 못했습니다😡")
         }
-        return appStoreVersion
+        
+        return ""
     }
     
     /// 앱스토어 버전과 현재 버전 비교하기
-    func checkUpdateAlertNeeded() -> UpdateAlertType? {
+    func checkUpdateAlertNeeded() async -> UpdateAlertType? {
         let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
-        let appStoreVersion = checkAppStoreVersion()
+        let appStoreVersion = await checkAppStoreVersion()
         
         let currentVersionArray = currentVersion.split(separator: ".").map { $0 }
         let appStoreVersionArray = appStoreVersion.split(separator: ".").map { $0 }
-        
-        if currentVersionArray[0] < appStoreVersionArray[0] {
+
+        if (currentVersionArray[0] < appStoreVersionArray[0]) {
             return .ForceUpdate
-        } else if currentVersionArray[0] == appStoreVersionArray[0] {
-            return currentVersionArray[1] < appStoreVersionArray[1] ? .NoticeFeatUpdate : nil
+        } else if (currentVersionArray[0] == appStoreVersionArray[0])
+                    && (currentVersionArray[1] < appStoreVersionArray[1]) {
+            return .NoticeFeatUpdate
+        } else if (currentVersionArray[0] == appStoreVersionArray[0])
+                    && (currentVersionArray[1] == appStoreVersionArray[1])
+                    && (currentVersionArray[2] < appStoreVersionArray[2]) {
+            return .NoticeUpdate
         } else {
             return nil
         }
