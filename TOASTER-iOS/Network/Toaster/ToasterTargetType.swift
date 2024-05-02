@@ -34,6 +34,7 @@ extension ToasterTargetType: BaseTargetType {
         switch self {
         case .postSaveLink(let body): return body
         case .patchOpenLink(let body): return body
+        case .patchEditLinkTitle(let body): return body
         default: return .none
         }
     }
