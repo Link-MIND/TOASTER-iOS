@@ -16,6 +16,7 @@ final class DeleteLinkBottomSheetView: UIView {
     
     private var deleteLinkBottomSheetViewButtonAction: (() -> Void)?
     private var editLinkTitleBottomSheetViewButtonAction: (() -> Void)?
+    private var confirmBottomSheetViewButtonAction: (() -> Void)?
     
     // MARK: - UI Components
     
@@ -48,6 +49,10 @@ extension DeleteLinkBottomSheetView {
     
     func setupEditLinkTitleBottomSheetButtonAction(_ action: (() -> Void)?) {
         editLinkTitleBottomSheetViewButtonAction = action
+    }
+    
+    func setupConfirmBottomSheetButtonAction(_ action: (() -> Void)?) {
+        confirmBottomSheetViewButtonAction = action
     }
 }
 
