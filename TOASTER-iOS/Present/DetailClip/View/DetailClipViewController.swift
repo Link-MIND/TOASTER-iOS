@@ -169,6 +169,14 @@ extension DetailClipViewController: UICollectionViewDataSource {
                 self.editLinkBottomSheetView.setupTextField(message: self.viewModel.linkTitle)
             }
         }
+        editLinkBottomSheetView.setupConfirmBottomSheetButtonAction {
+            self.viewModel.getDetailCategoryAPI(categoryID: self.viewModel.categoryId,
+                                                filter: DetailCategoryFilter.all)
+            self.bottom.hideBottomSheet()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeEditTitle)
+            }
+        }
         return cell
     }
     

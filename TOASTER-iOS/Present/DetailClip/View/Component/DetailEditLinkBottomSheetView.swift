@@ -22,6 +22,7 @@ final class EditLinkBottomSheetView: UIView {
     // MARK: - Properties
     
     weak var editLinkBottomSheetViewDelegate: EditLinkBottomSheetViewDelegate?
+    private var confirmBottomSheetViewButtonAction: (() -> Void)?
     
     private var isButtonClicked: Bool = false {
         didSet {
@@ -50,7 +51,7 @@ final class EditLinkBottomSheetView: UIView {
     // MARK: - UI Components
     
     let addClipTextField = UITextField()
-    private let addClipButton = UIButton()
+    private let editClipButton = UIButton()
     private let errorMessage = UILabel()
     private let clearButton = UIButton()
     
@@ -75,7 +76,7 @@ final class EditLinkBottomSheetView: UIView {
     }
 }
 
-// MARK: - Private Extensions
+// MARK: - Extensions
 
 extension EditLinkBottomSheetView {
     func resetTextField() {
@@ -96,6 +97,10 @@ extension EditLinkBottomSheetView {
     
     func setupTextField(message: String) {
         addClipTextField.text = message
+    }
+    
+    func setupConfirmBottomSheetButtonAction(_ action: (() -> Void)?) {
+        confirmBottomSheetViewButtonAction = action
     }
 }
 
@@ -118,7 +123,7 @@ private extension EditLinkBottomSheetView {
             $0.delegate = self
         }
         
-        addClipButton.do {
+        editClipButton.do {
             isButtonClicked = false
             $0.setTitle(StringLiterals.Button.okay, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
@@ -140,7 +145,7 @@ private extension EditLinkBottomSheetView {
     }
     
     func setupHierarchy() {
-        addSubviews(addClipTextField, addClipButton, errorMessage)
+        addSubviews(addClipTextField, editClipButton, errorMessage)
         addClipTextField.addSubview(clearButton)
     }
     
@@ -156,7 +161,7 @@ private extension EditLinkBottomSheetView {
             $0.leading.equalTo(addClipTextField)
         }
         
-        addClipButton.snp.makeConstraints {
+        editClipButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(56)
             $0.bottom.equalTo(keyboardLayoutGuide.snp.top)
@@ -177,11 +182,11 @@ private extension EditLinkBottomSheetView {
     
     func setupButtonColor() {
         if isButtonClicked {
-            addClipButton.isEnabled = true
-            addClipButton.backgroundColor = .toasterPrimary
+            editClipButton.isEnabled = true
+            editClipButton.backgroundColor = .toasterPrimary
         } else {
-            addClipButton.isEnabled = false
-            addClipButton.backgroundColor = .gray200
+            editClipButton.isEnabled = false
+            editClipButton.backgroundColor = .gray200
         }
     }
     
@@ -215,6 +220,7 @@ private extension EditLinkBottomSheetView {
     
     @objc
     func buttonTapped() {
+        confirmBottomSheetViewButtonAction?()
         editLinkBottomSheetViewDelegate?.dismissButtonTapped(title: addClipTextField.text ?? "")
     }
     
@@ -245,7 +251,7 @@ extension EditLinkBottomSheetView: UITextFieldDelegate {
             changeTextField(addButton: false, border: false, error: false, clearButton: false)
         } else if currentText.count > 15 {
             changeTextField(addButton: false, border: true, error: true, clearButton: true)
-            setupMessage(message: "클립의 이름은 최대 15자까지 입력 가능해요")
+            setupMessage(message: "링크 제목은 최대 15자까지 입력 가능해요")
         } else {
             changeTextField(addButton: true, border: false, error: false, clearButton: true)
         }
