@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDisplayName</key>
-	<string>TOASTER</string>
-	<key>FCM_TOKEN_KEY</key>
-	<string>$(FCM_TOKEN_KEY)</string>
 	<key>ACCESS_TOKEN_KEY</key>
 	<string>$(ACCESS_TOKEN_KEY)</string>
 	<key>APPLE_LOGIN</key>
@@ -24,7 +20,19 @@
 				<string>kakao$(KAKAO_NATIVE_APP_KEY)</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>TeamLinkMIND.TOASTER-iOS</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>TOASTER</string>
+			</array>
+		</dict>
 	</array>
+	<key>FCM_TOKEN_KEY</key>
+	<string>$(FCM_TOKEN_KEY)</string>
 	<key>KAKAO_LOGIN</key>
 	<string>$(KAKAO_LOGIN)</string>
 	<key>KAKAO_NATIVE_APP_KEY</key>
