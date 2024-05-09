@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ACCESS_TOKEN_KEY</key>
+	<string>$(ACCESS_TOKEN_KEY)</string>
+	<key>APPLE_LOGIN</key>
+	<string>$(APPLE_LOGIN)</string>
+	<key>APPLE_USER_ID</key>
+	<string>$(APPLE_USER_ID)</string>
+	<key>BASE_URL</key>
+	<string>$(BASE_URL)</string>
+	<key>KAKAO_LOGIN</key>
+	<string>$(KAKAO_LOGIN)</string>
+	<key>KAKAO_NATIVE_APP_KEY</key>
+	<string>$(KAKAO_NATIVE_APP_KEY)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>TOASTER</string>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionAttributes</key>
+		<dict>
+			<key>NSExtensionActivationRule</key>
+			<dict>
+				<key>NSExtensionActivationSupportsURLWithMaxCount</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.share-services</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>ShareViewController</string>
+	</dict>
+	<key>REFRESH_TOKEN_KEY</key>
+	<string>$(REFRESH_TOKEN_KEY)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SUIT-ExtraBold.otf</string>
+		<string>SUIT-Bold.otf</string>
+		<string>SUIT-SemiBold.otf</string>
+		<string>SUIT-Medium.otf</string>
+		<string>SUIT-Regular.otf</string>
+	</array>
+</dict>
+</plist>

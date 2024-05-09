@@ -221,7 +221,13 @@ extension SelectClipViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RemindSelectClipCollectionViewCell.className, for: indexPath) as? RemindSelectClipCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureCell(forModel: viewModel.selectedClip[indexPath.item])
+        
+        if indexPath.item == 0 {
+            cell.configureCell(forModel: viewModel.selectedClip[indexPath.item], icon: .icAllClip24)
+        } else {
+            cell.configureCell(forModel: viewModel.selectedClip[indexPath.item], icon: .icClip24Black)
+        }
+        
         return cell
     }
     
