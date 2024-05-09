@@ -122,7 +122,6 @@ private extension DetailClipViewController {
     }
     
     func editLinkTitleAction() {
-        showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeEditClip)
         editLinkBottomSheetView.resetTextField()
     }
     

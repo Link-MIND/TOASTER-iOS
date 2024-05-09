@@ -139,24 +139,6 @@ extension DetailClipViewModel {
         }
     }
     
-//    func patchEditLinkTitleAPI(requestBody: DetailClipModel) {
-//        NetworkService.shared.toastService.patchEditLinkTitle(
-//            requestBody: PatchEditLinkTitleRequestDTO(
-//                toastId: requestBody.toastList[0].id,
-//                newTitle: requestBody.toastList[0].title)) { result in
-//            switch result {
-//            case .success:
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                    self.editLinkTitleAction?()
-//                }
-//                self.getDetailAllCategoryAPI(filter: .all)
-//            case .unAuthorized, .networkFail, .notFound:
-//                self.unAuthorizedAction?()
-//            default: return
-//            }
-//        }
-//    }
-    
     func patchEditLinkTitleAPI(toastId: Int, title: String) {
         NetworkService.shared.toastService.patchEditLinkTitle(
             requestBody: PatchEditLinkTitleRequestDTO(
