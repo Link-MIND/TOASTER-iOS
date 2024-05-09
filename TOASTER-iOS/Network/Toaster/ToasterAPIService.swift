@@ -18,7 +18,7 @@ protocol ToasterAPIServiceProtocol {
                     completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
     func getWeeksLink(completion: @escaping (NetworkResult<GetWeeksLinkResponseDTO>) -> Void)
     func patchEditLinkTitle(requestBody: PatchEditLinkTitleRequestDTO,
-                            completion: @escaping (NetworkResult<PatchEditLinkTitleRequestDTO>) -> Void)
+                            completion: @escaping (NetworkResult<PatchEditLinkTitleResponseDTO>) -> Void)
 }
 
 final class ToasterAPIService: BaseAPIService, ToasterAPIServiceProtocol {
@@ -93,16 +93,16 @@ final class ToasterAPIService: BaseAPIService, ToasterAPIServiceProtocol {
     }
     
     func patchEditLinkTitle(requestBody: PatchEditLinkTitleRequestDTO, 
-                            completion: @escaping (NetworkResult<PatchEditLinkTitleRequestDTO>) -> Void) {
+                            completion: @escaping (NetworkResult<PatchEditLinkTitleResponseDTO>) -> Void) {
         provider.request(.patchEditLinkTitle(requestBody: requestBody)) { result in
             switch result {
             case .success(let response):
-                let networkResult: NetworkResult<PatchEditLinkTitleRequestDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                let networkResult: NetworkResult<PatchEditLinkTitleResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
                 print(networkResult.stateDescription)
                 completion(networkResult)
             case .failure(let error):
                 if let response = error.response {
-                    let networkResult: NetworkResult<PatchEditLinkTitleRequestDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    let networkResult: NetworkResult<PatchEditLinkTitleResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
                     completion(networkResult)
                 }
             }
