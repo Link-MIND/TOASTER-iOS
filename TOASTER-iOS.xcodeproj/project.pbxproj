@@ -194,6 +194,7 @@
 		8315CD8C2B54782F0061F377 /* SelectClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */; };
 		8315CD8E2B547EE30061F377 /* SelectClipHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */; };
 		8315CD912B5521F70061F377 /* SelectClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD902B5521F70061F377 /* SelectClipModel.swift */; };
+		8364220C2BE7BFB2005C4085 /* PatchEditLinkTitleResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364220B2BE7BFB2005C4085 /* PatchEditLinkTitleResponseDTO.swift */; };
 		8388E98C2BC8FAB200858C5C /* PatchEditLinkTitleRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8388E98B2BC8FAB200858C5C /* PatchEditLinkTitleRequestDTO.swift */; };
 		8388E98E2BC8FC6700858C5C /* DetailEditLinkBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8388E98D2BC8FC6700858C5C /* DetailEditLinkBottomSheetView.swift */; };
 		83CFC3372B564F1100A2EB2B /* WeeklyLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CFC3362B564F1100A2EB2B /* WeeklyLinkModel.swift */; };
@@ -373,6 +374,7 @@
 		8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipViewController.swift; sourceTree = "<group>"; };
 		8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipHeaderView.swift; sourceTree = "<group>"; };
 		8315CD902B5521F70061F377 /* SelectClipModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipModel.swift; sourceTree = "<group>"; };
+		8364220B2BE7BFB2005C4085 /* PatchEditLinkTitleResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditLinkTitleResponseDTO.swift; sourceTree = "<group>"; };
 		8388E98B2BC8FAB200858C5C /* PatchEditLinkTitleRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditLinkTitleRequestDTO.swift; sourceTree = "<group>"; };
 		8388E98D2BC8FC6700858C5C /* DetailEditLinkBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditLinkBottomSheetView.swift; sourceTree = "<group>"; };
 		83CFC3362B564F1100A2EB2B /* WeeklyLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyLinkModel.swift; sourceTree = "<group>"; };
@@ -1276,6 +1278,7 @@
 			children = (
 				6BE6DA872B546B24008B06FA /* PatchOpenLinkResponseDTO.swift */,
 				6BE6DA8B2B546CA9008B06FA /* GetWeeksLinkResponseDTO.swift */,
+				8364220B2BE7BFB2005C4085 /* PatchEditLinkTitleResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1586,6 +1589,7 @@
 				6BE6DA342B50594B008B06FA /* MoyaPlugin.swift in Sources */,
 				6BE6D9D82B4E8A03008B06FA /* RemindAlarmOffViewType.swift in Sources */,
 				398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */,
+				8364220C2BE7BFB2005C4085 /* PatchEditLinkTitleResponseDTO.swift in Sources */,
 				6BE6DA5B2B50B46F008B06FA /* GetMainPageResponseDTO.swift in Sources */,
 				3F2FA1772B45C3E000EDBF95 /* AuthenticationAdapterProtocol.swift in Sources */,
 				6BC493792B4D6FB300544249 /* SearchEmptyResultView.swift in Sources */,

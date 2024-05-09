@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol PatchClipDelegate: AnyObject {
+    func patchEnd()
+}
+
 final class DetailClipViewModel: NSObject {
     
     // MARK: - Properties
@@ -17,6 +21,8 @@ final class DetailClipViewModel: NSObject {
     typealias NormalChangeAction = () -> Void
     private var unAuthorizedAction: NormalChangeAction?
     private var editLinkTitleAction: NormalChangeAction?
+    
+    weak var delegate: PatchClipDelegate? = nil
     
     // MARK: - Data
     
@@ -81,7 +87,9 @@ extension DetailClipViewModel {
         }
     }
     
-    func getDetailCategoryAPI(categoryID: Int, filter: DetailCategoryFilter) {
+    func getDetailCategoryAPI(categoryID: Int, 
+                              filter: DetailCategoryFilter,
+                              completion: (() -> Void)? = nil) {
         NetworkService.shared.clipService.getDetailCategory(categoryID: categoryID, filter: filter) { result in
             switch result {
             case .success(let response):
@@ -96,6 +104,7 @@ extension DetailClipViewModel {
                 }
                 self.toastList = DetailClipModel(allToastCount: allToastCount ?? 0,
                                                  toastList: toasts ?? [])
+                completion?()
             case .unAuthorized, .networkFail, .notFound:
                 self.unAuthorizedAction?()
             default: return
@@ -115,9 +124,12 @@ extension DetailClipViewModel {
                     }
                 } else {
                     switch self.segmentIndex {
-                    case 0: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .all)
-                    case 1: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .read)
-                    default: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .unread)
+                    case 0: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .all) {
+                    }
+                    case 1: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .read) {
+                    }
+                    default: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .unread) {
+                    }
                     }
                 }
             case .unAuthorized, .networkFail, .notFound:
@@ -155,7 +167,7 @@ extension DetailClipViewModel {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.editLinkTitleAction?()
                 }
-                self.getDetailAllCategoryAPI(filter: .all)
+                self.delegate?.patchEnd()
             case .unAuthorized, .networkFail, .notFound:
                 self.unAuthorizedAction?()
             default: return
