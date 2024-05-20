@@ -19,7 +19,16 @@ final class DetailClipViewController: UIViewController {
     private let detailClipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     private let deleteLinkBottomSheetView = DeleteLinkBottomSheetView()
-    private lazy var bottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "수정하기", height: 72, insertView: deleteLinkBottomSheetView)
+    private lazy var editBottom = ToasterBottomSheetViewController(bottomType: .gray,
+                                                               bottomTitle: "수정하기",
+                                                               height: 126,
+                                                               insertView: deleteLinkBottomSheetView)
+    
+    private let editLinkBottomSheetView = EditLinkBottomSheetView()
+    private lazy var editLinkBottom = ToasterBottomSheetViewController(bottomType: .white,
+                                                                       bottomTitle: "링크 제목 편집",
+                                                                       height: 198,
+                                                                       insertView: editLinkBottomSheetView)
     
     // MARK: - Life Cycle
     
@@ -58,10 +67,14 @@ private extension DetailClipViewController {
         view.backgroundColor = .toasterBackground
         detailClipListCollectionView.backgroundColor = .toasterBackground
         detailClipEmptyView.isHidden = false
+        editLinkBottomSheetView.editLinkBottomSheetViewDelegate = self
+        
     }
     
     func setupHierarchy() {
-        view.addSubviews(detailClipSegmentedControlView, detailClipListCollectionView, detailClipEmptyView)
+        view.addSubviews(detailClipSegmentedControlView, 
+                         detailClipListCollectionView,
+                         detailClipEmptyView)
     }
     
     func setupLayout() {
@@ -90,11 +103,13 @@ private extension DetailClipViewController {
         detailClipListCollectionView.delegate = self
         detailClipListCollectionView.dataSource = self
         detailClipSegmentedControlView.detailClipSegmentedDelegate = self
+        viewModel.delegate = self
     }
     
     func setupViewModel() {
         viewModel.setupDataChangeAction(changeAction: reloadCollectionView,
-                                        forUnAuthorizedAction: unAuthorizedAction)
+                                        forUnAuthorizedAction: unAuthorizedAction,
+                                        editNameAction: editLinkTitleAction)
     }
     
     func reloadCollectionView(isHidden: Bool) {
@@ -104,6 +119,10 @@ private extension DetailClipViewController {
     
     func unAuthorizedAction() {
         changeViewController(viewController: LoginViewController())
+    }
+    
+    func editLinkTitleAction() {
+        editLinkBottomSheetView.resetTextField()
     }
     
     func setupNavigationBar() {
@@ -135,9 +154,19 @@ extension DetailClipViewController: UICollectionViewDataSource {
         }
         deleteLinkBottomSheetView.setupDeleteLinkBottomSheetButtonAction {
             self.viewModel.deleteLinkAPI(toastId: self.viewModel.toastId)
-            self.bottom.hideBottomSheet()
+            self.editBottom.hideBottomSheet()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeDeleteLink)
+            }
+        }
+        deleteLinkBottomSheetView.setupEditLinkTitleBottomSheetButtonAction {
+            self.viewModel.getDetailCategoryAPI(categoryID: self.viewModel.categoryId,
+                                                filter: DetailCategoryFilter.all)
+            self.editBottom.hideBottomSheet()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.editLinkBottom.modalPresentationStyle = .overFullScreen
+                self.present(self.editLinkBottom, animated: true)
+                self.editLinkBottomSheetView.setupTextField(message: self.viewModel.linkTitle)
             }
         }
         return cell
@@ -233,7 +262,45 @@ extension DetailClipViewController: DetailClipSegmentedDelegate {
 extension DetailClipViewController: DetailClipListCollectionViewCellDelegate {
     func modifiedButtonTapped(toastId: Int) {
         viewModel.toastId = toastId
-        bottom.modalPresentationStyle = .overFullScreen
-        present(bottom, animated: false)
+        editBottom.modalPresentationStyle = .overFullScreen
+        present(editBottom, animated: false)
+    }
+}
+
+// MARK: - EditLinkBottomSheetView Delegate
+
+extension DetailClipViewController: EditLinkBottomSheetViewDelegate {
+    func callCheckAPI(filter: DetailCategoryFilter) {
+        viewModel.getDetailAllCategoryAPI(filter: filter)
+    }
+    
+    func addHeightBottom() {
+        editLinkBottom.changeHeightBottomSheet(height: 219)
+    }
+    
+    func minusHeightBottom() {
+        editLinkBottom.changeHeightBottomSheet(height: 198)
+    }
+    
+    func dismissButtonTapped(title: String) {
+        viewModel.patchEditLinkTitleAPI(toastId: viewModel.toastId,
+                                        title: title)
+        // 이중 바텀시트 순차적으로 내리기
+        editLinkBottom.hideBottomSheet()
+        editBottom.hideBottomSheet()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            guard let self else { return }
+            self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeEditTitle)
+        }
+    }
+}
+
+extension DetailClipViewController: PatchClipDelegate {
+    func patchEnd() {
+        viewModel.getDetailCategoryAPI(categoryID: self.viewModel.categoryId,
+                                       filter: DetailCategoryFilter.all) {
+            self.detailClipListCollectionView.reloadData()
+        }
     }
 }

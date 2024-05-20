@@ -12,4 +12,5 @@ enum DetailClipPropertyType {
     case categoryId
     case categoryName
     case segmentIndex
+    case linkTitle
 }

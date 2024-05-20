@@ -13,7 +13,7 @@ import Then
 
 @objc(ShareViewController)
 class ShareViewController: UIViewController {
-
+    
     // MARK: - Properties
     private var urlString = ""
     private let viewModel = RemindSelectClipViewModel()
@@ -30,7 +30,7 @@ class ShareViewController: UIViewController {
     
     private let appURL = "TOASTER://"
     private var isUseShareExtension = false
-
+    
     // MARK: - UI Components
     
     private let titleLabel = UILabel()
@@ -79,7 +79,7 @@ class ShareViewController: UIViewController {
                 $0.height.equalTo(bottomSheetHeight())
                 $0.bottom.leading.trailing.equalToSuperview()
             }
-
+            
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseInOut, animations: {
                     self.view.layoutIfNeeded()
@@ -198,14 +198,14 @@ private extension ShareViewController {
     // 웹 사이트 URL 를 받아올 수 있는 메서드
     func getUrl() {
         if let item = extensionContext?.inputItems.first as? NSExtensionItem,
-            let itemProvider = item.attachments?.first as? NSItemProvider,
-            itemProvider.hasItemConformingToTypeIdentifier("public.url") {
+           let itemProvider = item.attachments?.first as? NSItemProvider,
+           itemProvider.hasItemConformingToTypeIdentifier("public.url") {
             itemProvider.loadItem(forTypeIdentifier: "public.url", options: nil) { [weak self] (url, error) in
                 if let shareURL = url as? URL {
                     self?.urlString = shareURL.absoluteString
-               } else {
-                   print("Error loading URL: \(error?.localizedDescription ?? "")")
-               }
+                } else {
+                    print("Error loading URL: \(error?.localizedDescription ?? "")")
+                }
             }
         }
     }
@@ -292,7 +292,8 @@ private extension ShareViewController {
 extension ShareViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedClip = viewModel.clipData[indexPath.item]
-        categoryID = viewModel.clipData[indexPath.item].id
+        let selectRow = viewModel.clipData[indexPath.item].id
+        categoryID = selectRow == 0 ? nil : selectRow
     }
 }
 

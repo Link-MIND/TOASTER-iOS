@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol PatchClipDelegate: AnyObject {
+    func patchEnd()
+}
+
 final class DetailClipViewModel: NSObject {
     
     // MARK: - Properties
@@ -16,6 +20,9 @@ final class DetailClipViewModel: NSObject {
     
     typealias NormalChangeAction = () -> Void
     private var unAuthorizedAction: NormalChangeAction?
+    private var editLinkTitleAction: NormalChangeAction?
+    
+    weak var delegate: PatchClipDelegate? = nil
     
     // MARK: - Data
     
@@ -23,6 +30,7 @@ final class DetailClipViewModel: NSObject {
     var categoryId: Int = 0
     var categoryName: String = ""
     var segmentIndex: Int = 0
+    var linkTitle: String = ""
     
     private(set) var toastList: DetailClipModel = DetailClipModel(allToastCount: 0, toastList: []) {
         didSet {
@@ -35,9 +43,11 @@ final class DetailClipViewModel: NSObject {
 
 extension DetailClipViewModel {
     func setupDataChangeAction(changeAction: @escaping DataChangeAction,
-                               forUnAuthorizedAction: @escaping NormalChangeAction) {
+                               forUnAuthorizedAction: @escaping NormalChangeAction,
+                               editNameAction: @escaping NormalChangeAction) {
         dataChangeAction = changeAction
         unAuthorizedAction = forUnAuthorizedAction
+        editLinkTitleAction = editNameAction
     }
     
     func getViewModelProperty(dataType: DetailClipPropertyType) -> Any {
@@ -50,6 +60,8 @@ extension DetailClipViewModel {
             return categoryName
         case .segmentIndex:
             return segmentIndex
+        case .linkTitle:
+            return linkTitle
         }
     }
     
@@ -75,7 +87,9 @@ extension DetailClipViewModel {
         }
     }
     
-    func getDetailCategoryAPI(categoryID: Int, filter: DetailCategoryFilter) {
+    func getDetailCategoryAPI(categoryID: Int, 
+                              filter: DetailCategoryFilter,
+                              completion: (() -> Void)? = nil) {
         NetworkService.shared.clipService.getDetailCategory(categoryID: categoryID, filter: filter) { result in
             switch result {
             case .success(let response):
@@ -90,6 +104,7 @@ extension DetailClipViewModel {
                 }
                 self.toastList = DetailClipModel(allToastCount: allToastCount ?? 0,
                                                  toastList: toasts ?? [])
+                completion?()
             case .unAuthorized, .networkFail, .notFound:
                 self.unAuthorizedAction?()
             default: return
@@ -109,11 +124,32 @@ extension DetailClipViewModel {
                     }
                 } else {
                     switch self.segmentIndex {
-                    case 0: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .all)
-                    case 1: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .read)
-                    default: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .unread)
+                    case 0: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .all) {
+                    }
+                    case 1: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .read) {
+                    }
+                    default: self.getDetailCategoryAPI(categoryID: self.categoryId, filter: .unread) {
+                    }
                     }
                 }
+            case .unAuthorized, .networkFail, .notFound:
+                self.unAuthorizedAction?()
+            default: return
+            }
+        }
+    }
+    
+    func patchEditLinkTitleAPI(toastId: Int, title: String) {
+        NetworkService.shared.toastService.patchEditLinkTitle(
+            requestBody: PatchEditLinkTitleRequestDTO(
+                toastId: toastId,
+                title: title)) { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.editLinkTitleAction?()
+                }
+                self.delegate?.patchEnd()
             case .unAuthorized, .networkFail, .notFound:
                 self.unAuthorizedAction?()
             default: return

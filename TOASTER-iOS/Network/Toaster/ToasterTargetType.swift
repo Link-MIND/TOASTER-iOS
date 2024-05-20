@@ -14,6 +14,7 @@ enum ToasterTargetType {
     case patchOpenLink(requestBody: PatchOpenLinkRequestDTO)
     case deleteLink(toastId: Int)
     case getWeeksLink
+    case patchEditLinkTitle(requestBody: PatchEditLinkTitleRequestDTO)
 }
 
 extension ToasterTargetType: BaseTargetType {
@@ -33,6 +34,7 @@ extension ToasterTargetType: BaseTargetType {
         switch self {
         case .postSaveLink(let body): return body
         case .patchOpenLink(let body): return body
+        case .patchEditLinkTitle(let body): return body
         default: return .none
         }
     }
@@ -43,6 +45,7 @@ extension ToasterTargetType: BaseTargetType {
         case .patchOpenLink: return utilPath.rawValue + "/is-read"
         case .deleteLink: return utilPath.rawValue + "/delete"
         case .getWeeksLink: return utilPath.rawValue + "/week"
+        case .patchEditLinkTitle: return utilPath.rawValue + "/title"
         }
     }
     
@@ -52,6 +55,7 @@ extension ToasterTargetType: BaseTargetType {
         case .patchOpenLink: return .patch
         case .deleteLink: return .delete
         case .getWeeksLink: return .get
+        case .patchEditLinkTitle: return .patch
         }
     }
 }
