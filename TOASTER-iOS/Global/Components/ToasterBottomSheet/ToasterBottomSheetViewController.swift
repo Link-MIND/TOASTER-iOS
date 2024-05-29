@@ -115,6 +115,8 @@ private extension ToasterBottomSheetViewController {
     func setupStyle() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         bottomSheetView.do {
             $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             $0.makeRounded(radius: 20)
@@ -178,6 +180,8 @@ private extension ToasterBottomSheetViewController {
             $0.bottom.leading.trailing.equalToSuperview()
             $0.top.equalToSuperview().inset(self.view.frame.height - self.keyboardHeight - self.bottomHeight)
         }
+        
+        self.view.layoutIfNeeded()
     }
     
     @objc
@@ -191,5 +195,11 @@ private extension ToasterBottomSheetViewController {
             keyboardHeight = keyboardSize.height
             updateBottomSheetLayout()
         }
+    }
+    
+    @objc
+    func keyboardWillHide(_ notification: Notification) {
+        keyboardHeight = 100
+        updateBottomSheetLayout()
     }
 }
