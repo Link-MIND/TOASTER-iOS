@@ -63,16 +63,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        if UIPasteboard.general.string != nil {
+        if let pasteboardString = UIPasteboard.general.url {
             if appDelegate.isLogin {
                 if let rootViewController = window?.rootViewController as? ToasterNavigationController {
                     let addLinkViewController = AddLinkViewController()
                     rootViewController.pushViewController(addLinkViewController, animated: true)
                     addLinkViewController.embedURL(url: UIPasteboard.general.string ?? "")
-                    UIPasteboard.general.string = nil
                 }
             }
         }
+        UIPasteboard.general.string = nil
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
