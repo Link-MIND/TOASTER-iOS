@@ -11,6 +11,8 @@ import SnapKit
 
 final class DetailClipViewController: UIViewController {
     
+    var indexNumber: Int?
+    
     // MARK: - UI Properties
     
     private let viewModel = DetailClipViewModel()
@@ -160,13 +162,15 @@ extension DetailClipViewController: UICollectionViewDataSource {
             }
         }
         deleteLinkBottomSheetView.setupEditLinkTitleBottomSheetButtonAction {
+            print("🍎🍎", self.indexNumber ?? 0)
             self.viewModel.getDetailCategoryAPI(categoryID: self.viewModel.categoryId,
                                                 filter: DetailCategoryFilter.all)
             self.editBottom.hideBottomSheet()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.viewModel.segmentIndex = indexPath.item - 1
                 self.editLinkBottom.modalPresentationStyle = .overFullScreen
                 self.present(self.editLinkBottom, animated: true)
-                self.editLinkBottomSheetView.setupTextField(message: self.viewModel.linkTitle)
+                self.editLinkBottomSheetView.setupTextField(message: self.viewModel.toastList.toastList[indexPath.item - 1].title)
             }
         }
         return cell
@@ -193,6 +197,9 @@ extension DetailClipViewController: UICollectionViewDataSource {
 
 extension DetailClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        indexNumber = indexPath.item
+        print("🍎", indexNumber)
+        
         let nextVC = LinkWebViewController()
         nextVC.hidesBottomBarWhenPushed = true
         nextVC.setupDataBind(linkURL: viewModel.toastList.toastList[indexPath.item].url,

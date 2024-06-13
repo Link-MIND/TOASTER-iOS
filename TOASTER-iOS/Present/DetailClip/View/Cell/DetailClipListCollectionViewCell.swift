@@ -143,6 +143,8 @@ private extension DetailClipListCollectionViewCell {
         
         modifiedButton.do {
             $0.setImage(.icMore24, for: .normal)
+            $0.frame = contentView.bounds
+                   // $0.isUserInteractionEnabled = false 
         }
         
         dimmedView.do {
@@ -158,11 +160,14 @@ private extension DetailClipListCollectionViewCell {
     }
     
     func setupHierarchy() {
-        addSubviews(linkImage, clipNameLabel, linkTitleLabel, linkLabel, modifiedButton)
+        contentView.addSubviews(linkImage, clipNameLabel, linkTitleLabel, linkLabel, modifiedButton)
         linkImage.addSubviews(dimmedView, readLabel)
     }
     
     func setupLayout() {
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         linkImage.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.top.leading.equalToSuperview().inset(12)
