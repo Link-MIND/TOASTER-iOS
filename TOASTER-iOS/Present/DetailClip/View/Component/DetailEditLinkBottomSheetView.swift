@@ -82,6 +82,7 @@ extension EditLinkBottomSheetView {
     func resetTextField() {
         editClipTitleTextField.text = nil
         editClipTitleTextField.becomeFirstResponder()
+        isButtonClicked = true
     }
     
     func changeTextField(addButton: Bool, border: Bool, error: Bool, clearButton: Bool) {
@@ -96,8 +97,8 @@ extension EditLinkBottomSheetView {
     }
     
     func setupTextField(message: String) {
-//        editClipTitleTextField.text = "hi"
         editClipTitleTextField.text = message
+        editClipTitleTextField.placeholder = message
     }
     
     func setupConfirmBottomSheetButtonAction(_ action: (() -> Void)?) {

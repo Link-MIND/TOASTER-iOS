@@ -19,6 +19,8 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    var buttonAction: (() -> Void)?
+    
     private var toastId: Int = 0
     private var isReadDimmedView: Bool = false {
         didSet {
@@ -228,6 +230,7 @@ private extension DetailClipListCollectionViewCell {
     
     @objc
     func buttonTapped() {
+        buttonAction?()
         detailClipListCollectionViewCellDelegate?.modifiedButtonTapped(toastId: toastId)
     }
 }

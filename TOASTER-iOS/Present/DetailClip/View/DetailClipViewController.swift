@@ -148,6 +148,11 @@ extension DetailClipViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.buttonAction = { [weak self] in
+            self?.buttonTappedAtIndexPath(indexPath)
+        }
+        
         cell.detailClipListCollectionViewCellDelegate = self
         if viewModel.categoryId == 0 {
             cell.configureCell(forModel: viewModel.toastList, index: indexPath.item, isClipHidden: false)
@@ -162,7 +167,6 @@ extension DetailClipViewController: UICollectionViewDataSource {
             }
         }
         deleteLinkBottomSheetView.setupEditLinkTitleBottomSheetButtonAction {
-            print("🍎🍎", self.indexNumber ?? 0)
             self.viewModel.getDetailCategoryAPI(categoryID: self.viewModel.categoryId,
                                                 filter: DetailCategoryFilter.all)
             self.editBottom.hideBottomSheet()
@@ -170,7 +174,6 @@ extension DetailClipViewController: UICollectionViewDataSource {
                 self.viewModel.segmentIndex = indexPath.item - 1
                 self.editLinkBottom.modalPresentationStyle = .overFullScreen
                 self.present(self.editLinkBottom, animated: true)
-                self.editLinkBottomSheetView.setupTextField(message: self.viewModel.toastList.toastList[indexPath.item - 1].title)
             }
         }
         return cell
@@ -191,6 +194,11 @@ extension DetailClipViewController: UICollectionViewDataSource {
         }
         return headerView
     }
+    
+    func buttonTappedAtIndexPath(_ indexPath: IndexPath) {
+        self.editLinkBottomSheetView.setupTextField(message: self.viewModel.toastList.toastList[indexPath.item].title)
+        
+    }
 }
 
 // MARK: - CollectionView Delegate
@@ -198,8 +206,6 @@ extension DetailClipViewController: UICollectionViewDataSource {
 extension DetailClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         indexNumber = indexPath.item
-        print("🍎", indexNumber)
-        
         let nextVC = LinkWebViewController()
         nextVC.hidesBottomBarWhenPushed = true
         nextVC.setupDataBind(linkURL: viewModel.toastList.toastList[indexPath.item].url,
