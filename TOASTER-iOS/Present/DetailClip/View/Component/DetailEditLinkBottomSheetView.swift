@@ -113,9 +113,9 @@ private extension EditLinkBottomSheetView {
         backgroundColor = .toasterWhite
         
         editClipTitleTextField.do {
-//            $0.attributedPlaceholder = NSAttributedString(string: StringLiterals.Placeholder.addClip,
-//                                                          attributes: [.foregroundColor: UIColor.gray400,
-//                                                                       .font: UIFont.suitRegular(size: 16)])
+            $0.attributedPlaceholder = NSAttributedString(string: StringLiterals.Placeholder.addClip,
+                                                          attributes: [.foregroundColor: UIColor.gray400,
+                                                                       .font: UIFont.suitRegular(size: 16)])
             $0.addPadding(left: 14, right: 44)
             $0.backgroundColor = .gray50
             $0.textColor = .black900

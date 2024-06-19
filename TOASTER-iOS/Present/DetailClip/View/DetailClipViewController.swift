@@ -197,7 +197,6 @@ extension DetailClipViewController: UICollectionViewDataSource {
     
     func buttonTappedAtIndexPath(_ indexPath: IndexPath) {
         self.editLinkBottomSheetView.setupTextField(message: self.viewModel.toastList.toastList[indexPath.item].title)
-        
     }
 }
 

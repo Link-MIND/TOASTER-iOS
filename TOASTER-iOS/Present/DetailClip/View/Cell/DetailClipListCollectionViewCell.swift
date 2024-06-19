@@ -146,7 +146,6 @@ private extension DetailClipListCollectionViewCell {
         modifiedButton.do {
             $0.setImage(.icMore24, for: .normal)
             $0.frame = contentView.bounds
-                   // $0.isUserInteractionEnabled = false 
         }
         
         dimmedView.do {
