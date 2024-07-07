@@ -19,6 +19,8 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    var buttonAction: (() -> Void)?
+    
     private var toastId: Int = 0
     private var isReadDimmedView: Bool = false {
         didSet {
@@ -143,6 +145,7 @@ private extension DetailClipListCollectionViewCell {
         
         modifiedButton.do {
             $0.setImage(.icMore24, for: .normal)
+            $0.frame = contentView.bounds
         }
         
         dimmedView.do {
@@ -158,11 +161,14 @@ private extension DetailClipListCollectionViewCell {
     }
     
     func setupHierarchy() {
-        addSubviews(linkImage, clipNameLabel, linkTitleLabel, linkLabel, modifiedButton)
+        contentView.addSubviews(linkImage, clipNameLabel, linkTitleLabel, linkLabel, modifiedButton)
         linkImage.addSubviews(dimmedView, readLabel)
     }
     
     func setupLayout() {
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         linkImage.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.top.leading.equalToSuperview().inset(12)
@@ -223,6 +229,7 @@ private extension DetailClipListCollectionViewCell {
     
     @objc
     func buttonTapped() {
+        buttonAction?()
         detailClipListCollectionViewCellDelegate?.modifiedButtonTapped(toastId: toastId)
     }
 }

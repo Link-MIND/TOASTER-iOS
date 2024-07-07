@@ -50,7 +50,7 @@ final class EditLinkBottomSheetView: UIView {
     
     // MARK: - UI Components
     
-    let addClipTextField = UITextField()
+    let editClipTitleTextField = UITextField()
     private let editClipButton = UIButton()
     private let errorMessage = UILabel()
     private let clearButton = UIButton()
@@ -80,8 +80,9 @@ final class EditLinkBottomSheetView: UIView {
 
 extension EditLinkBottomSheetView {
     func resetTextField() {
-        addClipTextField.text = nil
-        addClipTextField.becomeFirstResponder()
+        editClipTitleTextField.text = nil
+        editClipTitleTextField.becomeFirstResponder()
+        isButtonClicked = true
     }
     
     func changeTextField(addButton: Bool, border: Bool, error: Bool, clearButton: Bool) {
@@ -96,7 +97,8 @@ extension EditLinkBottomSheetView {
     }
     
     func setupTextField(message: String) {
-        addClipTextField.text = message
+        editClipTitleTextField.text = message
+        editClipTitleTextField.placeholder = message
     }
     
     func setupConfirmBottomSheetButtonAction(_ action: (() -> Void)?) {
@@ -110,7 +112,7 @@ private extension EditLinkBottomSheetView {
     func setupStyle() {
         backgroundColor = .toasterWhite
         
-        addClipTextField.do {
+        editClipTitleTextField.do {
             $0.attributedPlaceholder = NSAttributedString(string: StringLiterals.Placeholder.addClip,
                                                           attributes: [.foregroundColor: UIColor.gray400,
                                                                        .font: UIFont.suitRegular(size: 16)])
@@ -145,20 +147,20 @@ private extension EditLinkBottomSheetView {
     }
     
     func setupHierarchy() {
-        addSubviews(addClipTextField, editClipButton, errorMessage)
-        addClipTextField.addSubview(clearButton)
+        addSubviews(editClipTitleTextField, editClipButton, errorMessage)
+        editClipTitleTextField.addSubview(clearButton)
     }
     
     func setupLayout() {
-        addClipTextField.snp.makeConstraints {
+        editClipTitleTextField.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(54)
         }
         
         errorMessage.snp.makeConstraints {
-            $0.top.equalTo(addClipTextField.snp.bottom).offset(6)
-            $0.leading.equalTo(addClipTextField)
+            $0.top.equalTo(editClipTitleTextField.snp.bottom).offset(6)
+            $0.leading.equalTo(editClipTitleTextField)
         }
         
         editClipButton.snp.makeConstraints {
@@ -175,8 +177,8 @@ private extension EditLinkBottomSheetView {
     }
     
     func setupKeyboard() {
-        if !addClipTextField.isFirstResponder {
-            addClipTextField.becomeFirstResponder()
+        if !editClipTitleTextField.isFirstResponder {
+            editClipTitleTextField.becomeFirstResponder()
         }
     }
     
@@ -192,11 +194,11 @@ private extension EditLinkBottomSheetView {
     
     func setupTextFieldBorder() {
         if isBorderColor {
-            addClipTextField.layer.borderColor = UIColor.toasterError.cgColor
-            addClipTextField.layer.borderWidth = 1.0
+            editClipTitleTextField.layer.borderColor = UIColor.toasterError.cgColor
+            editClipTitleTextField.layer.borderWidth = 1.0
         } else {
-            addClipTextField.layer.borderColor = UIColor.clear.cgColor
-            addClipTextField.layer.borderWidth = 0.0
+            editClipTitleTextField.layer.borderColor = UIColor.clear.cgColor
+            editClipTitleTextField.layer.borderWidth = 0.0
         }
     }
     
@@ -221,7 +223,7 @@ private extension EditLinkBottomSheetView {
     @objc
     func buttonTapped() {
         confirmBottomSheetViewButtonAction?()
-        editLinkBottomSheetViewDelegate?.dismissButtonTapped(title: addClipTextField.text ?? "")
+        editLinkBottomSheetViewDelegate?.dismissButtonTapped(title: editClipTitleTextField.text ?? "")
     }
     
     @objc
