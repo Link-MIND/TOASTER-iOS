@@ -70,8 +70,8 @@ final class AddClipBottomSheetView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
         setupKeyboard()
     }
 }
@@ -81,7 +81,6 @@ final class AddClipBottomSheetView: UIView {
 extension AddClipBottomSheetView {
     func resetTextField() {
         addClipTextField.text = nil
-        addClipTextField.becomeFirstResponder()
     }
     
     func changeTextField(addButton: Bool, border: Bool, error: Bool, clearButton: Bool) {

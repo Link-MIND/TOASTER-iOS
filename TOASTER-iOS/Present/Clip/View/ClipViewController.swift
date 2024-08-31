@@ -17,8 +17,11 @@ final class ClipViewController: UIViewController {
     private let viewModel = ClipViewModel()
     private let clipEmptyView = ClipEmptyView()
     private let addClipBottomSheetView = AddClipBottomSheetView()
-    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, bottomTitle: "클립 추가", height: 198, insertView: addClipBottomSheetView)
-    private let clipListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white, 
+                                                                      bottomTitle: "클립 추가",
+                                                                      insertView: addClipBottomSheetView)
+    private let clipListCollectionView = UICollectionView(frame: .zero, 
+                                                          collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Life Cycle
     
@@ -91,8 +94,9 @@ private extension ClipViewController {
     }
     
     func addClipAction() {
-        addClipBottomSheetView.resetTextField()
-        addClipBottom.hideBottomSheet()
+        dismiss(animated: true) {
+            self.addClipBottomSheetView.resetTextField()
+        }
         showToastMessage(width: 157, status: .check, message: StringLiterals.ToastMessage.completeAddClip)
     }
     
@@ -208,19 +212,19 @@ extension ClipViewController: ClipCollectionHeaderViewDelegate {
         if viewModel.clipList.clips.count >= 15 {
             showToastMessage(width: 243, status: .warning, message: StringLiterals.ToastMessage.noticeMaxClip)
         } else {
-            addClipBottom.modalPresentationStyle = .overFullScreen
-            self.present(addClipBottom, animated: false)
+            addClipBottom.setupSheetPresentation(bottomHeight: 198)
+            present(addClipBottom, animated: true)
         }
     }
 }
 
 extension ClipViewController: AddClipBottomSheetViewDelegate {
     func addHeightBottom() {
-        addClipBottom.changeHeightBottomSheet(height: 219)
+        addClipBottom.setupSheetHeightChanges(bottomHeight: 219)
     }
     
     func minusHeightBottom() {
-        addClipBottom.changeHeightBottomSheet(height: 198)
+        addClipBottom.setupSheetHeightChanges(bottomHeight: 198)
     }
     
     func dismissButtonTapped(title: String) {
