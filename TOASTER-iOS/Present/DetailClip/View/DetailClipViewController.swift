@@ -23,13 +23,11 @@ final class DetailClipViewController: UIViewController {
     private let deleteLinkBottomSheetView = DeleteLinkBottomSheetView()
     private lazy var editBottom = ToasterBottomSheetViewController(bottomType: .gray,
                                                                bottomTitle: "수정하기",
-                                                               height: 126,
                                                                insertView: deleteLinkBottomSheetView)
     
     private let editLinkBottomSheetView = EditLinkBottomSheetView()
     private lazy var editLinkBottom = ToasterBottomSheetViewController(bottomType: .white,
                                                                        bottomTitle: "링크 제목 편집",
-                                                                       height: 198,
                                                                        insertView: editLinkBottomSheetView)
     
     // MARK: - Life Cycle
@@ -161,18 +159,16 @@ extension DetailClipViewController: UICollectionViewDataSource {
         }
         deleteLinkBottomSheetView.setupDeleteLinkBottomSheetButtonAction {
             self.viewModel.deleteLinkAPI(toastId: self.viewModel.toastId)
-            self.editBottom.hideBottomSheet()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeDeleteLink)
+            self.dismiss(animated: true) { [weak self] in
+                self?.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeDeleteLink)
             }
         }
         deleteLinkBottomSheetView.setupEditLinkTitleBottomSheetButtonAction {
             self.viewModel.getDetailCategoryAPI(categoryID: self.viewModel.categoryId,
                                                 filter: DetailCategoryFilter.all)
-            self.editBottom.hideBottomSheet()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.dismiss(animated: true) {
                 self.viewModel.segmentIndex = indexPath.item - 1
-                self.editLinkBottom.modalPresentationStyle = .overFullScreen
+                self.editLinkBottom.setupSheetPresentation(bottomHeight: 198)
                 self.present(self.editLinkBottom, animated: true)
             }
         }
@@ -274,8 +270,8 @@ extension DetailClipViewController: DetailClipSegmentedDelegate {
 extension DetailClipViewController: DetailClipListCollectionViewCellDelegate {
     func modifiedButtonTapped(toastId: Int) {
         viewModel.toastId = toastId
-        editBottom.modalPresentationStyle = .overFullScreen
-        present(editBottom, animated: false)
+        editBottom.setupSheetPresentation(bottomHeight: 226)
+        present(editBottom, animated: true)
     }
 }
 
@@ -287,23 +283,18 @@ extension DetailClipViewController: EditLinkBottomSheetViewDelegate {
     }
     
     func addHeightBottom() {
-        editLinkBottom.changeHeightBottomSheet(height: 219)
+        editLinkBottom.setupSheetHeightChanges(bottomHeight: 219)
     }
     
     func minusHeightBottom() {
-        editLinkBottom.changeHeightBottomSheet(height: 198)
+        editLinkBottom.setupSheetHeightChanges(bottomHeight: 198)
     }
     
     func dismissButtonTapped(title: String) {
         viewModel.patchEditLinkTitleAPI(toastId: viewModel.toastId,
                                         title: title)
-        // 이중 바텀시트 순차적으로 내리기
-        editLinkBottom.hideBottomSheet()
-        editBottom.hideBottomSheet()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            guard let self else { return }
-            self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeEditTitle)
+        dismiss(animated: true) { [weak self] in
+            self?.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeEditTitle)
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  DetailEditLinkBottomSheetView.swift
+//  EditLinkBottomSheetView.swift
 //  TOASTER-iOS
 //
 //  Created by Gahyun Kim on 2024/04/12.
@@ -70,8 +70,8 @@ final class EditLinkBottomSheetView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
         setupKeyboard()
     }
 }
