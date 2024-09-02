@@ -15,6 +15,8 @@ final class LinkWebViewController: UIViewController {
     
     // MARK: - Properties
     
+    private var progressObservation: NSKeyValueObservation?
+
     private var canGoBack: Bool = false {
         didSet {
             backButton.isEnabled = canGoBack
@@ -71,10 +73,6 @@ final class LinkWebViewController: UIViewController {
         
         showNavigationBar()
     }
-    
-    deinit {
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-    }
 }
 
 // MARK: - Extensions
@@ -97,16 +95,6 @@ extension LinkWebViewController {
         }
         toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, safariButton], animated: false)
     }
-    
-    /// KVO를 사용하여 estimatedProgress가 변경될 때 호출되는 메서드
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "estimatedProgress" {
-            if let newProgress = change?[.newKey] as? NSNumber {
-                let progress = Float(truncating: newProgress)
-                progressView.progress = progress
-            }
-        }
-    }
 }
 
 // MARK: - Private Extensions
@@ -123,7 +111,12 @@ private extension LinkWebViewController {
         
         webView.do {
             $0.navigationDelegate = self
-            $0.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+            progressObservation = $0.observe(
+                \.estimatedProgress,
+                 options: [.new]) { [weak self] object, _ in
+                     let progress = Float(object.estimatedProgress)
+                     self?.progressView.progress = progress
+            }
         }
         
         toolBar.do {

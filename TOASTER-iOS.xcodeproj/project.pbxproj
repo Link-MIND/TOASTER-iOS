@@ -23,6 +23,8 @@
 		3913B0B02BCECFC80031A3EB /* UpdateAlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3913B0AF2BCECFC80031A3EB /* UpdateAlertType.swift */; };
 		391908422B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391908412B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift */; };
 		391908442B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391908432B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift */; };
+		396D7EC82C855F180034A14E /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D7EC72C855F180034A14E /* ViewModelType.swift */; };
+		396D7ECB2C855F5F0034A14E /* LinkWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D7ECA2C855F5F0034A14E /* LinkWebViewModel.swift */; };
 		398ACFDC2B5E77FA00D5EE77 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 398ACFDB2B5E77FA00D5EE77 /* Colors.xcassets */; };
 		398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */; };
 		398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F52B456AF9001595E0 /* BottomType.swift */; };
@@ -323,6 +325,8 @@
 		3913B0AF2BCECFC80031A3EB /* UpdateAlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAlertType.swift; sourceTree = "<group>"; };
 		391908412B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditPriorityCategoryRequestDTO.swift; sourceTree = "<group>"; };
 		391908432B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditNameCategoryRequestDTO.swift; sourceTree = "<group>"; };
+		396D7EC72C855F180034A14E /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		396D7ECA2C855F5F0034A14E /* LinkWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWebViewModel.swift; sourceTree = "<group>"; };
 		398ACFDB2B5E77FA00D5EE77 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterToastMessageView.swift; sourceTree = "<group>"; };
 		398BE7F52B456AF9001595E0 /* BottomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomType.swift; sourceTree = "<group>"; };
@@ -538,8 +542,9 @@
 			isa = PBXGroup;
 			children = (
 				3909A0692B6236FE005A4546 /* Model */,
-				390925C92B4F047500487AA3 /* View */,
 				39A843D72B7485DF007A4D75 /* ViewController */,
+				390925C92B4F047500487AA3 /* View */,
+				396D7EC92C855F4F0034A14E /* ViewModel */,
 			);
 			path = LinkWeb;
 			sourceTree = "<group>";
@@ -599,6 +604,14 @@
 				3913B0AF2BCECFC80031A3EB /* UpdateAlertType.swift */,
 			);
 			path = UpdateAlert;
+			sourceTree = "<group>";
+		};
+		396D7EC92C855F4F0034A14E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				396D7ECA2C855F5F0034A14E /* LinkWebViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		398ACFDA2B5E77C500D5EE77 /* Assets */ = {
@@ -939,6 +952,7 @@
 			isa = PBXGroup;
 			children = (
 				3F2FA1762B45C3E000EDBF95 /* AuthenticationAdapterProtocol.swift */,
+				396D7EC72C855F180034A14E /* ViewModelType.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1902,6 +1916,7 @@
 				6BE6DA512B50B309008B06FA /* PatchPushAlarmRequestDTO.swift in Sources */,
 				830517962B4D21BB009FFB60 /* CompositioinalFactory.swift in Sources */,
 				6BE6D9E82B4EA773008B06FA /* RemindCollectionFooterView.swift in Sources */,
+				396D7EC82C855F180034A14E /* ViewModelType.swift in Sources */,
 				39A843CA2B74512B007A4D75 /* DetailClipViewModel.swift in Sources */,
 				83CFC3392B568BE700A2EB2B /* RecommendSiteModel.swift in Sources */,
 				391908442B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift in Sources */,
@@ -1953,6 +1968,7 @@
 				3F2FA17D2B4928B700EDBF95 /* LoginUseCase.swift in Sources */,
 				6BE6DA9A2B54747B008B06FA /* TimerAPIService.swift in Sources */,
 				6BE6DA882B546B24008B06FA /* PatchOpenLinkResponseDTO.swift in Sources */,
+				396D7ECB2C855F5F0034A14E /* LinkWebViewModel.swift in Sources */,
 				6BE6DA752B50C373008B06FA /* GetCheckCategoryResponseDTO.swift in Sources */,
 				6BE6D9EF2B4EE98D008B06FA /* RemindModel.swift in Sources */,
 				6BE6DA6B2B50BFED008B06FA /* NoneDataResponseDTO.swift in Sources */,
