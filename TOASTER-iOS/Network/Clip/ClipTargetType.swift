@@ -9,7 +9,7 @@ import Foundation
 
 import Moya
 
-enum DetailCategoryFilter: String {
+enum DetailCategoryFilter: String, CaseIterable {
     case all = "ALL"
     case read = "READ"
     case unread = "UNREAD"

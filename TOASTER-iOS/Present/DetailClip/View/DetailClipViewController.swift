@@ -301,8 +301,10 @@ extension DetailClipViewController: EditLinkBottomSheetViewDelegate {
 
 extension DetailClipViewController: PatchClipDelegate {
     func patchEnd() {
-        viewModel.getDetailCategoryAPI(categoryID: self.viewModel.categoryId,
-                                       filter: DetailCategoryFilter.all) {
+        viewModel.getDetailCategoryAPI(
+            categoryID: self.viewModel.categoryId,
+            filter: DetailCategoryFilter.allCases[self.viewModel.segmentIndex]
+        ) {
             self.detailClipListCollectionView.reloadData()
         }
     }
