@@ -358,9 +358,11 @@ private extension RemindTimerAddViewController {
         let repeatView = TimerRepeatBottomSheetView()
         repeatView.setupDelegate(forDelegate: self)
         repeatView.setupSelectedIndex(forIndexList: selectedIndex)
-        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, bottomTitle: "반복설정", height: view.convertByHeightRatio(622), insertView: repeatView)
-        exampleBottom.modalPresentationStyle = .overFullScreen
-        self.present(exampleBottom, animated: false)
+        let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, 
+                                                             bottomTitle: "반복설정",
+                                                             insertView: repeatView)
+        exampleBottom.setupSheetPresentation(bottomHeight: view.convertByHeightRatio(720))
+        self.present(exampleBottom, animated: true)
     }
     
     @objc func completeButtonTapped() {
@@ -391,6 +393,6 @@ extension RemindTimerAddViewController: TimerRepeatBottomSheetDelegate {
         setSelectedIndex(contains: 9, deleteFirst: 1, deleteSecond: 5)
         setSelectedIndex(contains: 10, deleteFirst: 6, deleteSecond: 7)
         
-        dismiss(animated: false)
+        dismiss(animated: true)
     }
 }

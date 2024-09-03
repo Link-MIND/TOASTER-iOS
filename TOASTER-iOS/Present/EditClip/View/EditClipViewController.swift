@@ -21,7 +21,6 @@ final class EditClipViewController: UIViewController {
     private let editClipBottomSheetView = AddClipBottomSheetView()
     private lazy var editClipBottom = ToasterBottomSheetViewController(bottomType: .white,
                                                                        bottomTitle: "클립 이름 수정",
-                                                                       height: 198,
                                                                        insertView: editClipBottomSheetView)
     
     // MARK: - Life Cycle
@@ -170,8 +169,8 @@ extension EditClipViewController: UICollectionViewDataSource {
             }
             cell.changeTitleButtonTapped {
                 self.viewModel.cellIndex = indexPath.item - 1
-                self.editClipBottom.modalPresentationStyle = .overFullScreen
-                self.present(self.editClipBottom, animated: false)
+                self.editClipBottom.setupSheetPresentation(bottomHeight: 198)
+                self.present(self.editClipBottom, animated: true)
                 self.editClipBottomSheetView.setupTextField(message: self.viewModel.clipList.clips[indexPath.item - 1].title)
             }
         }
@@ -242,8 +241,12 @@ extension EditClipViewController: UICollectionViewDropDelegate {
                 collectionView.deleteItems(at: [sourceIndexPath])
                 collectionView.insertItems(at: [destinationIndexPath])
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-                self.viewModel.patchEditPriorityCategoryAPI(requestBody: ClipPriorityEditModel(id: self.viewModel.clipList.clips[destinationIndexPath.item - 1].id,
-                                                                                               priority: destinationIndexPath.item - 1))
+                self.viewModel.patchEditPriorityCategoryAPI(
+                    requestBody: ClipPriorityEditModel(
+                        id: self.viewModel.clipList.clips[destinationIndexPath.item - 1].id,
+                        priority: destinationIndexPath.item - 1
+                    )
+                )
             }
         }
     }
@@ -257,17 +260,18 @@ extension EditClipViewController: AddClipBottomSheetViewDelegate {
     }
     
     func addHeightBottom() {
-        editClipBottom.changeHeightBottomSheet(height: 219)
+        editClipBottom.setupSheetHeightChanges(bottomHeight: 219)
     }
     
     func minusHeightBottom() {
-        editClipBottom.changeHeightBottomSheet(height: 198)
+        editClipBottom.setupSheetHeightChanges(bottomHeight: 198)
     }
     
     func dismissButtonTapped(title: String) {
-        editClipBottom.hideBottomSheet()
+        dismiss(animated: true)
         viewModel.patchEditaNameCategoryAPI(
             requestBody: ClipNameEditModel(id: viewModel.clipList.clips[viewModel.cellIndex].id,
-                                            title: title))
+                                           title: title)
+        )
     }
 }
