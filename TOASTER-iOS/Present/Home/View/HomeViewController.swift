@@ -19,7 +19,6 @@ final class HomeViewController: UIViewController {
     private let addClipBottomSheetView = AddClipBottomSheetView()
     private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white,
                                                                       bottomTitle: "클립 추가",
-                                                                      height: 198, 
                                                                       insertView: addClipBottomSheetView)
     
     // MARK: - Life Cycle
@@ -277,11 +276,12 @@ private extension HomeViewController {
     }
     
     func addClipAction() {
-        addClipBottomSheetView.resetTextField()
-        addClipBottom.hideBottomSheet()
-        showToastMessage(width: 157,
-                         status: .check,
-                         message: StringLiterals.ToastMessage.completeAddClip)
+        dismiss(animated: true) {
+            self.addClipBottomSheetView.resetTextField()
+            self.showToastMessage(width: 157,
+                                  status: .check,
+                                  message: StringLiterals.ToastMessage.completeAddClip)
+        }
     }
     
     func setupNavigationBar() {
@@ -318,11 +318,11 @@ extension HomeViewController: AddClipBottomSheetViewDelegate {
     }
     
     func addHeightBottom() {
-        addClipBottom.changeHeightBottomSheet(height: 219)
+        addClipBottom.setupSheetHeightChanges(bottomHeight: 219)
     }
     
     func minusHeightBottom() {
-        addClipBottom.changeHeightBottomSheet(height: 198)
+        addClipBottom.setupSheetHeightChanges(bottomHeight: 198)
     }
     
     func dismissButtonTapped(title: String) {
@@ -334,8 +334,8 @@ extension HomeViewController: AddClipBottomSheetViewDelegate {
 
 extension HomeViewController: UserClipCollectionViewCellDelegate {
     func addClipCellTapped() {
-        addClipBottom.modalPresentationStyle = .overFullScreen
-        self.present(addClipBottom, animated: false)
+        addClipBottom.setupSheetPresentation(bottomHeight: 198)
+        self.present(addClipBottom, animated: true)
     }
 }
 

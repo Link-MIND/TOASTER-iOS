@@ -182,11 +182,9 @@ private extension RemindViewController {
         
         let exampleBottom = ToasterBottomSheetViewController(bottomType: .gray, 
                                                              bottomTitle: "수정하기",
-                                                             height: 128,
                                                              insertView: editView)
-        exampleBottom.modalPresentationStyle = .overFullScreen
-        
-        present(exampleBottom, animated: false)
+        exampleBottom.setupSheetPresentation(bottomHeight: 226)
+        present(exampleBottom, animated: true)
     }
     
     func setupAlarmBottomSheet() {
@@ -195,11 +193,9 @@ private extension RemindViewController {
         
         let exampleBottom = ToasterBottomSheetViewController(bottomType: .white, 
                                                              bottomTitle: "알림이 꺼져있어요!",
-                                                             height: 311,
                                                              insertView: alarmView)
-        exampleBottom.modalPresentationStyle = .overFullScreen
-        
-        present(exampleBottom, animated: false)
+        exampleBottom.setupSheetPresentation(bottomHeight: 427)
+        present(exampleBottom, animated: true)
     }
     
     func reloadCollectionViewWithView(forType: RemindViewType) {
@@ -265,7 +261,7 @@ extension RemindViewController: RemindAlarmOffBottomSheetViewDelegate {
 extension RemindViewController: RemindEditViewDelegate {
     func editTimer(forID: Int?) {
         selectedTimerID = forID
-        dismiss(animated: false)
+        dismiss(animated: true)
         if let forID {
             let editViewController = RemindTimerAddViewController()
             editViewController.configureView(forTimerID: forID)
@@ -275,7 +271,7 @@ extension RemindViewController: RemindEditViewDelegate {
     
     func deleteTimer(forID: Int?) {
         selectedTimerID = forID
-        dismiss(animated: false)
+        dismiss(animated: true)
         showPopup(forMainText: "타이머를 삭제하시겠어요?",
                   forSubText: "더 이상 해당 클립의 리마인드를 \n받을 수 없어요",
                   forLeftButtonTitle: StringLiterals.Button.cancel,
