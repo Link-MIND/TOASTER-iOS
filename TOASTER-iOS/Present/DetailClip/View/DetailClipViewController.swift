@@ -157,19 +157,19 @@ extension DetailClipViewController: UICollectionViewDataSource {
         } else {
             cell.configureCell(forModel: viewModel.toastList, index: indexPath.item, isClipHidden: true)
         }
+        
+        /// "수정하기" 클릭 시
+        deleteLinkBottomSheetView.setupEditLinkTitleBottomSheetButtonAction {
+            self.dismiss(animated: true) {
+                self.editLinkBottom.setupSheetPresentation(bottomHeight: 198)
+                self.present(self.editLinkBottom, animated: true)
+            }
+        }
+        /// "삭제" 클릭 시
         deleteLinkBottomSheetView.setupDeleteLinkBottomSheetButtonAction {
             self.viewModel.deleteLinkAPI(toastId: self.viewModel.toastId)
             self.dismiss(animated: true) { [weak self] in
                 self?.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeDeleteLink)
-            }
-        }
-        deleteLinkBottomSheetView.setupEditLinkTitleBottomSheetButtonAction {
-            self.viewModel.getDetailCategoryAPI(categoryID: self.viewModel.categoryId,
-                                                filter: DetailCategoryFilter.all)
-            self.dismiss(animated: true) {
-                self.viewModel.segmentIndex = indexPath.item - 1
-                self.editLinkBottom.setupSheetPresentation(bottomHeight: 198)
-                self.present(self.editLinkBottom, animated: true)
             }
         }
         return cell
