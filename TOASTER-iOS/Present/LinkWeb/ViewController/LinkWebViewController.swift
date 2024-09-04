@@ -16,26 +16,6 @@ final class LinkWebViewController: UIViewController {
     // MARK: - Properties
     
     private var progressObservation: NSKeyValueObservation?
-
-    private var canGoBack: Bool = false {
-        didSet {
-            backButton.isEnabled = canGoBack
-            backButton.tintColor = canGoBack ? .gray700 : .gray150
-        }
-    }
-    
-    private var canGoForward: Bool = false {
-        didSet {
-            forwardButton.isEnabled = canGoForward
-            forwardButton.tintColor = canGoForward ? .gray700 : .gray150
-        }
-    }
-    
-    private var isRead: Bool = false {
-        didSet {
-            readLinkCheckButton.tintColor = isRead ? .gray700 : .gray150
-        }
-    }
     private var toastId: Int?
     
     // MARK: - UI Properties
@@ -43,13 +23,7 @@ final class LinkWebViewController: UIViewController {
     private let navigationView = LinkWebNavigationView()
     private let progressView = UIProgressView()
     private let webView = WKWebView()
-    private let toolBar = UIToolbar()
-    
-    private let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    private lazy var backButton = UIBarButtonItem(image: .icArrow2Back24, style: .plain, target: self, action: #selector(goBackInWeb))
-    private lazy var forwardButton = UIBarButtonItem(image: .icArrow2Forward24, style: .plain, target: self, action: #selector(goForwardInWeb))
-    private lazy var readLinkCheckButton = UIBarButtonItem(image: .icRead, style: .plain, target: self, action: #selector(checkReadInWeb))
-    private lazy var safariButton = UIBarButtonItem(image: .icSafari24, style: .plain, target: self, action: #selector(openInSafari))
+    private let toolBar = LinkWebToolBarView()
     
     // MARK: - Life Cycle
     
@@ -60,6 +34,7 @@ final class LinkWebViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupNavigationBarAction()
+        setupToolBarAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +48,10 @@ final class LinkWebViewController: UIViewController {
         
         showNavigationBar()
     }
+    
+    deinit {
+        progressObservation?.invalidate()
+    }
 }
 
 // MARK: - Extensions
@@ -83,9 +62,8 @@ extension LinkWebViewController {
             let request = URLRequest(url: url)
             webView.load(request)
         }
-        self.isRead = isRead
+        toolBar.updateIsRead(isRead)
         self.toastId = id
-        toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, readLinkCheckButton, flexibleSpace, safariButton], animated: false)
     }
     
     func setupDataBind(linkURL: String) {
@@ -93,7 +71,6 @@ extension LinkWebViewController {
             let request = URLRequest(url: url)
             webView.load(request)
         }
-        toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, safariButton], animated: false)
     }
 }
 
@@ -116,17 +93,7 @@ private extension LinkWebViewController {
                  options: [.new]) { [weak self] object, _ in
                      let progress = Float(object.estimatedProgress)
                      self?.progressView.progress = progress
-            }
-        }
-        
-        toolBar.do {
-            $0.backgroundColor = .toasterWhite
-            $0.setBackgroundImage(UIImage(), forToolbarPosition: .bottom, barMetrics: .default)
-            $0.setShadowImage(UIImage(), forToolbarPosition: .bottom)
-        }
-        
-        [backButton, forwardButton, safariButton].forEach {
-            $0.tintColor = .gray700
+                 }
         }
     }
     
@@ -173,33 +140,35 @@ private extension LinkWebViewController {
         }
     }
     
-    /// 툴바 뒤로가기 버튼 클릭 시
-    @objc func goBackInWeb() {
-        if webView.canGoBack {
-            webView.goBack()
-            canGoBack = webView.canGoBack
+    func setupToolBarAction() {
+        /// 툴바 뒤로가기 버튼 클릭 액션 클로저
+        toolBar.backButtonTapped {
+            if self.webView.canGoBack {
+                self.webView.goBack()
+                self.toolBar.updateCanGoBack(self.webView.canGoBack)
+            }
         }
-    }
-    
-    /// 툴바 앞으로가기 버튼 클릭 시
-    @objc func goForwardInWeb() {
-        if webView.canGoForward {
-            webView.goForward()
-            canGoForward = webView.canGoForward
+        
+        /// 툴바 앞으로가기 버튼 클릭 액션 클로저
+        toolBar.forwardButtonTapped {
+            if self.webView.canGoForward {
+                self.webView.goForward()
+                self.toolBar.updateCanGoForward(self.webView.canGoForward)
+            }
         }
-    }
-    
-    /// 툴바 링크 확인 완료 버튼 클릭 시
-    @objc func checkReadInWeb() {
-        if let toastId {
-            patchOpenLinkAPI(requestBody: LinkReadEditModel(toastId: toastId, isRead: !isRead))
+        
+        /// 툴바 링크 확인완료 버튼 클릭 액션 클로저
+        toolBar.readLinkCheckButtonTapped {
+            if let toastId = self.toastId {
+                self.patchOpenLinkAPI(
+                    requestBody: LinkReadEditModel(toastId: toastId, isRead: !self.toolBar.isRead)
+                )
+            }
         }
-    }
-    
-    /// 툴바 사파리 버튼 클릭 시
-    @objc func openInSafari() {
-        if let url = webView.url {
-            UIApplication.shared.open(url)
+        
+        /// 툴바 사파리 버튼 클릭 액션 클로저
+        toolBar.safariButtonTapped {
+            if let url = self.webView.url { UIApplication.shared.open(url) }
         }
     }
 }
@@ -212,8 +181,8 @@ extension LinkWebViewController: WKNavigationDelegate {
         if let url = webView.url?.absoluteString {
             navigationView.setupLinkAddress(link: url)
         }
-        canGoBack = webView.canGoBack
-        canGoForward = webView.canGoForward
+        toolBar.updateCanGoBack(webView.canGoBack)
+        toolBar.updateCanGoForward(webView.canGoForward)
     }
     
     /// 웹 페이지 로딩이 완료되었을 때 호출
@@ -235,12 +204,12 @@ extension LinkWebViewController {
                                                                                               isRead: requestBody.isRead)) { result in
             switch result {
             case .success:
-                if !self.isRead {
+                if !self.toolBar.isRead {
                     self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeReadLink)
                 } else {
                     self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.cancelReadLink)
                 }
-                self.isRead = !self.isRead
+                self.toolBar.updateIsRead(!self.toolBar.isRead)
             case .unAuthorized, .networkFail, .notFound:
                 self.changeViewController(viewController: LoginViewController())
             default: return
