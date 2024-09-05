@@ -22,7 +22,7 @@ final class DetailClipViewModel: NSObject {
     private var unAuthorizedAction: NormalChangeAction?
     private var editLinkTitleAction: NormalChangeAction?
     
-    weak var delegate: PatchClipDelegate? = nil
+    weak var delegate: PatchClipDelegate?
     
     // MARK: - Data
     
