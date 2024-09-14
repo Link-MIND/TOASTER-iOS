@@ -244,7 +244,7 @@ extension EditLinkBottomSheetView: UITextFieldDelegate {
         if currentText.count == maxLength && newText.count == 15 {
             editLinkBottomSheetViewDelegate?.minusHeightBottom()
         }
-        return newText.count <= maxLength
+        return (newText.count <= maxLength) || (newText.count < currentText.count)
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
