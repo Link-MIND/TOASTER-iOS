@@ -19,4 +19,5 @@ final class NetworkService {
     let clipService: ClipAPIServiceProtocol = ClipAPIService()
     let searchService: SearchAPIServiceProtocol = SearchAPIService()
     let timerService: TimerAPIServiceProtocol = TimerAPIService()
+    let popupService: PopupAPIServiceProtocol = PopupAPIService()
 }

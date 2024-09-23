@@ -23,6 +23,11 @@
 		3913B0B02BCECFC80031A3EB /* UpdateAlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3913B0AF2BCECFC80031A3EB /* UpdateAlertType.swift */; };
 		391908422B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391908412B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift */; };
 		391908442B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391908432B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift */; };
+		396DCDE52CA19A1300FEF7C8 /* PopupTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396DCDE42CA19A1300FEF7C8 /* PopupTargetType.swift */; };
+		396DCDE82CA19A2300FEF7C8 /* PopupAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396DCDE72CA19A2300FEF7C8 /* PopupAPIService.swift */; };
+		396DCDEB2CA19A4C00FEF7C8 /* GetPopupInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396DCDEA2CA19A4C00FEF7C8 /* GetPopupInfoResponseDTO.swift */; };
+		396DCDEE2CA19A5C00FEF7C8 /* PatchPopupHiddenRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396DCDED2CA19A5C00FEF7C8 /* PatchPopupHiddenRequestDTO.swift */; };
+		396DCDF12CA19A8900FEF7C8 /* PatchPopupHiddenResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396DCDF02CA19A8900FEF7C8 /* PatchPopupHiddenResponseDTO.swift */; };
 		398ACFDC2B5E77FA00D5EE77 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 398ACFDB2B5E77FA00D5EE77 /* Colors.xcassets */; };
 		398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */; };
 		398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F52B456AF9001595E0 /* BottomType.swift */; };
@@ -323,6 +328,11 @@
 		3913B0AF2BCECFC80031A3EB /* UpdateAlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAlertType.swift; sourceTree = "<group>"; };
 		391908412B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditPriorityCategoryRequestDTO.swift; sourceTree = "<group>"; };
 		391908432B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditNameCategoryRequestDTO.swift; sourceTree = "<group>"; };
+		396DCDE42CA19A1300FEF7C8 /* PopupTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTargetType.swift; sourceTree = "<group>"; };
+		396DCDE72CA19A2300FEF7C8 /* PopupAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAPIService.swift; sourceTree = "<group>"; };
+		396DCDEA2CA19A4C00FEF7C8 /* GetPopupInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPopupInfoResponseDTO.swift; sourceTree = "<group>"; };
+		396DCDED2CA19A5C00FEF7C8 /* PatchPopupHiddenRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchPopupHiddenRequestDTO.swift; sourceTree = "<group>"; };
+		396DCDF02CA19A8900FEF7C8 /* PatchPopupHiddenResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchPopupHiddenResponseDTO.swift; sourceTree = "<group>"; };
 		398ACFDB2B5E77FA00D5EE77 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterToastMessageView.swift; sourceTree = "<group>"; };
 		398BE7F52B456AF9001595E0 /* BottomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomType.swift; sourceTree = "<group>"; };
@@ -599,6 +609,26 @@
 				3913B0AF2BCECFC80031A3EB /* UpdateAlertType.swift */,
 			);
 			path = UpdateAlert;
+			sourceTree = "<group>";
+		};
+		396DCDE22CA199E800FEF7C8 /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				396DCDE32CA19A0400FEF7C8 /* DTO */,
+				396DCDE42CA19A1300FEF7C8 /* PopupTargetType.swift */,
+				396DCDE72CA19A2300FEF7C8 /* PopupAPIService.swift */,
+			);
+			path = Popup;
+			sourceTree = "<group>";
+		};
+		396DCDE32CA19A0400FEF7C8 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				396DCDEA2CA19A4C00FEF7C8 /* GetPopupInfoResponseDTO.swift */,
+				396DCDED2CA19A5C00FEF7C8 /* PatchPopupHiddenRequestDTO.swift */,
+				396DCDF02CA19A8900FEF7C8 /* PatchPopupHiddenResponseDTO.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 		398ACFDA2B5E77C500D5EE77 /* Assets */ = {
@@ -965,6 +995,7 @@
 				6BE6DA792B5456FE008B06FA /* Toaster */,
 				6BE6DA8D2B546EE2008B06FA /* Timer */,
 				6BE6DAA92B547978008B06FA /* Search */,
+				396DCDE22CA199E800FEF7C8 /* Popup */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1774,6 +1805,7 @@
 				3F1F261D2BAA98C8004F75CE /* RemindClipModel.swift in Sources */,
 				3F3ED28C2BA1A456004E79F0 /* PostRefreshTokenResponseDTO.swift in Sources */,
 				3F3ED28D2BA1A456004E79F0 /* AuthAPIService.swift in Sources */,
+				396DCDEB2CA19A4C00FEF7C8 /* GetPopupInfoResponseDTO.swift in Sources */,
 				3F3ED2892BA1A453004E79F0 /* PostSocialLoginRequestDTO.swift in Sources */,
 				3F3ED27B2BA1A298004E79F0 /* BaseTargetType.swift in Sources */,
 				3F3ED28E2BA1A45C004E79F0 /* PatchPushAlarmRequestDTO.swift in Sources */,
@@ -1784,6 +1816,7 @@
 				3F7D917A2BA1A05F004A022F /* UIView+.swift in Sources */,
 				3F3ED2AE2BA1CD10004E79F0 /* BottomType.swift in Sources */,
 				3F3ED2822BA1A3F8004E79F0 /* ClipTargetType.swift in Sources */,
+				396DCDEE2CA19A5C00FEF7C8 /* PatchPopupHiddenRequestDTO.swift in Sources */,
 				3FE00F0C2BC632A500CC821E /* NetworkResult.swift in Sources */,
 				83474A6D2BED0750009B9C48 /* PatchEditLinkTitleResponseDTO.swift in Sources */,
 				3F3ED2832BA1A3FD004E79F0 /* GetAllCategoryResponseDTO.swift in Sources */,
@@ -1792,8 +1825,10 @@
 				3F3ED2902BA1A45F004E79F0 /* PatchPushAlarmResponseDTO.swift in Sources */,
 				3F3ED2912BA1A45F004E79F0 /* UserTargetType.swift in Sources */,
 				3F3ED2922BA1A45F004E79F0 /* GetSettingPageResponseDTO.swift in Sources */,
+				396DCDE82CA19A2300FEF7C8 /* PopupAPIService.swift in Sources */,
 				3F3ED2932BA1A45F004E79F0 /* GetMyPageResponseDTO.swift in Sources */,
 				3F3ED2B62BA1D6C8004E79F0 /* UILabel+.swift in Sources */,
+				396DCDF22CA19A8900FEF7C8 /* PatchPopupHiddenResponseDTO.swift in Sources */,
 				3FE00F0B2BC6328900CC821E /* MoyaPlugin.swift in Sources */,
 				3F1F261B2BAA9820004F75CE /* RemindSelectClipCollectionViewCell.swift in Sources */,
 				83474A6C2BED072A009B9C48 /* ToasterAPIService.swift in Sources */,
@@ -1810,6 +1845,7 @@
 				3F3ED2972BA1A46E004E79F0 /* GetWeeksLinkResponseDTO.swift in Sources */,
 				3F3ED29B2BA1A475004E79F0 /* PatchEditTimerRequestDTO.swift in Sources */,
 				3F3ED29C2BA1A475004E79F0 /* PatchEditTimerTitleRequestDTO.swift in Sources */,
+				396DCDE52CA19A1300FEF7C8 /* PopupTargetType.swift in Sources */,
 				3F3ED29D2BA1A475004E79F0 /* PostCreateTimerRequestDTO.swift in Sources */,
 				3F1F26262BAAC231004F75CE /* ShareViewController.swift in Sources */,
 				3F1F26222BAAB395004F75CE /* ToasterToastMessageView.swift in Sources */,
@@ -1847,8 +1883,10 @@
 				6BE6D9E22B4E9B58008B06FA /* CompleteTimerCollectionViewCell.swift in Sources */,
 				3F2FA1792B45C46F00EDBF95 /* KakaoAuthenticateAdapter.swift in Sources */,
 				6BE6DA342B50594B008B06FA /* MoyaPlugin.swift in Sources */,
+				396DCDE62CA19A1300FEF7C8 /* PopupTargetType.swift in Sources */,
 				6BE6D9D82B4E8A03008B06FA /* RemindAlarmOffViewType.swift in Sources */,
 				398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */,
+				396DCDE92CA19A2300FEF7C8 /* PopupAPIService.swift in Sources */,
 				8364220C2BE7BFB2005C4085 /* PatchEditLinkTitleResponseDTO.swift in Sources */,
 				3913B0B02BCECFC80031A3EB /* UpdateAlertType.swift in Sources */,
 				6BE6DA5B2B50B46F008B06FA /* GetMainPageResponseDTO.swift in Sources */,
@@ -1914,6 +1952,7 @@
 				6BE6D9E42B4EA125008B06FA /* WaitTimerCollectionViewCell.swift in Sources */,
 				6BE6D9D42B4DE479008B06FA /* RemindTimerEmptyView.swift in Sources */,
 				39B54E7A2B53D49900538DAE /* SettingTableViewCell.swift in Sources */,
+				396DCDF12CA19A8900FEF7C8 /* PatchPopupHiddenResponseDTO.swift in Sources */,
 				39A843C52B736039007A4D75 /* ClipViewModel.swift in Sources */,
 				6BE6DA392B50636B008B06FA /* BaseAPIService.swift in Sources */,
 				6BE6DA572B50B44F008B06FA /* GetMyPageResponseDTO.swift in Sources */,
@@ -1926,6 +1965,7 @@
 				3909A06D2B62375E005A4546 /* LinkReadEditModel.swift in Sources */,
 				6BC4935E2B4414B400544249 /* ToasterPopupViewController.swift in Sources */,
 				39BE4BBE2B4ABB7C002B471D /* DetailClipSegmentedControlView.swift in Sources */,
+				396DCDEC2CA19A4C00FEF7C8 /* GetPopupInfoResponseDTO.swift in Sources */,
 				6BE6DA6D2B50C109008B06FA /* GetDetailCategoryResponseDTO.swift in Sources */,
 				6B6AE6A82B3FF6D5000E2366 /* UITextField+.swift in Sources */,
 				6BE6DA652B50BA4F008B06FA /* PostAddCategoryRequestDTO.swift in Sources */,
@@ -1954,6 +1994,7 @@
 				6BE6DA9A2B54747B008B06FA /* TimerAPIService.swift in Sources */,
 				6BE6DA882B546B24008B06FA /* PatchOpenLinkResponseDTO.swift in Sources */,
 				6BE6DA752B50C373008B06FA /* GetCheckCategoryResponseDTO.swift in Sources */,
+				396DCDEF2CA19A5C00FEF7C8 /* PatchPopupHiddenRequestDTO.swift in Sources */,
 				6BE6D9EF2B4EE98D008B06FA /* RemindModel.swift in Sources */,
 				6BE6DA6B2B50BFED008B06FA /* NoneDataResponseDTO.swift in Sources */,
 				391908422B56CFE4006F978A /* PatchEditPriorityCategoryRequestDTO.swift in Sources */,
