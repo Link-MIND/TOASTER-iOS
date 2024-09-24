@@ -279,50 +279,21 @@ private extension ToasterPopupViewController {
     }
     
     func setupButtonAction() {
-        leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
-        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
-        centerButton.addTarget(self, action: #selector(centerButtonTapped), for: .touchUpInside)
-        bottomButton.addTarget(self, action: #selector(bottomButtonTapped), for: .touchUpInside)
-        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        leftButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        rightButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        centerButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        bottomButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
-    @objc func leftButtonTapped() {
-        if let leftButtonHandler {
-            leftButtonHandler()
-        } else {
-            cancelAction()
-        }
-    }
-    
-    @objc func rightButtonTapped() {
-        if let rightButtonHandler {
-            rightButtonHandler()
-        } else {
-            cancelAction()
-        }
-    }
-    
-    @objc func centerButtonTapped() {
-        if let centerButtonHandler {
-            centerButtonHandler()
-        } else {
-            cancelAction()
-        }
-    }
-    
-    @objc func bottomButtonTapped() {
-        if let bottomButtonHandler {
-            bottomButtonHandler()
-        } else {
-            cancelAction()
-        }
-    }
-    
-    @objc func closeButtonTapped() {
-        if let closeButtonHandler {
-            closeButtonHandler()
-        } else {
-            cancelAction()
+    @objc func buttonTapped(_ sender: UIButton) {
+        switch sender {
+        case leftButton: leftButtonHandler?() ?? cancelAction()
+        case rightButton: rightButtonHandler?() ?? cancelAction()
+        case centerButton: centerButtonHandler?() ?? cancelAction()
+        case bottomButton: bottomButtonHandler?() ?? cancelAction()
+        case closeButton: closeButtonHandler?() ?? cancelAction()
+        default: break
         }
     }
     
