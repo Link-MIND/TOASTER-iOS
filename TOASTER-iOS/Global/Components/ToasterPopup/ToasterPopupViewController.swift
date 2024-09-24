@@ -13,6 +13,7 @@ import Then
 enum ToasterPopupType {
     case Confirmation // 가운테 버튼 존재
     case Cancelable // 좌,우 버튼 존재
+    case Limitation // 가운데 버튼 아래 기간 설정 버튼 존재
 }
 
 final class ToasterPopupViewController: UIViewController {
@@ -24,12 +25,16 @@ final class ToasterPopupViewController: UIViewController {
     private var popupType: ToasterPopupType
     private var mainText: String?
     private var subText: String?
+    private var imageURL: String?
     private var leftButtonTitle: String = ""
     private var rightButtonTitle: String = ""
     private var centerButtonTitle: String = ""
+    private var bottomButtonTitle: String = ""
     private var leftButtonHandler: ButtonAction?
     private var rightButtonHandler: ButtonAction?
     private var centerButtonHandler: ButtonAction?
+    private var bottomButtonHandler: ButtonAction?
+    private var closeButtonHandler: ButtonAction?
     
     // MARK: - UI Properties
     
@@ -38,11 +43,14 @@ final class ToasterPopupViewController: UIViewController {
     private let labelStackView: UIStackView = UIStackView()
     private let mainLabel: UILabel = UILabel()
     private let subLabel: UILabel = UILabel()
+    private let popupImage: UIImageView = UIImageView()
     
     private let buttonStackView: UIStackView = UIStackView()
     private let leftButton: UIButton = UIButton()
     private let rightButton: UIButton = UIButton()
     private let centerButton: UIButton = UIButton()
+    private let bottomButton: UIButton = UIButton()
+    private let closeButton: UIButton = UIButton()
     
     // MARK: - Life Cycle
     
@@ -90,6 +98,33 @@ final class ToasterPopupViewController: UIViewController {
             self.popupType = .Confirmation
         }
     
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(mainText: String?,
+         subText: String?,
+         imageURL: String?,
+         centerButtonTitle: String,
+         bottomButtonTitle: String,
+         centerButtonHandler: ButtonAction?,
+         bottomButtonHandler: ButtonAction?,
+         closeButtonHandler: ButtonAction?) {
+        
+        self.mainText = mainText
+        self.subText = subText
+        self.imageURL = imageURL
+        self.centerButtonTitle = centerButtonTitle
+        self.bottomButtonTitle = bottomButtonTitle
+        self.centerButtonHandler = nil
+        self.bottomButtonHandler = nil
+        self.closeButtonHandler = nil
+
+        if bottomButtonTitle.isEmpty {
+            self.popupType = .Confirmation
+        } else {
+            self.popupType = .Limitation
+        }
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -144,9 +179,13 @@ private extension ToasterPopupViewController {
             $0.font = .suitRegular(size: 16)
         }
         
+        popupImage.do {
+            $0.kf.setImage(with: URL(string: imageURL ?? ""))
+        }
+        
         buttonStackView.do {
-            $0.axis = .horizontal
-            $0.spacing = popupType == .Cancelable ? 10 : 0
+            $0.axis = popupType == .Limitation ? .vertical : .horizontal
+            $0.spacing = popupType == .Confirmation ? 0 : 10
         }
         
         leftButton.do {
@@ -172,33 +211,55 @@ private extension ToasterPopupViewController {
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
         }
+        
+        bottomButton.do {
+            let attributedString = NSAttributedString(
+                string: bottomButtonTitle,
+                attributes: [
+                    .foregroundColor: UIColor.gray800,
+                    .font: UIFont.suitRegular(size: 14),
+                    .underlineStyle: NSUnderlineStyle.single.rawValue
+                ]
+            )
+            $0.setAttributedTitle(attributedString, for: .normal)
+        }
+        
+        closeButton.do {
+            $0.setImage(.icClose24, for: .normal)
+            $0.tintColor = .black850
+            $0.isHidden = popupType == .Limitation ? false : true
+        }
     }
     
     func setupHierarchy() {
-        view.addSubview(popupStackView)
-        popupStackView.addArrangedSubviews(labelStackView,
-                                           buttonStackView)
-        if mainText != nil {
-            labelStackView.addArrangedSubview(mainLabel)
-        }
-        if subText != nil {
-            labelStackView.addArrangedSubview(subLabel)
-        }
-        buttonStackView.addArrangedSubviews(leftButton,
-                                            rightButton)
+        view.addSubviews(popupStackView)
         
-        if popupType == .Cancelable {
-            buttonStackView.addArrangedSubviews(leftButton,
-                                                rightButton)
-        } else {
+        if mainText != nil { labelStackView.addArrangedSubview(mainLabel) }
+        if subText != nil { labelStackView.addArrangedSubview(subLabel) }
+        if imageURL != nil { labelStackView.addArrangedSubviews(popupImage) }
+                
+        switch popupType {
+        case .Cancelable:
+            buttonStackView.addArrangedSubviews(leftButton, rightButton)
+        case .Confirmation:
             buttonStackView.addArrangedSubviews(centerButton)
+        case .Limitation:
+            buttonStackView.addArrangedSubviews(centerButton, bottomButton)
         }
+        popupStackView.addArrangedSubviews(labelStackView, buttonStackView)
+        popupStackView.addSubview(closeButton)
     }
     
     func setupLayout() {
         popupStackView.snp.makeConstraints {
             $0.width.equalTo(300)
             $0.center.equalToSuperview()
+        }
+        
+        closeButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(24)
+            $0.size.equalTo(20)
         }
         
         if popupType == .Cancelable {
@@ -221,13 +282,15 @@ private extension ToasterPopupViewController {
         leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
         rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
         centerButton.addTarget(self, action: #selector(centerButtonTapped), for: .touchUpInside)
+        bottomButton.addTarget(self, action: #selector(bottomButtonTapped), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
     }
     
     @objc func leftButtonTapped() {
         if let leftButtonHandler {
             leftButtonHandler()
         } else {
-            cancleAction()
+            cancelAction()
         }
     }
     
@@ -235,7 +298,7 @@ private extension ToasterPopupViewController {
         if let rightButtonHandler {
             rightButtonHandler()
         } else {
-            cancleAction()
+            cancelAction()
         }
     }
     
@@ -243,11 +306,27 @@ private extension ToasterPopupViewController {
         if let centerButtonHandler {
             centerButtonHandler()
         } else {
-            cancleAction()
+            cancelAction()
         }
     }
     
-    func cancleAction() {
+    @objc func bottomButtonTapped() {
+        if let bottomButtonHandler {
+            bottomButtonHandler()
+        } else {
+            cancelAction()
+        }
+    }
+    
+    @objc func closeButtonTapped() {
+        if let closeButtonHandler {
+            closeButtonHandler()
+        } else {
+            cancelAction()
+        }
+    }
+    
+    func cancelAction() {
         dismiss(animated: false)
     }
 }
