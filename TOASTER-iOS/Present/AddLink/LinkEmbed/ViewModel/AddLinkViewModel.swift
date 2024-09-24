@@ -47,7 +47,7 @@ final class AddLinkViewModel: AddLinkViewModelType, AddLinkViewModelInputs, AddL
     func embedLinkText(_ text: String) {
         embedLink = text
     }
-
+    
     var inputs: AddLinkViewModelInputs { return self }
     var outputs: AddLinkViewModelOutputs { return self }
 }
@@ -62,7 +62,10 @@ private extension AddLinkViewModel {
     }
     
     func isValidURL(_ urlString: String) -> Bool {
-        guard let url = URL(string: urlString) else { return false }
-        return UIApplication.shared.canOpenURL(url)
+        if (urlString.prefix(8) == "https://") || (urlString.prefix(7) == "http://") {
+            return true
+        } else {
+            return false
+        }
     }
 }
