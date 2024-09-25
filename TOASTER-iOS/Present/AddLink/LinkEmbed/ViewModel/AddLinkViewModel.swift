@@ -11,6 +11,7 @@ protocol AddLinkViewModelInputs {
     func embedLinkText(_ text: String)}
 
 protocol AddLinkViewModelOutputs {
+    var isClearButtonHidden: Bool { get }
     var isNextButtonEnabled: Bool { get }
     var nextButtonBackgroundColor: UIColor { get }
     var textFieldBorderColor: UIColor { get }
@@ -32,12 +33,14 @@ final class AddLinkViewModel: AddLinkViewModelType, AddLinkViewModelInputs, AddL
     }
     
     // Output
+    var isClearButtonHidden: Bool
     var isNextButtonEnabled: Bool
     var nextButtonBackgroundColor: UIColor
     var textFieldBorderColor: UIColor
     var linkEffectivenessMessage: String?
     
     init() {
+        self.isClearButtonHidden = true
         self.isNextButtonEnabled = false
         self.nextButtonBackgroundColor = .gray200
         self.textFieldBorderColor = .clear
@@ -55,6 +58,7 @@ final class AddLinkViewModel: AddLinkViewModelType, AddLinkViewModelInputs, AddL
 private extension AddLinkViewModel {
     func updateOutputs() {
         let isValid = isValidURL(embedLink)
+        isClearButtonHidden = embedLink.isEmpty
         isNextButtonEnabled = !embedLink.isEmpty && isValid
         nextButtonBackgroundColor = isNextButtonEnabled ? .black850 : .gray200
         textFieldBorderColor = isValid ? .clear : UIColor.toasterError
