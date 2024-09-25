@@ -57,9 +57,8 @@ final class HomeViewModel {
     
     private(set) var popupInfoList: [PopupInfoModel]? {
         didSet {
-            if let isEmpty = popupInfoList?.isEmpty {
-                dataChangeAction?(!isEmpty)
-            }
+            guard let isEmpty = popupInfoList?.isEmpty else { return }
+            showPopupAction?(!isEmpty)
         }
     }
 }
@@ -195,7 +194,7 @@ extension HomeViewModel {
                                                    image: data[idx].image,
                                                    activeStartDate: data[idx].activeStartDate,
                                                    activeEndDate: data[idx].activeEndDate,
-                                                   linkURL: data[idx].linkURL))
+                                                   linkURL: data[idx].linkUrl))
                     }
                     self.popupInfoList = list
                 }
@@ -209,12 +208,12 @@ extension HomeViewModel {
     func patchEditPopupHiddenAPI(popupId: Int, hideDate: Int) {
         NetworkService.shared.popupService.patchEditPopupHidden(
             requestBody: PatchPopupHiddenRequestDTO(
-                popupID: popupId,
+                popupId: popupId,
                 hideDate: hideDate
             )
         ) { result in
             switch result {
-            case .success(let response):
+            case .success:
                 self.popupInfoList?.removeAll()
             case .networkFail, .unAuthorized, .notFound:
                 self.unAuthorizedAction?()

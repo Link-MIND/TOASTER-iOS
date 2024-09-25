@@ -115,9 +115,9 @@ final class ToasterPopupViewController: UIViewController {
         self.imageURL = imageURL
         self.centerButtonTitle = centerButtonTitle
         self.bottomButtonTitle = bottomButtonTitle
-        self.centerButtonHandler = nil
-        self.bottomButtonHandler = nil
-        self.closeButtonHandler = nil
+        self.centerButtonHandler = centerButtonHandler
+        self.bottomButtonHandler = bottomButtonHandler
+        self.closeButtonHandler = closeButtonHandler
 
         if bottomButtonTitle.isEmpty {
             self.popupType = .Confirmation
@@ -181,6 +181,7 @@ private extension ToasterPopupViewController {
         
         popupImage.do {
             $0.kf.setImage(with: URL(string: imageURL ?? ""))
+            $0.contentMode = .scaleAspectFit
         }
         
         buttonStackView.do {

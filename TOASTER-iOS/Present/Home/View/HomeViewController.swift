@@ -298,29 +298,28 @@ private extension HomeViewController {
         
     func showPopupAction(isShow: Bool) {
         if isShow {
+            guard let popupId = viewModel.popupInfoList?.first?.id else { return }
             showLimitationPopup(
                 forMainText: "1분 설문조사 참여하고\n스타벅스 기프티콘 받기",
                 forSubText: "토스터 사용 피드백을 남겨주시면\n추첨을 통해 기프티콘을 드려요!",
-                forImageURL: "https://github.com/user-attachments/assets/753bcdee-fd2f-4fd4-a294-2f313f947d91",
+                forImageURL: viewModel.popupInfoList?.first?.image,
                 centerButtonTitle: "참여하기",
                 bottomButtonTitle: "일주일간 보지 않기",
                 centerButtonHandler: {
                     let nextVC = LinkWebViewController()
                     nextVC.hidesBottomBarWhenPushed = true
-                    nextVC.setupDataBind(
-                        linkURL: self.viewModel.popupInfoList?[0].linkURL ?? "",
-                        isRead: true,
-                        id: 0
-                    )
+                    nextVC.setupDataBind(linkURL: self.viewModel.popupInfoList?.first?.linkURL ?? "")
+                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 1)
+                    self.dismiss(animated: false)
                     self.navigationController?.pushViewController(nextVC, animated: true)
                 },
-                // MARK: - popupId 부분 수정 필요
                 bottomButtonHandler: {
-                    self.viewModel.patchEditPopupHiddenAPI(popupId: 0, hideDate: 7)
+                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 7)
+                    self.dismiss(animated: false)
                 },
-                // MARK: - popupId 부분 수정 필요
                 closeButtonHandler: {
-                    self.viewModel.patchEditPopupHiddenAPI(popupId: 0, hideDate: 1)
+                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 1)
+                    self.dismiss(animated: false)
                 }
             )
         }

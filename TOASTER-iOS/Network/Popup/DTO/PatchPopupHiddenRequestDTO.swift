@@ -8,5 +8,5 @@
 import Foundation
 
 struct PatchPopupHiddenRequestDTO: Codable {
-    let popupID, hideDate: Int
+    let popupId, hideDate: Int
 }

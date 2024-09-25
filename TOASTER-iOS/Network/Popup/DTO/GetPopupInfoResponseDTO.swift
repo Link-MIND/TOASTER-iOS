@@ -19,5 +19,5 @@ struct GetPopupInfoResponseData: Codable {
 
 struct PopupList: Codable {
     let id: Int
-    let image, activeStartDate, activeEndDate, linkURL: String
+    let image, activeStartDate, activeEndDate, linkUrl: String
 }
