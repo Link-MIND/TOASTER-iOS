@@ -33,6 +33,7 @@ final class AddLinkViewController: UIViewController {
     // MARK: - UI Properties
     
     private var addLinkView = AddLinkView()
+    private var viewModel = AddLinkViewModel()
     
     // MARK: - Life Cycle
     
@@ -42,6 +43,9 @@ final class AddLinkViewController: UIViewController {
         setupStyle()
         setAddLinkVew()
         hideKeyboard()
+        
+        setupBinding()
+        updateUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -123,16 +127,49 @@ private extension AddLinkViewController {
     }
     
     @objc func tappedNextBottomButton() {
-        if (addLinkView.linkEmbedTextField.text?.count ?? 0) < 1 {
-            addLinkView.emptyError()
-        } else {
-            let selectClipViewController = SelectClipViewController()
-            selectClipViewController.linkURL = addLinkView.linkEmbedTextField.text ?? ""
-            selectClipViewController.delegate = self
-            self.navigationController?.pushViewController(selectClipViewController, animated: true)
-        }
+   
+        let selectClipViewController = SelectClipViewController()
+        selectClipViewController.linkURL = addLinkView.linkEmbedTextField.text ?? ""
+        selectClipViewController.delegate = self
+        self.navigationController?.pushViewController(selectClipViewController, animated: true)
+        
+//        if (addLinkView.linkEmbedTextField.text?.count ?? 0) < 1 {
+//            addLinkView.emptyError()
+//        } else {
+//            let selectClipViewController = SelectClipViewController()
+//            selectClipViewController.linkURL = addLinkView.linkEmbedTextField.text ?? ""
+//            selectClipViewController.delegate = self
+//            self.navigationController?.pushViewController(selectClipViewController, animated: true)
+//        }
     }
     
+}
+
+extension AddLinkViewController {
+    private func setupBinding() {
+        addLinkView.linkEmbedTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        viewModel.inputs.embedLinkText(textField.text ?? "")
+        updateUI()
+    }
+    
+    private func updateUI() {
+        addLinkView.clearButton.isHidden = viewModel.outputs.isClearButtonHidden
+        addLinkView.nextTopButton.isEnabled = viewModel.outputs.isNextButtonEnabled
+        addLinkView.nextTopButton.backgroundColor = viewModel.outputs.nextButtonBackgroundColor
+        addLinkView.nextBottomButton.isEnabled = viewModel.outputs.isNextButtonEnabled
+        addLinkView.nextBottomButton.backgroundColor = viewModel.outputs.nextButtonBackgroundColor
+        addLinkView.linkEmbedTextField.layer.borderColor = viewModel.outputs.textFieldBorderColor.cgColor
+        addLinkView.linkEmbedTextField.layer.borderWidth = 1
+        
+        if let errorMessage = viewModel.outputs.linkEffectivenessMessage {
+            addLinkView.isValidLinkError(errorMessage)
+        } else {
+            addLinkView.resetError()
+        }
+    }
 }
 
 extension AddLinkViewController: SaveLinkButtonDelegate {
