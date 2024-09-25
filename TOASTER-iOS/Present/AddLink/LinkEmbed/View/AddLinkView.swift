@@ -12,9 +12,8 @@ import Then
 
 final class AddLinkView: UIView {
     
-    // MARK: - Properties
-    
-    private var timer: Timer?
+    // MARK: - Property
+
     private var keyboardHeight: CGFloat = 100
     
     // MARK: - UI Components
@@ -36,7 +35,7 @@ final class AddLinkView: UIView {
         super.init(frame: frame)
         
         setLinkEmbedTextField()
-        setView()
+        setupView()
     }
     
     @available(*, unavailable)
@@ -46,14 +45,13 @@ final class AddLinkView: UIView {
     
     // MARK: - Make View
     
-    func setView() {
+    func setupView() {
         setupStyle()
         setupHierarchy()
         setupLayout()
     }
     
     func setLinkEmbedTextField() {
-        linkEmbedTextField.delegate = self
         linkEmbedTextField.resignFirstResponder()
     }
     
@@ -89,6 +87,7 @@ private extension AddLinkView {
         clearButton.do {
             $0.setImage(.icCancle24, for: .normal)
             $0.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+            $0.isHidden = true
         }
         
         nextBottomButton.do {
@@ -112,7 +111,6 @@ private extension AddLinkView {
     
     func setupHierarchy() {
         addSubviews(descriptLabel, linkEmbedTextField, nextBottomButton, clearButton)
-        clearButton.isHidden = true
         accessoryView.addSubview(nextTopButton)
     }
     
@@ -155,36 +153,14 @@ private extension AddLinkView {
         }
     }
     
-    @objc func cancelButtonTapped() {
+    @objc 
+    func cancelButtonTapped() {
         linkEmbedTextField.text = ""
         linkEmbedTextField.becomeFirstResponder()
     }
 }
 
 // MARK: - Extension
-
-extension AddLinkView: UITextFieldDelegate {
-
-//    // 링크를 입력하는 텍스트필드가 비어 있을 경우 error 처리
-//    func emptyError() {
-//        linkEmbedTextField.layer.borderColor = UIColor.toasterError.cgColor
-//        linkEmbedTextField.layer.borderWidth = 1
-//        
-//        // Button 비활성화
-//        nextTopButton.backgroundColor = .gray200
-//        nextBottomButton.backgroundColor = .gray200
-//        nextTopButton.isEnabled = false
-//        nextBottomButton.isEnabled = false
-//        
-//        errorLabel.text = "링크를 입력해주세요"
-//        addSubview(errorLabel)
-//        errorLabel.snp.makeConstraints {
-//            $0.top.equalTo(linkEmbedTextField.snp.bottom).offset(6)
-//            $0.leading.equalTo(linkEmbedTextField.snp.leading)
-//        }
-//        errorLabel.isHidden = false
-//    }
-}
 
 extension AddLinkView {
     func isValidLinkError(_ message: String) {

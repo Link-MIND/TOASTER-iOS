@@ -30,7 +30,7 @@ final class AddLinkViewController: UIViewController {
     private weak var delegate: AddLinkViewControllerPopDelegate?
     private weak var urldelegate: SelectClipViewControllerDelegate?
     
-    // MARK: - UI Properties
+    // MARK: - UI Components
     
     private var addLinkView = AddLinkView()
     private var viewModel = AddLinkViewModel()
@@ -41,7 +41,7 @@ final class AddLinkViewController: UIViewController {
         super.viewDidLoad()
         
         setupStyle()
-        setAddLinkVew()
+        setupAddLinkVew()
         hideKeyboard()
         
         setupBinding()
@@ -59,19 +59,6 @@ final class AddLinkViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         navigationBarHidden(forHidden: false)
-    }
-    
-    // MARK: - set up Add Link View
-    
-    private func setAddLinkVew() {
-        view.addSubview(addLinkView)
-        
-        addLinkView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        addLinkView.nextBottomButton.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
-        addLinkView.nextTopButton.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
     }
 }
 
@@ -95,6 +82,17 @@ private extension AddLinkViewController {
     func setupStyle() {
         view.backgroundColor = .toasterBackground
     }
+    
+    func setupAddLinkVew() {
+       view.addSubview(addLinkView)
+       
+       addLinkView.snp.makeConstraints {
+           $0.edges.equalTo(view.safeAreaLayoutGuide)
+       }
+       
+       addLinkView.nextBottomButton.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
+       addLinkView.nextTopButton.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
+   }
     
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
@@ -127,24 +125,15 @@ private extension AddLinkViewController {
     }
     
     @objc func tappedNextBottomButton() {
-   
         let selectClipViewController = SelectClipViewController()
         selectClipViewController.linkURL = addLinkView.linkEmbedTextField.text ?? ""
         selectClipViewController.delegate = self
         self.navigationController?.pushViewController(selectClipViewController, animated: true)
-        
-//        if (addLinkView.linkEmbedTextField.text?.count ?? 0) < 1 {
-//            addLinkView.emptyError()
-//        } else {
-//            let selectClipViewController = SelectClipViewController()
-//            selectClipViewController.linkURL = addLinkView.linkEmbedTextField.text ?? ""
-//            selectClipViewController.delegate = self
-//            self.navigationController?.pushViewController(selectClipViewController, animated: true)
-//        }
     }
     
 }
 
+// ViewModel
 extension AddLinkViewController {
     private func setupBinding() {
         addLinkView.linkEmbedTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
