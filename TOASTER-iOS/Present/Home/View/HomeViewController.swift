@@ -26,7 +26,10 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         homeView.backgroundColor = .toasterBackground
-        setView()
+        setupHierarchy()
+        setupLayout()
+        createCollectionView()
+        setupDelegate()
         setupViewModel()
     }
     
@@ -37,6 +40,7 @@ final class HomeViewController: UIViewController {
         viewModel.fetchMainPageData()
         viewModel.fetchWeeklyLinkData()
         viewModel.fetchRecommendSiteData()
+        viewModel.getPopupInfoAPI()
     }
 }
 
@@ -101,9 +105,10 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionViewCell.className,
-                                                                for: indexPath) as? MainCollectionViewCell else { return UICollectionViewCell() }
-            
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: MainCollectionViewCell.className,
+                for: indexPath
+            ) as? MainCollectionViewCell else { return UICollectionViewCell() }
             let model = viewModel.mainInfoList
             cell.bindData(forModel: model)
             cell.mainCollectionViewDelegate = self
@@ -111,12 +116,16 @@ extension HomeViewController: UICollectionViewDataSource {
         case 1:
             let lastIndex = viewModel.mainInfoList.mainCategoryListDto.count
             if indexPath.item == lastIndex && lastIndex < 4 {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipEmptyCollectionViewCell.className,
-                                                                    for: indexPath) as? UserClipEmptyCollectionViewCell else { return UICollectionViewCell() }
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: UserClipEmptyCollectionViewCell.className,
+                    for: indexPath
+                ) as? UserClipEmptyCollectionViewCell else { return UICollectionViewCell() }
                 return cell
             } else {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserClipCollectionViewCell.className,
-                                                                    for: indexPath) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: UserClipCollectionViewCell.className,
+                    for: indexPath
+                ) as? UserClipCollectionViewCell else { return UICollectionViewCell() }
                 let model = viewModel.mainInfoList.mainCategoryListDto
                 if indexPath.item == 0 {
                     cell.bindData(forModel: model[indexPath.item],
@@ -128,16 +137,18 @@ extension HomeViewController: UICollectionViewDataSource {
                 return cell
             }
         case 2:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyLinkCollectionViewCell.className,
-                                                                for: indexPath) as? WeeklyLinkCollectionViewCell
-            else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: WeeklyLinkCollectionViewCell.className,
+                for: indexPath
+            ) as? WeeklyLinkCollectionViewCell else { return UICollectionViewCell() }
             let model = viewModel.weeklyLinkList
             cell.bindData(forModel: model[indexPath.item])
             return cell
         case 3:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeeklyRecommendCollectionViewCell.className,
-                                                                for: indexPath) as? WeeklyRecommendCollectionViewCell
-            else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: WeeklyRecommendCollectionViewCell.className,
+                for: indexPath
+            ) as? WeeklyRecommendCollectionViewCell else { return UICollectionViewCell() }
             let model = viewModel.recommendSiteList
             cell.bindData(forModel: model[indexPath.item])
             return cell
@@ -151,12 +162,12 @@ extension HomeViewController: UICollectionViewDataSource {
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
-            
-            // header
         case UICollectionView.elementKindSectionHeader:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                               withReuseIdentifier: HomeHeaderCollectionView.className,
-                                                                               for: indexPath) as? HomeHeaderCollectionView else { return UICollectionReusableView() }
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: HomeHeaderCollectionView.className,
+                for: indexPath
+            ) as? HomeHeaderCollectionView else { return UICollectionReusableView() }
             switch indexPath.section {
             case 1:
                 let nickName = viewModel.mainInfoList.nickname
@@ -172,14 +183,14 @@ extension HomeViewController: UICollectionViewDataSource {
             }
             return header
             
-            // footer
         case UICollectionView.elementKindSectionFooter:
-            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                               withReuseIdentifier: HomeFooterCollectionView.className,
-                                                                               for: indexPath) as? HomeFooterCollectionView else { return UICollectionReusableView() }
+            guard let footer = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: HomeFooterCollectionView.className,
+                for: indexPath
+            ) as? HomeFooterCollectionView else { return UICollectionReusableView() }
             return footer
-        default:
-            return UICollectionReusableView()
+        default: return UICollectionReusableView()
         }
     }
     
@@ -251,7 +262,8 @@ private extension HomeViewController {
         viewModel.setupDataChangeAction(changeAction: reloadCollectionView,
                                         forUnAuthorizedAction: unAuthorizedAction,
                                         editAction: addClipAction,
-                                        moveAction: moveBottomAction)
+                                        moveAction: moveBottomAction,
+                                        popupAction: showPopupAction)
     }
     
     func reloadCollectionView(isHidden: Bool) {
@@ -283,6 +295,35 @@ private extension HomeViewController {
                                   message: StringLiterals.ToastMessage.completeAddClip)
         }
     }
+        
+    func showPopupAction(isShow: Bool) {
+        if isShow {
+            guard let popupId = viewModel.popupInfoList?.first?.id else { return }
+            showLimitationPopup(
+                forMainText: "1분 설문조사 참여하고\n스타벅스 기프티콘 받기",
+                forSubText: "토스터 사용 피드백을 남겨주시면\n추첨을 통해 기프티콘을 드려요!",
+                forImageURL: viewModel.popupInfoList?.first?.image,
+                centerButtonTitle: "참여하기",
+                bottomButtonTitle: "일주일간 보지 않기",
+                centerButtonHandler: {
+                    let nextVC = LinkWebViewController()
+                    nextVC.hidesBottomBarWhenPushed = true
+                    nextVC.setupDataBind(linkURL: self.viewModel.popupInfoList?.first?.linkURL ?? "")
+                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 1)
+                    self.dismiss(animated: false)
+                    self.navigationController?.pushViewController(nextVC, animated: true)
+                },
+                bottomButtonHandler: {
+                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 7)
+                    self.dismiss(animated: false)
+                },
+                closeButtonHandler: {
+                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 1)
+                    self.dismiss(animated: false)
+                }
+            )
+        }
+    }
     
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
@@ -300,13 +341,6 @@ private extension HomeViewController {
         let settingVC = SettingViewController()
         settingVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(settingVC, animated: true)
-    }
-    
-    func setView() {
-        setupHierarchy()
-        setupLayout()
-        createCollectionView()
-        setupDelegate()
     }
 }
 

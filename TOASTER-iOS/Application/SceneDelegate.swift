@@ -65,10 +65,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if let pasteboardString = UIPasteboard.general.url {
             if appDelegate.isLogin {
-                if let rootViewController = window?.rootViewController as? ToasterNavigationController {
-                    let addLinkViewController = AddLinkViewController()
-                    rootViewController.pushViewController(addLinkViewController, animated: true)
-                    addLinkViewController.embedURL(url: UIPasteboard.general.string ?? "")
+                guard let rootVC = window?.rootViewController as? ToasterNavigationController else { return }
+                let addLinkViewController = AddLinkViewController()
+                rootVC.pushViewController(addLinkViewController, animated: true)
+                addLinkViewController.embedURL(url: UIPasteboard.general.string ?? "")
+                                
+                if let presentedVC = rootVC.presentedViewController {
+                    presentedVC.dismiss(animated: false)
                 }
             }
         }

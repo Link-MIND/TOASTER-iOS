@@ -30,6 +30,7 @@ enum UtilPath: String {
     case clip = "category"
     case search = ""
     case timer = "timer"
+    case popup = "api/v2/popup"
 }
 
 protocol BaseTargetType: TargetType {
