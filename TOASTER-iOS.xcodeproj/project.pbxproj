@@ -271,6 +271,7 @@
 		8315CD8E2B547EE30061F377 /* SelectClipHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */; };
 		8315CD912B5521F70061F377 /* SelectClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD902B5521F70061F377 /* SelectClipModel.swift */; };
 		832F0ED72C9C07EA00E38571 /* AddLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832F0ED62C9C07EA00E38571 /* AddLinkViewModel.swift */; };
+		8334CFA02CA6E2D200319922 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8334CF9F2CA6E2D200319922 /* ViewModelType.swift */; };
 		83474A6A2BED06EB009B9C48 /* ToasterTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA7B2B54571D008B06FA /* ToasterTargetType.swift */; };
 		83474A6B2BED06F1009B9C48 /* PatchEditLinkTitleRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8388E98B2BC8FAB200858C5C /* PatchEditLinkTitleRequestDTO.swift */; };
 		83474A6C2BED072A009B9C48 /* ToasterAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA7D2B54572B008B06FA /* ToasterAPIService.swift */; };
@@ -487,6 +488,7 @@
 		8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipHeaderView.swift; sourceTree = "<group>"; };
 		8315CD902B5521F70061F377 /* SelectClipModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipModel.swift; sourceTree = "<group>"; };
 		832F0ED62C9C07EA00E38571 /* AddLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLinkViewModel.swift; sourceTree = "<group>"; };
+		8334CF9F2CA6E2D200319922 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		8364220B2BE7BFB2005C4085 /* PatchEditLinkTitleResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditLinkTitleResponseDTO.swift; sourceTree = "<group>"; };
 		8388E98B2BC8FAB200858C5C /* PatchEditLinkTitleRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchEditLinkTitleRequestDTO.swift; sourceTree = "<group>"; };
 		8388E98D2BC8FC6700858C5C /* EditLinkBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLinkBottomSheetView.swift; sourceTree = "<group>"; };
@@ -941,6 +943,7 @@
 			isa = PBXGroup;
 			children = (
 				3F2FA1762B45C3E000EDBF95 /* AuthenticationAdapterProtocol.swift */,
+				8334CF9F2CA6E2D200319922 /* ViewModelType.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1856,6 +1859,7 @@
 				8305179D2B4D3701009FFB60 /* MainInfoModel.swift in Sources */,
 				6BE6DAA42B547579008B06FA /* GetDetailTimerResponseDTO.swift in Sources */,
 				6BE6D9E22B4E9B58008B06FA /* CompleteTimerCollectionViewCell.swift in Sources */,
+				8334CFA02CA6E2D200319922 /* ViewModelType.swift in Sources */,
 				3F2FA1792B45C46F00EDBF95 /* KakaoAuthenticateAdapter.swift in Sources */,
 				6BE6DA342B50594B008B06FA /* MoyaPlugin.swift in Sources */,
 				6BE6D9D82B4E8A03008B06FA /* RemindAlarmOffViewType.swift in Sources */,
