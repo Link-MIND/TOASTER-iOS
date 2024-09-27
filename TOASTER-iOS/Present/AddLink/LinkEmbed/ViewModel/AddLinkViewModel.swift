@@ -8,7 +8,8 @@
 import UIKit
 
 protocol AddLinkViewModelInputs {
-    func embedLinkText(_ text: String)}
+    func embedLinkText(_ text: String)
+}
 
 protocol AddLinkViewModelOutputs {
     var isClearButtonHidden: Bool { get }

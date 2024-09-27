@@ -19,7 +19,7 @@ final class AddLinkView: UIView {
     // MARK: - UI Components
     
     private let descriptLabel = UILabel()
-    var linkEmbedTextField = UITextField()
+    private(set) var linkEmbedTextField = UITextField()
     let clearButton = UIButton()
     
     let nextBottomButton = UIButton()
