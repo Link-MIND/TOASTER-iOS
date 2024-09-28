@@ -2,7 +2,7 @@
 //  ViewModelType.swift
 //  TOASTER-iOS
 //
-//  Created by 민 on 9/2/24.
+//  Created by Gahyun Kim on 9/27/24.
 //
 
 import Foundation
