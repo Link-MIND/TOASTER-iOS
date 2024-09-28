@@ -15,6 +15,7 @@ final class HomeViewModel {
     private var dataChangeAction: DataChangeAction?
     private var dataEmptyAction: DataChangeAction?
     private var moveBottomAction: DataChangeAction?
+    private var showPopupAction: DataChangeAction?
     
     typealias NormalChangeAction = () -> Void
     private var unAuthorizedAction: NormalChangeAction?
@@ -31,22 +32,33 @@ final class HomeViewModel {
         }
     }
     
-    private(set) var weeklyLinkList: [WeeklyLinkModel] = [WeeklyLinkModel(toastId: 0,
-                                                             toastTitle: "",
-                                                             toastImg: "",
-                                                             toastLink: "")] {
+    private(set) var weeklyLinkList: [WeeklyLinkModel] = [
+        WeeklyLinkModel(toastId: 0,
+                        toastTitle: "",
+                        toastImg: "",
+                        toastLink: "")
+    ] {
         didSet {
             dataChangeAction?(!weeklyLinkList.isEmpty)
         }
     }
     
-    private(set) var recommendSiteList: [RecommendSiteModel] = [RecommendSiteModel(siteId: 0, 
-                                                                      siteTitle: nil ?? "",
-                                                                      siteUrl: nil ?? "",
-                                                                      siteImg: nil ?? "",
-                                                                      siteSub: nil ?? "")] {
+    private(set) var recommendSiteList: [RecommendSiteModel] = [
+        RecommendSiteModel(siteId: 0,
+                           siteTitle: nil ?? "",
+                           siteUrl: nil ?? "",
+                           siteImg: nil ?? "",
+                           siteSub: nil ?? "")
+    ] {
         didSet {
             dataChangeAction?(!recommendSiteList.isEmpty)
+        }
+    }
+    
+    private(set) var popupInfoList: [PopupInfoModel]? {
+        didSet {
+            guard let isEmpty = popupInfoList?.isEmpty else { return }
+            showPopupAction?(!isEmpty)
         }
     }
 }
@@ -58,11 +70,13 @@ extension HomeViewModel {
     func setupDataChangeAction(changeAction: @escaping DataChangeAction,
                                forUnAuthorizedAction: @escaping NormalChangeAction,
                                editAction: @escaping NormalChangeAction,
-                               moveAction: @escaping DataChangeAction) {
+                               moveAction: @escaping DataChangeAction,
+                               popupAction: @escaping DataChangeAction) {
         dataChangeAction = changeAction
         unAuthorizedAction = forUnAuthorizedAction
         textFieldEditAction = editAction
         moveBottomAction = moveAction
+        showPopupAction = popupAction
     }
     
     func fetchMainPageData() {
@@ -162,6 +176,45 @@ extension HomeViewModel {
                     self.textFieldEditAction?()
                 }
                 self.fetchMainPageData()
+            case .networkFail, .unAuthorized, .notFound:
+                self.unAuthorizedAction?()
+            default: return
+            }
+        }
+    }
+    
+    func getPopupInfoAPI() {
+        NetworkService.shared.popupService.getPopupInfo { result in
+            switch result {
+            case .success(let response):
+                if let data = response?.data.popupList {
+                    var list: [PopupInfoModel] = []
+                    for idx in 0..<data.count {
+                        list.append(PopupInfoModel(id: data[idx].id,
+                                                   image: data[idx].image,
+                                                   activeStartDate: data[idx].activeStartDate,
+                                                   activeEndDate: data[idx].activeEndDate,
+                                                   linkURL: data[idx].linkUrl))
+                    }
+                    self.popupInfoList = list
+                }
+            case .networkFail, .unAuthorized, .notFound:
+                self.unAuthorizedAction?()
+            default: return
+            }
+        }
+    }
+    
+    func patchEditPopupHiddenAPI(popupId: Int, hideDate: Int) {
+        NetworkService.shared.popupService.patchEditPopupHidden(
+            requestBody: PatchPopupHiddenRequestDTO(
+                popupId: popupId,
+                hideDate: hideDate
+            )
+        ) { result in
+            switch result {
+            case .success:
+                self.popupInfoList?.removeAll()
             case .networkFail, .unAuthorized, .notFound:
                 self.unAuthorizedAction?()
             default: return

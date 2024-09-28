@@ -65,6 +65,26 @@ extension UIViewController {
         present(popupViewController, animated: false)
     }
     
+    func showLimitationPopup(forMainText: String? = nil,
+                             forSubText: String? = nil,
+                             forImageURL: String? = nil,
+                             centerButtonTitle: String,
+                             bottomButtonTitle: String,
+                             centerButtonHandler: (() -> Void)? = nil,
+                             bottomButtonHandler: (() -> Void)? = nil,
+                             closeButtonHandler: (() -> Void)? = nil) {
+        let popupViewController = ToasterPopupViewController(mainText: forMainText,
+                                                             subText: forSubText,
+                                                             imageURL: forImageURL,
+                                                             centerButtonTitle: centerButtonTitle,
+                                                             bottomButtonTitle: bottomButtonTitle,
+                                                             centerButtonHandler: centerButtonHandler,
+                                                             bottomButtonHandler: bottomButtonHandler,
+                                                             closeButtonHandler: closeButtonHandler)
+        popupViewController.modalPresentationStyle = .overFullScreen
+        present(popupViewController, animated: false)
+    }
+    
     /// 토스트 메시지를 보여주는 메서드
     func showToastMessage(width: CGFloat,
                           status: ToastStatus,
