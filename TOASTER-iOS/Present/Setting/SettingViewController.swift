@@ -14,10 +14,12 @@ final class SettingViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let settingList = ["알림 설정", "1:1 문의", "이용약관", "로그아웃"]
+    private let rootView = SettingView()
+    
+//    private let settingList = ["알림 설정", "1:1 문의", "이용약관", "로그아웃"]
     private var isToggle: Bool? = UserDefaults.standard.object(forKey: "isAppAlarmOn") as? Bool {
         didSet {
-            settingTableView.reloadData()            
+            rootView.settingTableView.reloadData()
             setupWarningView()
             UserDefaults.standard.set(isToggle, forKey: "isAppAlarmOn")
         }
@@ -25,26 +27,29 @@ final class SettingViewController: UIViewController {
     
     private var userName: String = "" {
         didSet {
-            settingTableView.reloadData()
+            rootView.settingTableView.reloadData()
         }
     }
     
-    // MARK: - UI Properties
+
     
-    private let alertWarningView = UIView()
-    private let warningStackView = UIStackView()
-    private let warningImage = UIImageView()
-    private let warningLabel = UILabel()
-    private let settingTableView = UITableView(frame: .zero, style: .grouped)
+    // MARK: - UI Properties
+//    
+//    private let alertWarningView = UIView()
+//    private let warningStackView = UIStackView()
+//    private let warningImage = UIImageView()
+//    private let warningLabel = UILabel()
+//    private let settingTableView = UITableView(frame: .zero, style: .grouped)
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupStyle()
+//        setupStyle()
         setupHierarchy()
         setupLayout()
+        setupDelegate()
         setupWarningView()
     }
     
@@ -58,71 +63,85 @@ final class SettingViewController: UIViewController {
 // MARK: - Private Extensions
 
 private extension SettingViewController {
-    func setupStyle() {
-        view.backgroundColor = .toasterBackground
-        
-        alertWarningView.do {
-            $0.backgroundColor = .gray50
-            $0.makeRounded(radius: 12)
-        }
-        
-        warningStackView.do {
-            $0.spacing = 5
-        }
-        
-        warningImage.do {
-            $0.image = .icAlert18Dark
-            $0.contentMode = .scaleAspectFit
-        }
-        
-        warningLabel.do {
-            $0.text = "알림 설정을 끄면 타이머 기능을 이용할 수 없어요"
-            $0.font = .suitBold(size: 12)
-            $0.textColor = .gray400
-        }
-        
-        settingTableView.do {
-            $0.backgroundColor = .toasterBackground
-            $0.isScrollEnabled = false
-            $0.separatorStyle = .none
-            $0.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.className)
-            $0.dataSource = self
-            $0.delegate = self
-        }
-    }
-    
     func setupHierarchy() {
-        view.addSubviews(alertWarningView, settingTableView)
-        alertWarningView.addSubview(warningStackView)
-        warningStackView.addArrangedSubviews(warningImage, warningLabel)
+        view.addSubview(rootView)
     }
     
     func setupLayout() {
-        alertWarningView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(42)
-        }
-        
-        warningStackView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-        
-        warningImage.snp.makeConstraints {
-            $0.centerY.leading.equalToSuperview()
-            $0.size.equalTo(18)
-        }
-        
-        warningLabel.snp.makeConstraints {
-            $0.centerY.trailing.equalToSuperview()
-        }
-        
-        settingTableView.snp.makeConstraints {
-            $0.top.equalTo(alertWarningView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
+        rootView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
+//    func setupStyle() {
+//        view.backgroundColor = .toasterBackground
+//        
+//        alertWarningView.do {
+//            $0.backgroundColor = .gray50
+//            $0.makeRounded(radius: 12)
+//        }
+//        
+//        warningStackView.do {
+//            $0.spacing = 5
+//        }
+//        
+//        warningImage.do {
+//            $0.image = .icAlert18Dark
+//            $0.contentMode = .scaleAspectFit
+//        }
+//        
+//        warningLabel.do {
+//            $0.text = "알림 설정을 끄면 타이머 기능을 이용할 수 없어요"
+//            $0.font = .suitBold(size: 12)
+//            $0.textColor = .gray400
+//        }
+//        
+//        settingTableView.do {
+//            $0.backgroundColor = .toasterBackground
+//            $0.isScrollEnabled = false
+//            $0.separatorStyle = .none
+//            $0.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.className)
+//            $0.dataSource = self
+//            $0.delegate = self
+//        }
+//    }
+//    
+//    func setupHierarchy() {
+//        view.addSubviews(alertWarningView, settingTableView)
+//        alertWarningView.addSubview(warningStackView)
+//        warningStackView.addArrangedSubviews(warningImage, warningLabel)
+//    }
+//    
+//    func setupLayout() {
+//        alertWarningView.snp.makeConstraints {
+//            $0.top.equalTo(view.safeAreaLayoutGuide)
+//            $0.leading.trailing.equalToSuperview().inset(20)
+//            $0.height.equalTo(42)
+//        }
+//        
+//        warningStackView.snp.makeConstraints {
+//            $0.center.equalToSuperview()
+//        }
+//        
+//        warningImage.snp.makeConstraints {
+//            $0.centerY.leading.equalToSuperview()
+//            $0.size.equalTo(18)
+//        }
+//        
+//        warningLabel.snp.makeConstraints {
+//            $0.centerY.trailing.equalToSuperview()
+//        }
+//        
+//        settingTableView.snp.makeConstraints {
+//            $0.top.equalTo(alertWarningView.snp.bottom)
+//            $0.leading.trailing.bottom.equalToSuperview()
+//        }
+//    }
+//    
     
+    func setupDelegate() {
+        rootView.settingTableView.dataSource = self
+        rootView.settingTableView.delegate = self
+    }
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
                                                                 hasRightButton: false,
@@ -138,13 +157,13 @@ private extension SettingViewController {
     func setupWarningView() {
         if let isToggle {
             if isToggle {
-                settingTableView.snp.remakeConstraints {
+                rootView.settingTableView.snp.remakeConstraints {
                     $0.top.equalTo(view.safeAreaLayoutGuide)
                     $0.leading.trailing.bottom.equalToSuperview()
                 }
             } else {
-                settingTableView.snp.remakeConstraints {
-                    $0.top.equalTo(alertWarningView.snp.bottom)
+                rootView.settingTableView.snp.remakeConstraints {
+                    $0.top.equalTo(rootView.alertWarningView.snp.bottom)
                     $0.leading.trailing.bottom.equalToSuperview()
                 }
             }
@@ -302,7 +321,7 @@ extension SettingViewController: UITableViewDataSource {
         case 0:
             cell.configureCell(name: userName, sectionNumber: indexPath.section)
         case 1:
-            cell.configureCell(name: settingList[indexPath.row], sectionNumber: indexPath.section)
+            cell.configureCell(name: rootView.settingList[indexPath.row], sectionNumber: indexPath.section)
             if indexPath.row == 0 {
                 cell.showSwitch()
                 cell.setSwitchValueChangedHandler { isOn in
