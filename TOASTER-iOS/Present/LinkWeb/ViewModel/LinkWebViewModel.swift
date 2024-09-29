@@ -22,6 +22,7 @@ final class LinkWebViewModel: ViewModelType {
     
     struct Output {
         let isRead = PassthroughSubject<Bool, Never>()
+        let navigateToLogin = PassthroughSubject<Void, Never>()
     }
     
     // MARK: - Method
@@ -69,8 +70,8 @@ private extension LinkWebViewModel {
                case .success:
                    promise(.success(!requestBody.isRead))
                case .unAuthorized, .networkFail, .notFound:
-                   break
-                   // self.changeViewController(viewController: LoginViewController())
+                   let output = Output()
+                   output.navigateToLogin.send()
                default: return
                }
            }

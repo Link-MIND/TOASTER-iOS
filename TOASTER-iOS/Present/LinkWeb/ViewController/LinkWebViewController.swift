@@ -100,6 +100,11 @@ private extension LinkWebViewController {
                 self?.showToastMessage(width: 152, status: .check, message: mesage)
                 self?.toolBar.updateIsRead(isRead)
             }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink { [weak self] _ in
+                self?.changeViewController(viewController: LoginViewController())
+            }.store(in: cancelBag)
     }
     
     func setupStyle() {
