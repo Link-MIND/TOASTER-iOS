@@ -96,11 +96,8 @@ private extension LinkWebViewController {
         
         output.isRead
             .sink { [weak self] isRead in
-                if isRead {
-                    self?.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeReadLink)
-                } else {
-                    self?.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.cancelReadLink)
-                }
+                let mesage = isRead ? StringLiterals.ToastMessage.completeReadLink : StringLiterals.ToastMessage.cancelReadLink
+                self?.showToastMessage(width: 152, status: .check, message: mesage)
                 self?.toolBar.updateIsRead(isRead)
             }.store(in: cancelBag)
     }
