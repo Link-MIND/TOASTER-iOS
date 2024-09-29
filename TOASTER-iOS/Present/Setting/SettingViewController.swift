@@ -166,6 +166,7 @@ private extension SettingViewController {
             switch result {
             case .success(let response):
                 self.isToggle = response?.data?.isAllowed
+                self.setupWarningView()
             case .notFound, .networkFail:
                 self.changeViewController(viewController: LoginViewController())
             default: break
@@ -260,14 +261,14 @@ extension SettingViewController: UITableViewDelegate {
 
 extension SettingViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
+//        case 0:
+//            return 1
         case 0:
-            return 1
-        case 1:
             return 4
         default:
             return 1
@@ -279,8 +280,6 @@ extension SettingViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         switch indexPath.section {
         case 0:
-            cell.configureCell(name: userName, sectionNumber: indexPath.section)
-        case 1:
             cell.configureCell(name: settingView.settingList[indexPath.row], sectionNumber: indexPath.section)
             if indexPath.row == 0 {
                 cell.showSwitch()
@@ -289,6 +288,7 @@ extension SettingViewController: UITableViewDataSource {
                 }
             }
         default:
+            cell.hiddenSwitch()
             cell.configureCell(name: "탈퇴하기", sectionNumber: indexPath.section)
         }
         return cell
