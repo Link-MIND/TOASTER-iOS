@@ -15,6 +15,9 @@ final class LinkWebViewController: UIViewController {
     
     // MARK: - Properties
     
+    private var viewModel = LinkWebViewModel()
+    private var cancelBag = CancelBag()
+    
     private var progressObservation: NSKeyValueObservation?
     private var toastId: Int?
     
@@ -30,6 +33,7 @@ final class LinkWebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bindViewModels()
         setupStyle()
         setupHierarchy()
         setupLayout()
@@ -77,6 +81,30 @@ extension LinkWebViewController {
 // MARK: - Private Extensions
 
 private extension LinkWebViewController {
+    func bindViewModels() {
+        let readLinkButtonTapped = toolBar.readLinkButtonTap
+            .map { _ in
+                LinkReadEditModel(toastId: self.toastId ?? 0, isRead: !self.toolBar.isRead)
+            }
+            .eraseToAnyPublisher()
+        
+        let input = LinkWebViewModel.Input(
+            readLinkButtonTapped: readLinkButtonTapped
+        )
+        
+        let output = viewModel.transform(input, cancelBag: cancelBag)
+        
+        output.isRead
+            .sink { [weak self] isRead in
+                if isRead {
+                    self?.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeReadLink)
+                } else {
+                    self?.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.cancelReadLink)
+                }
+                self?.toolBar.updateIsRead(isRead)
+            }.store(in: cancelBag)
+    }
+    
     func setupStyle() {
         view.bringSubviewToFront(progressView)
         view.backgroundColor = .toasterWhite
@@ -157,15 +185,6 @@ private extension LinkWebViewController {
             }
         }
         
-        /// 툴바 링크 확인완료 버튼 클릭 액션 클로저
-        toolBar.readLinkCheckButtonTapped {
-            if let toastId = self.toastId {
-                self.patchOpenLinkAPI(
-                    requestBody: LinkReadEditModel(toastId: toastId, isRead: !self.toolBar.isRead)
-                )
-            }
-        }
-        
         /// 툴바 사파리 버튼 클릭 액션 클로저
         toolBar.safariButtonTapped {
             if let url = self.webView.url { UIApplication.shared.open(url) }
@@ -193,27 +212,5 @@ extension LinkWebViewController: WKNavigationDelegate {
     /// 웹 페이지 로딩이 시작할 때 호출
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         progressView.isHidden = false
-    }
-}
-
-// MARK: - Network
-
-extension LinkWebViewController {
-    func patchOpenLinkAPI(requestBody: LinkReadEditModel) {
-        NetworkService.shared.toastService.patchOpenLink(requestBody: PatchOpenLinkRequestDTO(toastId: requestBody.toastId,
-                                                                                              isRead: requestBody.isRead)) { result in
-            switch result {
-            case .success:
-                if !self.toolBar.isRead {
-                    self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.completeReadLink)
-                } else {
-                    self.showToastMessage(width: 152, status: .check, message: StringLiterals.ToastMessage.cancelReadLink)
-                }
-                self.toolBar.updateIsRead(!self.toolBar.isRead)
-            case .unAuthorized, .networkFail, .notFound:
-                self.changeViewController(viewController: LoginViewController())
-            default: return
-            }
-        }
     }
 }

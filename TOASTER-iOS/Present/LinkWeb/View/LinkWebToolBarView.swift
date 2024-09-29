@@ -36,8 +36,9 @@ final class LinkWebToolBarView: UIView {
     
     private var backButtonAction: (() -> Void)?
     private var forwardButtonAction: (() -> Void)?
-    private var readLinkCheckButtonAction: (() -> Void)?
     private var safariButtonAction: (() -> Void)?
+    
+    lazy var readLinkButtonTap = readLinkCheckButton.publisher().eraseToAnyPublisher()
     
     // MARK: - UI Components
     
@@ -75,10 +76,6 @@ extension LinkWebToolBarView {
     
     func forwardButtonTapped(_ action: @escaping () -> Void) {
         forwardButtonAction = action
-    }
-    
-    func readLinkCheckButtonTapped(_ action: @escaping () -> Void) {
-        readLinkCheckButtonAction = action
     }
     
     func safariButtonTapped(_ action: @escaping () -> Void) {
@@ -157,8 +154,6 @@ private extension LinkWebToolBarView {
             backButtonAction?()
         case forwardButton:
             forwardButtonAction?()
-        case readLinkCheckButton:
-            readLinkCheckButtonAction?()
         case safariButton:
             safariButtonAction?()
         default:
