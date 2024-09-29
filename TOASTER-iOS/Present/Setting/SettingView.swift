@@ -31,7 +31,6 @@ final class SettingView: UIView {
         setupStyle()
         setupHierarchy()
         setupLayout()
-//        setupWarningView()
     }
     
     @available(*, unavailable)
@@ -40,7 +39,6 @@ final class SettingView: UIView {
     }
     
 }
-
 
 private extension SettingView {
     func setupStyle() {
@@ -71,8 +69,6 @@ private extension SettingView {
             $0.isScrollEnabled = false
             $0.separatorStyle = .none
             $0.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.className)
-//            $0.dataSource = self
-//            $0.delegate = self
         }
     }
     
@@ -107,21 +103,4 @@ private extension SettingView {
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
-    
-//    func setupWarningView() {
-//        if let isToggle {
-//            if isToggle {
-//                settingTableView.snp.remakeConstraints {
-//                    $0.top.equalTo(view.safeAreaLayoutGuide)
-//                    $0.leading.trailing.bottom.equalToSuperview()
-//                }
-//            } else {
-//                settingTableView.snp.remakeConstraints {
-//                    $0.top.equalTo(alertWarningView.snp.bottom)
-//                    $0.leading.trailing.bottom.equalToSuperview()
-//                }
-//            }
-//        }
-//    }
-    
 }
