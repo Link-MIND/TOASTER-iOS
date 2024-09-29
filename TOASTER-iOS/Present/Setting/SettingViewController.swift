@@ -14,11 +14,12 @@ final class SettingViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let rootView = SettingView()
+    private let userInfoView = MypageHeaderView()
+    private let settingView = SettingView()
 
     private var isToggle: Bool? = UserDefaults.standard.object(forKey: "isAppAlarmOn") as? Bool {
         didSet {
-            rootView.settingTableView.reloadData()
+            settingView.settingTableView.reloadData()
             setupWarningView()
             UserDefaults.standard.set(isToggle, forKey: "isAppAlarmOn")
         }
@@ -26,7 +27,7 @@ final class SettingViewController: UIViewController {
     
     private var userName: String = "" {
         didSet {
-            rootView.settingTableView.reloadData()
+            settingView.settingTableView.reloadData()
         }
     }
 
@@ -35,6 +36,7 @@ final class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupStyle()
         setupHierarchy()
         setupLayout()
         setupDelegate()
@@ -43,27 +45,39 @@ final class SettingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         setupNavigationBar()
         fetchMysettings()
+        fetchMypageInformation()
     }
 }
 
 // MARK: - Private Extensions
 
 private extension SettingViewController {
+    func setupStyle() {
+        self.view.backgroundColor = .toasterBackground
+    }
+
     func setupHierarchy() {
-        view.addSubview(rootView)
+        view.addSubviews(userInfoView, settingView)
     }
     
     func setupLayout() {
-        rootView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        userInfoView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        settingView.snp.makeConstraints {
+            $0.top.equalTo(userInfoView.weakLinkDataView.snp.bottom)
+            $0.horizontalEdges.bottom.equalToSuperview()
         }
     }
     
     func setupDelegate() {
-        rootView.settingTableView.dataSource = self
-        rootView.settingTableView.delegate = self
+        settingView.settingTableView.dataSource = self
+        settingView.settingTableView.delegate = self
     }
     
     func setupNavigationBar() {
@@ -81,13 +95,13 @@ private extension SettingViewController {
     func setupWarningView() {
         if let isToggle {
             if isToggle {
-                rootView.settingTableView.snp.remakeConstraints {
-                    $0.top.equalTo(view.safeAreaLayoutGuide)
+                settingView.settingTableView.snp.remakeConstraints {
+                    $0.top.equalTo(userInfoView.weakLinkDataView.snp.bottom)
                     $0.leading.trailing.bottom.equalToSuperview()
                 }
             } else {
-                rootView.settingTableView.snp.remakeConstraints {
-                    $0.top.equalTo(rootView.alertWarningView.snp.bottom)
+                settingView.settingTableView.snp.remakeConstraints {
+                    $0.top.equalTo(settingView.alertWarningView.snp.bottom)
                     $0.leading.trailing.bottom.equalToSuperview()
                 }
             }
@@ -158,6 +172,28 @@ private extension SettingViewController {
             }
         }
     }
+    
+    func fetchMypageInformation() {
+        NetworkService.shared.userService.getMyPage { [weak self] result in
+            switch result {
+            case .success(let response):
+                if let responseData = response?.data {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.userInfoView.bindModel(model: MypageUserModel(nickname: responseData.nickname,
+                                                                                profile: responseData.profile,
+                                                                                allReadToast: responseData.allReadToast,
+                                                                                thisWeekendRead: responseData.thisWeekendRead,
+                                                                                thisWeekendSaved: responseData.thisWeekendSaved))
+                    }
+                }
+            case .unAuthorized, .networkFail:
+                self?.changeViewController(viewController: LoginViewController())
+            default:
+                print("default Fail")
+            }
+        }
+    }
+    
     
     func popupDeleteButtonTapped() {
         deleteAccount()
@@ -245,7 +281,7 @@ extension SettingViewController: UITableViewDataSource {
         case 0:
             cell.configureCell(name: userName, sectionNumber: indexPath.section)
         case 1:
-            cell.configureCell(name: rootView.settingList[indexPath.row], sectionNumber: indexPath.section)
+            cell.configureCell(name: settingView.settingList[indexPath.row], sectionNumber: indexPath.section)
             if indexPath.row == 0 {
                 cell.showSwitch()
                 cell.setSwitchValueChangedHandler { isOn in
