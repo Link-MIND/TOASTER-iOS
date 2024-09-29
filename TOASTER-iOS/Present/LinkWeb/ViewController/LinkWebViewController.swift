@@ -61,20 +61,14 @@ final class LinkWebViewController: UIViewController {
 // MARK: - Extensions
 
 extension LinkWebViewController {
-    func setupDataBind(linkURL: String, isRead: Bool, id: Int) {
+    func setupDataBind(linkURL: String, isRead: Bool? = nil, id: Int? = nil) {
         if let url = URL(string: linkURL) {
             let request = URLRequest(url: url)
             webView.load(request)
         }
+        guard let isRead, let id else { return }
         toolBar.updateIsRead(isRead)
         self.toastId = id
-    }
-    
-    func setupDataBind(linkURL: String) {
-        if let url = URL(string: linkURL) {
-            let request = URLRequest(url: url)
-            webView.load(request)
-        }
     }
 }
 
@@ -165,26 +159,18 @@ private extension LinkWebViewController {
         }
         
         /// 네비게이션바 새로고침 버튼 클릭 액션 클로저
-        navigationView.reloadButtonTapped {
-            self.webView.reload()
-        }
+        navigationView.reloadButtonTapped { self.webView.reload() }
     }
     
     func setupToolBarAction() {
         /// 툴바 뒤로가기 버튼 클릭 액션 클로저
         toolBar.backButtonTapped {
-            if self.webView.canGoBack {
-                self.webView.goBack()
-                self.toolBar.updateCanGoBack(self.webView.canGoBack)
-            }
+            if self.webView.canGoBack { self.webView.goBack() }
         }
         
         /// 툴바 앞으로가기 버튼 클릭 액션 클로저
         toolBar.forwardButtonTapped {
-            if self.webView.canGoForward {
-                self.webView.goForward()
-                self.toolBar.updateCanGoForward(self.webView.canGoForward)
-            }
+            if self.webView.canGoForward { self.webView.goForward() }
         }
         
         /// 툴바 사파리 버튼 클릭 액션 클로저
