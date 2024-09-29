@@ -30,6 +30,7 @@ final class LinkWebToolBarView: UIView {
     private(set) var isRead: Bool = false {
         didSet {
             readLinkCheckButton.tintColor = isRead ? .gray700 : .gray150
+            toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, readLinkCheckButton, flexibleSpace, safariButton], animated: false)
         }
     }
     
@@ -133,7 +134,7 @@ private extension LinkWebToolBarView {
     
     func setupHierarchy() {
         addSubview(toolBar)
-        toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, readLinkCheckButton, flexibleSpace, safariButton], animated: false)
+        toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, safariButton], animated: false)
     }
     
     func setupLayout() {
