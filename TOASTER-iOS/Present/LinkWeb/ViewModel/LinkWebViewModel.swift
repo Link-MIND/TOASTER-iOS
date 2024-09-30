@@ -31,27 +31,23 @@ final class LinkWebViewModel: ViewModelType {
         let output = Output()
         
         input.readLinkButtonTapped
-            .flatMap { [weak self] model -> AnyPublisher<Bool, Error> in
-                guard let self = self else {
-                    return Just(false)
-                        .setFailureType(to: Error.self)
-                        .eraseToAnyPublisher()
-                }
-                return self.patchOpenLinkAPI(requestBody: model)
+            .flatMap { [weak self] model in
+                self?.performLinkReadRequest(model, output) ?? Driver.empty()
             }
-            .sink(
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .finished: break
-                    case .failure(let error): print("Error occurred: \(error)")
-                    }
-                },
-                receiveValue: { isRead in
-                    output.isRead.send(!isRead)
-                }
-            ).store(in: cancelBag)
+            .sink { isRead in
+                output.isRead.send(!isRead)
+            }.store(in: cancelBag)
         
         return output
+    }
+    
+    func performLinkReadRequest(_ model: LinkReadEditModel, _ output: Output) -> Driver<Bool> {
+        return patchOpenLinkAPI(requestBody: model)
+            .handleEvents(receiveCompletion: { completion in
+                if case .failure = completion {
+                    output.navigateToLogin.send()
+                }
+            }).asDriver()
     }
 }
 
@@ -70,9 +66,9 @@ private extension LinkWebViewModel {
                case .success:
                    promise(.success(!requestBody.isRead))
                case .unAuthorized, .networkFail, .notFound:
-                   let output = Output()
-                   output.navigateToLogin.send()
-               default: return
+                   promise(.failure(NetworkResult<Error>.unAuthorized))
+               default:
+                   break
                }
            }
         }.eraseToAnyPublisher()
