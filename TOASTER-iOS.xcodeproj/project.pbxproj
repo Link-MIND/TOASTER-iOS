@@ -40,6 +40,7 @@
 		397215592CA8D15F009DF1F9 /* Publisher+UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397215582CA8D15F009DF1F9 /* Publisher+UIControl.swift */; };
 		3972155B2CA8DB1A009DF1F9 /* Publisher+UIGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3972155A2CA8DB1A009DF1F9 /* Publisher+UIGesture.swift */; };
 		3972155D2CA9007B009DF1F9 /* Publisher+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3972155C2CA9007B009DF1F9 /* Publisher+UIBarButtonItem.swift */; };
+		397586EC2CAA312C004FB095 /* Publisher+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397586EB2CAA312C004FB095 /* Publisher+Driver.swift */; };
 		398ACFDC2B5E77FA00D5EE77 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 398ACFDB2B5E77FA00D5EE77 /* Colors.xcassets */; };
 		398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */; };
 		398BE7F62B456AF9001595E0 /* BottomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F52B456AF9001595E0 /* BottomType.swift */; };
@@ -355,6 +356,7 @@
 		397215582CA8D15F009DF1F9 /* Publisher+UIControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+UIControl.swift"; sourceTree = "<group>"; };
 		3972155A2CA8DB1A009DF1F9 /* Publisher+UIGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+UIGesture.swift"; sourceTree = "<group>"; };
 		3972155C2CA9007B009DF1F9 /* Publisher+UIBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+UIBarButtonItem.swift"; sourceTree = "<group>"; };
+		397586EB2CAA312C004FB095 /* Publisher+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Driver.swift"; sourceTree = "<group>"; };
 		398ACFDB2B5E77FA00D5EE77 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterToastMessageView.swift; sourceTree = "<group>"; };
 		398BE7F52B456AF9001595E0 /* BottomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomType.swift; sourceTree = "<group>"; };
@@ -698,6 +700,7 @@
 			isa = PBXGroup;
 			children = (
 				397215532CA8CF07009DF1F9 /* CancelBag.swift */,
+				397586EB2CAA312C004FB095 /* Publisher+Driver.swift */,
 				397215582CA8D15F009DF1F9 /* Publisher+UIControl.swift */,
 				3972155A2CA8DB1A009DF1F9 /* Publisher+UIGesture.swift */,
 				3972155C2CA9007B009DF1F9 /* Publisher+UIBarButtonItem.swift */,
@@ -2138,6 +2141,7 @@
 				6BE6DA072B4F2FC5008B06FA /* RemindClipModel.swift in Sources */,
 				6B6AE69F2B3FF5D7000E2366 /* LoginViewController.swift in Sources */,
 				6BE6DA982B54709D008B06FA /* PatchEditTimerTitleRequestDTO.swift in Sources */,
+				397586EC2CAA312C004FB095 /* Publisher+Driver.swift in Sources */,
 				6BE6DA362B5059CE008B06FA /* NetworkResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

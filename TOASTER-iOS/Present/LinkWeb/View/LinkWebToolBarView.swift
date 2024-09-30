@@ -38,7 +38,7 @@ final class LinkWebToolBarView: UIView {
     private var forwardButtonAction: (() -> Void)?
     private var safariButtonAction: (() -> Void)?
     
-    lazy var readLinkButtonTap = readLinkCheckButton.publisher().eraseToAnyPublisher()
+    lazy var readLinkButtonTap = readLinkCheckButton.publisher()
     
     // MARK: - UI Components
     

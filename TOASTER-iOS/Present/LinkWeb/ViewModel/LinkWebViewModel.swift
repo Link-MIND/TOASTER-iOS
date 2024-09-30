@@ -15,7 +15,7 @@ final class LinkWebViewModel: ViewModelType {
     // MARK: - Input State
     
     struct Input {
-        let readLinkButtonTapped: AnyPublisher<LinkReadEditModel, Never>
+        let readLinkButtonTapped: Driver<LinkReadEditModel>
     }
     
     // MARK: - Output State
