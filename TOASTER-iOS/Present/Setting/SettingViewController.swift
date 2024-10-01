@@ -69,8 +69,12 @@ private extension SettingViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide)
         }
         
+        userInfoView.seperatorView.snp.makeConstraints {
+            $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
         settingView.snp.makeConstraints {
-            $0.top.equalTo(userInfoView.weakLinkDataView.snp.bottom)
+            $0.top.equalTo(userInfoView.seperatorView.snp.bottom)
             $0.horizontalEdges.bottom.equalToSuperview()
         }
     }
@@ -96,7 +100,7 @@ private extension SettingViewController {
         if let isToggle {
             if isToggle {
                 settingView.settingTableView.snp.remakeConstraints {
-                    $0.top.equalTo(userInfoView.weakLinkDataView.snp.bottom)
+                    $0.top.equalTo(userInfoView.seperatorView.snp.bottom)
                     $0.leading.trailing.bottom.equalToSuperview()
                 }
             } else {
