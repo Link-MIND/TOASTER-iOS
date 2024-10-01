@@ -16,26 +16,27 @@ final class LinkWebToolBarView: UIView {
     private var canGoBack: Bool = false {
         didSet {
             backButton.isEnabled = canGoBack
-            backButton.tintColor = canGoBack ? .gray700 : .gray150
+            backButton.tintColor = canGoBack ? .gray700 : .gray200
         }
     }
     
     private var canGoForward: Bool = false {
         didSet {
             forwardButton.isEnabled = canGoForward
-            forwardButton.tintColor = canGoForward ? .gray700 : .gray150
+            forwardButton.tintColor = canGoForward ? .gray700 : .gray200
         }
     }
     
     private(set) var isRead: Bool = false {
         didSet {
-            readLinkCheckButton.tintColor = isRead ? .gray700 : .gray150
-            toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, readLinkCheckButton, flexibleSpace, safariButton], animated: false)
+            readLinkCheckButton.tintColor = isRead ? .gray700 : .gray200
+            toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, readLinkCheckButton, flexibleSpace, shareLinkButton, flexibleSpace, safariButton], animated: false)
         }
     }
     
     private var backButtonAction: (() -> Void)?
     private var forwardButtonAction: (() -> Void)?
+    private var shareButtonAction: (() -> Void)?
     private var safariButtonAction: (() -> Void)?
     
     lazy var readLinkButtonTap = readLinkCheckButton.publisher()
@@ -48,6 +49,7 @@ final class LinkWebToolBarView: UIView {
     private let backButton = UIBarButtonItem()
     private let forwardButton = UIBarButtonItem()
     private let readLinkCheckButton = UIBarButtonItem()
+    private let shareLinkButton = UIBarButtonItem()
     private let safariButton = UIBarButtonItem()
       
     // MARK: - Life Cycles
@@ -76,6 +78,10 @@ extension LinkWebToolBarView {
     
     func forwardButtonTapped(_ action: @escaping () -> Void) {
         forwardButtonAction = action
+    }
+    
+    func shareButtonTapped(_ action: @escaping () -> Void) {
+        shareButtonAction = action
     }
     
     func safariButtonTapped(_ action: @escaping () -> Void) {
@@ -122,6 +128,12 @@ private extension LinkWebToolBarView {
             $0.style = .plain
         }
         
+        shareLinkButton.do {
+            $0.tintColor = .gray700
+            $0.image = .icShare
+            $0.style = .plain
+        }
+        
         safariButton.do {
             $0.tintColor = .gray700
             $0.image = .icSafari24
@@ -131,7 +143,7 @@ private extension LinkWebToolBarView {
     
     func setupHierarchy() {
         addSubview(toolBar)
-        toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, safariButton], animated: false)
+        toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, shareLinkButton, flexibleSpace, safariButton], animated: false)
     }
     
     func setupLayout() {
@@ -141,7 +153,7 @@ private extension LinkWebToolBarView {
     }
     
     func setupAddTarget() {
-        [backButton, forwardButton, readLinkCheckButton, safariButton].forEach {
+        [backButton, forwardButton, readLinkCheckButton, shareLinkButton, safariButton].forEach {
             $0.target = self
             $0.action = #selector(barButtonTapped)
         }
@@ -154,6 +166,8 @@ private extension LinkWebToolBarView {
             backButtonAction?()
         case forwardButton:
             forwardButtonAction?()
+        case shareLinkButton:
+            shareButtonAction?()
         case safariButton:
             safariButtonAction?()
         default:

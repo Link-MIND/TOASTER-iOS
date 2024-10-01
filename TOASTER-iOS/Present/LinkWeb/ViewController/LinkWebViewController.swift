@@ -173,6 +173,13 @@ private extension LinkWebViewController {
             if self.webView.canGoForward { self.webView.goForward() }
         }
         
+        /// 툴바 공유 버튼 클릭 액션 클로저
+        toolBar.shareButtonTapped {
+            guard let url = self.webView.url else { return }
+            let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            self.present(activityViewController, animated: true, completion: nil)
+        }
+        
         /// 툴바 사파리 버튼 클릭 액션 클로저
         toolBar.safariButtonTapped {
             if let url = self.webView.url { UIApplication.shared.open(url) }
