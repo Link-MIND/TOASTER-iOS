@@ -80,7 +80,7 @@ private extension SettingView {
     
     func setupLayout() {
         alertWarningView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().offset(22)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(42)
         }
