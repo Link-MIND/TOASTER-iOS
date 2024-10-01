@@ -29,7 +29,7 @@ final class LinkWebToolBarView: UIView {
     
     private(set) var isRead: Bool = false {
         didSet {
-            readLinkCheckButton.tintColor = isRead ? .gray700 : .gray200
+            readLinkCheckButton.tintColor = isRead ? .toasterPrimary : .gray200
             toolBar.setItems([backButton, flexibleSpace, forwardButton, flexibleSpace, readLinkCheckButton, flexibleSpace, shareLinkButton, flexibleSpace, safariButton], animated: false)
         }
     }
