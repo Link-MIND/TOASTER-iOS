@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		390247AA2B58016C00F9A86A /* PatchOpenLinkRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390247A92B58016C00F9A86A /* PatchOpenLinkRequestDTO.swift */; };
-		390247AC2B58263C00F9A86A /* MypageAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390247AB2B58263C00F9A86A /* MypageAlertView.swift */; };
 		39049C8D2B43EEF400C9196E /* ToastStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39049C8C2B43EEF400C9196E /* ToastStatus.swift */; };
 		39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39049C8E2B43F70400C9196E /* ToasterBottomSheetViewController.swift */; };
 		390925C42B4EF64100487AA3 /* LinkWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390925C32B4EF64100487AA3 /* LinkWebViewController.swift */; };
@@ -181,7 +180,6 @@
 		6B6AE6782B3FF46C000E2366 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6AE6772B3FF46C000E2366 /* Moya */; };
 		6B6AE67A2B3FF46C000E2366 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6AE6792B3FF46C000E2366 /* ReactiveMoya */; };
 		6B6AE67C2B3FF46C000E2366 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6AE67B2B3FF46C000E2366 /* RxMoya */; };
-		6B6AE68A2B3FF582000E2366 /* MypageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6892B3FF582000E2366 /* MypageViewController.swift */; };
 		6B6AE68D2B3FF58D000E2366 /* RemindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE68C2B3FF58D000E2366 /* RemindViewController.swift */; };
 		6B6AE6902B3FF59C000E2366 /* DetailClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE68F2B3FF59C000E2366 /* DetailClipViewController.swift */; };
 		6B6AE6932B3FF5A9000E2366 /* ClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6AE6922B3FF5A9000E2366 /* ClipViewController.swift */; };
@@ -322,7 +320,6 @@
 
 /* Begin PBXFileReference section */
 		390247A92B58016C00F9A86A /* PatchOpenLinkRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchOpenLinkRequestDTO.swift; sourceTree = "<group>"; };
-		390247AB2B58263C00F9A86A /* MypageAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageAlertView.swift; sourceTree = "<group>"; };
 		39049C8C2B43EEF400C9196E /* ToastStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastStatus.swift; sourceTree = "<group>"; };
 		39049C8E2B43F70400C9196E /* ToasterBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterBottomSheetViewController.swift; sourceTree = "<group>"; };
 		390925C32B4EF64100487AA3 /* LinkWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWebViewController.swift; sourceTree = "<group>"; };
@@ -405,7 +402,6 @@
 		6B6AE6572B3FF103000E2366 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B6AE65A2B3FF103000E2366 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B6AE65C2B3FF103000E2366 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6B6AE6892B3FF582000E2366 /* MypageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewController.swift; sourceTree = "<group>"; };
 		6B6AE68C2B3FF58D000E2366 /* RemindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindViewController.swift; sourceTree = "<group>"; };
 		6B6AE68F2B3FF59C000E2366 /* DetailClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClipViewController.swift; sourceTree = "<group>"; };
 		6B6AE6922B3FF5A9000E2366 /* ClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipViewController.swift; sourceTree = "<group>"; };
@@ -830,7 +826,6 @@
 			isa = PBXGroup;
 			children = (
 				3F617CB42B4EC2EE00956E69 /* MypageHeaderView.swift */,
-				390247AB2B58263C00F9A86A /* MypageAlertView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1040,7 +1035,6 @@
 		6B6AE6882B3FF575000E2366 /* Mypage */ = {
 			isa = PBXGroup;
 			children = (
-				6B6AE6892B3FF582000E2366 /* MypageViewController.swift */,
 				3F617CB62B4ECB4600956E69 /* Model */,
 				3F617CB32B4EC2B500956E69 /* View */,
 			);
@@ -2000,7 +1994,6 @@
 				390247AA2B58016C00F9A86A /* PatchOpenLinkRequestDTO.swift in Sources */,
 				8309F5882B8DCEAC00A1420A /* SelectClipViewModel.swift in Sources */,
 				39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */,
-				390247AC2B58263C00F9A86A /* MypageAlertView.swift in Sources */,
 				6BE6DAB12B547BE1008B06FA /* GetMainPageSearchResponseDTO.swift in Sources */,
 				8315CD862B517DBF0061F377 /* AddLinkView.swift in Sources */,
 				8315CD912B5521F70061F377 /* SelectClipModel.swift in Sources */,
@@ -2070,7 +2063,6 @@
 				8315CD8E2B547EE30061F377 /* SelectClipHeaderView.swift in Sources */,
 				6B6AE6A22B3FF5F7000E2366 /* TabBarController.swift in Sources */,
 				3F2BFAC92B40370D00DA76B7 /* SocialLoginButtonView.swift in Sources */,
-				6B6AE68A2B3FF582000E2366 /* MypageViewController.swift in Sources */,
 				6BE6DA432B50A999008B06FA /* PostRefreshTokenResponseDTO.swift in Sources */,
 				830471622B889641005AEEB4 /* HomeViewModel.swift in Sources */,
 				6BE6DA072B4F2FC5008B06FA /* RemindClipModel.swift in Sources */,
