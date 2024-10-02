@@ -195,7 +195,7 @@ private extension ShareViewController {
     func fetchCheckTokenHealth() {
         NetworkService.shared.authService.postTokenHealth(tokenType: .accessToken) { [weak self] result in
             switch result {
-            case .success(_):
+            case .success:
                 self?.isUseShareExtension = true
             case .unAuthorized, .networkFail:
                 self?.isUseShareExtension = false
@@ -210,8 +210,8 @@ private extension ShareViewController {
     func bindViewModel() {
         let input = ShareViewModel.Input(
             selectedClip: selectedClipRelay.eraseToAnyPublisher(),
-            completeButtonTap: completeBottomButton.tapPublisher,
-            closeButtonTap: closeButton.tapPublisher
+            completeButtonTap: completeBottomButton.tapPublisher(),
+            closeButtonTap: closeButton.tapPublisher()
         )
         
         let output = shareViewModel.transform(input)
