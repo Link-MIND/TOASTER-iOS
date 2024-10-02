@@ -142,6 +142,7 @@
 		3F7D91812BA1A0D9004A022F /* SUIT-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B102B410EF2004024E6 /* SUIT-SemiBold.otf */; };
 		3F7D91822BA1A0DC004A022F /* SUIT-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B122B410EF3004024E6 /* SUIT-Regular.otf */; };
 		3F7D91832BA1A0DE004A022F /* SUIT-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0F2B410EF2004024E6 /* SUIT-Medium.otf */; };
+		3F82C30F2CA92AAB00492EEE /* ShareViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F82C30E2CA92AAB00492EEE /* ShareViewModel.swift */; };
 		3FA56CD72B85C76B00B9FCFE /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA56CD62B85C76B00B9FCFE /* OnboardingViewController.swift */; };
 		3FA8654F2BBD799600A9DB8F /* PostTokenHealthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8654E2BBD799600A9DB8F /* PostTokenHealthResponseDTO.swift */; };
 		3FACF9B82B4FE306007E5A8F /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */; };
@@ -384,6 +385,7 @@
 		3F617CB72B4ECB6000956E69 /* MypageUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageUserModel.swift; sourceTree = "<group>"; };
 		3F6CD49C2B86229A00DEC113 /* CustomPageIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageIndicatorView.swift; sourceTree = "<group>"; };
 		3F7D91712BA18C93004A022F /* ToasterShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ToasterShareExtension.entitlements; sourceTree = "<group>"; };
+		3F82C30E2CA92AAB00492EEE /* ShareViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewModel.swift; sourceTree = "<group>"; };
 		3FA56CD62B85C76B00B9FCFE /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		3FA8654E2BBD799600A9DB8F /* PostTokenHealthResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTokenHealthResponseDTO.swift; sourceTree = "<group>"; };
 		3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
@@ -847,6 +849,7 @@
 				3FF2BF062BA17492001D7DC1 /* Info.plist */,
 				3F1F26252BAAC231004F75CE /* ShareViewController.swift */,
 				3FE00F0A2BC6328900CC821E /* MoyaPlugin.swift */,
+				3F82C30E2CA92AAB00492EEE /* ShareViewModel.swift */,
 			);
 			path = ToasterShareExtension;
 			sourceTree = "<group>";
@@ -1828,6 +1831,7 @@
 				3F1F261D2BAA98C8004F75CE /* RemindClipModel.swift in Sources */,
 				3F3ED28C2BA1A456004E79F0 /* PostRefreshTokenResponseDTO.swift in Sources */,
 				3F3ED28D2BA1A456004E79F0 /* AuthAPIService.swift in Sources */,
+				3F82C30F2CA92AAB00492EEE /* ShareViewModel.swift in Sources */,
 				3F3ED2892BA1A453004E79F0 /* PostSocialLoginRequestDTO.swift in Sources */,
 				3F3ED27B2BA1A298004E79F0 /* BaseTargetType.swift in Sources */,
 				3F3ED28E2BA1A45C004E79F0 /* PatchPushAlarmRequestDTO.swift in Sources */,
