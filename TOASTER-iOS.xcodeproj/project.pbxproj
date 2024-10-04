@@ -750,9 +750,8 @@
 		39B54E712B53C4F100538DAE /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				39B54E722B53C50300538DAE /* SettingViewController.swift */,
-				39B54E792B53D49900538DAE /* SettingTableViewCell.swift */,
-				8334CFA12CA979E700319922 /* SettingView.swift */,
+				830BD47A2CAFCC8B0050F8D1 /* Model */,
+				830BD4792CAFCC1D0050F8D1 /* View */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -818,22 +817,6 @@
 			isa = PBXGroup;
 			children = (
 				3F2FA17E2B4A31E900EDBF95 /* SocialLoginTokenModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		3F617CB32B4EC2B500956E69 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				3F617CB42B4EC2EE00956E69 /* MypageHeaderView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		3F617CB62B4ECB4600956E69 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				3F617CB72B4ECB6000956E69 /* MypageUserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1026,19 +1009,9 @@
 				6B6AE68E2B3FF590000E2366 /* DetailClip */,
 				6B6AE68B2B3FF585000E2366 /* Remind */,
 				6BE6D9FF2B4F2A91008B06FA /* RemindAdd */,
-				6B6AE6882B3FF575000E2366 /* Mypage */,
 				6B6AE6522B3FF101000E2366 /* ViewController.swift */,
 			);
 			path = Present;
-			sourceTree = "<group>";
-		};
-		6B6AE6882B3FF575000E2366 /* Mypage */ = {
-			isa = PBXGroup;
-			children = (
-				3F617CB62B4ECB4600956E69 /* Model */,
-				3F617CB32B4EC2B500956E69 /* View */,
-			);
-			path = Mypage;
 			sourceTree = "<group>";
 		};
 		6B6AE68B2B3FF585000E2366 /* Remind */ = {
@@ -1601,6 +1574,33 @@
 				83CFC33A2B57324700A2EB2B /* SaveLinkModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		830BD4792CAFCC1D0050F8D1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				830BD47B2CAFCC910050F8D1 /* Cell */,
+				8334CFA12CA979E700319922 /* SettingView.swift */,
+				39B54E722B53C50300538DAE /* SettingViewController.swift */,
+				3F617CB42B4EC2EE00956E69 /* MypageHeaderView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		830BD47A2CAFCC8B0050F8D1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3F617CB72B4ECB6000956E69 /* MypageUserModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		830BD47B2CAFCC910050F8D1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				39B54E792B53D49900538DAE /* SettingTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		8315CD882B5478050061F377 /* SelectClip */ = {
