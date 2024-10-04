@@ -199,7 +199,6 @@ private extension SettingViewController {
         }
     }
     
-    
     func popupDeleteButtonTapped() {
         deleteAccount()
     }
@@ -236,7 +235,7 @@ extension SettingViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == 0 {
             switch indexPath.row {
             case 1:
                 let urlString = "https://open.kakao.com/o/sfN9Fr4f"
@@ -255,7 +254,7 @@ extension SettingViewController: UITableViewDelegate {
             default:
                 return
             }
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 1 {
             self.showPopup(forMainText: "정말로 탈퇴하시겠어요?", forSubText: "회원 탈퇴 시 지금까지\n저장한 모든 링크가 사라져요.", forLeftButtonTitle: "네, 탈퇴할래요", forRightButtonTitle: "더 써볼래요", forLeftButtonHandler: self.popupDeleteButtonTapped, forRightButtonHandler: nil)
         }
     }
