@@ -8,20 +8,13 @@
 import Foundation
 import Combine
 
-protocol ViewModelType {
-    associatedtype Input
-    associatedtype Output
-    
-    func transform(_ input: Input) -> Output
-}
-
 final class ShareViewModel: ViewModelType {
 
     private let appURL = "TOASTER://"
     private var urlString = ""
     
     struct Input {
-        let selectedClip: AnyPublisher<RemindClipModel?, Never>
+        let selectedClip: AnyPublisher<RemindClipModel, Never>
         let completeButtonTap: AnyPublisher<Void, Never>
         let closeButtonTap: AnyPublisher<Void, Never>
     }
@@ -32,25 +25,22 @@ final class ShareViewModel: ViewModelType {
         let closeButtonAction: AnyPublisher<Void, Never>
     }
     
-    private var cancellables = Set<AnyCancellable>()
-    
-    func transform(_ input: Input) -> Output {
+    func transform(_ input: Input, cancelBag: CancelBag) -> Output {
         let categoryIDPublisher = input.selectedClip
-            .map { clip -> Int? in
-                guard let clip = clip else { return nil }
-                return clip.id == 0 ? nil : clip.id
+            .map { clip in
+                clip.id == 0 ? nil : clip.id
             }
             .eraseToAnyPublisher()
         
         let isSelectedPublisher = input.selectedClip
-            .map { $0 != nil }
+            .map { _ in true }
             .eraseToAnyPublisher()
 
         let saveLinkResultPublisher = input.completeButtonTap
             .combineLatest(categoryIDPublisher)
             .map { _, categoryID in categoryID }
             .flatMap { [weak self] categoryID -> AnyPublisher<Bool, Never> in
-                guard let self = self else {
+                guard let self else {
                     return Just(false).eraseToAnyPublisher()
                 }
                 

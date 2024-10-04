@@ -26,9 +26,9 @@ class ShareViewController: UIViewController {
     
     private var isUseShareExtension = false
     
-    private let selectedClipRelay = CurrentValueSubject<RemindClipModel?, Never>(nil)
+    private let selectedClipSubejct = PassthroughSubject<RemindClipModel, Never>()
     
-    private var cancellables = Set<AnyCancellable>()
+    private var cancelBag = CancelBag()
     
     // MARK: - UI Components
     
@@ -209,12 +209,12 @@ private extension ShareViewController {
     
     func bindViewModel() {
         let input = ShareViewModel.Input(
-            selectedClip: selectedClipRelay.eraseToAnyPublisher(),
+            selectedClip: selectedClipSubejct.eraseToAnyPublisher(),
             completeButtonTap: completeBottomButton.tapPublisher(),
             closeButtonTap: closeButton.tapPublisher()
         )
         
-        let output = shareViewModel.transform(input)
+        let output = shareViewModel.transform(input, cancelBag: cancelBag)
         
         output.isSeleted
             .sink { [weak self] result in
@@ -222,7 +222,7 @@ private extension ShareViewController {
                     self?.completeBottomButton.backgroundColor = .toasterBlack
                 }
             }
-            .store(in: &cancellables)
+            .store(in: cancelBag)
         
         output.completeButtonAction
             .sink { [weak self] result in
@@ -230,7 +230,7 @@ private extension ShareViewController {
                     self?.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
                 }
             }
-            .store(in: &cancellables)
+            .store(in: cancelBag)
         
         output.closeButtonAction
             .sink { [weak self] _ in
@@ -241,7 +241,7 @@ private extension ShareViewController {
                     self.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
                 })
             }
-            .store(in: &cancellables)
+            .store(in: cancelBag)
     }
 }
 
@@ -293,7 +293,7 @@ private extension ShareViewController {
 extension ShareViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedClip = viewModel.clipData[indexPath.item]
-        selectedClipRelay.send(selectedClip)
+        selectedClipSubejct.send(selectedClip)
     }
 }
 

@@ -167,6 +167,7 @@
 		3FE00F0C2BC632A500CC821E /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA352B5059CE008B06FA /* NetworkResult.swift */; };
 		3FE28DC22B879B1400B6AED8 /* OnboardingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE28DC12B879B1400B6AED8 /* OnboardingType.swift */; };
 		3FE828352B54E58E00F10732 /* APIInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE828342B54E58E00F10732 /* APIInterceptor.swift */; };
+		3FF02B302CAFE6600074332E /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8334CF9F2CA6E2D200319922 /* ViewModelType.swift */; };
 		3FF2BF092BA17492001D7DC1 /* ToasterShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3FF2BEFF2BA17492001D7DC1 /* ToasterShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3FF2BF0E2BA188AE001D7DC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B6AE6572B3FF103000E2366 /* Assets.xcassets */; };
 		3FF2BF0F2BA188B9001D7DC1 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 398ACFDB2B5E77FA00D5EE77 /* Colors.xcassets */; };
@@ -1952,6 +1953,7 @@
 				3F3ED2992BA1A46E004E79F0 /* PatchOpenLinkResponseDTO.swift in Sources */,
 				3F3ED2872BA1A400004E79F0 /* PostAddCategoryRequestDTO.swift in Sources */,
 				3F3ED2B52BA1D645004E79F0 /* ClipModel.swift in Sources */,
+				3FF02B302CAFE6600074332E /* ViewModelType.swift in Sources */,
 				83474A6A2BED06EB009B9C48 /* ToasterTargetType.swift in Sources */,
 				3F3ED2952BA1A46B004E79F0 /* PatchOpenLinkRequestDTO.swift in Sources */,
 				3F3ED2A92BA1AAB4004E79F0 /* StringLiterals.swift in Sources */,
