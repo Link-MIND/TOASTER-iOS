@@ -180,13 +180,16 @@ private extension ShareViewController {
     // 웹 사이트 URL 를 받아올 수 있는 메서드
     func getUrl() {
         if let item = extensionContext?.inputItems.first as? NSExtensionItem,
-           let itemProvider = item.attachments?.first as? NSItemProvider,
-           itemProvider.hasItemConformingToTypeIdentifier("public.url") {
-            itemProvider.loadItem(forTypeIdentifier: "public.url", options: nil) { [weak self] (url, error) in
-                if let shareURL = url as? URL {
-                    self?.shareViewModel.bindUrl(shareURL.absoluteString)
-                } else {
-                    print("Error loading URL: \(error?.localizedDescription ?? "")")
+           let itemProviders = item.attachments {
+            itemProviders.forEach { itemProvider in
+                if itemProvider.hasItemConformingToTypeIdentifier("public.url") {
+                    itemProvider.loadItem(forTypeIdentifier: "public.url") { [weak self] (url, error) in
+                        if let shareURL = url as? URL {
+                            self?.urlString = shareURL.absoluteString
+                        } else {
+                            print("Error loading URL: \(error?.localizedDescription ?? "")")
+                        }
+                    }
                 }
             }
         }
