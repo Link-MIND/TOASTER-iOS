@@ -148,6 +148,14 @@
 		3F7D91812BA1A0D9004A022F /* SUIT-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B102B410EF2004024E6 /* SUIT-SemiBold.otf */; };
 		3F7D91822BA1A0DC004A022F /* SUIT-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B122B410EF3004024E6 /* SUIT-Regular.otf */; };
 		3F7D91832BA1A0DE004A022F /* SUIT-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0F2B410EF2004024E6 /* SUIT-Medium.otf */; };
+		3F82C30F2CA92AAB00492EEE /* ShareViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F82C30E2CA92AAB00492EEE /* ShareViewModel.swift */; };
+		3F82C3212CADA19300492EEE /* Publisher+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F82C3202CADA19300492EEE /* Publisher+UIButton.swift */; };
+		3F82C3222CADA1EF00492EEE /* Publisher+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F82C3202CADA19300492EEE /* Publisher+UIButton.swift */; };
+		3F82C3232CADA1F400492EEE /* CancelBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397215532CA8CF07009DF1F9 /* CancelBag.swift */; };
+		3F82C3242CADA1F700492EEE /* Publisher+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397586EB2CAA312C004FB095 /* Publisher+Driver.swift */; };
+		3F82C3252CADA1F900492EEE /* Publisher+UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397215582CA8D15F009DF1F9 /* Publisher+UIControl.swift */; };
+		3F82C3262CADA1FC00492EEE /* Publisher+UIGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3972155A2CA8DB1A009DF1F9 /* Publisher+UIGesture.swift */; };
+		3F82C3272CADA1FE00492EEE /* Publisher+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3972155C2CA9007B009DF1F9 /* Publisher+UIBarButtonItem.swift */; };
 		3FA56CD72B85C76B00B9FCFE /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA56CD62B85C76B00B9FCFE /* OnboardingViewController.swift */; };
 		3FA8654F2BBD799600A9DB8F /* PostTokenHealthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8654E2BBD799600A9DB8F /* PostTokenHealthResponseDTO.swift */; };
 		3FACF9B82B4FE306007E5A8F /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */; };
@@ -158,6 +166,7 @@
 		3FE00F0C2BC632A500CC821E /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA352B5059CE008B06FA /* NetworkResult.swift */; };
 		3FE28DC22B879B1400B6AED8 /* OnboardingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE28DC12B879B1400B6AED8 /* OnboardingType.swift */; };
 		3FE828352B54E58E00F10732 /* APIInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE828342B54E58E00F10732 /* APIInterceptor.swift */; };
+		3FF02B302CAFE6600074332E /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8334CF9F2CA6E2D200319922 /* ViewModelType.swift */; };
 		3FF2BF092BA17492001D7DC1 /* ToasterShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3FF2BEFF2BA17492001D7DC1 /* ToasterShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3FF2BF0E2BA188AE001D7DC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B6AE6572B3FF103000E2366 /* Assets.xcassets */; };
 		3FF2BF0F2BA188B9001D7DC1 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 398ACFDB2B5E77FA00D5EE77 /* Colors.xcassets */; };
@@ -397,6 +406,8 @@
 		3F617CB72B4ECB6000956E69 /* MypageUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageUserModel.swift; sourceTree = "<group>"; };
 		3F6CD49C2B86229A00DEC113 /* CustomPageIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageIndicatorView.swift; sourceTree = "<group>"; };
 		3F7D91712BA18C93004A022F /* ToasterShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ToasterShareExtension.entitlements; sourceTree = "<group>"; };
+		3F82C30E2CA92AAB00492EEE /* ShareViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewModel.swift; sourceTree = "<group>"; };
+		3F82C3202CADA19300492EEE /* Publisher+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+UIButton.swift"; sourceTree = "<group>"; };
 		3FA56CD62B85C76B00B9FCFE /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		3FA8654E2BBD799600A9DB8F /* PostTokenHealthResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTokenHealthResponseDTO.swift; sourceTree = "<group>"; };
 		3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
@@ -702,6 +713,7 @@
 				397215582CA8D15F009DF1F9 /* Publisher+UIControl.swift */,
 				3972155A2CA8DB1A009DF1F9 /* Publisher+UIGesture.swift */,
 				3972155C2CA9007B009DF1F9 /* Publisher+UIBarButtonItem.swift */,
+				3F82C3202CADA19300492EEE /* Publisher+UIButton.swift */,
 			);
 			path = "Combine+";
 			sourceTree = "<group>";
@@ -894,6 +906,7 @@
 				3FF2BF062BA17492001D7DC1 /* Info.plist */,
 				3F1F26252BAAC231004F75CE /* ShareViewController.swift */,
 				3FE00F0A2BC6328900CC821E /* MoyaPlugin.swift */,
+				3F82C30E2CA92AAB00492EEE /* ShareViewModel.swift */,
 			);
 			path = ToasterShareExtension;
 			sourceTree = "<group>";
@@ -1884,15 +1897,19 @@
 			files = (
 				3F3ED28A2BA1A456004E79F0 /* AuthTargetType.swift in Sources */,
 				396DCDFD2CA19F4500FEF7C8 /* PatchPopupHiddenRequestDTO.swift in Sources */,
+				3F82C3222CADA1EF00492EEE /* Publisher+UIButton.swift in Sources */,
 				3F3ED28B2BA1A456004E79F0 /* PostSocialLoginResponseDTO.swift in Sources */,
 				3F1F261D2BAA98C8004F75CE /* RemindClipModel.swift in Sources */,
 				3F3ED28C2BA1A456004E79F0 /* PostRefreshTokenResponseDTO.swift in Sources */,
 				3F3ED28D2BA1A456004E79F0 /* AuthAPIService.swift in Sources */,
+				3F82C30F2CA92AAB00492EEE /* ShareViewModel.swift in Sources */,
 				3F3ED2892BA1A453004E79F0 /* PostSocialLoginRequestDTO.swift in Sources */,
 				3F3ED27B2BA1A298004E79F0 /* BaseTargetType.swift in Sources */,
 				3F3ED28E2BA1A45C004E79F0 /* PatchPushAlarmRequestDTO.swift in Sources */,
 				3F3ED2782BA1A246004E79F0 /* KeyChainService.swift in Sources */,
 				3F1F26202BAAB34B004F75CE /* SelectClipModel.swift in Sources */,
+				3F82C3272CADA1FE00492EEE /* Publisher+UIBarButtonItem.swift in Sources */,
+				3F82C3242CADA1F700492EEE /* Publisher+Driver.swift in Sources */,
 				3F1F261F2BAAAED7004F75CE /* ToastStatus.swift in Sources */,
 				3F3ED2792BA1A258004E79F0 /* Config.swift in Sources */,
 				3F7D917A2BA1A05F004A022F /* UIView+.swift in Sources */,
@@ -1922,6 +1939,7 @@
 				3F3ED2A12BA1A478004E79F0 /* GetDetailTimerResponseDTO.swift in Sources */,
 				3F3ED2942BA1A45F004E79F0 /* GetMainPageResponseDTO.swift in Sources */,
 				3F3ED2B42BA1D5FF004E79F0 /* NSObject+.swift in Sources */,
+				3F82C3232CADA1F400492EEE /* CancelBag.swift in Sources */,
 				3F3ED2862BA1A400004E79F0 /* PatchEditNameCategoryRequestDTO.swift in Sources */,
 				3F3ED2972BA1A46E004E79F0 /* GetWeeksLinkResponseDTO.swift in Sources */,
 				3F3ED29B2BA1A475004E79F0 /* PatchEditTimerRequestDTO.swift in Sources */,
@@ -1932,12 +1950,14 @@
 				3F3ED2992BA1A46E004E79F0 /* PatchOpenLinkResponseDTO.swift in Sources */,
 				3F3ED2872BA1A400004E79F0 /* PostAddCategoryRequestDTO.swift in Sources */,
 				3F3ED2B52BA1D645004E79F0 /* ClipModel.swift in Sources */,
+				3FF02B302CAFE6600074332E /* ViewModelType.swift in Sources */,
 				83474A6A2BED06EB009B9C48 /* ToasterTargetType.swift in Sources */,
 				3F3ED2952BA1A46B004E79F0 /* PatchOpenLinkRequestDTO.swift in Sources */,
 				3F3ED2A92BA1AAB4004E79F0 /* StringLiterals.swift in Sources */,
 				3F3ED2A22BA1A47E004E79F0 /* GetMainPageSearchResponseDTO.swift in Sources */,
 				3F3ED2A32BA1A47E004E79F0 /* SearchTargetType.swift in Sources */,
 				396DCDFB2CA19F2000FEF7C8 /* PopupTargetType.swift in Sources */,
+				3F82C3252CADA1F900492EEE /* Publisher+UIControl.swift in Sources */,
 				3F3ED2A42BA1A47E004E79F0 /* GetRecommendSiteResponseDTO.swift in Sources */,
 				3F3ED2A52BA1A47E004E79F0 /* SearchAPIService.swift in Sources */,
 				3F3ED2962BA1A46B004E79F0 /* PostSaveLinkRequestDTO.swift in Sources */,
@@ -1948,6 +1968,7 @@
 				3F3ED2852BA1A3FD004E79F0 /* GetDetailCategoryResponseDTO.swift in Sources */,
 				3F3ED2802BA1A2B0004E79F0 /* APIInterceptor.swift in Sources */,
 				3F3ED27F2BA1A2A9004E79F0 /* NetworkService.swift in Sources */,
+				3F82C3262CADA1FC00492EEE /* Publisher+UIGesture.swift in Sources */,
 				3F1F26292BAADE01004F75CE /* Config.swift in Sources */,
 				3F3ED27C2BA1A29F004E79F0 /* BaseAPIService.swift in Sources */,
 				3F3ED2B32BA1D59D004E79F0 /* ClipListCollectionViewCell.swift in Sources */,
@@ -2089,6 +2110,7 @@
 				396D7ECD2C880F1F0034A14E /* LinkWebToolBarView.swift in Sources */,
 				6BE6DA732B50C33A008B06FA /* GetAllCategoryResponseDTO.swift in Sources */,
 				3F2FA1752B45C0AF00EDBF95 /* Config.swift in Sources */,
+				3F82C3212CADA19300492EEE /* Publisher+UIButton.swift in Sources */,
 				6B6AE6AC2B3FF6F7000E2366 /* UIColor+.swift in Sources */,
 				6BC493682B45D7B100544249 /* ToasterNavigationController.swift in Sources */,
 				6BE6DA492B50ADC2008B06FA /* NetworkService.swift in Sources */,

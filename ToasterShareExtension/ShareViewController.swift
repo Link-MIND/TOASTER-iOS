@@ -7,6 +7,7 @@
 
 import UIKit
 import Social
+import Combine
 
 import SnapKit
 import Then
@@ -15,21 +16,19 @@ import Then
 class ShareViewController: UIViewController {
     
     // MARK: - Properties
-    private var urlString = ""
-    private let viewModel = RemindSelectClipViewModel()
-    private var categoryID: Int?
-    private var selectedClip: RemindClipModel? {
-        didSet {
-            nextBottomButton.backgroundColor = .toasterBlack
-        }
-    }
     
+    private let viewModel = RemindSelectClipViewModel()
+    private let shareViewModel = ShareViewModel()
+
     private var titleHeight: Int {
         return isUseShareExtension ? 64 : 0
     }
     
-    private let appURL = "TOASTER://"
     private var isUseShareExtension = false
+    
+    private let selectedClipSubejct = PassthroughSubject<RemindClipModel, Never>()
+    
+    private var cancelBag = CancelBag()
     
     // MARK: - UI Components
     
@@ -37,7 +36,7 @@ class ShareViewController: UIViewController {
     private let closeButton = UIButton()
     private let bottomSheetView = UIView()
     private var clipSelectCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    private let nextBottomButton = UIButton()
+    private let completeBottomButton = UIButton()
     
     // MARK: - Life Cycles
     
@@ -49,10 +48,10 @@ class ShareViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupDelegate()
-        setupButton()
         setupRegisterCell()
         setupViewModel()
         fetchCheckTokenHealth()
+        bindViewModel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -120,8 +119,8 @@ private extension ShareViewController {
             $0.showsVerticalScrollIndicator = false
         }
         
-        nextBottomButton.do {
-            $0.setTitle(StringLiterals.Button.next, for: .normal)
+        completeBottomButton.do {
+            $0.setTitle(StringLiterals.Button.complete, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.backgroundColor = .gray200
             $0.makeRounded(radius: 12)
@@ -130,7 +129,7 @@ private extension ShareViewController {
     
     func setupHierarchy() {
         view.addSubviews(bottomSheetView)
-        bottomSheetView.addSubviews(titleLabel, closeButton, clipSelectCollectionView, nextBottomButton)
+        bottomSheetView.addSubviews(titleLabel, closeButton, clipSelectCollectionView, completeBottomButton)
     }
     
     func setupLayout() {
@@ -150,10 +149,10 @@ private extension ShareViewController {
         clipSelectCollectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(22)
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalTo(nextBottomButton.snp.top).inset(-20)
+            $0.bottom.equalTo(completeBottomButton.snp.top).inset(-20)
         }
         
-        nextBottomButton.snp.makeConstraints {
+        completeBottomButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().inset(34)
             $0.horizontalEdges.equalToSuperview().inset(20)
@@ -170,11 +169,6 @@ private extension ShareViewController {
         clipSelectCollectionView.dataSource = self
     }
     
-    func setupButton() {
-        closeButton.addTarget(self, action: #selector(hideBottomSheetAction), for: .touchUpInside)
-        nextBottomButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-    }
-    
     func setupViewModel() {
         viewModel.setupDataChangeAction(changeAction: reloadCollectionView)
     }
@@ -182,19 +176,7 @@ private extension ShareViewController {
     func reloadCollectionView() {
         clipSelectCollectionView.reloadData()
     }
-    
-    @objc func hideBottomSheetAction(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.view.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
-        }, completion: { _ in
-            self.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
-        })
-    }
-    
-    @objc func nextButtonTapped(_ sender: UIButton) {
-        postSaveLink(url: urlString, category: categoryID)
-    }
-    
+
     // 웹 사이트 URL 를 받아올 수 있는 메서드
     func getUrl() {
         if let item = extensionContext?.inputItems.first as? NSExtensionItem,
@@ -216,7 +198,7 @@ private extension ShareViewController {
     func fetchCheckTokenHealth() {
         NetworkService.shared.authService.postTokenHealth(tokenType: .accessToken) { [weak self] result in
             switch result {
-            case .success(let response):
+            case .success:
                 self?.isUseShareExtension = true
             case .unAuthorized, .networkFail:
                 self?.isUseShareExtension = false
@@ -228,22 +210,41 @@ private extension ShareViewController {
         }
     }
     
-    func postSaveLink(url: String, category: Int?) {
-        let request = PostSaveLinkRequestDTO(linkUrl: url,
-                                             categoryId: category)
-        NetworkService.shared.toastService.postSaveLink(requestBody: request) { [weak self] result in
-            switch result {
-            case .success:
-                print("저장 성공")
-                self?.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
-            case .networkFail, .unAuthorized, .notFound:
-                print("저장 실패")
-            case .badRequest, .serverErr:
-                print("저장 실패")
-            default:
-                return
+    func bindViewModel() {
+        let input = ShareViewModel.Input(
+            selectedClip: selectedClipSubejct.eraseToAnyPublisher(),
+            completeButtonTap: completeBottomButton.tapPublisher(),
+            closeButtonTap: closeButton.tapPublisher()
+        )
+        
+        let output = shareViewModel.transform(input, cancelBag: cancelBag)
+        
+        output.isSeleted
+            .sink { [weak self] result in
+                if result == true {
+                    self?.completeBottomButton.backgroundColor = .toasterBlack
+                }
             }
-        }
+            .store(in: cancelBag)
+        
+        output.completeButtonAction
+            .sink { [weak self] result in
+                if result == true {
+                    self?.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
+                }
+            }
+            .store(in: cancelBag)
+        
+        output.closeButtonAction
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.view.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
+                }, completion: { _ in
+                    self.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
+                })
+            }
+            .store(in: cancelBag)
     }
 }
 
@@ -273,7 +274,7 @@ private extension ShareViewController {
     
     func openMyApp() {
         self.extensionContext?.completeRequest(returningItems: nil, completionHandler: { _ in
-            guard let url = URL(string: self.appURL) else { return }
+            guard let url = URL(string: self.shareViewModel.readAppURL()) else { return }
             _ = self.openURL(url)
         })
     }
@@ -294,9 +295,8 @@ private extension ShareViewController {
 
 extension ShareViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedClip = viewModel.clipData[indexPath.item]
-        let selectRow = viewModel.clipData[indexPath.item].id
-        categoryID = selectRow == 0 ? nil : selectRow
+        let selectedClip = viewModel.clipData[indexPath.item]
+        selectedClipSubejct.send(selectedClip)
     }
 }
 
