@@ -61,7 +61,7 @@ enum TabBarItem: CaseIterable {
         case .clip: return ClipViewController()
         case .plus: return ViewController()
         case .timer: return RemindViewController()
-        case .my: return MypageViewController()
+        case .my: return ViewController()
         }
     }
 }
