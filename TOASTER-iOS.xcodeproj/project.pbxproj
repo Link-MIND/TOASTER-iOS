@@ -52,6 +52,8 @@
 		39A843D12B746420007A4D75 /* EditClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A843D02B746420007A4D75 /* EditClipViewModel.swift */; };
 		39AE73C72CB3D41E00F89793 /* ToasterLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AE73C62CB3D41E00F89793 /* ToasterLoadingView.swift */; };
 		39AE73C92CB41DF200F89793 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AE73C82CB41DF200F89793 /* UIButton+.swift */; };
+		39AE73CC2CB4EADB00F89793 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AE73C82CB41DF200F89793 /* UIButton+.swift */; };
+		39AE73CD2CB4EBC300F89793 /* ToasterLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AE73C62CB3D41E00F89793 /* ToasterLoadingView.swift */; };
 		39B54E732B53C50300538DAE /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B54E722B53C50300538DAE /* SettingViewController.swift */; };
 		39B54E7A2B53D49900538DAE /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B54E792B53D49900538DAE /* SettingTableViewCell.swift */; };
 		39BC5B0B2B400602004024E6 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0A2B400602004024E6 /* .swiftlint.yml */; };
@@ -1974,6 +1976,7 @@
 				3F82C3252CADA1F900492EEE /* Publisher+UIControl.swift in Sources */,
 				3F3ED2A42BA1A47E004E79F0 /* GetRecommendSiteResponseDTO.swift in Sources */,
 				3F3ED2A52BA1A47E004E79F0 /* SearchAPIService.swift in Sources */,
+				39AE73CD2CB4EBC300F89793 /* ToasterLoadingView.swift in Sources */,
 				3F3ED2962BA1A46B004E79F0 /* PostSaveLinkRequestDTO.swift in Sources */,
 				3F3ED2882BA1A400004E79F0 /* PatchEditPriorityCategoryRequestDTO.swift in Sources */,
 				3FE00F082BC5076200CC821E /* PostTokenHealthResponseDTO.swift in Sources */,
@@ -1988,6 +1991,7 @@
 				3F3ED2B32BA1D59D004E79F0 /* ClipListCollectionViewCell.swift in Sources */,
 				3F3ED2B72BA1D897004E79F0 /* SearchResultModel.swift in Sources */,
 				3F3ED2812BA1A3F5004E79F0 /* ClipAPIService.swift in Sources */,
+				39AE73CC2CB4EADB00F89793 /* UIButton+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

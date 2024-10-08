@@ -190,7 +190,9 @@ private extension SelectClipViewController {
             loadingTitle: "저장 중...",
             loadingAnimationSize: 16,
             task: { _ in
-                self.viewModel.postSaveLink(url: self.linkURL, category: self.categoryID)
+                DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
+                    self.viewModel.postSaveLink(url: self.linkURL, category: self.categoryID)
+                }
             }
         )
     }

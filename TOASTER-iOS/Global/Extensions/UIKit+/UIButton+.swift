@@ -15,7 +15,7 @@ extension UIButton {
     func loadingButtonTapped(
         loadingTitle: String?,
         loadingAnimationSize: Int,
-        task: @escaping (@escaping () -> Void) -> Void
+        task: @escaping (_ completion: @escaping () -> Void) -> Void
     ) {
         let originalTitle = self.title(for: .normal)
         let originalBackgroundColor = self.backgroundColor
@@ -62,4 +62,3 @@ extension UIButton {
         }
     }
 }
-
