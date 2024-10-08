@@ -186,8 +186,13 @@ private extension SelectClipViewController {
     }
     
     @objc func completeButtonTapped() {
-        viewModel.postSaveLink(url: linkURL,
-                               category: categoryID)
+        completeButton.loadingButtonTapped(
+            loadingTitle: "저장 중...",
+            loadingAnimationSize: 16,
+            task: { _ in
+                self.viewModel.postSaveLink(url: self.linkURL, category: self.categoryID)
+            }
+        )
     }
 }
 
