@@ -51,13 +51,7 @@ final class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        hideNavigationBar()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        showNavigationBar()
+        setupNavigationBar()
     }
 }
 
@@ -193,6 +187,18 @@ private extension SearchViewController {
     
     func unAuthorizedAction() {
         self.changeViewController(viewController: LoginViewController())
+    }
+    
+    func setupNavigationBar() {
+        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
+                                                                hasRightButton: false,
+                                                                mainTitle: StringOrImageType.string(StringLiterals.Tabbar.search),
+                                                                rightButton: StringOrImageType.string(""),
+                                                                rightButtonAction: {})
+        
+        if let navigationController = navigationController as? ToasterNavigationController {
+            navigationController.setupNavigationBar(forType: type)
+        }
     }
     
     @objc func searchButtonTapped() {
