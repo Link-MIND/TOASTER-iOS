@@ -28,6 +28,18 @@ final class LinkWebViewController: UIViewController {
     private let webView = WKWebView()
     private let toolBar = LinkWebToolBarView()
     
+    private lazy var firstToolTip = ToasterTipView(
+        title: "직접 복사할 수 있어요",
+        type: .bottom,
+        sourceItem: navigationView.addressLabel
+    )
+    
+    private lazy var secondToolTip = ToasterTipView(
+        title: "열람 버튼을 클릭해보세요!",
+        type: .top,
+        sourceItem: toolBar.readLinkCheckButton
+    )
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -51,6 +63,19 @@ final class LinkWebViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         showNavigationBar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+            self.view.addSubview(self.secondToolTip)
+            self.secondToolTip.showToolTipAndDismissAfterDelay(duration: 3) {
+                self.view.addSubview(self.firstToolTip)
+                self.firstToolTip.showToolTipAndDismissAfterDelay(duration: 3)
+            }
+        }
+
     }
     
     deinit {
