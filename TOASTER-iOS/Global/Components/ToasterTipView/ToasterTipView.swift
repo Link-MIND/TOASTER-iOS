@@ -29,10 +29,10 @@ final class ToasterTipView: UIView {
     
     // MARK: - Life Cycles
     
-    init(title: String, type: TipType, sourceItem: UIView) {
+    init(title: String, type: TipType, sourceItem: AnyObject) {
         self.title = title
         self.tipType = type
-        self.sourceView = sourceItem
+        self.sourceView = (sourceItem as? UIView) ?? sourceItem.view
         super.init(frame: .zero)
         setupStyle()
         setupHierarchy()
@@ -106,33 +106,8 @@ extension ToasterTipView {
             animations: { [weak self] in
                 guard let self else { return }
                 guard self.isShow else { return }
-                
                 self.isShow = false
                 self.alpha = 0
-                self.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
-                
-                switch self.tipType {
-                case .top:
-                    self.center = CGPoint(
-                        x: self.sourceView?.center.x ?? 0,
-                        y: self.sourceView?.frame.minY ?? 0
-                    )
-                case .bottom:
-                    self.center = CGPoint(
-                        x: self.sourceView?.center.x ?? 0,
-                        y: self.sourceView?.frame.maxY ?? 0
-                    )
-                case .left:
-                    self.center = CGPoint(
-                        x: self.sourceView?.frame.minX ?? 0,
-                        y: self.sourceView?.center.y ?? 0
-                    )
-                case .right:
-                    self.center = CGPoint(
-                        x: self.sourceView?.frame.maxX ?? 0,
-                        y: self.sourceView?.center.y ?? 0
-                    )
-                }
             }, completion: { _ in
                 self.removeFromSuperview()
                 completion?()
