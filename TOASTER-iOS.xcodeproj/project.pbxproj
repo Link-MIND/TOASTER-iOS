@@ -46,6 +46,7 @@
 		398BE7FA2B467E4B001595E0 /* ClipListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F92B467E4B001595E0 /* ClipListCollectionViewCell.swift */; };
 		398BE7FC2B468F80001595E0 /* ClipCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7FB2B468F80001595E0 /* ClipCollectionHeaderView.swift */; };
 		398BE7FE2B46C164001595E0 /* AddClipBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7FD2B46C164001595E0 /* AddClipBottomSheetView.swift */; };
+		399A556C2CC0C073005B1FDE /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 399A556B2CC0C073005B1FDE /* SkeletonView */; };
 		39A843C52B736039007A4D75 /* ClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A843C42B736039007A4D75 /* ClipViewModel.swift */; };
 		39A843CA2B74512B007A4D75 /* DetailClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A843C92B74512B007A4D75 /* DetailClipViewModel.swift */; };
 		39A843CE2B745B3A007A4D75 /* DetailClipPropertyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A843CD2B745B3A007A4D75 /* DetailClipPropertyType.swift */; };
@@ -560,6 +561,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B6AE66A2B3FF41D000E2366 /* Kingfisher in Frameworks */,
+				399A556C2CC0C073005B1FDE /* SkeletonView in Frameworks */,
 				6B0E85CB2B561746001BC15F /* FirebaseAppCheck in Frameworks */,
 				6B6AE66D2B3FF450000E2366 /* KakaoSDK in Frameworks */,
 				390925C72B4EF66C00487AA3 /* WebKit.framework in Frameworks */,
@@ -1799,6 +1801,7 @@
 				6B0E85CC2B561746001BC15F /* FirebaseAuth */,
 				6B0E85CE2B561746001BC15F /* FirebaseDatabase */,
 				6B0E85D02B561746001BC15F /* FirebaseMessaging */,
+				399A556B2CC0C073005B1FDE /* SkeletonView */,
 			);
 			productName = "TOASTER-iOS";
 			productReference = 6B6AE64B2B3FF101000E2366 /* TOASTER-iOS.app */;
@@ -1838,6 +1841,7 @@
 				6B6AE66B2B3FF450000E2366 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				6B6AE6742B3FF46C000E2366 /* XCRemoteSwiftPackageReference "Moya" */,
 				6B0E85C12B561746001BC15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				399A556A2CC0C073005B1FDE /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = 6B6AE64C2B3FF101000E2366 /* Products */;
 			projectDirPath = "";
@@ -2484,6 +2488,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		399A556A2CC0C073005B1FDE /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.31.0;
+			};
+		};
 		6B0E85C12B561746001BC15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -2535,6 +2547,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		399A556B2CC0C073005B1FDE /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 399A556A2CC0C073005B1FDE /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
 		3F3ED2AB2BA1C53F004E79F0 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6B6AE6742B3FF46C000E2366 /* XCRemoteSwiftPackageReference "Moya" */;

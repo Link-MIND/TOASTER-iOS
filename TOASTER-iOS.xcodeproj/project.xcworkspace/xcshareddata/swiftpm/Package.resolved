@@ -1,4 +1,5 @@
 {
+  "originHash" : "3f63164603fdfab953068e456100e61184363ec4122db9a14dfea264f6258aa2",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -163,6 +164,15 @@
       }
     },
     {
+      "identity" : "skeletonview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Juanpe/SkeletonView",
+      "state" : {
+        "revision" : "2f5274827d310e32c09325dd3e0007120940988e",
+        "version" : "1.31.0"
+      }
+    },
+    {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SnapKit/SnapKit.git",
@@ -190,5 +200,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
