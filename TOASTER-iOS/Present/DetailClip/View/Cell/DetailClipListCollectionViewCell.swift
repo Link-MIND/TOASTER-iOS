@@ -8,6 +8,7 @@
 import UIKit
 
 import Kingfisher
+import SkeletonView
 import SnapKit
 import Then
 
@@ -59,6 +60,7 @@ final class DetailClipListCollectionViewCell: UICollectionViewCell {
         setupHierarchy()
         setupLayout()
         setupAddTarget()
+        setupSkeleton()
     }
     
     required init?(coder: NSCoder) {
@@ -225,6 +227,13 @@ private extension DetailClipListCollectionViewCell {
     
     func setupAddTarget() {
         modifiedButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
+    
+    func setupSkeleton() {
+        isSkeletonable = true
+        [linkImage, linkTitleLabel, linkLabel, clipNameLabel, modifiedButton].forEach {
+            $0.isSkeletonable = true
+        }
     }
     
     @objc

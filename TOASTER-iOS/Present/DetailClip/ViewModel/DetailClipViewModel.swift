@@ -17,6 +17,7 @@ final class DetailClipViewModel: NSObject {
     
     typealias DataChangeAction = (Bool) -> Void
     private var dataChangeAction: DataChangeAction?
+    private var loadingStatusAction: DataChangeAction?
     
     typealias NormalChangeAction = () -> Void
     private var unAuthorizedAction: NormalChangeAction?
@@ -43,9 +44,11 @@ final class DetailClipViewModel: NSObject {
 
 extension DetailClipViewModel {
     func setupDataChangeAction(changeAction: @escaping DataChangeAction,
+                               loadingAction: @escaping DataChangeAction,
                                forUnAuthorizedAction: @escaping NormalChangeAction,
                                editNameAction: @escaping NormalChangeAction) {
         dataChangeAction = changeAction
+        loadingStatusAction = loadingAction
         unAuthorizedAction = forUnAuthorizedAction
         editLinkTitleAction = editNameAction
     }
@@ -66,17 +69,19 @@ extension DetailClipViewModel {
     }
     
     func getDetailAllCategoryAPI(filter: DetailCategoryFilter) {
+        loadingStatusAction?(true)
         NetworkService.shared.clipService.getDetailAllCategory(filter: filter) { result in
+            self.loadingStatusAction?(false)
             switch result {
             case .success(let response):
                 let allToastCount = response?.data.allToastNum
                 let toasts = response?.data.toastListDto.map {
                     ToastListModel(id: $0.toastId,
-                                    title: $0.toastTitle,
-                                    url: $0.linkUrl,
-                                    isRead: $0.isRead,
-                                    clipTitle: $0.categoryTitle,
-                                    imageURL: $0.thumbnailUrl)
+                                   title: $0.toastTitle,
+                                   url: $0.linkUrl,
+                                   isRead: $0.isRead,
+                                   clipTitle: $0.categoryTitle,
+                                   imageURL: $0.thumbnailUrl)
                 }
                 self.toastList = DetailClipModel(allToastCount: allToastCount ?? 0,
                                                  toastList: toasts ?? [])
@@ -87,20 +92,22 @@ extension DetailClipViewModel {
         }
     }
     
-    func getDetailCategoryAPI(categoryID: Int, 
+    func getDetailCategoryAPI(categoryID: Int,
                               filter: DetailCategoryFilter,
                               completion: (() -> Void)? = nil) {
+        loadingStatusAction?(true)
         NetworkService.shared.clipService.getDetailCategory(categoryID: categoryID, filter: filter) { result in
+            self.loadingStatusAction?(false)
             switch result {
             case .success(let response):
                 let allToastCount = response?.data.allToastNum
                 let toasts = response?.data.toastListDto.map {
                     ToastListModel(id: $0.toastId,
-                                    title: $0.toastTitle,
-                                    url: $0.linkUrl,
-                                    isRead: $0.isRead,
-                                    clipTitle: $0.categoryTitle,
-                                    imageURL: $0.thumbnailUrl)
+                                   title: $0.toastTitle,
+                                   url: $0.linkUrl,
+                                   isRead: $0.isRead,
+                                   clipTitle: $0.categoryTitle,
+                                   imageURL: $0.thumbnailUrl)
                 }
                 self.toastList = DetailClipModel(allToastCount: allToastCount ?? 0,
                                                  toastList: toasts ?? [])

@@ -7,6 +7,7 @@
 
 import UIKit
 
+import SkeletonView
 import SnapKit
 
 final class DetailClipViewController: UIViewController {
@@ -66,9 +67,7 @@ private extension DetailClipViewController {
     func setupStyle() {
         view.backgroundColor = .toasterBackground
         detailClipListCollectionView.backgroundColor = .toasterBackground
-        detailClipEmptyView.isHidden = false
         editLinkBottomSheetView.editLinkBottomSheetViewDelegate = self
-        
     }
     
     func setupHierarchy() {
@@ -108,6 +107,7 @@ private extension DetailClipViewController {
     
     func setupViewModel() {
         viewModel.setupDataChangeAction(changeAction: reloadCollectionView,
+                                        loadingAction: setupSkeleton,
                                         forUnAuthorizedAction: unAuthorizedAction,
                                         editNameAction: editLinkTitleAction)
     }
@@ -115,6 +115,16 @@ private extension DetailClipViewController {
     func reloadCollectionView(isHidden: Bool) {
         detailClipListCollectionView.reloadData()
         detailClipEmptyView.isHidden = isHidden
+    }
+    
+    func setupSkeleton(isLoading: Bool) {
+        detailClipListCollectionView.isSkeletonable = true
+        if isLoading {
+            detailClipEmptyView.isHidden = true
+            detailClipListCollectionView.showAnimatedGradientSkeleton()
+        } else {
+            detailClipListCollectionView.hideSkeleton()
+        }
     }
     
     func unAuthorizedAction() {
@@ -139,7 +149,11 @@ private extension DetailClipViewController {
 
 // MARK: - CollectionView DataSource
 
-extension DetailClipViewController: UICollectionViewDataSource {
+extension DetailClipViewController: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        return DetailClipListCollectionViewCell.className
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.toastList.toastList.count
     }
