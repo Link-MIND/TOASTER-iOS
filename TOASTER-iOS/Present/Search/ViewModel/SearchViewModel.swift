@@ -5,70 +5,105 @@
 //  Created by 김다예 on 1/9/24.
 //
 
+import Combine
 import Foundation
 
-final class SearchViewModel: NSObject {
+final class SearchViewModel: ViewModelType {
     
-    // MARK: - Properties
+    private var cancelBag = CancelBag()
+    private(set) var searchResults: SearchResultModel = SearchResultModel(
+        detailClipList: [],
+        clipList: []
+    )
     
-    typealias DataChangeAction = () -> Void
-    private var dataChangeAction: DataChangeAction?
-    private var dataEmptyAction: DataChangeAction?
-    private var unAuthorizedAction: DataChangeAction?
+    // MARK: - Input State
     
-    // MARK: - Data
+    struct Input {
+        let searchButtonTapped: Driver<String>
+        let clearButtonTapped: Driver<Void>
+        let textFieldBeginEdited: Driver<Void>
+    }
     
-    private(set) var searchResultData: SearchResultModel = SearchResultModel(detailClipList: [],
-                                                                             clipList: []) {
-        didSet {
-            if searchResultData.clipList.count == 0 &&
-                searchResultData.detailClipList.count == 0 {
-                dataEmptyAction?()
-            } else {
-                dataChangeAction?()
+    // MARK: - Output State
+    
+    struct Output {
+        let loadToSearchResults = PassthroughSubject<Bool, Never>()
+        let startSearching = PassthroughSubject<Void, Never>()
+        let isSearching = PassthroughSubject<Bool, Never>()
+    }
+    
+    // MARK: - Method
+    
+    func transform(_ input: Input, cancelBag: CancelBag) -> Output {
+        let output = Output()
+
+        input.searchButtonTapped
+            .filter { !$0.isEmpty }
+            .networkFlatMap(self) { context, text in
+                context.fetchSearchResult(forText: text)
             }
-        }
+            .sink { [weak self] result in
+                self?.searchResults = result
+                output.loadToSearchResults.send(result.detailClipList.isEmpty && result.clipList.isEmpty)
+                output.isSearching.send(false)
+            }.store(in: cancelBag)
+        
+        input.clearButtonTapped
+            .sink { [weak self] in
+                self?.searchResults = SearchResultModel(detailClipList: [], clipList: [])
+                output.loadToSearchResults.send(false)
+                output.startSearching.send()
+                output.isSearching.send(true)
+            }.store(in: cancelBag)
+        
+        input.textFieldBeginEdited
+            .sink { _ in
+                output.isSearching.send(true)
+            }.store(in: cancelBag)
+                
+        return output
     }
 }
 
-// MARK: - extension
+// MARK: - Network
 
-extension SearchViewModel {
-    func setupDataChangeAction(changeAction: @escaping DataChangeAction,
-                               emptyAction: @escaping DataChangeAction,
-                               forUnAuthorizedAction: @escaping DataChangeAction) {
-        dataChangeAction = changeAction
-        dataEmptyAction = emptyAction
-        unAuthorizedAction = forUnAuthorizedAction
-    }
-    
-    func fetchSearchResult(forText: String) {
-        NetworkService.shared.searchService.getMainPageSearch(searchText: forText) { result in
-            switch result {
-            case .success(let response):
-                let detailClipList = response?.data?.toasts.map {
-                    SearchResultDetailClipModel(iD: $0.toastId,
-                                                title: $0.toastTitle,
-                                                link: $0.linkUrl,
-                                                imageURL: $0.thumbnailUrl,
-                                                clipTitle: $0.categoryTitle,
-                                                isRead: $0.isRead)
+private extension SearchViewModel {
+    func fetchSearchResult(forText: String) -> AnyPublisher<SearchResultModel, Error> {
+        return Future<SearchResultModel, Error> { promise in
+            NetworkService.shared.searchService.getMainPageSearch(searchText: forText) { result in
+                switch result {
+                case .success(let response):
+                    let detailClips = response?.data?.toasts.map {
+                        SearchResultDetailClipModel(
+                            iD: $0.toastId,
+                            title: $0.toastTitle,
+                            link: $0.linkUrl,
+                            imageURL: $0.thumbnailUrl,
+                            clipTitle: $0.categoryTitle,
+                            isRead: $0.isRead
+                        )
+                    }
+                    let clips = response?.data?.categories.map {
+                        SearchResultClipModel(
+                            iD: $0.categoryId,
+                            title: $0.title,
+                            numberOfDetailClip: $0.toastNum
+                        )
+                    }
+                    promise(
+                        .success(
+                            SearchResultModel(
+                                detailClipList: detailClips ?? [],
+                                clipList: clips ?? []
+                            )
+                        )
+                    )
+                case .unAuthorized, .networkFail, .notFound:
+                    promise(.failure(NetworkResult<Error>.unAuthorized))
+                default:
+                    return
                 }
-                let clipList = response?.data?.categories.map {
-                    SearchResultClipModel(iD: $0.categoryId,
-                                          title: $0.title,
-                                          numberOfDetailClip: $0.toastNum)
-                }
-                self.searchResultData = SearchResultModel(
-                    detailClipList: detailClipList ?? [],
-                    clipList: clipList ?? [])
-            case .badRequest:
-                self.searchResultData = SearchResultModel(detailClipList: [],
-                                                          clipList: [])
-            case .unAuthorized:
-                self.unAuthorizedAction?()
-            default: break
             }
-        }
+        }.eraseToAnyPublisher()
     }
 }
