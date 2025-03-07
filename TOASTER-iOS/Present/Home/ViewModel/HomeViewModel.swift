@@ -49,7 +49,7 @@ final class HomeViewModel: ViewModelType {
         )
     ]
     
-    private(set) var popupInfoList: [PopupInfoModel]? = nil
+    private(set) var popupInfoList: [PopupInfoModel]?
     
     // MARK: - Input State
     

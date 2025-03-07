@@ -36,33 +36,48 @@ enum CompositionalFactory {
         let itemInset: CGFloat = 0
         
         // item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalWidthFraction),
-                                              heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(itemFractionalWidthFraction),
+            heightDimension: .fractionalHeight(1)
+        )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: itemInset,
-                                                     leading: itemInset,
-                                                     bottom: itemInset,
-                                                     trailing: itemInset)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: itemInset,
+            leading: itemInset,
+            bottom: itemInset,
+            trailing: itemInset
+        )
         
         // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                               heightDimension: .estimated(158))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                       subitems: [item])
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(158)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
         
         // section
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: itemInset,
-                                                        leading: itemInset,
-                                                        bottom: itemInset,
-                                                        trailing: itemInset)
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: itemInset,
+            leading: itemInset,
+            bottom: itemInset,
+            trailing: itemInset
+        )
         
         // Footer
         section.boundarySupplementaryItems = [
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                          heightDimension: .absolute(4)),
-                                                        elementKind: UICollectionView.elementKindSectionFooter, 
-                                                        alignment: .bottom)]
+            NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(4)
+                ),
+                elementKind: UICollectionView.elementKindSectionFooter,
+                alignment: .bottom
+            )
+        ]
         return section
     }
     
@@ -73,37 +88,56 @@ enum CompositionalFactory {
         let itemInset: CGFloat = 8
         
         // item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalWidthFraction),
-                                              heightDimension: .absolute(104))
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(itemFractionalWidthFraction),
+            heightDimension: .absolute(104)
+        )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0,
-                                                     leading: itemInset,
-                                                     bottom: itemInset,
-                                                     trailing: itemInset)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: itemInset,
+            bottom: itemInset,
+            trailing: itemInset
+        )
         
         // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                               heightDimension: .absolute(104))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                       subitems: [item])
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(104)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
         
         // section
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: itemInset,
-                                                        leading: itemInset,
-                                                        bottom: itemInset,
-                                                        trailing: itemInset)
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: itemInset,
+            leading: itemInset,
+            bottom: itemInset,
+            trailing: itemInset
+        )
         
         // Header, Footer
         section.boundarySupplementaryItems = [
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                          heightDimension: .absolute(46)),
-                                                        elementKind: UICollectionView.elementKindSectionHeader, 
-                                                        alignment: .top),
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                          heightDimension: .absolute(9)),
-                                                        elementKind: UICollectionView.elementKindSectionFooter, 
-                                                        alignment: .bottom)]
+            NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(46)
+                ),
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            ),
+            NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(9)
+                ),
+                elementKind: UICollectionView.elementKindSectionFooter,
+                alignment: .bottom
+            )
+        ]
         return section
     }
     
@@ -114,40 +148,57 @@ enum CompositionalFactory {
         let itemInset: CGFloat = 7
         
         // item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalWidthFraction),
-                                              heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(itemFractionalWidthFraction),
+            heightDimension: .absolute(120)
+        )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: itemInset,
-                                                     leading: itemInset,
-                                                     bottom: itemInset,
-                                                     trailing: itemInset)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: itemInset,
+            leading: itemInset,
+            bottom: itemInset,
+            trailing: itemInset
+        )
         
         // group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(600)
         )
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
-                                                     subitem: item, 
-                                                     count: 5)
+        let group = NSCollectionLayoutGroup.vertical(
+            layoutSize: groupSize,
+            repeatingSubitem: item,
+            count: 5
+        )
         
         // section
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: itemInset,
-                                                        leading: itemInset,
-                                                        bottom: itemInset,
-                                                        trailing: itemInset)
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: itemInset,
+            leading: itemInset,
+            bottom: itemInset,
+            trailing: itemInset
+        )
         
         // Header, Footer
         section.boundarySupplementaryItems = [
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                          heightDimension: .absolute(50)),
-                                                        elementKind: UICollectionView.elementKindSectionHeader, 
-                                                        alignment: .top),
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                          heightDimension: .absolute(20)),
-                                                        elementKind: UICollectionView.elementKindSectionFooter, 
-                                                        alignment: .bottom)]
+            NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(50)
+                ),
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            ),
+            NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(20)
+                ),
+                elementKind: UICollectionView.elementKindSectionFooter,
+                alignment: .bottom
+            )
+        ]
         return section
     }
     
@@ -163,32 +214,43 @@ enum CompositionalFactory {
             heightDimension: .fractionalHeight(1)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: itemInset,
-                                                     leading: itemInset,
-                                                     bottom: itemInset,
-                                                     trailing: itemInset)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: itemInset,
+            leading: itemInset,
+            bottom: itemInset,
+            trailing: itemInset
+        )
         
         // group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(115)
         )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                       subitems: [item])
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
         
         // section
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: itemInset,
-                                                        leading: itemInset,
-                                                        bottom: itemInset,
-                                                        trailing: itemInset)
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: itemInset,
+            leading: itemInset,
+            bottom: itemInset,
+            trailing: itemInset
+        )
         
         // Header
         section.boundarySupplementaryItems = [
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                          heightDimension: .absolute(50)),
-                                                        elementKind: UICollectionView.elementKindSectionHeader, 
-                                                        alignment: .top)]
+            NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(50)
+                ),
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+        ]
         return section
     }
 }

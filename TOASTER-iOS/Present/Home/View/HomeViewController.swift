@@ -295,7 +295,6 @@ private extension HomeViewController {
         homeView.collectionView.dataSource = self
     }
     
-    
     func setupToolTip() {
         if UserDefaults.standard.value(forKey: TipUserDefaults.isShowHomeViewToolTip) == nil {
             UserDefaults.standard.set(true, forKey: TipUserDefaults.isShowHomeViewToolTip)
