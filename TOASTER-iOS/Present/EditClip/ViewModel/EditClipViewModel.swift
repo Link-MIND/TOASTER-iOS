@@ -34,10 +34,6 @@ final class EditClipViewModel: ViewModelType {
         let changeClipNameResult = PassthroughSubject<Bool, Never>()
     }
     
-    // MARK: - Cancellable Bag
-    
-    private var cancellables = Set<AnyCancellable>()
-    
     // MARK: - Method
     
     func transform(_ input: Input, cancelBag: CancelBag) -> Output {

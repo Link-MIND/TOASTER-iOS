@@ -5,6 +5,7 @@
 //  Created by 김다예 on 12/30/23.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -20,10 +21,17 @@ final class HomeViewController: UIViewController {
     var onArrowSelected: ((Int, String) -> Void)?
     var onAddLinkSelected: (() -> Void)?
     
-    // MARK: - UI Properties
+    // MARK: - Data Stream
     
     private let viewModel: HomeViewModel!
     private let clipViewModel: DetailClipViewModel!
+    private let cancelBag = CancelBag()
+    
+    private var requestHomeData = PassthroughSubject<Void, Never>()
+    private var changePopupState = PassthroughSubject<(Int, Int), Never>()
+    
+    // MARK: - UI Properties
+    
     private let homeView = HomeView()
     
     private var firstToolTip: ToasterTipView?
@@ -53,23 +61,17 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         homeView.backgroundColor = .toasterBackground
-        
+        bindViewModels()
         setupHierarchy()
         setupLayout()
         createCollectionView()
         setupDelegate()
-        setupViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
-        
-        viewModel.fetchMainPageData()
-        viewModel.fetchWeeklyLinkData()
-        viewModel.fetchRecommendSiteData()
-        viewModel.getPopupInfoAPI()
-        viewModel.fetchRecentLinkData()
+        requestHomeData.send()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -84,7 +86,7 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1:
-            let data = viewModel.recentLink
+            let data = viewModel.recentLinks
             if indexPath.item < data.count {
                 let url = viewModel.recentLink[indexPath.item].linkUrl
                 let isRead = viewModel.recentLink[indexPath.item].isRead
@@ -116,12 +118,12 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            let count = viewModel.recentLink.count
+            let count = viewModel.recentLinks.count
             return count == 0 ? 1 : min(count, 3)
         case 2:
-            return viewModel.weeklyLinkList.count
+            return viewModel.weeklyLinks.count
         case 3:
-            return viewModel.recommendSiteList.count
+            return viewModel.recommendSites.count
         default:
             return 0
         }
@@ -134,11 +136,11 @@ extension HomeViewController: UICollectionViewDataSource {
                 withReuseIdentifier: MainCollectionViewCell.className,
                 for: indexPath
             ) as? MainCollectionViewCell else { return UICollectionViewCell() }
-            let model = viewModel.mainInfoList
+            let model = viewModel.mainInfo
             cell.bindData(forModel: model)
             return cell
         case 1:
-            let lastIndex = viewModel.recentLink.count
+            let lastIndex = viewModel.recentLinks.count
             if lastIndex == 0 {
                 guard let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: UserClipEmptyCollectionViewCell.className,
@@ -151,7 +153,7 @@ extension HomeViewController: UICollectionViewDataSource {
                     for: indexPath
                 ) as? DetailClipListCollectionViewCell else { return UICollectionViewCell() }
                 if indexPath.item < lastIndex {
-                    let model = viewModel.recentLink
+                    let model = viewModel.recentLinks
                     cell.configureCell(forModel: model[indexPath.item], isClipHidden: false)
                 }
                 return cell
@@ -161,7 +163,7 @@ extension HomeViewController: UICollectionViewDataSource {
                 withReuseIdentifier: WeeklyLinkCollectionViewCell.className,
                 for: indexPath
             ) as? WeeklyLinkCollectionViewCell else { return UICollectionViewCell() }
-            let model = viewModel.weeklyLinkList
+            let model = viewModel.weeklyLinks
             cell.bindData(forModel: model[indexPath.item])
             return cell
         case 3:
@@ -169,7 +171,7 @@ extension HomeViewController: UICollectionViewDataSource {
                 withReuseIdentifier: WeeklyRecommendCollectionViewCell.className,
                 for: indexPath
             ) as? WeeklyRecommendCollectionViewCell else { return UICollectionViewCell() }
-            let model = viewModel.recommendSiteList
+            let model = viewModel.recommendSites
             cell.bindData(forModel: model[indexPath.item])
             return cell
         default:
@@ -190,7 +192,7 @@ extension HomeViewController: UICollectionViewDataSource {
             ) as? HomeHeaderCollectionView else { return UICollectionReusableView() }
             switch indexPath.section {
             case 1:
-                let nickName = viewModel.mainInfoList.nickname
+                let nickName = viewModel.mainInfo.nickname
                 header.configureHeader(forTitle: nickName,
                                        num: indexPath.section)
                 header.arrowButton.addTarget(self, action: #selector(arrowButtonTapped), for: .touchUpInside)
@@ -240,6 +242,25 @@ extension HomeViewController: UICollectionViewDataSource {
 // MARK: - Private Extensions
 
 private extension HomeViewController {
+    func bindViewModels() {
+        let input = HomeViewModel.Input(
+            requestMainInfo: requestHomeData.asDriver(),
+            requestRecentLinks: requestHomeData.asDriver(),
+            requestWeeklyLinks: requestHomeData.asDriver(),
+            requestRecommendSites: requestHomeData.asDriver(),
+            requestPopupInfoList: requestHomeData.asDriver(),
+            changePopupDate: changePopupState.asDriver()
+        )
+        
+        let output = viewModel.transform(input, cancelBag: cancelBag)
+        
+        output.needToReload
+            .sink { [weak self] in
+                guard let self else { return }
+                homeView.collectionView.reloadData()
+            }.store(in: cancelBag)
+    }
+    
     func setupHierarchy() {
         view.addSubview(homeView.collectionView)
     }
@@ -284,13 +305,6 @@ private extension HomeViewController {
         homeView.collectionView.dataSource = self
     }
     
-    // ViewModel
-    func setupViewModel() {
-        viewModel.setupDataChangeAction(changeAction: reloadCollectionView,
-                                        forUnAuthorizedAction: unAuthorizedAction,
-                                        popupAction: showPopupAction)
-    }
-    
     func setupToolTip() {
         if UserDefaults.standard.value(forKey: TipUserDefaults.isShowHomeViewToolTip) == nil {
             UserDefaults.standard.set(true, forKey: TipUserDefaults.isShowHomeViewToolTip)
@@ -306,14 +320,6 @@ private extension HomeViewController {
         }
     }
     
-    func reloadCollectionView(isHidden: Bool) {
-        homeView.collectionView.reloadData()
-    }
-    
-    func unAuthorizedAction() {
-        changeViewController(viewController: LoginViewController())
-    }
-        
     func showPopupAction(isShow: Bool) {
         if isShow {
             guard let popupId = viewModel.popupInfoList?.first?.id else { return }
@@ -327,16 +333,16 @@ private extension HomeViewController {
                     let nextVC = ViewControllerFactory.shared.makeLinkWebVC()
                     nextVC.hidesBottomBarWhenPushed = true
                     nextVC.setupDataBind(linkURL: self.viewModel.popupInfoList?.first?.linkURL ?? "")
-                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 1)
+                    self.changePopupState.send((popupId, 1))
                     self.dismiss(animated: false)
                     self.navigationController?.pushViewController(nextVC, animated: true)
                 },
                 bottomButtonHandler: {
-                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 7)
+                    self.changePopupState.send((popupId, 7))
                     self.dismiss(animated: false)
                 },
                 closeButtonHandler: {
-                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 1)
+                    self.changePopupState.send((popupId, 1))
                     self.dismiss(animated: false)
                 }
             )
