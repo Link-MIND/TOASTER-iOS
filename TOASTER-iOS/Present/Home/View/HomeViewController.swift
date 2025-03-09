@@ -88,18 +88,18 @@ extension HomeViewController: UICollectionViewDelegate {
         case 1:
             let data = viewModel.recentLinks
             if indexPath.item < data.count {
-                let url = viewModel.recentLink[indexPath.item].linkUrl
-                let isRead = viewModel.recentLink[indexPath.item].isRead
-                let id = viewModel.recentLink[indexPath.item].toastId
+                let url = viewModel.recentLinks[indexPath.item].linkUrl
+                let isRead = viewModel.recentLinks[indexPath.item].isRead
+                let id = viewModel.recentLinks[indexPath.item].toastId
                 onMyLinkSelected?(url, isRead, id)
             } else {
                 addClipCellTapped()
             }
         case 2:
-            let data = viewModel.weeklyLinkList[indexPath.item]
+            let data = viewModel.weeklyLinks[indexPath.item]
             onOurLinkSelected?(data.toastLink)
         case 3:
-            let data = viewModel.recommendSiteList[indexPath.item]
+            let data = viewModel.recommendSites[indexPath.item]
             if let url = data.siteUrl { onOurLinkSelected?(url) }
         default: break
         }

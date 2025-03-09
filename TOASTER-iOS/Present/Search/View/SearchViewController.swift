@@ -222,10 +222,10 @@ extension SearchViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            let data = viewModel.searchResultData.detailClipList[indexPath.item]
+            let data = viewModel.searchResults.detailClipList[indexPath.item]
             onLinkItemSelected?(data.link, data.isRead, data.iD)
         case 1:
-            let data = viewModel.searchResultData.clipList[indexPath.item]
+            let data = viewModel.searchResults.clipList[indexPath.item]
             onClipItemSelected?(data.iD, data.title)
         default: break
         }
