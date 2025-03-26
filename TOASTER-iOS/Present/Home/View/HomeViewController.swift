@@ -13,9 +13,18 @@ import Then
 
 final class HomeViewController: UIViewController {
     
+    // MARK: - View Controllable
+
+    var onMyLinkSelected: ((String, Bool, Int) -> Void)?
+    var onOurLinkSelected: ((String) -> Void)?
+    var onSettingSelected: (() -> Void)?
+    var onArrowSelected: ((Int, String) -> Void)?
+    var onAddLinkSelected: (() -> Void)?
+    
     // MARK: - Data Stream
     
-    private let viewModel = HomeViewModel()
+    private let viewModel: HomeViewModel!
+    private let clipViewModel: DetailClipViewModel!
     private let cancelBag = CancelBag()
     
     private var requestHomeData = PassthroughSubject<Void, Never>()
@@ -35,6 +44,19 @@ final class HomeViewController: UIViewController {
     }()
     
     // MARK: - Life Cycle
+    
+    init(
+        viewModel: HomeViewModel,
+        clipViewModel: DetailClipViewModel
+    ) {
+        self.viewModel = viewModel
+        self.clipViewModel = clipViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,31 +88,19 @@ extension HomeViewController: UICollectionViewDelegate {
         case 1:
             let data = viewModel.recentLinks
             if indexPath.item < data.count {
-                let nextVC = LinkWebViewController()
-                nextVC.hidesBottomBarWhenPushed = true
-                nextVC.setupDataBind(
-                    linkURL: viewModel.recentLinks[indexPath.item].linkUrl,
-                    isRead: viewModel.recentLinks[indexPath.item].isRead,
-                    id: viewModel.recentLinks[indexPath.item].toastId
-                )
-                self.navigationController?.pushViewController(nextVC, animated: true)
+                let url = viewModel.recentLinks[indexPath.item].linkUrl
+                let isRead = viewModel.recentLinks[indexPath.item].isRead
+                let id = viewModel.recentLinks[indexPath.item].toastId
+                onMyLinkSelected?(url, isRead, id)
             } else {
                 addClipCellTapped()
             }
         case 2:
-            let nextVC = LinkWebViewController()
-            nextVC.hidesBottomBarWhenPushed = true
             let data = viewModel.weeklyLinks[indexPath.item]
-            nextVC.setupDataBind(linkURL: data.toastLink)
-            self.navigationController?.pushViewController(nextVC, animated: true)
+            onOurLinkSelected?(data.toastLink)
         case 3:
-            let nextVC = LinkWebViewController()
-            nextVC.hidesBottomBarWhenPushed = true
             let data = viewModel.recommendSites[indexPath.item]
-            if let url = data.siteUrl {
-                nextVC.setupDataBind(linkURL: url)
-            }
-            self.navigationController?.pushViewController(nextVC, animated: true)
+            if let url = data.siteUrl { onOurLinkSelected?(url) }
         default: break
         }
     }
@@ -320,7 +330,7 @@ private extension HomeViewController {
                 centerButtonTitle: "참여하기",
                 bottomButtonTitle: "일주일간 보지 않기",
                 centerButtonHandler: {
-                    let nextVC = LinkWebViewController()
+                    let nextVC = ViewControllerFactory.shared.makeLinkWebVC()
                     nextVC.hidesBottomBarWhenPushed = true
                     nextVC.setupDataBind(linkURL: self.viewModel.popupInfoList?.first?.linkURL ?? "")
                     self.changePopupState.send((popupId, 1))
@@ -340,28 +350,25 @@ private extension HomeViewController {
     }
     
     func setupNavigationBar() {
-        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
-                                                                hasRightButton: true,
-                                                                mainTitle: StringOrImageType.image(.wordmark),
-                                                                rightButton: StringOrImageType.image(.icSettings24),
-                                                                rightButtonAction: rightButtonTapped)
-        
+        let type: ToasterNavigationType = ToasterNavigationType(
+            hasBackButton: false,
+            hasRightButton: true,
+            mainTitle: StringOrImageType.image(.wordmark),
+            rightButton: StringOrImageType.image(.icSettings24),
+            rightButtonAction: rightButtonTapped
+        )
         if let navigationController = navigationController as? ToasterNavigationController {
             navigationController.setupNavigationBar(forType: type)
         }
     }
     
     func rightButtonTapped() {
-        let settingVC = SettingViewController()
-        settingVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(settingVC, animated: true)
+        onSettingSelected?()
     }
     
     @objc
     func arrowButtonTapped() {
-        let detailClipViewController = DetailClipViewController()
-        detailClipViewController.setupCategory(id: 0, name: "전체 클립")
-        navigationController?.pushViewController(detailClipViewController, animated: true)
+        onArrowSelected?(0, "전체 클립")
     }
 }
 
@@ -369,7 +376,6 @@ private extension HomeViewController {
 
 extension HomeViewController: UserClipCollectionViewCellDelegate {
     func addClipCellTapped() {
-        let nextVC = AddLinkViewController()
-        self.navigationController?.pushViewController(nextVC, animated: true)
+        onAddLinkSelected?()
     }
 }

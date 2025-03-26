@@ -147,8 +147,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         if let navigationViewController = UIApplication.shared.keyWindow?.rootViewController as? ToasterNavigationController {
             navigationViewController.popToRootViewController(animated: false)
-            if let tabBarControlelr = navigationViewController.topViewController as? TabBarController {
-                tabBarControlelr.selectedIndex = 3
+            if let tabBarController = navigationViewController.topViewController as? TabBarController {
+                tabBarController.selectedIndex = 4
             }
         }
     }
