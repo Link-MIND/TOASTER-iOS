@@ -8,13 +8,14 @@
 import Combine
 import UIKit
 
+import SkeletonView
 import SnapKit
 import Then
 
 final class HomeViewController: UIViewController {
     
     // MARK: - View Controllable
-
+    
     var onMyLinkSelected: ((String, Bool, Int) -> Void)?
     var onOurLinkSelected: ((String) -> Void)?
     var onSettingSelected: (() -> Void)?
@@ -60,8 +61,8 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        homeView.backgroundColor = .toasterBackground
         bindViewModels()
+        setupStyle()
         setupHierarchy()
         setupLayout()
         createCollectionView()
@@ -239,6 +240,34 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - Skeleton CollectionView DataSource
+
+extension HomeViewController: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        switch indexPath.section {
+        case 0: return MainCollectionViewCell.className
+        case 1: return DetailClipListCollectionViewCell.className
+        case 2: return WeeklyLinkCollectionViewCell.className
+        case 3: return WeeklyRecommendCollectionViewCell.className
+        default: return MainCollectionViewCell.className
+        }
+    }
+    
+    func numSections(in collectionSkeletonView: UICollectionView) -> Int {
+        return 4
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
+        case 0: return 1
+        case 1: return 3
+        case 2: return 3
+        case 3: return 9
+        default: return 0
+        }
+    }
+}
+
 // MARK: - Private Extensions
 
 private extension HomeViewController {
@@ -258,7 +287,17 @@ private extension HomeViewController {
             .sink { [weak self] in
                 guard let self else { return }
                 homeView.collectionView.reloadData()
+                homeView.collectionView.stopSkeletonAnimation()
+                homeView.collectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
             }.store(in: cancelBag)
+    }
+    
+    func setupStyle() {
+        homeView.backgroundColor = .toasterBackground
+        view.isSkeletonable = true
+        homeView.isSkeletonable = true
+        homeView.collectionView.isSkeletonable = true
+        homeView.collectionView.showAnimatedGradientSkeleton()
     }
     
     func setupHierarchy() {

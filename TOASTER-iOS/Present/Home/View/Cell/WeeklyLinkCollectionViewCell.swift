@@ -8,6 +8,7 @@
 import UIKit
 
 import Kingfisher
+import SkeletonView
 import SnapKit
 import Then
 
@@ -57,19 +58,23 @@ private extension WeeklyLinkCollectionViewCell {
     func setupStyle() {
         backgroundColor = .toasterWhite
         self.makeRounded(radius: 12)
+        self.isSkeletonable = true
         
         linkImage.do {
             $0.makeRounded(radius: 8)
+            $0.isSkeletonable = true
         }
         
         linkTitleLabel.do {
             $0.font = .suitMedium(size: 16)
             $0.textColor = .black900
+            $0.isSkeletonable = true
         }
         
         linkLabel.do {
             $0.font = .suitRegular(size: 10)
             $0.textColor = .gray200
+            $0.isSkeletonable = true
         }
     }
     

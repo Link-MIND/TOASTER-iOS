@@ -8,6 +8,7 @@
 import Combine
 import UIKit
 
+import SkeletonView
 import SnapKit
 import Then
 
@@ -89,6 +90,8 @@ private extension ClipViewController {
             .sink { [weak self] _ in
                 self?.clipListCollectionView.reloadData()
                 self?.clipEmptyView.isHidden = self?.viewModel.clipList.clips.count ?? 0 != 0
+                self?.clipListCollectionView.stopSkeletonAnimation()
+                self?.clipListCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
             }.store(in: cancelBag)
         
         output.addClipResult
@@ -114,6 +117,9 @@ private extension ClipViewController {
     
     func setupStyle() {
         clipListCollectionView.backgroundColor = .toasterBackground
+        view.isSkeletonable = true
+        clipListCollectionView.isSkeletonable = true
+        clipListCollectionView.showAnimatedGradientSkeleton()
     }
     
     func setupHierarchy() {
@@ -226,6 +232,24 @@ extension ClipViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - CollectionView Delegate Flow Layout
+
+extension ClipViewController: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        return ClipListCollectionViewCell.className
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+}
+
+// MARK: - CollectionView HeaderView Delegate
+
 extension ClipViewController: ClipCollectionHeaderViewDelegate {
     func addClipButtonTapped() {
         if viewModel.clipList.clips.count >= 15 {
@@ -236,6 +260,8 @@ extension ClipViewController: ClipCollectionHeaderViewDelegate {
         }
     }
 }
+
+// MARK: - Bottom Sheet Delegate
 
 extension ClipViewController: AddClipBottomSheetViewDelegate {
     func addHeightBottom() {

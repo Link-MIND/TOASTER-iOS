@@ -4,8 +4,10 @@
 //
 //  Created by Gahyun Kim on 2024/01/09.
 //
+
 import UIKit
 
+import SkeletonView
 import SnapKit
 import Then
 
@@ -69,10 +71,12 @@ extension MainCollectionViewCell {
 
 private extension MainCollectionViewCell {
     func setupStyle() {
+        isSkeletonable = true
         
         userLabel.do {
             $0.font = .suitRegular(size: 20)
             $0.textColor = .black900
+            $0.isSkeletonable = true
         }
         
         noticeLabel.do {
@@ -81,11 +85,13 @@ private extension MainCollectionViewCell {
             $0.textAlignment = .left
             $0.font = .suitRegular(size: 20)
             $0.textColor = .black900
+            $0.isSkeletonable = true
         }
         
         countToastLabel.do {
             $0.font = .suitRegular(size: 16)
             $0.textColor = .gray300
+            $0.isSkeletonable = true
         }
         
         linkProgressView.do {

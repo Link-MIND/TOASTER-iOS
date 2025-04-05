@@ -8,6 +8,7 @@
 import UIKit
 
 import Kingfisher
+import SkeletonView
 import SnapKit
 import Then
 
@@ -58,19 +59,23 @@ private extension WeeklyRecommendCollectionViewCell {
     func setupStyle() {
         backgroundColor = .toasterWhite
         self.makeRounded(radius: 8)
+        self.isSkeletonable = true
         
         brandImage.do {
             $0.makeRounded(radius: 20)
+            $0.isSkeletonable = true
         }
         
         titleLabel.do {
             $0.font = .suitBold(size: 12)
             $0.textColor = .gray800
+            $0.isSkeletonable = true
         }
         
         subLabel.do {
             $0.font = .suitMedium(size: 10)
             $0.textColor = .gray400
+            $0.isSkeletonable = true
         }
     }
     

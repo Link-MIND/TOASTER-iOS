@@ -7,6 +7,7 @@
 
 import UIKit
 
+import SkeletonView
 import SnapKit
 import Then
 
@@ -63,19 +64,23 @@ private extension ClipListCollectionViewCell {
     func setupStyle() {
         self.backgroundColor = .toasterWhite
         self.makeRounded(radius: 12)
+        self.isSkeletonable = true
         
         clipNameLabel.do {
             $0.font = .suitSemiBold(size: 16)
             $0.textColor = .black850
+            $0.isSkeletonable = true
         }
         
         countLabel.do {
             $0.font = .suitSemiBold(size: 14)
             $0.textColor = .gray600
+            $0.isSkeletonable = true
         }
         
         arrowImage.do {
             $0.image = .icArrow18
+            $0.isSkeletonable = true
         }
     }
     

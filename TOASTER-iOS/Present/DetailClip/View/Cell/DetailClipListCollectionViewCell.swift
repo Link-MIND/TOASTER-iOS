@@ -8,6 +8,7 @@
 import UIKit
 
 import Kingfisher
+import SkeletonView
 import SnapKit
 import Then
 
@@ -143,9 +144,11 @@ private extension DetailClipListCollectionViewCell {
     func setupStyle() {
         backgroundColor = .toasterWhite
         makeRounded(radius: 12)
+        isSkeletonable = true
         
         linkImage.do {
             $0.makeRounded(radius: 8)
+            $0.isSkeletonable = true
         }
         
         clipNameLabel.do {
@@ -154,21 +157,25 @@ private extension DetailClipListCollectionViewCell {
             $0.textColor = .toasterPrimary
             $0.font = .suitMedium(size: 10)
             $0.textAlignment = .center
+            $0.isSkeletonable = true
         }
         
         linkTitleLabel.do {
             $0.font = .suitMedium(size: 16)
             $0.textColor = .black850
+            $0.isSkeletonable = true
         }
         
         linkLabel.do {
             $0.font = .suitMedium(size: 10)
             $0.textColor = .gray200
+            $0.isSkeletonable = true
         }
         
         modifiedButton.do {
             $0.setImage(.icMore24, for: .normal)
             $0.frame = contentView.bounds
+            $0.isSkeletonable = true
         }
         
         dimmedView.do {
