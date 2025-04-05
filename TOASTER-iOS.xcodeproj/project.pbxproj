@@ -94,6 +94,7 @@
 		39EF95FF2B501BD600F301FC /* EditClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF95FE2B501BD600F301FC /* EditClipViewController.swift */; };
 		39EF96012B501E8A00F301FC /* EditClipNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF96002B501E8A00F301FC /* EditClipNoticeView.swift */; };
 		39EF96042B5020D600F301FC /* EditClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF96032B5020D600F301FC /* EditClipCollectionViewCell.swift */; };
+		3D431B1E2DA0E58900416B2B /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 3D431B1D2DA0E58900416B2B /* SkeletonView */; };
 		3F1F26182BAA8E7D004F75CE /* SUIT-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0E2B410EF2004024E6 /* SUIT-Bold.otf */; };
 		3F1F261B2BAA9820004F75CE /* RemindSelectClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA032B4F2AF5008B06FA /* RemindSelectClipCollectionViewCell.swift */; };
 		3F1F261C2BAA9887004F75CE /* RemindSelectClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA0A2B4F3063008B06FA /* RemindSelectClipViewModel.swift */; };
@@ -613,6 +614,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B6AE66A2B3FF41D000E2366 /* Kingfisher in Frameworks */,
+				3D431B1E2DA0E58900416B2B /* SkeletonView in Frameworks */,
 				6B0E85CB2B561746001BC15F /* FirebaseAppCheck in Frameworks */,
 				6B6AE66D2B3FF450000E2366 /* KakaoSDK in Frameworks */,
 				390925C72B4EF66C00487AA3 /* WebKit.framework in Frameworks */,
@@ -1907,6 +1909,7 @@
 				6B0E85CC2B561746001BC15F /* FirebaseAuth */,
 				6B0E85CE2B561746001BC15F /* FirebaseDatabase */,
 				6B0E85D02B561746001BC15F /* FirebaseMessaging */,
+				3D431B1D2DA0E58900416B2B /* SkeletonView */,
 			);
 			productName = "TOASTER-iOS";
 			productReference = 6B6AE64B2B3FF101000E2366 /* TOASTER-iOS.app */;
@@ -1946,6 +1949,7 @@
 				6B6AE66B2B3FF450000E2366 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				6B6AE6742B3FF46C000E2366 /* XCRemoteSwiftPackageReference "Moya" */,
 				6B0E85C12B561746001BC15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				3D431B1C2DA0E58900416B2B /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = 6B6AE64C2B3FF101000E2366 /* Products */;
 			projectDirPath = "";
@@ -2622,6 +2626,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3D431B1C2DA0E58900416B2B /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.31.0;
+			};
+		};
 		6B0E85C12B561746001BC15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -2673,6 +2685,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3D431B1D2DA0E58900416B2B /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D431B1C2DA0E58900416B2B /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
 		3F3ED2AB2BA1C53F004E79F0 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6B6AE6742B3FF46C000E2366 /* XCRemoteSwiftPackageReference "Moya" */;
