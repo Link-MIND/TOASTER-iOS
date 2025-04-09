@@ -13,6 +13,12 @@ final class ClipViewModel: ViewModelType {
     private var cancelBag = CancelBag()
     var clipList: ClipModel = ClipModel(allClipToastCount: 0, clips: [])
     
+    private let clipService: ClipAPIServiceProtocol
+    
+    init(clipService: ClipAPIServiceProtocol) {
+        self.clipService = clipService
+    }
+    
     // MARK: - Input State
     
     struct Input {
@@ -42,7 +48,7 @@ final class ClipViewModel: ViewModelType {
                 self?.clipList = clipList
                 output.needToReload.send()
             }.store(in: cancelBag)
-                
+        
         input.clipNameChanged
             .debounce(for: 0.2, scheduler: RunLoop.main)
             .removeDuplicates()
@@ -71,56 +77,35 @@ final class ClipViewModel: ViewModelType {
 // MARK: - Network
 
 private extension ClipViewModel {
-    func getAllCategoryAPI() -> AnyPublisher<ClipModel, Error> {
-        return Future<ClipModel, Error> { promise in
-            NetworkService.shared.clipService.getAllCategory { result in
-                switch result {
-                case .success(let response):
-                    let allClipToastCount = response?.data.toastNumberInEntire
-                    let clips = response?.data.categories.map {
-                        AllClipModel(id: $0.categoryId,
-                                     title: $0.categoryTitle,
-                                     toastCount: $0.toastNum)
-                    }
-                    promise(.success(ClipModel(allClipToastCount: allClipToastCount ?? 0, clips: clips ?? [])))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
+    func getAllCategoryAPI() -> AnyPublisher<ClipModel, Never> {
+        return clipService.getAllCategory()
+            .map { response in
+                let totalCount = response.data.toastNumberInEntire
+                let clips = response.data.categories.map {
+                    AllClipModel(
+                        id: $0.categoryId,
+                        title: $0.categoryTitle,
+                        toastCount: $0.toastNum
+                    )
                 }
+                return ClipModel(allClipToastCount: totalCount, clips: clips)
             }
-        }.eraseToAnyPublisher()
+            .catch { _ in Just(ClipModel(allClipToastCount: 0, clips: [])) }
+            .eraseToAnyPublisher()
     }
     
-    func getCheckCategoryAPI(categoryTitle: String) -> AnyPublisher<Bool, Error> {
-        return Future<Bool, Error> { promise in
-            NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle) { result in
-                switch result {
-                case .success(let response):
-                    if let data = response?.data.isDupicated, categoryTitle.count < 16 {
-                        promise(.success(data))
-                    }
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
-                }
-            }
-        }.eraseToAnyPublisher()
+    func getCheckCategoryAPI(categoryTitle: String) -> AnyPublisher<Bool, Never> {
+        return clipService.getCheckCategory(categoryTitle: categoryTitle)
+            .map { $0.data.isDupicated && categoryTitle.count < 16 }
+            .catch { _ in Just(false) }
+            .eraseToAnyPublisher()
     }
-    
-    func postAddCategoryAPI(requestBody: String) -> AnyPublisher<Bool, Error> {
-        return Future<Bool, Error> { promise in
-            NetworkService.shared.clipService.postAddCategory(requestBody: PostAddCategoryRequestDTO(categoryTitle: requestBody)) { result in
-                switch result {
-                case .success:
-                    promise(.success(true))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
-                }
-            }
-        }.eraseToAnyPublisher()
+
+    func postAddCategoryAPI(requestBody: String) -> AnyPublisher<Bool, Never> {
+        let request = PostAddCategoryRequestDTO(categoryTitle: requestBody)
+        return clipService.postAddCategory(requestBody: request)
+            .map { _ in true }
+            .catch { _ in Just(false) }
+            .eraseToAnyPublisher()
     }
 }

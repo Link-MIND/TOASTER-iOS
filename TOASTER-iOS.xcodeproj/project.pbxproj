@@ -94,6 +94,8 @@
 		39EF95FF2B501BD600F301FC /* EditClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF95FE2B501BD600F301FC /* EditClipViewController.swift */; };
 		39EF96012B501E8A00F301FC /* EditClipNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF96002B501E8A00F301FC /* EditClipNoticeView.swift */; };
 		39EF96042B5020D600F301FC /* EditClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF96032B5020D600F301FC /* EditClipCollectionViewCell.swift */; };
+		3DAB25C62DA6B33500FDA362 /* ToasterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAB25C52DA6B33500FDA362 /* ToasterError.swift */; };
+		3DAB25C72DA6B33500FDA362 /* ToasterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAB25C52DA6B33500FDA362 /* ToasterError.swift */; };
 		3F1F26182BAA8E7D004F75CE /* SUIT-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0E2B410EF2004024E6 /* SUIT-Bold.otf */; };
 		3F1F261B2BAA9820004F75CE /* RemindSelectClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA032B4F2AF5008B06FA /* RemindSelectClipCollectionViewCell.swift */; };
 		3F1F261C2BAA9887004F75CE /* RemindSelectClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA0A2B4F3063008B06FA /* RemindSelectClipViewModel.swift */; };
@@ -102,7 +104,6 @@
 		3F1F26202BAAB34B004F75CE /* SelectClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD902B5521F70061F377 /* SelectClipModel.swift */; };
 		3F1F26222BAAB395004F75CE /* ToasterToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398BE7F22B456367001595E0 /* ToasterToastMessageView.swift */; };
 		3F1F26262BAAC231004F75CE /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F26252BAAC231004F75CE /* ShareViewController.swift */; };
-		3F1F26292BAADE01004F75CE /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FA1742B45C0AF00EDBF95 /* Config.swift */; };
 		3F2BFAC92B40370D00DA76B7 /* SocialLoginButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BFAC82B40370D00DA76B7 /* SocialLoginButtonView.swift */; };
 		3F2BFACB2B40373C00DA76B7 /* SocialLoginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BFACA2B40373C00DA76B7 /* SocialLoginType.swift */; };
 		3F2FA1752B45C0AF00EDBF95 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FA1742B45C0AF00EDBF95 /* Config.swift */; };
@@ -114,7 +115,6 @@
 		3F2FA1812B4A32A200EDBF95 /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FA1802B4A32A200EDBF95 /* LogoutUseCase.swift */; };
 		3F3ED2782BA1A246004E79F0 /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */; };
 		3F3ED2792BA1A258004E79F0 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FA1742B45C0AF00EDBF95 /* Config.swift */; };
-		3F3ED27A2BA1A25B004E79F0 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */; };
 		3F3ED27B2BA1A298004E79F0 /* BaseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA1F2B504433008B06FA /* BaseTargetType.swift */; };
 		3F3ED27C2BA1A29F004E79F0 /* BaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA382B50636B008B06FA /* BaseAPIService.swift */; };
 		3F3ED27F2BA1A2A9004E79F0 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA482B50ADC2008B06FA /* NetworkService.swift */; };
@@ -185,7 +185,6 @@
 		3FA56CD72B85C76B00B9FCFE /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA56CD62B85C76B00B9FCFE /* OnboardingViewController.swift */; };
 		3FA8654F2BBD799600A9DB8F /* PostTokenHealthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8654E2BBD799600A9DB8F /* PostTokenHealthResponseDTO.swift */; };
 		3FACF9B82B4FE306007E5A8F /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FACF9B72B4FE306007E5A8F /* KeyChainService.swift */; };
-		3FACF9BA2B50FEB4007E5A8F /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */; };
 		3FBFDEC02B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBFDEBF2B4D3A4C00C58393 /* AppleAuthenticateAdapter.swift */; };
 		3FE00F082BC5076200CC821E /* PostTokenHealthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8654E2BBD799600A9DB8F /* PostTokenHealthResponseDTO.swift */; };
 		3FE00F0B2BC6328900CC821E /* MoyaPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE00F0A2BC6328900CC821E /* MoyaPlugin.swift */; };
@@ -446,6 +445,7 @@
 		39EF95FE2B501BD600F301FC /* EditClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClipViewController.swift; sourceTree = "<group>"; };
 		39EF96002B501E8A00F301FC /* EditClipNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClipNoticeView.swift; sourceTree = "<group>"; };
 		39EF96032B5020D600F301FC /* EditClipCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClipCollectionViewCell.swift; sourceTree = "<group>"; };
+		3DAB25C52DA6B33500FDA362 /* ToasterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterError.swift; sourceTree = "<group>"; };
 		3F1F26252BAAC231004F75CE /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		3F2BFAC82B40370D00DA76B7 /* SocialLoginButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginButtonView.swift; sourceTree = "<group>"; };
 		3F2BFACA2B40373C00DA76B7 /* SocialLoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginType.swift; sourceTree = "<group>"; };
@@ -1476,6 +1476,7 @@
 				6BE6DA382B50636B008B06FA /* BaseAPIService.swift */,
 				6BE6DA332B50594B008B06FA /* MoyaPlugin.swift */,
 				6BE6DA352B5059CE008B06FA /* NetworkResult.swift */,
+				3DAB25C52DA6B33500FDA362 /* ToasterError.swift */,
 				6BE6DA482B50ADC2008B06FA /* NetworkService.swift */,
 				6BE6DA6A2B50BFED008B06FA /* NoneDataResponseDTO.swift */,
 				3FE828342B54E58E00F10732 /* APIInterceptor.swift */,
@@ -1920,7 +1921,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					3FF2BEFE2BA17492001D7DC1 = {
 						CreatedOnToolsVersion = 15.3;
@@ -1966,7 +1967,6 @@
 				3F7D91832BA1A0DE004A022F /* SUIT-Medium.otf in Resources */,
 				3FF2BF0F2BA188B9001D7DC1 /* Colors.xcassets in Resources */,
 				3F1F26182BAA8E7D004F75CE /* SUIT-Bold.otf in Resources */,
-				3F3ED27A2BA1A25B004E79F0 /* Config.xcconfig in Resources */,
 				3F7D91812BA1A0D9004A022F /* SUIT-SemiBold.otf in Resources */,
 				3FF2BF0E2BA188AE001D7DC1 /* Assets.xcassets in Resources */,
 				3F7D91822BA1A0DC004A022F /* SUIT-Regular.otf in Resources */,
@@ -1982,7 +1982,6 @@
 				398ACFDC2B5E77FA00D5EE77 /* Colors.xcassets in Resources */,
 				39BC5B142B410EF3004024E6 /* SUIT-Medium.otf in Resources */,
 				39BC5B172B410EF3004024E6 /* SUIT-Regular.otf in Resources */,
-				3FACF9BA2B50FEB4007E5A8F /* Config.xcconfig in Resources */,
 				39BC5B152B410EF3004024E6 /* SUIT-SemiBold.otf in Resources */,
 				6B6AE6582B3FF103000E2366 /* Assets.xcassets in Resources */,
 				390ADE652B585C8D00FE1E4B /* GoogleService-Info.plist in Resources */,
@@ -2070,6 +2069,7 @@
 				3F3ED2862BA1A400004E79F0 /* PatchEditNameCategoryRequestDTO.swift in Sources */,
 				3F3ED2972BA1A46E004E79F0 /* GetWeeksLinkResponseDTO.swift in Sources */,
 				3F3ED29B2BA1A475004E79F0 /* PatchEditTimerRequestDTO.swift in Sources */,
+				3DAB25C72DA6B33500FDA362 /* ToasterError.swift in Sources */,
 				3F3ED29C2BA1A475004E79F0 /* PatchEditTimerTitleRequestDTO.swift in Sources */,
 				3F3ED29D2BA1A475004E79F0 /* PostCreateTimerRequestDTO.swift in Sources */,
 				3FEA674E2CB51E6D00675805 /* PatchChangeCategoryRequestDTO.swift in Sources */,
@@ -2100,7 +2100,6 @@
 				3F3ED2802BA1A2B0004E79F0 /* APIInterceptor.swift in Sources */,
 				3F3ED27F2BA1A2A9004E79F0 /* NetworkService.swift in Sources */,
 				3F82C3262CADA1FC00492EEE /* Publisher+UIGesture.swift in Sources */,
-				3F1F26292BAADE01004F75CE /* Config.swift in Sources */,
 				3F3ED27C2BA1A29F004E79F0 /* BaseAPIService.swift in Sources */,
 				3F3ED2B32BA1D59D004E79F0 /* ClipListCollectionViewCell.swift in Sources */,
 				3F3ED2B72BA1D897004E79F0 /* SearchResultModel.swift in Sources */,
@@ -2162,7 +2161,6 @@
 				6BE6DA8C2B546CA9008B06FA /* GetWeeksLinkResponseDTO.swift in Sources */,
 				6BE6DA0B2B4F3063008B06FA /* RemindSelectClipViewModel.swift in Sources */,
 				6BE6DA4D2B50B1EB008B06FA /* UserTargetType.swift in Sources */,
-				6B6AE6932B3FF5A9000E2366 /* ClipViewController.swift in Sources */,
 				8388E98C2BC8FAB200858C5C /* PatchEditLinkTitleRequestDTO.swift in Sources */,
 				3967F9732D2D28FF00B0E9FF /* ClipCoordinator.swift in Sources */,
 				6BE6DAAF2B547A81008B06FA /* SearchAPIService.swift in Sources */,
@@ -2190,6 +2188,7 @@
 				39A232E12CB8F29A00ACC803 /* ToasterTipView.swift in Sources */,
 				6BE6D9E82B4EA773008B06FA /* RemindCollectionFooterView.swift in Sources */,
 				39A843CA2B74512B007A4D75 /* DetailClipViewModel.swift in Sources */,
+				3DAB25C62DA6B33500FDA362 /* ToasterError.swift in Sources */,
 				3FEA674D2CB51BFC00675805 /* PatchChangeCategoryResponseDTO.swift in Sources */,
 				3FEA674B2CB51BBC00675805 /* PatchChangeCategoryRequestDTO.swift in Sources */,
 				83CFC3392B568BE700A2EB2B /* RecommendSiteModel.swift in Sources */,
@@ -2523,7 +2522,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "TOASTER-iOS/TOASTER-iOS.entitlements";
@@ -2558,7 +2556,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3FACF9B92B50FEB4007E5A8F /* Config.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "TOASTER-iOS/TOASTER-iOS.entitlements";

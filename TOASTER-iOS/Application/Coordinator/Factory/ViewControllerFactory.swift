@@ -47,7 +47,8 @@ final class ViewControllerFactory: ViewControllerFactoryProtocol {
     }
     
     func makeClipVC() -> ClipViewController {
-        let viewModel = ClipViewModel()
+        let service = ClipAPIService()
+        let viewModel = ClipViewModel(clipService: service)
         let clipVC = ClipViewController(viewModel: viewModel)
         return clipVC
     }
