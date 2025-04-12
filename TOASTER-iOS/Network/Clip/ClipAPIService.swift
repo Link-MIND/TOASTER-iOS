@@ -29,7 +29,6 @@ protocol ClipAPIServiceProtocol {
 }
 
 final class ClipAPIService: BaseAPIService<ClipTargetType>, ClipAPIServiceProtocol {
-
     private let provider = MoyaProvider<ClipTargetType>(
         session: Session(interceptor: APIInterceptor.shared),
         plugins: [MoyaPlugin()]

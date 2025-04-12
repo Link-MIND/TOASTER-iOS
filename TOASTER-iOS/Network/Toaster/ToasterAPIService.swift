@@ -5,143 +5,84 @@
 //  Created by 김다예 on 1/15/24.
 //
 
+import Combine
 import Foundation
 
 import Moya
 
 protocol ToasterAPIServiceProtocol {
-    func postSaveLink(requestBody: PostSaveLinkRequestDTO,
-                      completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
-    func patchOpenLink(requestBody: PatchOpenLinkRequestDTO,
-                       completion: @escaping (NetworkResult<PatchOpenLinkResponseDTO>) -> Void)
-    func deleteLink(toastId: Int,
-                    completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
-    func getWeeksLink(completion: @escaping (NetworkResult<GetWeeksLinkResponseDTO>) -> Void)
-    func patchEditLinkTitle(requestBody: PatchEditLinkTitleRequestDTO,
-                            completion: @escaping (NetworkResult<PatchEditLinkTitleResponseDTO>) -> Void)
-    func getRecentLink(completion: @escaping (NetworkResult<GetRecentLinkResponseDTO>) -> Void)
-    func patchChangeCategory(requestBody: PatchChangeCategoryRequestDTO,
-                             completion: @escaping (NetworkResult<PatchChangeCategoryResponseDTO>) -> Void)
+    func postSaveLink(requestBody: PostSaveLinkRequestDTO) -> AnyPublisher<NoneDataResponseDTO?, ToasterError>
+    
+    func patchOpenLink(requestBody: PatchOpenLinkRequestDTO) -> AnyPublisher<PatchOpenLinkResponseDTO, ToasterError>
+
+    func deleteLink(toastId: Int) -> AnyPublisher<NoneDataResponseDTO?, ToasterError>
+    
+    func getWeeksLink() -> AnyPublisher<GetWeeksLinkResponseDTO, ToasterError>
+    
+    func patchEditLinkTitle(requestBody: PatchEditLinkTitleRequestDTO) -> AnyPublisher<PatchEditLinkTitleResponseDTO, ToasterError>
+
+    func getRecentLink() -> AnyPublisher<GetRecentLinkResponseDTO, ToasterError>
+    
+    func patchChangeCategory(requestBody: PatchChangeCategoryRequestDTO) -> AnyPublisher<PatchChangeCategoryResponseDTO, ToasterError>
 }
 
-final class ToasterAPIService: BaseAPIService, ToasterAPIServiceProtocol {
+final class ToasterAPIService: BaseAPIService<ToasterTargetType>, ToasterAPIServiceProtocol {
+    private let provider = MoyaProvider<ToasterTargetType>(
+        session: Session(interceptor: APIInterceptor.shared),
+        plugins: [MoyaPlugin()]
+    )
     
-    private let provider = MoyaProvider<ToasterTargetType>.init(session: Session(interceptor: APIInterceptor.shared), plugins: [MoyaPlugin()])
-
-    func postSaveLink(requestBody: PostSaveLinkRequestDTO, 
-                      completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
-        provider.request(.postSaveLink(requestBody: requestBody)) { result in
-            switch result {
-            case .success(let response):
-                let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                print(networkResult.stateDescription)
-                completion(networkResult)
-            case .failure(let error):
-                if let response = error.response {
-                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                    completion(networkResult)
-                }
-            }
-        }
+    func postSaveLink(requestBody: PostSaveLinkRequestDTO) -> AnyPublisher<NoneDataResponseDTO?, ToasterError> {
+        return requestWithoutDecodeWithCombine(
+            provider: provider,
+            target: .postSaveLink(requestBody: requestBody)
+        )
     }
     
-    func patchOpenLink(requestBody: PatchOpenLinkRequestDTO, 
-                       completion: @escaping (NetworkResult<PatchOpenLinkResponseDTO>) -> Void) {
-        provider.request(.patchOpenLink(requestBody: requestBody)) { result in
-            switch result {
-            case .success(let response):
-                let networkResult: NetworkResult<PatchOpenLinkResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                print(networkResult.stateDescription)
-                completion(networkResult)
-            case .failure(let error):
-                if let response = error.response {
-                    let networkResult: NetworkResult<PatchOpenLinkResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                    completion(networkResult)
-                }
-            }
-        }
+    func patchOpenLink(requestBody: PatchOpenLinkRequestDTO) -> AnyPublisher<PatchOpenLinkResponseDTO, ToasterError> {
+        return requestWithCombine(
+            provider: provider,
+            target: .patchOpenLink(requestBody: requestBody),
+            responseType: PatchOpenLinkResponseDTO.self
+        )
     }
     
-    func deleteLink(toastId: Int,
-                    completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
-        provider.request(.deleteLink(toastId: toastId)) { result in
-            switch result {
-            case .success(let response):
-                let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                print(networkResult.stateDescription)
-                completion(networkResult)
-            case .failure(let error):
-                if let response = error.response {
-                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                    completion(networkResult)
-                }
-            }
-        }
+    func deleteLink(toastId: Int) -> AnyPublisher<NoneDataResponseDTO?, ToasterError> {
+        return requestWithoutDecodeWithCombine(
+            provider: provider,
+            target: .deleteLink(toastId: toastId)
+        )
     }
     
-    func getWeeksLink(completion: @escaping (NetworkResult<GetWeeksLinkResponseDTO>) -> Void) {
-        provider.request(.getWeeksLink) { result in
-            switch result {
-            case .success(let response):
-                let networkResult: NetworkResult<GetWeeksLinkResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                print(networkResult.stateDescription)
-                completion(networkResult)
-            case .failure(let error):
-                if let response = error.response {
-                    let networkResult: NetworkResult<GetWeeksLinkResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                    completion(networkResult)
-                }
-            }
-        }
+    func getWeeksLink() -> AnyPublisher<GetWeeksLinkResponseDTO, ToasterError> {
+        return requestWithCombine(
+            provider: provider,
+            target: .getWeeksLink,
+            responseType: GetWeeksLinkResponseDTO.self
+        )
     }
     
-    func patchEditLinkTitle(requestBody: PatchEditLinkTitleRequestDTO, 
-                            completion: @escaping (NetworkResult<PatchEditLinkTitleResponseDTO>) -> Void) {
-        provider.request(.patchEditLinkTitle(requestBody: requestBody)) { result in
-            switch result {
-            case .success(let response):
-                let networkResult: NetworkResult<PatchEditLinkTitleResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                print(networkResult.stateDescription)
-                completion(networkResult)
-            case .failure(let error):
-                if let response = error.response {
-                    let networkResult: NetworkResult<PatchEditLinkTitleResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                    completion(networkResult)
-                }
-            }
-        }
+    func patchEditLinkTitle(requestBody: PatchEditLinkTitleRequestDTO) -> AnyPublisher<PatchEditLinkTitleResponseDTO, ToasterError> {
+        return requestWithCombine(
+            provider: provider,
+            target: .patchEditLinkTitle(requestBody: requestBody),
+            responseType: PatchEditLinkTitleResponseDTO.self
+        )
     }
     
-    func getRecentLink(completion: @escaping (NetworkResult<GetRecentLinkResponseDTO>) -> Void) {
-        provider.request(.getRecentLink) { result in
-            switch result {
-            case .success(let response):
-                let networkResult: NetworkResult<GetRecentLinkResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                print(networkResult.stateDescription)
-                completion(networkResult)
-            case .failure(let error):
-                if let response = error.response {
-                    let networkResult: NetworkResult<GetRecentLinkResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                    completion(networkResult)
-                }
-            }
-        }
+    func getRecentLink() -> AnyPublisher<GetRecentLinkResponseDTO, ToasterError> {
+        return requestWithCombine(
+            provider: provider,
+            target: .getRecentLink,
+            responseType: GetRecentLinkResponseDTO.self
+        )
     }
     
-    func patchChangeCategory(requestBody: PatchChangeCategoryRequestDTO,
-                             completion: @escaping (NetworkResult<PatchChangeCategoryResponseDTO>) -> Void) {
-        provider.request(.patchChangeCategory(requestBody: requestBody)) { result in
-            switch result {
-            case .success(let response):
-                let networkResult: NetworkResult<PatchChangeCategoryResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                print(networkResult.stateDescription)
-                completion(networkResult)
-            case .failure(let error):
-                if let response = error.response {
-                    let networkResult: NetworkResult<PatchChangeCategoryResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                    completion(networkResult)
-                }
-            }
-        }
+    func patchChangeCategory(requestBody: PatchChangeCategoryRequestDTO) -> AnyPublisher<PatchChangeCategoryResponseDTO, ToasterError> {
+        return requestWithCombine(
+            provider: provider,
+            target: .patchChangeCategory(requestBody: requestBody),
+            responseType: PatchChangeCategoryResponseDTO.self
+        )
     }
 }
