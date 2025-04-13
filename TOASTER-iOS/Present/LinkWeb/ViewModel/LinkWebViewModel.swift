@@ -45,23 +45,16 @@ final class LinkWebViewModel: ViewModelType {
 // MARK: - Network
 
 private extension LinkWebViewModel {
-    func patchOpenLinkAPI(requestBody: LinkReadEditModel) -> AnyPublisher<Bool, Error> {
-        return Future<Bool, Error> { promise in
-            NetworkService.shared.toastService.patchOpenLink(
-                requestBody: PatchOpenLinkRequestDTO(
-                    toastId: requestBody.toastId,
-                    isRead: requestBody.isRead
-                )
-            ) { result in
-               switch result {
-               case .success:
-                   promise(.success(!requestBody.isRead))
-               case .unAuthorized, .networkFail, .notFound:
-                   promise(.failure(NetworkResult<Error>.unAuthorized))
-               default:
-                   break
-               }
-           }
-        }.eraseToAnyPublisher()
+    func patchOpenLinkAPI(requestBody: LinkReadEditModel) -> AnyPublisher<Bool, ToasterError> {
+        return NetworkService.shared.toastService.patchOpenLink(
+            requestBody: PatchOpenLinkRequestDTO(
+                toastId: requestBody.toastId,
+                isRead: requestBody.isRead
+            )
+        )
+        .map { response in
+            return !response.data.isRead
+        }
+        .eraseToAnyPublisher()
     }
 }

@@ -172,139 +172,76 @@ private extension HomeViewModel {
             }
         }.eraseToAnyPublisher()
     }
-    
-    func fetchRecentLinkData() -> AnyPublisher<[RecentLinkModel], Error> {
-        return Future<[RecentLinkModel], Error> { promise in
-            NetworkService.shared.toastService.getRecentLink { result in
-                switch result {
-                case .success(let response):
-                    var recentLinks: [RecentLinkModel] = []
-                    if let data = response?.data {
-                        for idx in 0..<data.count {
-                            recentLinks.append(
-                                RecentLinkModel(
-                                    toastId: data[idx].toastId,
-                                    toastTitle: data[idx].toastTitle,
-                                    linkUrl: data[idx].linkUrl,
-                                    isRead: data[idx].isRead,
-                                    categoryTitle: data[idx].categoryTitle,
-                                    thumbnailUrl: data[idx].thumbnailUrl
-                                )
-                            )
-                        }
-                    }
-                    promise(.success(recentLinks))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
+
+    func fetchRecentLinkData() -> AnyPublisher<[RecentLinkModel], ToasterError> {
+        return NetworkService.shared.toastService.getRecentLink()
+            .map { response in
+                response.data.map {
+                    RecentLinkModel(
+                        toastId: $0.toastId,
+                        toastTitle: $0.toastTitle,
+                        linkUrl: $0.linkUrl,
+                        isRead: $0.isRead,
+                        categoryTitle: $0.categoryTitle,
+                        thumbnailUrl: $0.thumbnailUrl
+                    )
                 }
             }
-        }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
-    
-    func fetchWeeklyLinkData() -> AnyPublisher<[WeeklyLinkModel], Error> {
-        return Future<[WeeklyLinkModel], Error> { promise in
-            NetworkService.shared.toastService.getWeeksLink { result in
-                switch result {
-                case .success(let response):
-                    var weeklyLinks: [WeeklyLinkModel] = []
-                    if let data = response?.data {
-                        for idx in 0..<data.count {
-                            weeklyLinks.append(
-                                WeeklyLinkModel(
-                                    toastId: data[idx].linkId,
-                                    toastTitle: data[idx].linkTitle,
-                                    toastImg: data[idx].linkImg ?? "",
-                                    toastLink: data[idx].linkUrl
-                                )
-                            )
-                        }
-                    }
-                    promise(.success(weeklyLinks))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
+
+    func fetchWeeklyLinkData() -> AnyPublisher<[WeeklyLinkModel], ToasterError> {
+        return NetworkService.shared.toastService.getWeeksLink()
+            .map { response in
+                response.data.map {
+                    WeeklyLinkModel(
+                        toastId: $0.linkId,
+                        toastTitle: $0.linkTitle,
+                        toastImg: $0.linkImg ?? "",
+                        toastLink: $0.linkUrl
+                    )
                 }
             }
-        }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
-    
-    func fetchRecommendSiteData() -> AnyPublisher<[RecommendSiteModel], Error> {
-        return Future<[RecommendSiteModel], Error> { promise in
-            NetworkService.shared.searchService.getRecommendSite { result in
-                switch result {
-                case .success(let response):
-                    var recommendSites: [RecommendSiteModel] = []
-                    if let data = response?.data {
-                        for idx in 0..<data.count {
-                            recommendSites.append(
-                                RecommendSiteModel(
-                                    siteId: data[idx].siteId,
-                                    siteTitle: data[idx].siteTitle,
-                                    siteUrl: data[idx].siteUrl,
-                                    siteImg: data[idx].siteImg,
-                                    siteSub: data[idx].siteSub
-                                )
-                            )
-                        }
-                    }
-                    promise(.success(recommendSites))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
+
+    func fetchRecommendSiteData() -> AnyPublisher<[RecommendSiteModel], ToasterError> {
+        return NetworkService.shared.searchService.getRecommendSite()
+            .map { response in
+                response.data.map {
+                    RecommendSiteModel(
+                        siteId: $0.siteId,
+                        siteTitle: $0.siteTitle,
+                        siteUrl: $0.siteUrl,
+                        siteImg: $0.siteImg,
+                        siteSub: $0.siteSub
+                    )
                 }
             }
-        }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
-    
-    func fetchPopupInfoAPI() -> AnyPublisher<[PopupInfoModel], Error> {
-        return Future<[PopupInfoModel], Error> { promise in
-            NetworkService.shared.popupService.getPopupInfo { result in
-                switch result {
-                case .success(let response):
-                    var popupInfoList: [PopupInfoModel] = []
-                    if let data = response?.data.popupList {
-                        for idx in 0..<data.count {
-                            popupInfoList.append(
-                                PopupInfoModel(
-                                    id: data[idx].id,
-                                    image: data[idx].image,
-                                    activeStartDate: data[idx].activeStartDate,
-                                    activeEndDate: data[idx].activeEndDate,
-                                    linkURL: data[idx].linkUrl
-                                )
-                            )
-                        }
-                    }
-                    promise(.success(popupInfoList))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
+
+    func fetchPopupInfoAPI() -> AnyPublisher<[PopupInfoModel], ToasterError> {
+        return NetworkService.shared.popupService.getPopupInfo()
+            .map { response in
+                response.data.popupList.map {
+                    PopupInfoModel(
+                        id: $0.id,
+                        image: $0.image,
+                        activeStartDate: $0.activeStartDate,
+                        activeEndDate: $0.activeEndDate,
+                        linkURL: $0.linkUrl
+                    )
                 }
             }
-        }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
-    
-    func patchEditPopupHiddenAPI(popupId: Int, hideDate: Int) -> AnyPublisher<Void, Error> {
-        return Future<Void, Error> { promise in
-            NetworkService.shared.popupService.patchEditPopupHidden(
-                requestBody: PatchPopupHiddenRequestDTO(
-                    popupId: popupId,
-                    hideDate: hideDate
-                )
-            ) { result in
-                switch result {
-                case .success:
-                    promise(.success(()))
-                case .networkFail, .unAuthorized, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default: return
-                }
-            }
-        }.eraseToAnyPublisher()
+
+    func patchEditPopupHiddenAPI(popupId: Int, hideDate: Int) -> AnyPublisher<Void, ToasterError> {
+        return NetworkService.shared.popupService.patchEditPopupHidden(
+            requestBody: PatchPopupHiddenRequestDTO(popupId: popupId, hideDate: hideDate)
+        )
+        .map { _ in () }
+        .eraseToAnyPublisher()
     }
 }

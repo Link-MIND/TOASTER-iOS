@@ -200,139 +200,84 @@ private extension DetailClipViewModel {
 // MARK: - Network
 
 private extension DetailClipViewModel {
-    func getDetailAllCategoryAPI(filter: DetailCategoryFilter) -> AnyPublisher<DetailClipModel, Error> {
-        return Future<DetailClipModel, Error> { promise in
-            NetworkService.shared.clipService.getDetailAllCategory(filter: filter) { result in
-                switch result {
-                case .success(let response):
-                    let allToastCount = response?.data.allToastNum
-                    let toasts = response?.data.toastListDto.map {
-                        ToastListModel(
-                            id: $0.toastId,
-                            title: $0.toastTitle,
-                            url: $0.linkUrl,
-                            isRead: $0.isRead,
-                            clipTitle: $0.categoryTitle,
-                            imageURL: $0.thumbnailUrl
-                        )
-                    }
-                    let detailClipModel = DetailClipModel(
-                        allToastCount: allToastCount ?? 0,
-                        toastList: toasts ?? []
+    func getDetailAllCategoryAPI(filter: DetailCategoryFilter) -> AnyPublisher<DetailClipModel, ToasterError> {
+        return NetworkService.shared.clipService.getDetailAllCategory(filter: filter)
+            .map { response in
+                let allToastCount = response.data.allToastNum
+                let toasts = response.data.toastListDto.map {
+                    ToastListModel(
+                        id: $0.toastId,
+                        title: $0.toastTitle,
+                        url: $0.linkUrl,
+                        isRead: $0.isRead,
+                        clipTitle: $0.categoryTitle,
+                        imageURL: $0.thumbnailUrl
                     )
-                    promise(.success(detailClipModel))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
                 }
+                return DetailClipModel(allToastCount: allToastCount, toastList: toasts)
             }
-        }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
     
-    func getDetailCategoryAPI(categoryID: Int,
-                              filter: DetailCategoryFilter) -> AnyPublisher<DetailClipModel, Error> {
-        return Future<DetailClipModel, Error> { promise in
-            NetworkService.shared.clipService.getDetailCategory(categoryID: categoryID, filter: filter) { result in
-                switch result {
-                case .success(let response):
-                    let allToastCount = response?.data.allToastNum
-                    let toasts = response?.data.toastListDto.map {
-                        ToastListModel(
-                            id: $0.toastId,
-                            title: $0.toastTitle,
-                            url: $0.linkUrl,
-                            isRead: $0.isRead,
-                            clipTitle: $0.categoryTitle,
-                            imageURL: $0.thumbnailUrl
-                        )
-                    }
-                    let detailClipModel = DetailClipModel(
-                        allToastCount: allToastCount ?? 0,
-                        toastList: toasts ?? []
+    func getDetailCategoryAPI(
+        categoryID: Int,
+        filter: DetailCategoryFilter
+    ) -> AnyPublisher<DetailClipModel, ToasterError> {
+        return NetworkService.shared.clipService.getDetailCategory(categoryID: categoryID, filter: filter)
+            .map { response in
+                let allToastCount = response.data.allToastNum
+                let toasts = response.data.toastListDto.map {
+                    ToastListModel(
+                        id: $0.toastId,
+                        title: $0.toastTitle,
+                        url: $0.linkUrl,
+                        isRead: $0.isRead,
+                        clipTitle: $0.categoryTitle,
+                        imageURL: $0.thumbnailUrl
                     )
-                    promise(.success(detailClipModel))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
                 }
+                return DetailClipModel(allToastCount: allToastCount, toastList: toasts)
             }
-        }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
     
-    func patchEditLinkTitleAPI(toastId: Int, title: String) -> AnyPublisher<Bool, Error> {
-        return Future<Bool, Error> { promise in
-            NetworkService.shared.toastService.patchEditLinkTitle(
-                requestBody: PatchEditLinkTitleRequestDTO(
-                    toastId: toastId,
-                    title: title
-                )
-            ) { result in
-                switch result {
-                case .success:
-                    promise(.success(true))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
-                }
-            }
-        }.eraseToAnyPublisher()
+    func patchEditLinkTitleAPI(toastId: Int, title: String) -> AnyPublisher<Bool, ToasterError> {
+        return NetworkService.shared.toastService.patchEditLinkTitle(
+            requestBody: PatchEditLinkTitleRequestDTO(
+                toastId: toastId,
+                title: title
+            )
+        )
+        .map { _ in true }
+        .eraseToAnyPublisher()
     }
     
-    func deleteLinkAPI(toastId: Int) -> AnyPublisher<Void, Error> {
-        return Future<Void, Error> { promise in
-            NetworkService.shared.toastService.deleteLink(toastId: toastId) { result in
-                switch result {
-                case .success:
-                    promise(.success(()))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
-                }
-            }
-        }.eraseToAnyPublisher()
+    func deleteLinkAPI(toastId: Int) -> AnyPublisher<Void, ToasterError> {
+        return NetworkService.shared.toastService.deleteLink(toastId: toastId)
+            .map { _ in () }
+            .eraseToAnyPublisher()
     }
     
-    func getAllCategoryAPI() -> AnyPublisher<[SelectClipModel], Error> {
-        return Future<[SelectClipModel], Error> { promise in
-            NetworkService.shared.clipService.getAllCategory { result in
-                switch result {
-                case .success(let response):
-                    let clipDataList = response?.data.categories.map { category in
-                        SelectClipModel(
-                            id: category.categoryId,
-                            title: category.categoryTitle,
-                            clipCount: category.toastNum
-                        )
-                    } ?? []
-                    promise(.success(clipDataList))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    break
+    func getAllCategoryAPI() -> AnyPublisher<[SelectClipModel], ToasterError> {
+        return NetworkService.shared.clipService.getAllCategory()
+            .map { response in
+                let clipDataList = response.data.categories.map { category in
+                    SelectClipModel(
+                        id: category.categoryId,
+                        title: category.categoryTitle,
+                        clipCount: category.toastNum
+                    )
                 }
+                return clipDataList
             }
-        }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
     
-    func patchChangeCategory(categoryId: Int) -> AnyPublisher<Bool, Error> {
+    func patchChangeCategory(categoryId: Int) -> AnyPublisher<Bool, ToasterError> {
         let requestDTO = PatchChangeCategoryRequestDTO(toastId: currentToastId, categoryId: categoryId)
         
-        return Future<Bool, Error> { promise in
-            NetworkService.shared.toastService.patchChangeCategory(requestBody: requestDTO) { result in
-                switch result {
-                case .success:
-                    promise(.success(true))
-                case .unAuthorized, .networkFail, .notFound, .serverErr:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    break
-                }
-            }
-            
-        }.eraseToAnyPublisher()
+        return NetworkService.shared.toastService.patchChangeCategory(requestBody: requestDTO)
+            .map { _ in true }
+            .eraseToAnyPublisher()
     }
 }

@@ -13,12 +13,6 @@ final class ClipViewModel: ViewModelType {
     private var cancelBag = CancelBag()
     var clipList: ClipModel = ClipModel(allClipToastCount: 0, clips: [])
     
-    private let clipService: ClipAPIServiceProtocol
-    
-    init(clipService: ClipAPIServiceProtocol) {
-        self.clipService = clipService
-    }
-    
     // MARK: - Input State
     
     struct Input {
@@ -77,8 +71,8 @@ final class ClipViewModel: ViewModelType {
 // MARK: - Network
 
 private extension ClipViewModel {
-    func getAllCategoryAPI() -> AnyPublisher<ClipModel, Never> {
-        return clipService.getAllCategory()
+    func getAllCategoryAPI() -> AnyPublisher<ClipModel, ToasterError> {
+        return NetworkService.shared.clipService.getAllCategory()
             .map { response in
                 let totalCount = response.data.toastNumberInEntire
                 let clips = response.data.categories.map {
@@ -90,22 +84,19 @@ private extension ClipViewModel {
                 }
                 return ClipModel(allClipToastCount: totalCount, clips: clips)
             }
-            .catch { _ in Just(ClipModel(allClipToastCount: 0, clips: [])) }
             .eraseToAnyPublisher()
     }
     
-    func getCheckCategoryAPI(categoryTitle: String) -> AnyPublisher<Bool, Never> {
-        return clipService.getCheckCategory(categoryTitle: categoryTitle)
+    func getCheckCategoryAPI(categoryTitle: String) -> AnyPublisher<Bool, ToasterError> {
+        return NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle)
             .map { $0.data.isDupicated && categoryTitle.count < 16 }
-            .catch { _ in Just(false) }
             .eraseToAnyPublisher()
     }
 
-    func postAddCategoryAPI(requestBody: String) -> AnyPublisher<Bool, Never> {
+    func postAddCategoryAPI(requestBody: String) -> AnyPublisher<Bool, ToasterError> {
         let request = PostAddCategoryRequestDTO(categoryTitle: requestBody)
-        return clipService.postAddCategory(requestBody: request)
+        return NetworkService.shared.clipService.postAddCategory(requestBody: request)
             .map { _ in true }
-            .catch { _ in Just(false) }
             .eraseToAnyPublisher()
     }
 }

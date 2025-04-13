@@ -101,7 +101,7 @@ extension RemindViewModel {
     }
     
     func fetchTimerData() {
-        NetworkService.shared.timerService.getTimerMainpage { result in
+        return NetworkService.shared.timerService.getTimerMainpage { result in
             switch result {
             case .success(let response):
                 let completedList = response?.data.completedTimerList.map {
