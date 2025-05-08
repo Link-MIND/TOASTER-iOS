@@ -5,58 +5,105 @@
 //  Created by 김다예 on 1/12/24.
 //
 
-import Combine
 import Foundation
 
 import Moya
 
 protocol AuthAPIServiceProtocol {
-    func postSocialLogin(socialToken: String, requestBody: PostSocialLoginRequestDTO) -> AnyPublisher<PostSocialLoginResponseDTO, ToasterError>
-    
-    func postRefreshToken() -> AnyPublisher<PostRefreshTokenResponseDTO, ToasterError>
-    
-    func postLogout() -> AnyPublisher<NoneDataResponseDTO?, ToasterError>
-    
-    func deleteWithdraw() -> AnyPublisher<NoneDataResponseDTO?, ToasterError>
-    
-    func postTokenHealth(tokenType: TokenHealthType) -> AnyPublisher<PostTokenHealthResponseDTO, ToasterError>
+    func postSocialLogin(socialToken: String,
+                         requestBody: PostSocialLoginRequestDTO,
+                         completion: @escaping (NetworkResult<PostSocialLoginResponseDTO>) -> Void)
+    func postRefreshToken(completion: @escaping (NetworkResult<PostRefreshTokenResponseDTO>) -> Void)
+    func postLogout(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
+    func deleteWithdraw(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void)
+    func postTokenHealth(tokenType: TokenHealthType,
+                         completion: @escaping (NetworkResult<PostTokenHealthResponseDTO>) -> Void)
 }
 
 final class AuthAPIService: BaseAPIService<AuthTargetType>, AuthAPIServiceProtocol {
-    private let provider = MoyaProvider<AuthTargetType>(
-        session: Session(interceptor: APIInterceptor.shared),
-        plugins: [MoyaPlugin()]
-    )
     
-    func postSocialLogin(socialToken: String, requestBody: PostSocialLoginRequestDTO) -> AnyPublisher<PostSocialLoginResponseDTO, ToasterError> {
-        return requestWithCombine(
-            provider: provider,
-            target: .postSocialLogin(socialToken: socialToken, requestBody: requestBody),
-            responseType: PostSocialLoginResponseDTO.self
-        )
+    private let provider = MoyaProvider<AuthTargetType>.init(session: Session(interceptor: APIInterceptor.shared), plugins: [MoyaPlugin()])
+    
+    func postSocialLogin(socialToken: String,
+                         requestBody: PostSocialLoginRequestDTO,
+                         completion: @escaping (NetworkResult<PostSocialLoginResponseDTO>) -> Void) {
+        provider.request(.postSocialLogin(socialToken: socialToken, requestBody: requestBody)) { result in
+            switch result {
+            case .success(let response):
+                let networkResult: NetworkResult<PostSocialLoginResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                print(networkResult.stateDescription)
+                completion(networkResult)
+            case .failure(let error):
+                if let response = error.response {
+                    let networkResult: NetworkResult<PostSocialLoginResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
+            }
+        }
     }
     
-    func postRefreshToken() -> AnyPublisher<PostRefreshTokenResponseDTO, ToasterError> {
-        return requestWithCombine(
-            provider: provider,
-            target: .postRefreshToken,
-            responseType: PostRefreshTokenResponseDTO.self
-        )
+    func postRefreshToken(completion: @escaping (NetworkResult<PostRefreshTokenResponseDTO>) -> Void) {
+        provider.request(.postRefreshToken) { result in
+            switch result {
+            case .success(let response):
+                let networkResult: NetworkResult<PostRefreshTokenResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                print(networkResult.stateDescription)
+                completion(networkResult)
+            case .failure(let error):
+                if let response = error.response {
+                    let networkResult: NetworkResult<PostRefreshTokenResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
+            }
+        }
     }
     
-    func postLogout() -> AnyPublisher<NoneDataResponseDTO?, ToasterError> {
-        return requestWithoutDecodeWithCombine(provider: provider, target: .postLogout)
+    func postLogout(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
+        provider.request(.postLogout) { result in
+            switch result {
+            case .success(let response):
+                let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                print(networkResult.stateDescription)
+                completion(networkResult)
+            case .failure(let error):
+                if let response = error.response {
+                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
+            }
+        }
     }
     
-    func deleteWithdraw() -> AnyPublisher<NoneDataResponseDTO?, ToasterError> {
-        return requestWithoutDecodeWithCombine(provider: provider, target: .deleteWithdraw)
+    func deleteWithdraw(completion: @escaping (NetworkResult<NoneDataResponseDTO>) -> Void) {
+        provider.request(.deleteWithdraw) { result in
+            switch result {
+            case .success(let response):
+                let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                print(networkResult.stateDescription)
+                completion(networkResult)
+            case .failure(let error):
+                if let response = error.response {
+                    let networkResult: NetworkResult<NoneDataResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
+            }
+        }
     }
     
-    func postTokenHealth(tokenType: TokenHealthType) -> AnyPublisher<PostTokenHealthResponseDTO, ToasterError> {
-        return requestWithCombine(
-            provider: provider,
-            target: .postTokenHealth(tokenType: tokenType),
-            responseType: PostTokenHealthResponseDTO.self
-        )
+    func postTokenHealth(tokenType: TokenHealthType,
+                         completion: @escaping (NetworkResult<PostTokenHealthResponseDTO>) -> Void) {
+        provider.request(.postTokenHealth(tokenType: tokenType)) { result in
+            switch result {
+            case .success(let response):
+                let networkResult: NetworkResult<PostTokenHealthResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                print(networkResult.stateDescription)
+                completion(networkResult)
+            case .failure(let error):
+                if let response = error.response {
+                    let networkResult: NetworkResult<PostTokenHealthResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
+                    completion(networkResult)
+                }
+            }
+        }
     }
 }

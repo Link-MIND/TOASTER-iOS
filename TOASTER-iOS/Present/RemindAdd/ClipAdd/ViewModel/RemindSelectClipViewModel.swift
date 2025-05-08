@@ -23,7 +23,9 @@ final class RemindSelectClipViewModel {
     }
     
     init() {
-        fetchClipData()
+        Task {
+            await fetchClipData()
+        }
     }
 }
 
@@ -34,26 +36,51 @@ extension RemindSelectClipViewModel {
         dataChangeAction = changeAction
     }
     
-    func fetchClipData() {
-        NetworkService.shared.clipService.getAllCategory { result in
-            switch result {
-            case .success(let response):
-                
-                var clipDataList: [RemindClipModel] = [RemindClipModel(id: 0,
-                                                                       title: "전체 클립",
-                                                                       clipCount: response?.data.toastNumberInEntire ?? 0)]
-                
-                if let categories = response?.data.categories {
-                    categories.forEach { category in
-                        clipDataList.append(RemindClipModel(id: category.categoryId,
-                                                            title: category.categoryTitle,
-                                                            clipCount: category.toastNum))
-                    }
-                }
-                
-                self.clipData = clipDataList
-            default: break
-            }
-        }
+    func fetchClipData() async {
+//        let result = await NetworkService.shared.clipService.getAllCategory()
+//        switch result {
+//        case .success(let response):
+//            var clipDataList: [RemindClipModel] = [
+//                RemindClipModel(
+//                    id: 0,
+//                    title: "전체 클립",
+//                    clipCount: response?.data.toastNumberInEntire ?? 0
+//                )
+//            ]
+//            
+//            if let categories = response?.data.categories {
+//                categories.forEach { category in
+//                    clipDataList.append(RemindClipModel(id: category.categoryId,
+//                                                        title: category.categoryTitle,
+//                                                        clipCount: category.toastNum))
+//                }
+//            }
+//            
+//            self.clipData = clipDataList
+//        default: break
+//        }
     }
+    
+//    func fetchClipData() {
+//        NetworkService.shared.clipService.getAllCategory { result in
+//            switch result {
+//            case .success(let response):
+//                
+//                var clipDataList: [RemindClipModel] = [RemindClipModel(id: 0,
+//                                                                       title: "전체 클립",
+//                                                                       clipCount: response?.data.toastNumberInEntire ?? 0)]
+//
+//                if let categories = response?.data.categories {
+//                    categories.forEach { category in
+//                        clipDataList.append(RemindClipModel(id: category.categoryId,
+//                                                            title: category.categoryTitle,
+//                                                            clipCount: category.toastNum))
+//                    }
+//                }
+//                
+//                self.clipData = clipDataList
+//            default: break
+//            }
+//        }
+//    }
 }

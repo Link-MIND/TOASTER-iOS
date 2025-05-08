@@ -59,15 +59,15 @@ final class UpdateAlertManager {
         
         let currentVersionArray = currentVersion.split(separator: ".").map { $0 }
         let appStoreVersionArray = appStoreVersion.split(separator: ".").map { $0 }
-
-        if (currentVersionArray[0] < appStoreVersionArray[0]) {
+        
+        if currentVersionArray[0] < appStoreVersionArray[0] {
             return .ForceUpdate
-        } else if (currentVersionArray[0] == appStoreVersionArray[0])
-                    && (currentVersionArray[1] < appStoreVersionArray[1]) {
+        } else if currentVersionArray[0] == appStoreVersionArray[0]
+                    && currentVersionArray[1] < appStoreVersionArray[1] {
             return .NoticeFeatUpdate
-        } else if (currentVersionArray[0] == appStoreVersionArray[0])
-                    && (currentVersionArray[1] == appStoreVersionArray[1])
-                    && (currentVersionArray[2] < appStoreVersionArray[2]) {
+        } else if currentVersionArray[0] == appStoreVersionArray[0]
+                    && currentVersionArray[1] == appStoreVersionArray[1]
+                    && currentVersionArray[2] < appStoreVersionArray[2] {
             return .NoticeUpdate
         } else {
             return nil

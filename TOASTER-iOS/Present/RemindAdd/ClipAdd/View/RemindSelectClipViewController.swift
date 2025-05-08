@@ -51,7 +51,9 @@ final class RemindSelectClipViewController: UIViewController {
         setupLayout()
         setupDelegate()
         setupViewModel()
-        viewModel.fetchClipData()
+        Task {
+            await viewModel.fetchClipData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
