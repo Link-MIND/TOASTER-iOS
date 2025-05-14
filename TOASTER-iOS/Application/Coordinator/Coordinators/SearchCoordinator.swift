@@ -57,6 +57,9 @@ private extension SearchCoordinator {
         vc.onBack = { [weak self] in
             self?.router.pop(animated: true)
         }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
+        }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
 }

@@ -16,6 +16,7 @@ final class LinkWebViewController: UIViewController {
     // MARK: - View Controllable
     
     var onBack: (() -> Void)?
+    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Properties
     
@@ -123,7 +124,7 @@ private extension LinkWebViewController {
         
         output.navigateToLogin
             .sink { [weak self] _ in
-                self?.changeViewController(viewController: LoginViewController())
+                self?.onRootDeleteToken?()
             }.store(in: cancelBag)
     }
     

@@ -45,6 +45,9 @@ private extension TimerCoordinator {
         vc.onSettingSelected = { [weak self] in
             self?.showSettingVC()
         }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
+        }
         router.setRoot(vc, animated: false)
     }
     
@@ -65,6 +68,9 @@ private extension TimerCoordinator {
         vc.onPopToRoot = { [weak self] in
             self?.router.popToRoot(animated: true)
         }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
+        }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
     
@@ -73,6 +79,9 @@ private extension TimerCoordinator {
         vc.configureView(forModel: model)
         vc.onPopToRoot = { [weak self] in
             self?.router.popToRoot(animated: true)
+        }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
@@ -92,6 +101,9 @@ private extension TimerCoordinator {
         vc.onBack = { [weak self] in
             self?.router.pop(animated: true)
         }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
+        }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
     
@@ -100,6 +112,9 @@ private extension TimerCoordinator {
         vc.onChangeRoot = { [weak self] in
             self?.router.dismiss()
             self?.onFinish?()
+        }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }

@@ -19,6 +19,7 @@ final class RemindTimerAddViewController: UIViewController {
     // MARK: - View Controllable
 
     var onPopToRoot: (() -> Void)?
+    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Properties
     
@@ -284,7 +285,7 @@ private extension RemindTimerAddViewController {
     }
     
     func unAuthorizedAction() {
-        self.changeViewController(viewController: LoginViewController())
+        onRootDeleteToken?()
     }
     
     func patchSuccessAction() {

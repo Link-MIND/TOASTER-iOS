@@ -10,6 +10,7 @@ import UIKit
 protocol RouterProtocol: AnyObject {
     func setRoot(_ viewController: UIViewController, animated: Bool)
     func setRoot(_ viewController: UIViewController, animated: Bool, hideBottomBarWhenPushed: Bool)
+    func setRootWithDeleteToken()
     
     func popToRoot(animated: Bool)
     
@@ -42,6 +43,11 @@ final class Router: RouterProtocol {
     ) {
         viewController.hidesBottomBarWhenPushed = hideBottomBarWhenPushed
         rootViewController?.setViewControllers([viewController], animated: animated)
+    }
+    
+    func setRootWithDeleteToken() {
+        _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+        rootViewController?.setViewControllers([LoginViewController()], animated: true)
     }
     
     func popToRoot(animated: Bool) {

@@ -17,6 +17,7 @@ public extension Publisher {
     func networkFlatMap<SelfPublisher: AnyObject, NewPublisher: Publisher>(
         _ weakSelf: SelfPublisher?,
         _ firstTransform: @escaping (SelfPublisher, Output) -> NewPublisher,
+        onError: ((Error) -> Void)? = nil,
         _ secondTransform: @escaping (Error) -> AnyPublisher<NewPublisher.Output, Never> = { _ in
             Empty().eraseToAnyPublisher()
         }
@@ -25,7 +26,10 @@ public extension Publisher {
         self.flatMap { [weak weakSelf] output -> AnyPublisher<NewPublisher.Output, Never> in
             guard let weakSelf else { return Empty().eraseToAnyPublisher() }
             return firstTransform(weakSelf, output)
-                .catch { secondTransform($0) }
+                .catch {
+                    onError?($0)
+                    return secondTransform($0)
+                }
                 .eraseToAnyPublisher()
         }
         .eraseToAnyPublisher()
