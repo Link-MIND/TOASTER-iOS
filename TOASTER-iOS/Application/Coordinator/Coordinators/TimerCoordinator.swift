@@ -92,6 +92,9 @@ private extension TimerCoordinator {
         vc.onLinkSelected = { [weak self] linkURL, isRead, id in
             self?.showLinkWebVC(linkURL: linkURL, isRead: isRead, id: id)
         }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
+        }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
     

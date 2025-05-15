@@ -122,6 +122,7 @@ private extension TabBarCoordinator {
             self?.tabBarController?.selectTab(0)
             self?.router.popToRoot(animated: false)
         }
+        
         router.push(vc, animated: false)
     }
     

@@ -66,6 +66,7 @@ final class HomeViewModel: ViewModelType {
     
     struct Output {
         let needToReload = PassthroughSubject<Void, Never>()
+        let navigateToLogin = PassthroughSubject<Void, Never>()
     }
     
     // MARK: - Method
@@ -74,53 +75,65 @@ final class HomeViewModel: ViewModelType {
         let output = Output()
         
         input.requestMainInfo
-            .networkFlatMap(self) { context, _ in
+            .networkFlatMap(self, { context, _ in
                 context.fetchMainPageData()
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] mainInfo in
                 self?.mainInfo = mainInfo
                 output.needToReload.send()
             }.store(in: cancelBag)
         
         input.requestRecentLinks
-            .networkFlatMap(self) { context, _ in
+            .networkFlatMap(self, { context, _ in
                 context.fetchRecentLinkData()
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] recentLinks in
                 self?.recentLinks = recentLinks
                 output.needToReload.send()
             }.store(in: cancelBag)
         
         input.requestWeeklyLinks
-            .networkFlatMap(self) { context, _ in
+            .networkFlatMap(self, { context, _ in
                 context.fetchWeeklyLinkData()
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] weeklyLinks in
                 self?.weeklyLinks = weeklyLinks
                 output.needToReload.send()
             }.store(in: cancelBag)
         
         input.requestRecommendSites
-            .networkFlatMap(self) { context, _ in
+            .networkFlatMap(self, { context, _ in
                 context.fetchRecommendSiteData()
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] recommendSites in
                 self?.recommendSites = recommendSites
                 output.needToReload.send()
             }.store(in: cancelBag)
         
         input.requestPopupInfoList
-            .networkFlatMap(self) { context, _ in
+            .networkFlatMap(self, { context, _ in
                 context.fetchPopupInfoAPI()
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] popupInfoList in
                 self?.popupInfoList = popupInfoList
             }.store(in: cancelBag)
         
         input.changePopupDate
-            .networkFlatMap(self) { context, body in
+            .networkFlatMap(self, { context, body in
                 context.patchEditPopupHiddenAPI(popupId: body.0, hideDate: body.1)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] in
                 self?.popupInfoList?.removeAll()
             }.store(in: cancelBag)

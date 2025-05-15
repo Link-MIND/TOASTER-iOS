@@ -30,6 +30,7 @@ final class SearchViewModel: ViewModelType {
         let loadToSearchResults = PassthroughSubject<Bool, Never>()
         let startSearching = PassthroughSubject<Void, Never>()
         let isSearching = PassthroughSubject<Bool, Never>()
+        let navigateToLogin = PassthroughSubject<Void, Never>()
     }
     
     // MARK: - Method
@@ -39,9 +40,11 @@ final class SearchViewModel: ViewModelType {
 
         input.searchButtonTapped
             .filter { !$0.isEmpty }
-            .networkFlatMap(self) { context, text in
+            .networkFlatMap(self, { context, text in
                 context.fetchSearchResult(forText: text)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] result in
                 self?.searchResults = result
                 output.loadToSearchResults.send(result.detailClipList.isEmpty && result.clipList.isEmpty)

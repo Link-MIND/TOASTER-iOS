@@ -39,12 +39,18 @@ private extension ClipCoordinator {
         vc.onClipItemSelected = { [weak self] clipId, clipName in
             self?.showDetailClipVC(id: clipId, name: clipName)
         }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
+        }
         router.setRoot(vc, animated: false)
     }
     
     func showEditClipVC(clipList: ClipModel) {
         let vc = viewControllerFactory.makeEditClipVC()
         vc.setupDataBind(clipModel: clipList)
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
+        }
         router.push(vc, animated: false, hideBottomBarWhenPushed: true)
     }
     
@@ -53,6 +59,9 @@ private extension ClipCoordinator {
         vc.setupCategory(id: id, name: name)
         vc.onLinkSelected = { [weak self] linkURL, isRead, id in
             self?.showLinkWebVC(linkURL: linkURL, isRead: isRead, id: id)
+        }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }

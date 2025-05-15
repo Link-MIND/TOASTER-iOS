@@ -44,6 +44,7 @@ final class DetailClipViewModel: ViewModelType {
         let isCompleteButtonEnable = PassthroughSubject<Bool, Never>()
         let changeCategoryResult = PassthroughSubject<Bool, Never>()
         let deleteToastComplete = PassthroughSubject<Void, Never>()
+        let navigateToLogin = PassthroughSubject<Void, Never>()
     }
     
     // MARK: - Method
@@ -52,20 +53,22 @@ final class DetailClipViewModel: ViewModelType {
         let output = Output()
         
         input.requestToast
-            .networkFlatMap(self) { context, isAll in
+            .networkFlatMap(self, { context, isAll in
                 if isAll {
                     context.getDetailAllCategoryAPI(filter: .all)
                 } else {
                     context.getDetailCategoryAPI(categoryID: self.currentCategoryId, filter: .all)
                 }
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] toasts in
                 self?.toastList = toasts
                 output.loadToToastList.send(!toasts.toastList.isEmpty)
             }.store(in: cancelBag)
         
         input.changeSegmentIndex
-            .networkFlatMap(self) { context, index in
+            .networkFlatMap(self, { context, index in
                 if self.currentCategoryId == 0 {
                     switch index {
                     case 0:
@@ -85,23 +88,27 @@ final class DetailClipViewModel: ViewModelType {
                         context.getDetailCategoryAPI(categoryID: self.currentCategoryId, filter: .unread)
                     }
                 }
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] toasts in
                 self?.toastList = toasts
                 output.loadToToastList.send(!toasts.toastList.isEmpty)
             }.store(in: cancelBag)
         
         input.editToastTitleButtonTap
-            .networkFlatMap(self) { context, toast in
+            .networkFlatMap(self, { context, toast in
                 context.patchEditLinkTitleAPI(toastId: toast.0, title: toast.1)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] isSuccess in
                 output.toastNameChanged.send(isSuccess)
                 output.loadToToastList.send(self?.currentCategoryId == 0)
             }.store(in: cancelBag)
         
         input.changeClipButtonTap
-            .networkFlatMap(self) { context, _ in
+            .networkFlatMap(self, { context, _ in
                 context.getAllCategoryAPI()
                     .map { [weak self] result -> [SelectClipModel]? in
                         guard let self = self else { return [] }
@@ -110,7 +117,9 @@ final class DetailClipViewModel: ViewModelType {
                         self.collectionViewHeight = self.calculateCollectionViewHeight(numberOfItems: sortedResult.count)
                         return sortedResult
                     }
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { model in
                 output.loadToClipData.send(model)
             }.store(in: cancelBag)
@@ -127,17 +136,21 @@ final class DetailClipViewModel: ViewModelType {
             .zip(input.selectedClip) { _, selectedClip in
                 return selectedClip
             }
-            .networkFlatMap(self) { context, selectClip in
+            .networkFlatMap(self, { context, selectClip in
                 context.patchChangeCategory(categoryId: selectClip)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { result in
                 output.changeCategoryResult.send(result)
             }.store(in: cancelBag)
         
         input.deleteToastButtonTap
-            .networkFlatMap(self) { context, toastId in
+            .networkFlatMap(self, { context, toastId in
                 context.deleteLinkAPI(toastId: toastId)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] _ in
                 output.loadToToastList.send(self?.currentCategoryId == 0)
                 output.deleteToastComplete.send()

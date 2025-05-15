@@ -55,6 +55,9 @@ private extension AddLinkCoordinator {
                 self?.onFinish?()
             })
         }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
+        }
         router.push(vc, animated: true)
     }
 }

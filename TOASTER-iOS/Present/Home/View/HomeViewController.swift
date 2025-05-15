@@ -20,6 +20,7 @@ final class HomeViewController: UIViewController {
     var onSettingSelected: (() -> Void)?
     var onArrowSelected: ((Int, String) -> Void)?
     var onAddLinkSelected: (() -> Void)?
+    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Data Stream
     
@@ -258,6 +259,11 @@ private extension HomeViewController {
             .sink { [weak self] in
                 guard let self else { return }
                 homeView.collectionView.reloadData()
+            }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink { [weak self] _ in
+                self?.onRootDeleteToken?()
             }.store(in: cancelBag)
     }
     

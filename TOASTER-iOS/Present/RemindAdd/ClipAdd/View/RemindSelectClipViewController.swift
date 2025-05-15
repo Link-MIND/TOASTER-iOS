@@ -16,6 +16,7 @@ final class RemindSelectClipViewController: UIViewController {
     
     var onEditTimerSelected: ((RemindClipModel?) -> Void)?
     var onPopToRoot: (() -> Void)?
+    var onRootDeleteToken: (() -> Void)?
 
     // MARK: - Properties
     

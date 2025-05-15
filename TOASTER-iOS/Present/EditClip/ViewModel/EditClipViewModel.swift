@@ -32,6 +32,7 @@ final class EditClipViewModel: ViewModelType {
         let deleteClipResult = PassthroughSubject<Void, Never>()
         let duplicateClipName = PassthroughSubject<Bool, Never>()
         let changeClipNameResult = PassthroughSubject<Bool, Never>()
+        let navigateToLogin = PassthroughSubject<Void, Never>()
     }
     
     // MARK: - Method
@@ -40,18 +41,22 @@ final class EditClipViewModel: ViewModelType {
         let output = Output()
         
         input.requestClipList
-            .networkFlatMap(self) { context, _ in
+            .networkFlatMap(self, { context, _ in
                 context.getAllCategoryAPI()
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] clipList in
                 self?.clipList = clipList
                 output.needToReload.send()
             }.store(in: cancelBag)
         
         input.deleteClipButtonTapped
-            .networkFlatMap(self) { context, clipID in
+            .networkFlatMap(self, { context, clipID in
                 context.deleteCategoryAPI(deleteCategoryDto: clipID)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { _ in
                 output.deleteClipResult.send()
                 output.needToReload.send()
@@ -60,25 +65,31 @@ final class EditClipViewModel: ViewModelType {
         input.clipNameChanged
             .debounce(for: 0.2, scheduler: RunLoop.main)
             .removeDuplicates()
-            .networkFlatMap(self) { context, clipTitle in
+            .networkFlatMap(self, { context, clipTitle in
                 context.getCheckCategoryAPI(categoryTitle: clipTitle)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { isDuplicated in
                 output.duplicateClipName.send(isDuplicated)
             }.store(in: cancelBag)
         
         input.changeClipNameButtonTapped
-            .networkFlatMap(self) { context, model in
+            .networkFlatMap(self, { context, model in
                 context.patchEditNameCategoryAPI(requestBody: model)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { isSuccess in
                 output.changeClipNameResult.send(isSuccess)
             }.store(in: cancelBag)
         
         input.clipOrderedChanged
-            .networkFlatMap(self) { context, model in
+            .networkFlatMap(self, { context, model in
                 context.patchEditPriorityCategoryAPI(requestBody: model)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { _ in
                 output.needToReload.send()
             }.store(in: cancelBag)

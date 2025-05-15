@@ -48,6 +48,9 @@ private extension HomeCoordinator {
         vc.onAddLinkSelected = { [weak self] in
             self?.startAddLinkCoordinator()
         }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
+        }
         router.setRoot(vc, animated: false)
     }
     
@@ -80,6 +83,9 @@ private extension HomeCoordinator {
         vc.setupCategory(id: id, name: name)
         vc.onLinkSelected = { [weak self] linkURL, isRead, id in
             self?.showLinkWebVC(linkURL: linkURL, isRead: isRead, id: id)
+        }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }

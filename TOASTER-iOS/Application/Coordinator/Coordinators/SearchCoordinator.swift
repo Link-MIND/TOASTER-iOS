@@ -39,6 +39,9 @@ private extension SearchCoordinator {
         vc.onClipItemSelected = { [weak self] id, name in
             self?.showDetailClipVC(id: id, name: name)
         }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
+        }
         router.setRoot(vc, animated: false)
     }
     
@@ -48,6 +51,9 @@ private extension SearchCoordinator {
         vc.onLinkSelected = { [weak self] linkURL, isRead, id in
             self?.showLinkWebVC(linkURL: linkURL, isRead: isRead, id: id)
         }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
+        }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
     
@@ -56,6 +62,9 @@ private extension SearchCoordinator {
         vc.setupDataBind(linkURL: linkURL, isRead: isRead, id: id)
         vc.onBack = { [weak self] in
             self?.router.pop(animated: true)
+        }
+        vc.onRootDeleteToken = { [weak self] in
+            self?.router.setRootWithDeleteToken()
         }
         vc.onRootDeleteToken = { [weak self] in
             self?.router.setRootWithDeleteToken()
