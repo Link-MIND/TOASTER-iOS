@@ -112,16 +112,12 @@ extension RemindTimerAddViewModel {
                 switch result {
                 case .success:
                     promise(.success(()))
-                    //self.patchSuccessAction?()
-                case .unAuthorized, .networkFail:
+                case .unAuthorized, .networkFail, .notFound:
                     promise(.failure(NetworkResult<Error>.unAuthorized))
-                    // self.unAuthorizedAction?()
                 case .unProcessable:
                     promise(.failure(NetworkResult<Error>.unProcessable))
-                    // self.unProcessableAction?()
                 case .badRequest:
                     promise(.failure(NetworkResult<Error>.badRequest))
-                    // self.badRequestAction?()
                 default: break
                 }
             }
@@ -140,7 +136,7 @@ extension RemindTimerAddViewModel {
                 switch result {
                 case .success:
                     promise(.success(()))
-                case .unAuthorized, .networkFail:
+                case .unAuthorized, .networkFail, .notFound:
                     promise(.failure(NetworkResult<Error>.unProcessable))
                 default: break
                 }
