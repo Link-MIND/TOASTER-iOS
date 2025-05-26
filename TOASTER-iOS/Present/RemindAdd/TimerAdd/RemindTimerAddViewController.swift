@@ -194,6 +194,11 @@ private extension RemindTimerAddViewController {
                 guard let self else { return }
                 showToastMessage(width: 297, status: .warning, message: error)
             }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink { [weak self] _ in
+                self?.onRootDeleteToken?()
+            }.store(in: cancelBag)
     }
     
     func setupStyle() {
@@ -339,10 +344,6 @@ private extension RemindTimerAddViewController {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(14)
         }
-    }
-    
-    func unAuthorizedAction() {
-        onRootDeleteToken?()
     }
     
     func setupNavigationBar() {

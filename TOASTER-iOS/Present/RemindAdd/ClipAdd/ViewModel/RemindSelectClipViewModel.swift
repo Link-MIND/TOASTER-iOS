@@ -23,6 +23,7 @@ final class RemindSelectClipViewModel: ViewModelType {
     
     struct Output {
         let needToReload = PassthroughSubject<Void, Never>()
+        let navigateToLogin = PassthroughSubject<Void, Never>()
     }
     
     // MARK: - Method
@@ -31,9 +32,11 @@ final class RemindSelectClipViewModel: ViewModelType {
         let output = Output()
         
         input.requestClipList
-            .networkFlatMap(self) { context, _ in
+            .networkFlatMap(self, { context, _ in
                 context.fetchClipData()
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] clips in
                 self?.clips = clips
                 output.needToReload.send()

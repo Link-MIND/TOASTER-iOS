@@ -77,6 +77,11 @@ private extension RemindSelectClipViewController {
                 guard let self else { return }
                 clipSelectCollectionView.reloadData()
             }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink { [weak self] _ in
+                self?.onRootDeleteToken?()
+            }.store(in: cancelBag)
     }
     
     func setupStyle() {
