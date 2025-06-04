@@ -33,7 +33,7 @@ final class TabBarCoordinator: BaseCoordinator, CoordinatorFinishOutput {
         guard let tabBarController else { return }
         tabBarController.selectTab(0)
         router.setRoot(tabBarController, animated: false)
-        observeDeleteTokenEvent()
+        observeDeleteTokenEvent()   // 탭바 진입 이후 .refreshTokenExpired Event 계속 감지
     }
 }
 
