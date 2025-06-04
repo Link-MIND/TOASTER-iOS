@@ -13,10 +13,6 @@ import Then
 
 final class EditClipViewController: UIViewController {
     
-    // MARK: - View Controllable
-    
-    var onRootDeleteToken: (() -> Void)?
-    
     // MARK: - Data Stream
         
     private let viewModel: EditClipViewModel
@@ -148,8 +144,8 @@ private extension EditClipViewController {
             }.store(in: cancelBag)
         
         output.navigateToLogin
-            .sink { [weak self] _ in
-                self?.onRootDeleteToken?()
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             }.store(in: cancelBag)
     }
     

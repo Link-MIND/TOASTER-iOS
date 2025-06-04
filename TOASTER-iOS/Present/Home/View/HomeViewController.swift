@@ -20,7 +20,6 @@ final class HomeViewController: UIViewController {
     var onSettingSelected: (() -> Void)?
     var onArrowSelected: ((Int, String) -> Void)?
     var onAddLinkSelected: (() -> Void)?
-    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Data Stream
     
@@ -262,8 +261,8 @@ private extension HomeViewController {
             }.store(in: cancelBag)
         
         output.navigateToLogin
-            .sink { [weak self] _ in
-                self?.onRootDeleteToken?()
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             }.store(in: cancelBag)
     }
     

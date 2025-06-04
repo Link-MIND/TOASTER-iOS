@@ -55,10 +55,6 @@ private extension AddLinkCoordinator {
                 self?.onFinish?()
             })
         }
-        vc.onRootDeleteToken = { [weak self] in
-            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
-            self?.onFinish?()
-        }
         router.push(vc, animated: true)
     }
 }
