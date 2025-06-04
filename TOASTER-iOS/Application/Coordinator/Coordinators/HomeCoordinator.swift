@@ -49,7 +49,8 @@ private extension HomeCoordinator {
             self?.startAddLinkCoordinator()
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.setRoot(vc, animated: false)
     }
@@ -61,7 +62,8 @@ private extension HomeCoordinator {
             self?.router.pop(animated: true)
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
@@ -69,11 +71,12 @@ private extension HomeCoordinator {
     func showSettingVC() {
         let vc = viewControllerFactory.makeSettingVC()
         vc.onChangeRoot = { [weak self] in
-            self?.router.dismiss()
+            self?.router.dismiss()  // 로그아웃 완료 Alert dismiss
             self?.onFinish?()
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
@@ -85,7 +88,9 @@ private extension HomeCoordinator {
             self?.showLinkWebVC(linkURL: linkURL, isRead: isRead, id: id)
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }

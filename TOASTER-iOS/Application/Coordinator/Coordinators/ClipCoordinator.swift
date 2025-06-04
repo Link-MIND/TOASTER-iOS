@@ -40,7 +40,8 @@ private extension ClipCoordinator {
             self?.showDetailClipVC(id: clipId, name: clipName)
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.setRoot(vc, animated: false)
     }
@@ -49,7 +50,8 @@ private extension ClipCoordinator {
         let vc = viewControllerFactory.makeEditClipVC()
         vc.setupDataBind(clipModel: clipList)
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: false, hideBottomBarWhenPushed: true)
     }
@@ -61,7 +63,8 @@ private extension ClipCoordinator {
             self?.showLinkWebVC(linkURL: linkURL, isRead: isRead, id: id)
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
@@ -73,7 +76,8 @@ private extension ClipCoordinator {
             self?.router.pop(animated: true)
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }

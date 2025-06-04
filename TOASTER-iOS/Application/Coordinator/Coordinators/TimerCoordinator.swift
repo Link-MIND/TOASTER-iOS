@@ -46,7 +46,8 @@ private extension TimerCoordinator {
             self?.showSettingVC()
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.setRoot(vc, animated: false)
     }
@@ -59,6 +60,10 @@ private extension TimerCoordinator {
         vc.onPopToRoot = { [weak self] in
             self?.router.popToRoot(animated: true)
         }
+        vc.onRootDeleteToken = { [weak self] in
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
+        }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
     
@@ -69,7 +74,8 @@ private extension TimerCoordinator {
             self?.router.popToRoot(animated: true)
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
@@ -81,7 +87,8 @@ private extension TimerCoordinator {
             self?.router.popToRoot(animated: true)
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
@@ -93,7 +100,8 @@ private extension TimerCoordinator {
             self?.showLinkWebVC(linkURL: linkURL, isRead: isRead, id: id)
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
@@ -105,7 +113,8 @@ private extension TimerCoordinator {
             self?.router.pop(animated: true)
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
@@ -117,7 +126,8 @@ private extension TimerCoordinator {
             self?.onFinish?()
         }
         vc.onRootDeleteToken = { [weak self] in
-            self?.router.setRootWithDeleteToken()
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
