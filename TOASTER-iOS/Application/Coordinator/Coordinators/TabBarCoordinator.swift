@@ -33,6 +33,7 @@ final class TabBarCoordinator: BaseCoordinator, CoordinatorFinishOutput {
         guard let tabBarController else { return }
         tabBarController.selectTab(0)
         router.setRoot(tabBarController, animated: false)
+        observeDeleteTokenEvent()
     }
 }
 
@@ -135,5 +136,21 @@ private extension TabBarCoordinator {
             self?.router.popToRoot(animated: false)
         }
         router.push(vc, animated: true)
+    }
+    
+    /// NotificationCenter의 .refreshTokenExpired (리프레시 토큰 만료) 상황을 감지하는 Observer Method
+    /// Event가 발생하면 -> KeyChain에 있는 Token 값을 지우고 -> AppCoordinator에서 TabBarCoordinator onFinish?() 클로저 수행
+    func observeDeleteTokenEvent() {
+        NotificationCenter.default.addObserver(
+            forName: .refreshTokenExpired,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            _ = KeyChainService.deleteTokens(
+                accessKey: Config.accessTokenKey,
+                refreshKey: Config.refreshTokenKey
+            )
+            self?.onFinish?()
+        }
     }
 }
