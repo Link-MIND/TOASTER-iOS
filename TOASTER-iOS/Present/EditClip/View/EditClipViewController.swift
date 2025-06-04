@@ -13,6 +13,10 @@ import Then
 
 final class EditClipViewController: UIViewController {
     
+    // MARK: - View Controllable
+    
+    var onRootDeleteToken: (() -> Void)?
+    
     // MARK: - Data Stream
         
     private let viewModel: EditClipViewModel
@@ -141,6 +145,11 @@ private extension EditClipViewController {
                     )
                     self?.editClipBottomSheetView.resetTextField()
                 }
+            }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink { [weak self] _ in
+                self?.onRootDeleteToken?()
             }.store(in: cancelBag)
     }
     

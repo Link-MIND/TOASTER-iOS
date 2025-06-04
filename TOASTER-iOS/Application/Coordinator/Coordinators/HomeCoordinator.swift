@@ -48,6 +48,10 @@ private extension HomeCoordinator {
         vc.onAddLinkSelected = { [weak self] in
             self?.startAddLinkCoordinator()
         }
+        vc.onRootDeleteToken = { [weak self] in
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
+        }
         router.setRoot(vc, animated: false)
     }
     
@@ -57,13 +61,21 @@ private extension HomeCoordinator {
         vc.onBack = { [weak self] in
             self?.router.pop(animated: true)
         }
+        vc.onRootDeleteToken = { [weak self] in
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
+        }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
     
     func showSettingVC() {
         let vc = viewControllerFactory.makeSettingVC()
         vc.onChangeRoot = { [weak self] in
-            self?.router.dismiss()
+            self?.router.dismiss()  // 로그아웃 완료 Alert dismiss
+            self?.onFinish?()
+        }
+        vc.onRootDeleteToken = { [weak self] in
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
             self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
@@ -74,6 +86,11 @@ private extension HomeCoordinator {
         vc.setupCategory(id: id, name: name)
         vc.onLinkSelected = { [weak self] linkURL, isRead, id in
             self?.showLinkWebVC(linkURL: linkURL, isRead: isRead, id: id)
+        }
+        vc.onRootDeleteToken = { [weak self] in
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
+            self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }

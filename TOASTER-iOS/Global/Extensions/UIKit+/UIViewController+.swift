@@ -100,23 +100,4 @@ extension UIViewController {
             toastView.removeFromSuperview()
         })
     }
-    
-    /// rootVIewController 를 변경해주는 메서드
-    func changeViewController(viewController: UIViewController) {
-        switch viewController {
-        case is LoginViewController:
-            _ = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
-            
-            // alret 관련 동작을 넣으면 좋을거 같습니다.
-        default:
-            print("🍞⛔️해당하는 ViewController 가 없습니다!⛔️🍞")
-        }
-        
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let window = windowScene.windows.first {
-                window.rootViewController = ToasterNavigationController(rootViewController: viewController)
-                print("🍞⛔️\(String(describing: type(of: viewController)))⛔️🍞")
-            }
-        }
-    }
 }

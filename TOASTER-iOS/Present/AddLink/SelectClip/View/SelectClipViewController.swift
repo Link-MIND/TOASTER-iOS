@@ -16,6 +16,7 @@ final class SelectClipViewController: UIViewController {
     // MARK: - View Controllable
 
     var onPopToRoot: (() -> Void)?
+    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Properties
     
@@ -148,6 +149,11 @@ private extension SelectClipViewController {
                 self?.navigationController?.showToastMessage(width: width, status: status, message: message)
                 self?.onPopToRoot?()
                 if isSuccess { self?.delegate?.saveLinkButtonTapped() }
+            }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink { [weak self] _ in
+                self?.onRootDeleteToken?()
             }.store(in: cancelBag)
     }
     

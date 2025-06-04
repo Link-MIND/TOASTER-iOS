@@ -26,6 +26,7 @@ final class RemindViewController: UIViewController {
     var onEditTimerSelected: ((Int) -> Void)?
     var onClipItemSelected: ((Int, String) -> Void)?
     var onSettingSelected: (() -> Void)?
+    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Properties
     
@@ -221,7 +222,7 @@ private extension RemindViewController {
     }
     
     func unAuthorizedAction() {
-        self.changeViewController(viewController: LoginViewController())
+        onRootDeleteToken?()
     }
     
     func deleteAction() {

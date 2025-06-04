@@ -31,9 +31,11 @@ final class LinkWebViewModel: ViewModelType {
         let output = Output()
         
         input.readLinkButtonTapped
-            .networkFlatMap(self) { context, model in
+            .networkFlatMap(self, { context, model in
                 context.patchOpenLinkAPI(requestBody: model)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { isRead in
                 output.isRead.send(!isRead)
             }.store(in: cancelBag)

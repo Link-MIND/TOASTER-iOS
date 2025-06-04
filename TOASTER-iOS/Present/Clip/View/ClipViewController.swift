@@ -17,6 +17,7 @@ final class ClipViewController: UIViewController {
     
     var onEditClipSelected: ((ClipModel) -> Void)?
     var onClipItemSelected: ((Int, String) -> Void)?
+    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - UI Properties
     
@@ -109,6 +110,11 @@ private extension ClipViewController {
                 } else {
                     self?.minusHeightBottom()
                 }
+            }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink { [weak self] _ in
+                self?.onRootDeleteToken?()
             }.store(in: cancelBag)
     }
     

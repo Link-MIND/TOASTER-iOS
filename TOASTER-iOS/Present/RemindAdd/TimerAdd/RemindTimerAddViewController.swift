@@ -20,6 +20,7 @@ final class RemindTimerAddViewController: UIViewController {
     // MARK: - View Controllable
 
     var onPopToRoot: (() -> Void)?
+    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Data Streams
 
@@ -193,6 +194,11 @@ private extension RemindTimerAddViewController {
                 guard let self else { return }
                 showToastMessage(width: 297, status: .warning, message: error)
             }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink { [weak self] _ in
+                self?.onRootDeleteToken?()
+            }.store(in: cancelBag)
     }
     
     func setupStyle() {
@@ -338,10 +344,6 @@ private extension RemindTimerAddViewController {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(14)
         }
-    }
-    
-    func unAuthorizedAction() {
-        self.changeViewController(viewController: LoginViewController())
     }
     
     func setupNavigationBar() {

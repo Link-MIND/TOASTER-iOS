@@ -16,6 +16,7 @@ final class DetailClipViewController: UIViewController {
     // MARK: - View Controllable
     
     var onLinkSelected: ((String, Bool, Int) -> Void)?
+    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Data Streams
     
@@ -224,6 +225,11 @@ private extension DetailClipViewController {
                         message: StringLiterals.ToastMessage.completeDeleteLink
                     )
                 }
+            }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink { [weak self] _ in
+                self?.onRootDeleteToken?()
             }.store(in: cancelBag)
     }
     

@@ -17,6 +17,7 @@ final class SearchViewController: UIViewController {
     
     var onLinkItemSelected: ((String, Bool, Int) -> Void)?
     var onClipItemSelected: ((Int, String) -> Void)?
+    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Data Stream
 
@@ -102,6 +103,11 @@ private extension SearchViewController {
                 guard let self else { return }
                 searchButton.isHidden = !isSearching
                 clearButton.isHidden = isSearching
+            }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink { [weak self] _ in
+                self?.onRootDeleteToken?()
             }.store(in: cancelBag)
     }
     

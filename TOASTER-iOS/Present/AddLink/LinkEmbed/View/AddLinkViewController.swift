@@ -31,7 +31,6 @@ final class AddLinkViewController: UIViewController {
     
     private var isNavigationBarHidden: Bool
     
-    // private weak var delegate: AddLinkViewControllerPopDelegate?
     private weak var urldelegate: SelectClipViewControllerDelegate?
     
     private var addLinkView = AddLinkView()

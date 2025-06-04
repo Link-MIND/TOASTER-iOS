@@ -28,6 +28,7 @@ final class RemindTimerAddViewModel: ViewModelType {
         let onSetTimerSuccess = PassthroughSubject<Void, Never>()
         let onEditTimerSuccess = PassthroughSubject<Void, Never>()
         let onError = PassthroughSubject<String, Never>()
+        let navigateToLogin = PassthroughSubject<Void, Never>()
     }
     
     // MARK: - Method
@@ -36,9 +37,11 @@ final class RemindTimerAddViewModel: ViewModelType {
         let output = Output()
         
         input.requestGetDetailTimer
-            .networkFlatMap(self) { context, timerID in
+            .networkFlatMap(self, { context, timerID in
                 context.getDetailTimerAPI(forID: timerID)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] data in
                 self?.remindAddData = data
                 output.onSetView.send()
@@ -61,9 +64,11 @@ final class RemindTimerAddViewModel: ViewModelType {
             }.store(in: cancelBag)
         
         input.completeEditButtonTapped
-            .networkFlatMap(self) { context, model in
+            .networkFlatMap(self, { context, model in
                 context.patchEditTimerAPI(forModel: model)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink {
                 output.onEditTimerSuccess.send()
             }.store(in: cancelBag)
