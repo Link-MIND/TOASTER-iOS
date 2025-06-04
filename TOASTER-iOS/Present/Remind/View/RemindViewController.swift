@@ -221,7 +221,7 @@ private extension RemindViewController {
     }
     
     func unAuthorizedAction() {
-        self.changeViewController(viewController: LoginViewController())
+        NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
     }
     
     func deleteAction() {

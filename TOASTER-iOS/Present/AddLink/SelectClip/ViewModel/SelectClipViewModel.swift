@@ -29,6 +29,7 @@ final class SelectClipViewModel: ViewModelType {
         let duplicateClipName = PassthroughSubject<Bool, Never>()
         let addClipResult = PassthroughSubject<Bool, Never>()
         let saveLinkResult = PassthroughSubject<Bool, Never>()
+        let navigateToLogin = PassthroughSubject<Void, Never>()
     }
     
     // MARK: - Method
@@ -37,9 +38,11 @@ final class SelectClipViewModel: ViewModelType {
         let output = Output()
         
         input.requestClipList
-            .networkFlatMap(self) { context, _ in
+            .networkFlatMap(self, { context, _ in
                 context.fetchClipData()
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { [weak self] clipDataList in
                 self?.selectedClip = clipDataList
                 output.needToReload.send()
@@ -48,17 +51,21 @@ final class SelectClipViewModel: ViewModelType {
         input.clipNameChanged
             .debounce(for: 0.2, scheduler: RunLoop.main)
             .removeDuplicates()
-            .networkFlatMap(self) { context, clipTitle in
+            .networkFlatMap(self, { context, clipTitle in
                 context.getCheckCategoryAPI(categoryTitle: clipTitle)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { isDuplicate in
                 output.duplicateClipName.send(isDuplicate)
             }.store(in: cancelBag)
         
         input.addClipButtonTapped
-            .networkFlatMap(self) { context, clipTitle in
+            .networkFlatMap(self, { context, clipTitle in
                 context.postAddCategoryAPI(requestBody: clipTitle)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { isSuccess in
                 output.addClipResult.send(isSuccess)
                 if isSuccess {
@@ -67,9 +74,11 @@ final class SelectClipViewModel: ViewModelType {
             }.store(in: cancelBag)
         
         input.completeButtonTapped
-            .networkFlatMap(self) { context, body in
+            .networkFlatMap(self, { context, body in
                 context.postSaveLink(url: body.0, category: body.1)
-            }
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
             .sink { result in
                 output.saveLinkResult.send(result)
             }.store(in: cancelBag)

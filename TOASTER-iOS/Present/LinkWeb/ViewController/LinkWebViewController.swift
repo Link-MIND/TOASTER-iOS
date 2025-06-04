@@ -122,8 +122,8 @@ private extension LinkWebViewController {
             }.store(in: cancelBag)
         
         output.navigateToLogin
-            .sink { [weak self] _ in
-                self?.changeViewController(viewController: LoginViewController())
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             }.store(in: cancelBag)
     }
     

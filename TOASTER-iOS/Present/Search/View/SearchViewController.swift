@@ -103,6 +103,11 @@ private extension SearchViewController {
                 searchButton.isHidden = !isSearching
                 clearButton.isHidden = isSearching
             }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
+            }.store(in: cancelBag)
     }
     
     func setupStyle() {

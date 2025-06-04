@@ -63,7 +63,7 @@ private extension HomeCoordinator {
     func showSettingVC() {
         let vc = viewControllerFactory.makeSettingVC()
         vc.onChangeRoot = { [weak self] in
-            self?.router.dismiss()
+            self?.router.dismiss()  // 로그아웃 완료 Alert dismiss
             self?.onFinish?()
         }
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)

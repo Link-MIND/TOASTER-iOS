@@ -259,6 +259,11 @@ private extension HomeViewController {
                 guard let self else { return }
                 homeView.collectionView.reloadData()
             }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
+            }.store(in: cancelBag)
     }
     
     func setupHierarchy() {

@@ -5,6 +5,7 @@
 //  Created by 김다예 on 1/11/24.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -20,10 +21,27 @@ final class RemindTimerAddViewController: UIViewController {
 
     var onPopToRoot: (() -> Void)?
     
-    // MARK: - Properties
-    
+    // MARK: - Data Streams
+
     private let viewModel: RemindTimerAddViewModel!
+    private var cancelBag = CancelBag()
     
+    private var requestGetDetailTimer = PassthroughSubject<Int, Never>()
+
+    private lazy var completeAddButtonTapped = completeButton.publisher(for: .touchUpInside).mapVoid()
+        .filter { [weak self] in
+            guard let self else { return false }
+            return buttonType == .add
+        }
+    
+    private lazy var completeEditButtonTapped = completeButton.publisher(for: .touchUpInside).mapVoid()
+        .filter { [weak self] in
+            guard let self else { return false }
+            return buttonType == .edit
+        }
+    
+    // MARK: - Properties
+        
     private let labelDateformatter = DateFormatter()
     private let networkDateformatter = DateFormatter()
     private var buttonType: RemindTimerAddButtonType = .add
@@ -76,16 +94,14 @@ final class RemindTimerAddViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        bindViewModels()
         setupStyle()
         setupHierarchy()
         setupLayout()
-        setupViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupNavigationBar()
     }
 }
@@ -106,7 +122,7 @@ extension RemindTimerAddViewController {
     
     func configureView(forTimerID: Int) {
         buttonType = .edit
-        viewModel.fetchClipData(forID: forTimerID)
+        requestGetDetailTimer.send(forTimerID)
         timerID = forTimerID
     }
 }
@@ -114,6 +130,76 @@ extension RemindTimerAddViewController {
 // MARK: - Private Extension
 
 private extension RemindTimerAddViewController {
+    func bindViewModels() {
+        let input = RemindTimerAddViewModel.Input(
+            requestGetDetailTimer: requestGetDetailTimer.asDriver(),
+            completeAddButtonTapped: completeAddButtonTapped
+                .compactMap { [weak self] in
+                    guard let self, let categoryID = self.categoryID else { return nil }
+                    let model = RemindTimerAddModel(
+                        clipTitle: "",
+                        remindTime: networkDateformatter.string(from: datePickerView.date),
+                        remindDates: Array(selectedIndex)
+                    )
+                    return (categoryID, model)
+                }
+                .asDriver(),
+            completeEditButtonTapped: completeEditButtonTapped
+                .compactMap { [weak self] in
+                    guard let self, let timerID = self.timerID else { return nil }
+
+                    return RemindTimerEditModel(
+                        remindID: timerID,
+                        remindTime: networkDateformatter.string(from: self.datePickerView.date),
+                        remindDates: Array(selectedIndex)
+                    )
+                }
+                .asDriver()
+        )
+        
+        let output = viewModel.transform(input, cancelBag: cancelBag)
+        
+        output.onSetView
+            .sink { [weak self] in
+                guard let self else { return }
+                if let data = self.viewModel.remindAddData {
+                    self.mainLabel.text = "\(data.clipTitle) 클립을"
+                    self.mainLabel.asFont(targetString: data.clipTitle,
+                                          font: .suitSemiBold(size: 18))
+                    self.selectedIndex = Set(data.remindDates)
+                    
+                    let date = networkDateformatter.date(from: data.remindTime) ?? Date()
+                    timerLabel.text = labelDateformatter.string(from: date)
+                    datePickerView.date = date
+                }
+            }.store(in: cancelBag)
+        
+        output.onSetTimerSuccess
+            .sink { [weak self] in
+                guard let self else { return }
+                onPopToRoot?()
+                navigationController?.showToastMessage(width: 169, status: .check, message: StringLiterals.ToastMessage.completeSetTimer)
+            }.store(in: cancelBag)
+        
+        output.onEditTimerSuccess
+            .sink { [weak self] in
+                guard let self else { return }
+                onPopToRoot?()
+                navigationController?.showToastMessage(width: 169, status: .check, message: StringLiterals.ToastMessage.completeEditTimer)
+            }.store(in: cancelBag)
+        
+        output.onError
+            .sink { [weak self] error in
+                guard let self else { return }
+                showToastMessage(width: 297, status: .warning, message: error)
+            }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
+            }.store(in: cancelBag)
+    }
+    
     func setupStyle() {
         view.backgroundColor = .toasterBackground
         selectedIndex = []
@@ -186,8 +272,6 @@ private extension RemindTimerAddViewController {
             $0.setTitle(StringLiterals.Button.complete, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitSemiBold(size: 16)
-            
-            $0.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -261,57 +345,14 @@ private extension RemindTimerAddViewController {
         }
     }
     
-    func setupViewModel() {
-        viewModel.setupDataChangeAction(changeAction: configureView, 
-                                        forSuccessAction: patchSuccessAction, 
-                                        forEditSuccessAction: editSuccessAction,
-                                        forUnAuthorizedAction: unAuthorizedAction,
-                                        forUnProcessableAction: unProcessableAction, 
-                                        forBadRequestAction: badRequestAction)
-    }
-    
-    func configureView() {
-        if let data = self.viewModel.remindAddData {
-            self.mainLabel.text = "\(data.clipTitle) 클립을"
-            self.mainLabel.asFont(targetString: data.clipTitle,
-                                  font: .suitSemiBold(size: 18))
-            self.selectedIndex = Set(data.remindDates)
-            
-            let date = networkDateformatter.date(from: data.remindTime) ?? Date()
-            timerLabel.text = labelDateformatter.string(from: date)
-            datePickerView.date = date
-        }
-    }
-    
-    func unAuthorizedAction() {
-        self.changeViewController(viewController: LoginViewController())
-    }
-    
-    func patchSuccessAction() {
-        onPopToRoot?()
-        self.navigationController?.showToastMessage(width: 169, status: .check, message: StringLiterals.ToastMessage.completeSetTimer)
-    }
-    
-    func editSuccessAction() {
-        onPopToRoot?()
-        self.navigationController?.showToastMessage(width: 169, status: .check, message: StringLiterals.ToastMessage.completeEditTimer)
-    }
-    
-    func unProcessableAction() {
-        self.showToastMessage(width: 297, status: .warning, message: StringLiterals.ToastMessage.noticeSetTimer)
-    }
-    
-    func badRequestAction() {
-        self.showToastMessage(width: 297, status: .warning, message: StringLiterals.ToastMessage.noticeMaxTimer)
-    }
-    
     func setupNavigationBar() {
-        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
-                                                                hasRightButton: true,
-                                                                mainTitle: StringOrImageType.string("타이머 설정"),
-                                                                rightButton: StringOrImageType.image(.icClose24),
-                                                                rightButtonAction: closeButtonTapped)
-        
+        let type: ToasterNavigationType = ToasterNavigationType(
+            hasBackButton: true,
+            hasRightButton: true,
+            mainTitle: StringOrImageType.string("타이머 설정"),
+            rightButton: StringOrImageType.image(.icClose24),
+            rightButtonAction: closeButtonTapped
+        )
         if let navigationController = navigationController as? ToasterNavigationController {
             navigationController.setupNavigationBar(forType: type)
         }
@@ -375,32 +416,6 @@ private extension RemindTimerAddViewController {
                                                              insertView: repeatView)
         exampleBottom.setupSheetPresentation(bottomHeight: view.convertByHeightRatio(720))
         self.present(exampleBottom, animated: true)
-    }
-    
-    @objc func completeButtonTapped() {
-        let dateString = networkDateformatter.string(from: datePickerView.date)
-        
-        switch buttonType {
-        case .add:
-            guard let categoryID else { return }
-            self.viewModel.postClipData(
-                forClipID: categoryID,
-                forModel: RemindTimerAddModel(
-                    clipTitle: "",
-                    remindTime: dateString,
-                    remindDates: Array(selectedIndex)
-                )
-            )
-        case .edit:
-            guard let timerID else { return }
-            self.viewModel.editClipData(
-                forModel: RemindTimerEditModel(
-                    remindID: timerID,
-                    remindTime: dateString,
-                    remindDates: Array(selectedIndex)
-                )
-            )
-        }
     }
 }
 

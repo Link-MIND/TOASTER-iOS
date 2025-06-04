@@ -124,9 +124,8 @@ private extension SettingViewController {
                     self?.userName = responseData.nickname
                 }
             case .unAuthorized, .networkFail:
-                self?.changeViewController(viewController: LoginViewController())
-            default:
-                self?.changeViewController(viewController: LoginViewController())
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
+            default: break
             }
         }
     }
@@ -176,7 +175,7 @@ private extension SettingViewController {
                 self.isToggle = response?.data?.isAllowed
                 self.setupWarningView()
             case .notFound, .networkFail:
-                self.changeViewController(viewController: LoginViewController())
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             default: break
             }
         }
@@ -200,7 +199,7 @@ private extension SettingViewController {
                     }
                 }
             case .unAuthorized, .networkFail:
-                self?.changeViewController(viewController: LoginViewController())
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             default:
                 print("default Fail")
             }
