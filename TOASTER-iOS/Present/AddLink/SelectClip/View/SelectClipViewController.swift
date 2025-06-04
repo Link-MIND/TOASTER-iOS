@@ -16,7 +16,6 @@ final class SelectClipViewController: UIViewController {
     // MARK: - View Controllable
 
     var onPopToRoot: (() -> Void)?
-    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Properties
     
@@ -152,8 +151,8 @@ private extension SelectClipViewController {
             }.store(in: cancelBag)
         
         output.navigateToLogin
-            .sink { [weak self] _ in
-                self?.onRootDeleteToken?()
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             }.store(in: cancelBag)
     }
     

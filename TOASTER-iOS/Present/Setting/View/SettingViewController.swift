@@ -15,7 +15,6 @@ final class SettingViewController: UIViewController {
     // MARK: - View Controllable
 
     var onChangeRoot: (() -> Void)?
-    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Properties
     
@@ -125,7 +124,7 @@ private extension SettingViewController {
                     self?.userName = responseData.nickname
                 }
             case .unAuthorized, .networkFail:
-                self?.onRootDeleteToken?()
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             default: break
             }
         }
@@ -176,7 +175,7 @@ private extension SettingViewController {
                 self.isToggle = response?.data?.isAllowed
                 self.setupWarningView()
             case .notFound, .networkFail:
-                self.onRootDeleteToken?()
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             default: break
             }
         }
@@ -200,7 +199,7 @@ private extension SettingViewController {
                     }
                 }
             case .unAuthorized, .networkFail:
-                self?.onRootDeleteToken?()
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             default:
                 print("default Fail")
             }

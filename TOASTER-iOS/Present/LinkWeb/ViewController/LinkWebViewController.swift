@@ -16,7 +16,6 @@ final class LinkWebViewController: UIViewController {
     // MARK: - View Controllable
     
     var onBack: (() -> Void)?
-    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Properties
     
@@ -123,8 +122,8 @@ private extension LinkWebViewController {
             }.store(in: cancelBag)
         
         output.navigateToLogin
-            .sink { [weak self] _ in
-                self?.onRootDeleteToken?()
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             }.store(in: cancelBag)
     }
     

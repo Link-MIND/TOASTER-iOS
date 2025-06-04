@@ -17,7 +17,6 @@ final class SearchViewController: UIViewController {
     
     var onLinkItemSelected: ((String, Bool, Int) -> Void)?
     var onClipItemSelected: ((Int, String) -> Void)?
-    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Data Stream
 
@@ -106,8 +105,8 @@ private extension SearchViewController {
             }.store(in: cancelBag)
         
         output.navigateToLogin
-            .sink { [weak self] _ in
-                self?.onRootDeleteToken?()
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             }.store(in: cancelBag)
     }
     

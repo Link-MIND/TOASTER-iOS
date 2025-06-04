@@ -17,7 +17,6 @@ final class RemindSelectClipViewController: UIViewController {
     
     var onEditTimerSelected: ((RemindClipModel?) -> Void)?
     var onPopToRoot: (() -> Void)?
-    var onRootDeleteToken: (() -> Void)?
 
     // MARK: - Data Stream
     
@@ -79,8 +78,8 @@ private extension RemindSelectClipViewController {
             }.store(in: cancelBag)
         
         output.navigateToLogin
-            .sink { [weak self] _ in
-                self?.onRootDeleteToken?()
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             }.store(in: cancelBag)
     }
     
