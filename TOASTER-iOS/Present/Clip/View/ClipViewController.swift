@@ -17,7 +17,6 @@ final class ClipViewController: UIViewController {
     
     var onEditClipSelected: ((ClipModel) -> Void)?
     var onClipItemSelected: ((Int, String) -> Void)?
-    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - UI Properties
     
@@ -113,8 +112,8 @@ private extension ClipViewController {
             }.store(in: cancelBag)
         
         output.navigateToLogin
-            .sink { [weak self] _ in
-                self?.onRootDeleteToken?()
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             }.store(in: cancelBag)
     }
     

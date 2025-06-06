@@ -20,7 +20,6 @@ final class RemindTimerAddViewController: UIViewController {
     // MARK: - View Controllable
 
     var onPopToRoot: (() -> Void)?
-    var onRootDeleteToken: (() -> Void)?
     
     // MARK: - Data Streams
 
@@ -196,8 +195,8 @@ private extension RemindTimerAddViewController {
             }.store(in: cancelBag)
         
         output.navigateToLogin
-            .sink { [weak self] _ in
-                self?.onRootDeleteToken?()
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             }.store(in: cancelBag)
     }
     
