@@ -57,7 +57,8 @@ final class RemindTimerAddViewModel: ViewModelType {
                     output.onError.send(StringLiterals.ToastMessage.noticeSetTimer)
                 case .badRequest:
                     output.onError.send(StringLiterals.ToastMessage.noticeMaxTimer)
-                default: break
+                default:
+                    output.navigateToLogin.send()
                 }
             })
             .sink {

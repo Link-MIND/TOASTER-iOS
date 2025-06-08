@@ -30,7 +30,14 @@ class BaseAPIService<Target: TargetType> {
                     case 200, 201, 204:
                         if let decodedData = try? decoder.decode(T.self, from: data) {
                             return promise(.success(decodedData))
-                        } else { return promise(.failure(.decodeErr)) }
+                        } else {
+                            return promise(.failure(.decodeErr))
+                        }
+                    default: return promise(.failure(.networkFail))
+                    }
+                case .failure(let error):
+                    guard let statusCode = error.response?.statusCode else { return }
+                    switch statusCode {
                     case 400: return promise(.failure(.badRequest))
                     case 401: return promise(.failure(.unAuthorized))
                     case 404: return promise(.failure(.notFound))
@@ -38,8 +45,6 @@ class BaseAPIService<Target: TargetType> {
                     case 500: return promise(.failure(.serverErr))
                     default: return promise(.failure(.networkFail))
                     }
-                case .failure:
-                    promise(.failure(.networkFail))
                 }
             }
         }.eraseToAnyPublisher()
@@ -54,10 +59,13 @@ class BaseAPIService<Target: TargetType> {
             provider.request(target) { result in
                 switch result {
                 case .success(let response):
-                    let statusCode = response.statusCode
-                    
-                    switch statusCode {
+                    switch response.statusCode {
                     case 200, 201, 204: return promise(.success(nil))
+                    default: return promise(.failure(.networkFail))
+                    }
+                case .failure(let error):
+                    guard let statusCode = error.response?.statusCode else { return }
+                    switch statusCode {
                     case 400: return promise(.failure(.badRequest))
                     case 401: return promise(.failure(.unAuthorized))
                     case 404: return promise(.failure(.notFound))
@@ -65,8 +73,6 @@ class BaseAPIService<Target: TargetType> {
                     case 500: return promise(.failure(.serverErr))
                     default: return promise(.failure(.networkFail))
                     }
-                case .failure:
-                    promise(.failure(.networkFail))
                 }
             }
         }.eraseToAnyPublisher()
