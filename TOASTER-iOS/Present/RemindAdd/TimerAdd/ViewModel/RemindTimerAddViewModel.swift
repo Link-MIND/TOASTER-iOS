@@ -51,7 +51,8 @@ final class RemindTimerAddViewModel: ViewModelType {
             .networkFlatMap(self, { context, body in
                 context.postCreateTimerAPI(forClipID: body.0, forModel: body.1)
             }, onError: { error in
-                switch error as? NetworkResult<Error> {
+                guard let error = error as? ToasterError else { return }
+                switch error {
                 case .unProcessable:
                     output.onError.send(StringLiterals.ToastMessage.noticeSetTimer)
                 case .badRequest:
@@ -80,72 +81,44 @@ final class RemindTimerAddViewModel: ViewModelType {
 // MARK: - Network
 
 extension RemindTimerAddViewModel {
-    func getDetailTimerAPI(forID: Int) -> AnyPublisher<RemindTimerAddModel?, Error> {
-        return Future<RemindTimerAddModel?, Error> { promise in
-            NetworkService.shared.timerService.getDetailTimer(timerId: forID) { result in
-                switch result {
-                case .success(let response):
-                    var remindAddData: RemindTimerAddModel?
-                    if let data = response?.data {
-                        remindAddData = RemindTimerAddModel(
-                            clipTitle: data.categoryName,
-                            remindTime: data.remindTime,
-                            remindDates: data.remindDates
-                        )
-                    }
-                    promise(.success(remindAddData))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default: break
-                }
+    func getDetailTimerAPI(forID: Int) -> AnyPublisher<RemindTimerAddModel, ToasterError> {
+        return NetworkService.shared.timerService.getDetailTimer(timerId: forID)
+            .map { response in
+                var remindAddData: RemindTimerAddModel
+                remindAddData = RemindTimerAddModel(
+                    clipTitle: response.data .categoryName,
+                    remindTime: response.data .remindTime,
+                    remindDates: response.data .remindDates
+                )
+                return remindAddData
             }
-        }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
     
     func postCreateTimerAPI(
         forClipID: Int,
         forModel: RemindTimerAddModel
-    ) -> AnyPublisher<Void, Error> {
-        return Future<Void, Error> { promise in
-            NetworkService.shared.timerService.postCreateTimer(
-                requestBody: PostCreateTimerRequestDTO(
-                    categoryId: forClipID,
-                    remindTime: forModel.remindTime,
-                    remindDates: forModel.remindDates
-                )
-            ) { result in
-                switch result {
-                case .success:
-                    promise(.success(()))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                case .unProcessable:
-                    promise(.failure(NetworkResult<Error>.unProcessable))
-                case .badRequest:
-                    promise(.failure(NetworkResult<Error>.badRequest))
-                default: break
-                }
-            }
-        }.eraseToAnyPublisher()
+    ) -> AnyPublisher<Void, ToasterError> {
+        return NetworkService.shared.timerService.postCreateTimer(
+            requestBody: PostCreateTimerRequestDTO(
+                categoryId: forClipID,
+                remindTime: forModel.remindTime,
+                remindDates: forModel.remindDates
+            )
+        )
+        .map { _ in () }
+        .eraseToAnyPublisher()
     }
     
-    func patchEditTimerAPI(forModel: RemindTimerEditModel) -> AnyPublisher<Void, Error> {
-        return Future<Void, Error> { promise in
-            NetworkService.shared.timerService.patchEditTimer(
-                timerId: forModel.remindID,
-                requestBody: PatchEditTimerRequestDTO(
-                    remindTime: forModel.remindTime,
-                    remindDates: forModel.remindDates
-                )
-            ) { result in
-                switch result {
-                case .success:
-                    promise(.success(()))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unProcessable))
-                default: break
-                }
-            }
-        }.eraseToAnyPublisher()
+    func patchEditTimerAPI(forModel: RemindTimerEditModel) -> AnyPublisher<Void, ToasterError> {
+        NetworkService.shared.timerService.patchEditTimer(
+            timerId: forModel.remindID,
+            requestBody: PatchEditTimerRequestDTO(
+                remindTime: forModel.remindTime,
+                remindDates: forModel.remindDates
+            )
+        )
+        .map { _ in () }
+        .eraseToAnyPublisher()
     }
 }
