@@ -26,6 +26,7 @@ class ShareViewController: UIViewController {
     
     private var isUseShareExtension = false
     
+    private var requestClipSubject = PassthroughSubject<Void, Never>()
     private let selectedClipSubejct = PassthroughSubject<RemindClipModel, Never>()
     
     private var cancelBag = CancelBag()
@@ -49,9 +50,10 @@ class ShareViewController: UIViewController {
         setupLayout()
         setupDelegate()
         setupRegisterCell()
-        setupViewModel()
         fetchCheckTokenHealth()
         bindViewModel()
+        
+        requestClipSubject.send()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -70,7 +72,7 @@ class ShareViewController: UIViewController {
 
         if isUseShareExtension {
             // 상단 Title 높이 + 데이터 개수 * cell 높이 + 하단 버튼 + SafeArea
-            let calculateBottomSheetHeight = titleHeight + (viewModel.clipData.count) * 54 + 116
+            let calculateBottomSheetHeight = titleHeight + (viewModel.clips.count) * 54 + 116
             
             let bottomSheetHeight = { () -> Int in
                 // 화면에 보여줄 크키보다 Sheet 높이가 커질 경우 (데이터가 많을 경우)
@@ -179,14 +181,6 @@ private extension ShareViewController {
         clipSelectCollectionView.dataSource = self
     }
     
-    func setupViewModel() {
-        viewModel.setupDataChangeAction(changeAction: reloadCollectionView)
-    }
-    
-    func reloadCollectionView() {
-        clipSelectCollectionView.reloadData()
-    }
-
     // 웹 사이트 URL 를 받아올 수 있는 메서드
     func getUrl() {
         if let item = extensionContext?.inputItems.first as? NSExtensionItem,
@@ -221,15 +215,23 @@ private extension ShareViewController {
     }
     
     func bindViewModel() {
-        let input = ShareViewModel.Input(
+        let input = RemindSelectClipViewModel.Input(requestClipList: requestClipSubject.asDriver())
+        let output = viewModel.transform(input, cancelBag: cancelBag)
+        
+        output.needToReload
+            .sink { [weak self] in
+                guard let self else { return }
+                clipSelectCollectionView.reloadData()
+            }.store(in: cancelBag)
+        
+        let shareVMInput = ShareViewModel.Input(
             selectedClip: selectedClipSubejct.eraseToAnyPublisher(),
             completeButtonTap: completeBottomButton.tapPublisher(),
             closeButtonTap: closeButton.tapPublisher()
         )
-        
-        let output = shareViewModel.transform(input, cancelBag: cancelBag)
-        
-        output.isSeleted
+        let shareVMOutput = shareViewModel.transform(shareVMInput, cancelBag: cancelBag)
+
+        shareVMOutput.isSeleted
             .sink { [weak self] result in
                 if result == true {
                     self?.completeBottomButton.backgroundColor = .toasterBlack
@@ -237,7 +239,7 @@ private extension ShareViewController {
             }
             .store(in: cancelBag)
         
-        output.completeButtonAction
+        shareVMOutput.completeButtonAction
             .sink { [weak self] result in
                 if result == true {
                     self?.extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
@@ -245,7 +247,7 @@ private extension ShareViewController {
             }
             .store(in: cancelBag)
         
-        output.closeButtonAction
+        shareVMOutput.closeButtonAction
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 UIView.animate(withDuration: 0.3, animations: {
@@ -305,7 +307,7 @@ private extension ShareViewController {
 
 extension ShareViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedClip = viewModel.clipData[indexPath.item]
+        let selectedClip = viewModel.clips[indexPath.item]
         selectedClipSubejct.send(selectedClip)
     }
 }
@@ -314,16 +316,16 @@ extension ShareViewController: UICollectionViewDelegate {
 
 extension ShareViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.clipData.count
+        return viewModel.clips.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RemindSelectClipCollectionViewCell.className, for: indexPath) as? RemindSelectClipCollectionViewCell else { return UICollectionViewCell() }
         
         if indexPath.item == 0 {
-            cell.configureCell(forModel: viewModel.clipData[indexPath.item], icon: .icAllClip24, isRounded: false)
+            cell.configureCell(forModel: viewModel.clips[indexPath.item], icon: .icAllClip24, isRounded: false)
         } else {
-            cell.configureCell(forModel: viewModel.clipData[indexPath.item], icon: .icClip24Black, isRounded: false)
+            cell.configureCell(forModel: viewModel.clips[indexPath.item], icon: .icClip24Black, isRounded: false)
         }
         
         return cell

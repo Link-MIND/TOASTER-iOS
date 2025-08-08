@@ -4,6 +4,8 @@
 //
 //  Created by 김다예 on 12/30/23.
 //
+
+import Combine
 import UIKit
 
 import SnapKit
@@ -11,16 +13,26 @@ import Then
 
 final class HomeViewController: UIViewController {
     
+    // MARK: - View Controllable
+
+    var onMyLinkSelected: ((String, Bool, Int) -> Void)?
+    var onOurLinkSelected: ((String) -> Void)?
+    var onSettingSelected: (() -> Void)?
+    var onArrowSelected: ((Int, String) -> Void)?
+    var onAddLinkSelected: (() -> Void)?
+    
+    // MARK: - Data Stream
+    
+    private let viewModel: HomeViewModel!
+    private let clipViewModel: DetailClipViewModel!
+    private let cancelBag = CancelBag()
+    
+    private var requestHomeData = PassthroughSubject<Void, Never>()
+    private var changePopupState = PassthroughSubject<(Int, Int), Never>()
+    
     // MARK: - UI Properties
     
-    private let viewModel = HomeViewModel()
-    private let clipViewModel = DetailClipViewModel()
     private let homeView = HomeView()
-    
-    private let addClipBottomSheetView = AddClipBottomSheetView()
-    private lazy var addClipBottom = ToasterBottomSheetViewController(bottomType: .white,
-                                                                      bottomTitle: "클립 추가",
-                                                                      insertView: addClipBottomSheetView)
     
     private var firstToolTip: ToasterTipView?
     private lazy var secondToolTip: ToasterTipView? = {
@@ -33,26 +45,33 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Life Cycle
     
+    init(
+        viewModel: HomeViewModel,
+        clipViewModel: DetailClipViewModel
+    ) {
+        self.viewModel = viewModel
+        self.clipViewModel = clipViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         homeView.backgroundColor = .toasterBackground
-        
+        bindViewModels()
         setupHierarchy()
         setupLayout()
         createCollectionView()
         setupDelegate()
-        setupViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
-        
-        viewModel.fetchMainPageData()
-        viewModel.fetchWeeklyLinkData()
-        viewModel.fetchRecommendSiteData()
-        viewModel.getPopupInfoAPI()
-        viewModel.fetchRecentLinkData()
+        requestHomeData.send()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,31 +86,21 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1:
-            let data = viewModel.recentLink
+            let data = viewModel.recentLinks
             if indexPath.item < data.count {
-                let nextVC = LinkWebViewController()
-                nextVC.hidesBottomBarWhenPushed = true
-                nextVC.setupDataBind(linkURL: viewModel.recentLink[indexPath.item].linkUrl,
-                                     isRead: viewModel.recentLink[indexPath.item].isRead,
-                                     id: viewModel.recentLink[indexPath.item].toastId)
-                self.navigationController?.pushViewController(nextVC, animated: true)
+                let url = viewModel.recentLinks[indexPath.item].linkUrl
+                let isRead = viewModel.recentLinks[indexPath.item].isRead
+                let id = viewModel.recentLinks[indexPath.item].toastId
+                onMyLinkSelected?(url, isRead, id)
             } else {
                 addClipCellTapped()
             }
         case 2:
-            let nextVC = LinkWebViewController()
-            nextVC.hidesBottomBarWhenPushed = true
-            let data = viewModel.weeklyLinkList[indexPath.item]
-            nextVC.setupDataBind(linkURL: data.toastLink)
-            self.navigationController?.pushViewController(nextVC, animated: true)
+            let data = viewModel.weeklyLinks[indexPath.item]
+            onOurLinkSelected?(data.toastLink)
         case 3:
-            let nextVC = LinkWebViewController()
-            nextVC.hidesBottomBarWhenPushed = true
-            let data = viewModel.recommendSiteList[indexPath.item]
-            if let url = data.siteUrl {
-                nextVC.setupDataBind(linkURL: url)
-            }
-            self.navigationController?.pushViewController(nextVC, animated: true)
+            let data = viewModel.recommendSites[indexPath.item]
+            if let url = data.siteUrl { onOurLinkSelected?(url) }
         default: break
         }
     }
@@ -109,12 +118,12 @@ extension HomeViewController: UICollectionViewDataSource {
         case 0:
             return 1
         case 1:
-            let count = viewModel.recentLink.count
+            let count = viewModel.recentLinks.count
             return count == 0 ? 1 : min(count, 3)
         case 2:
-            return viewModel.weeklyLinkList.count
+            return viewModel.weeklyLinks.count
         case 3:
-            return viewModel.recommendSiteList.count
+            return viewModel.recommendSites.count
         default:
             return 0
         }
@@ -127,11 +136,11 @@ extension HomeViewController: UICollectionViewDataSource {
                 withReuseIdentifier: MainCollectionViewCell.className,
                 for: indexPath
             ) as? MainCollectionViewCell else { return UICollectionViewCell() }
-            let model = viewModel.mainInfoList
+            let model = viewModel.mainInfo
             cell.bindData(forModel: model)
             return cell
         case 1:
-            let lastIndex = viewModel.recentLink.count
+            let lastIndex = viewModel.recentLinks.count
             if lastIndex == 0 {
                 guard let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: UserClipEmptyCollectionViewCell.className,
@@ -144,7 +153,7 @@ extension HomeViewController: UICollectionViewDataSource {
                     for: indexPath
                 ) as? DetailClipListCollectionViewCell else { return UICollectionViewCell() }
                 if indexPath.item < lastIndex {
-                    let model = viewModel.recentLink
+                    let model = viewModel.recentLinks
                     cell.configureCell(forModel: model[indexPath.item], isClipHidden: false)
                 }
                 return cell
@@ -154,7 +163,7 @@ extension HomeViewController: UICollectionViewDataSource {
                 withReuseIdentifier: WeeklyLinkCollectionViewCell.className,
                 for: indexPath
             ) as? WeeklyLinkCollectionViewCell else { return UICollectionViewCell() }
-            let model = viewModel.weeklyLinkList
+            let model = viewModel.weeklyLinks
             cell.bindData(forModel: model[indexPath.item])
             return cell
         case 3:
@@ -162,7 +171,7 @@ extension HomeViewController: UICollectionViewDataSource {
                 withReuseIdentifier: WeeklyRecommendCollectionViewCell.className,
                 for: indexPath
             ) as? WeeklyRecommendCollectionViewCell else { return UICollectionViewCell() }
-            let model = viewModel.recommendSiteList
+            let model = viewModel.recommendSites
             cell.bindData(forModel: model[indexPath.item])
             return cell
         default:
@@ -183,7 +192,7 @@ extension HomeViewController: UICollectionViewDataSource {
             ) as? HomeHeaderCollectionView else { return UICollectionReusableView() }
             switch indexPath.section {
             case 1:
-                let nickName = viewModel.mainInfoList.nickname
+                let nickName = viewModel.mainInfo.nickname
                 header.configureHeader(forTitle: nickName,
                                        num: indexPath.section)
                 header.arrowButton.addTarget(self, action: #selector(arrowButtonTapped), for: .touchUpInside)
@@ -233,6 +242,30 @@ extension HomeViewController: UICollectionViewDataSource {
 // MARK: - Private Extensions
 
 private extension HomeViewController {
+    func bindViewModels() {
+        let input = HomeViewModel.Input(
+            requestMainInfo: requestHomeData.asDriver(),
+            requestRecentLinks: requestHomeData.asDriver(),
+            requestWeeklyLinks: requestHomeData.asDriver(),
+            requestRecommendSites: requestHomeData.asDriver(),
+            requestPopupInfoList: requestHomeData.asDriver(),
+            changePopupDate: changePopupState.asDriver()
+        )
+        
+        let output = viewModel.transform(input, cancelBag: cancelBag)
+        
+        output.needToReload
+            .sink { [weak self] in
+                guard let self else { return }
+                homeView.collectionView.reloadData()
+            }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
+            }.store(in: cancelBag)
+    }
+    
     func setupHierarchy() {
         view.addSubview(homeView.collectionView)
     }
@@ -270,7 +303,6 @@ private extension HomeViewController {
                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                         withReuseIdentifier: HomeFooterCollectionView.className)
         }
-        addClipBottomSheetView.addClipBottomSheetViewDelegate = self
     }
     
     func setupDelegate() {
@@ -278,17 +310,7 @@ private extension HomeViewController {
         homeView.collectionView.dataSource = self
     }
     
-    // ViewModel
-    func setupViewModel() {
-        viewModel.setupDataChangeAction(changeAction: reloadCollectionView,
-                                        forUnAuthorizedAction: unAuthorizedAction,
-                                        editAction: addClipAction,
-                                        moveAction: moveBottomAction,
-                                        popupAction: showPopupAction)
-    }
-    
     func setupToolTip() {
-        guard let secondToolTip else { return }
         if UserDefaults.standard.value(forKey: TipUserDefaults.isShowHomeViewToolTip) == nil {
             UserDefaults.standard.set(true, forKey: TipUserDefaults.isShowHomeViewToolTip)
             
@@ -303,36 +325,6 @@ private extension HomeViewController {
         }
     }
     
-    func reloadCollectionView(isHidden: Bool) {
-        homeView.collectionView.reloadData()
-    }
-    
-    func unAuthorizedAction() {
-        changeViewController(viewController: LoginViewController())
-    }
-    
-    func moveBottomAction(isDuplicated: Bool) {
-        if isDuplicated {
-            addHeightBottom()
-            addClipBottomSheetView.changeTextField(addButton: false,
-                                                   border: true,
-                                                   error: true,
-                                                   clearButton: true)
-            addClipBottomSheetView.setupMessage(message: "이미 같은 이름의 클립이 있어요")
-        } else {
-            minusHeightBottom()
-        }
-    }
-    
-    func addClipAction() {
-        dismiss(animated: true) {
-            self.addClipBottomSheetView.resetTextField()
-            self.showToastMessage(width: 157,
-                                  status: .check,
-                                  message: StringLiterals.ToastMessage.completeAddClip)
-        }
-    }
-        
     func showPopupAction(isShow: Bool) {
         if isShow {
             guard let popupId = viewModel.popupInfoList?.first?.id else { return }
@@ -343,19 +335,19 @@ private extension HomeViewController {
                 centerButtonTitle: "참여하기",
                 bottomButtonTitle: "일주일간 보지 않기",
                 centerButtonHandler: {
-                    let nextVC = LinkWebViewController()
+                    let nextVC = ViewControllerFactory.shared.makeLinkWebVC()
                     nextVC.hidesBottomBarWhenPushed = true
                     nextVC.setupDataBind(linkURL: self.viewModel.popupInfoList?.first?.linkURL ?? "")
-                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 1)
+                    self.changePopupState.send((popupId, 1))
                     self.dismiss(animated: false)
                     self.navigationController?.pushViewController(nextVC, animated: true)
                 },
                 bottomButtonHandler: {
-                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 7)
+                    self.changePopupState.send((popupId, 7))
                     self.dismiss(animated: false)
                 },
                 closeButtonHandler: {
-                    self.viewModel.patchEditPopupHiddenAPI(popupId: popupId, hideDate: 1)
+                    self.changePopupState.send((popupId, 1))
                     self.dismiss(animated: false)
                 }
             )
@@ -363,48 +355,25 @@ private extension HomeViewController {
     }
     
     func setupNavigationBar() {
-        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
-                                                                hasRightButton: true,
-                                                                mainTitle: StringOrImageType.image(.wordmark),
-                                                                rightButton: StringOrImageType.image(.icSettings24),
-                                                                rightButtonAction: rightButtonTapped)
-        
+        let type: ToasterNavigationType = ToasterNavigationType(
+            hasBackButton: false,
+            hasRightButton: true,
+            mainTitle: StringOrImageType.image(.wordmark),
+            rightButton: StringOrImageType.image(.icSettings24),
+            rightButtonAction: rightButtonTapped
+        )
         if let navigationController = navigationController as? ToasterNavigationController {
             navigationController.setupNavigationBar(forType: type)
         }
     }
     
     func rightButtonTapped() {
-        let settingVC = SettingViewController()
-        settingVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(settingVC, animated: true)
+        onSettingSelected?()
     }
     
     @objc
     func arrowButtonTapped() {
-        let detailClipViewController = DetailClipViewController()
-        detailClipViewController.setupCategory(id: 0, name: "전체 클립")
-        navigationController?.pushViewController(detailClipViewController, animated: true)
-    }
-}
-
-// MARK: - AddClipBottomSheetViewDelegate
-
-extension HomeViewController: AddClipBottomSheetViewDelegate {
-    func callCheckAPI(text: String) {
-        viewModel.getCheckCategoryAPI(categoryTitle: text)
-    }
-    
-    func addHeightBottom() {
-        addClipBottom.setupSheetHeightChanges(bottomHeight: 219)
-    }
-    
-    func minusHeightBottom() {
-        addClipBottom.setupSheetHeightChanges(bottomHeight: 198)
-    }
-    
-    func dismissButtonTapped(title: String) {
-        viewModel.postAddCategoryAPI(requestBody: title)
+        onArrowSelected?(0, "전체 클립")
     }
 }
 
@@ -412,7 +381,6 @@ extension HomeViewController: AddClipBottomSheetViewDelegate {
 
 extension HomeViewController: UserClipCollectionViewCellDelegate {
     func addClipCellTapped() {
-        let nextVC = AddLinkViewController()
-        self.navigationController?.pushViewController(nextVC, animated: true)
+        onAddLinkSelected?()
     }
 }

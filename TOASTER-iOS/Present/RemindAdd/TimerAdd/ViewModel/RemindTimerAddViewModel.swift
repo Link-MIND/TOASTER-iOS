@@ -5,89 +5,147 @@
 //  Created by 김다예 on 1/16/24.
 //
 
-import Foundation
+import Combine
+import UIKit
 
-final class RemindTimerAddViewModel {
+final class RemindTimerAddViewModel: ViewModelType {
     
-    // MARK: - Properties
+    private var cancelBag = CancelBag()
+    private(set) var remindAddData: RemindTimerAddModel?
     
-    typealias DataChangeAction = () -> Void
-    private var dataChangeAction: DataChangeAction?
-    private var patchSuccessAction: DataChangeAction?
-    private var editSuccessAction: DataChangeAction?
-    private var unAuthorizedAction: DataChangeAction?
-    private var unProcessableAction: DataChangeAction?
-    private var badRequestAction: DataChangeAction?
+    // MARK: - Input State
     
-    // MARK: - Data
+    struct Input {
+        let requestGetDetailTimer: Driver<Int>
+        let completeAddButtonTapped: Driver<(Int, RemindTimerAddModel)>
+        let completeEditButtonTapped: Driver<RemindTimerEditModel>
+    }
     
-    private(set) var remindAddData: RemindTimerAddModel? {
-        didSet {
-            dataChangeAction?()
-        }
+    // MARK: - Output State
+    
+    struct Output {
+        let onSetView = PassthroughSubject<Void, Never>()
+        let onSetTimerSuccess = PassthroughSubject<Void, Never>()
+        let onEditTimerSuccess = PassthroughSubject<Void, Never>()
+        let onError = PassthroughSubject<String, Never>()
+        let navigateToLogin = PassthroughSubject<Void, Never>()
+    }
+    
+    // MARK: - Method
+
+    func transform(_ input: Input, cancelBag: CancelBag) -> Output {
+        let output = Output()
+        
+        input.requestGetDetailTimer
+            .networkFlatMap(self, { context, timerID in
+                context.getDetailTimerAPI(forID: timerID)
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
+            .sink { [weak self] data in
+                self?.remindAddData = data
+                output.onSetView.send()
+            }.store(in: cancelBag)
+        
+        input.completeAddButtonTapped
+            .networkFlatMap(self, { context, body in
+                context.postCreateTimerAPI(forClipID: body.0, forModel: body.1)
+            }, onError: { error in
+                switch error as? NetworkResult<Error> {
+                case .unProcessable:
+                    output.onError.send(StringLiterals.ToastMessage.noticeSetTimer)
+                case .badRequest:
+                    output.onError.send(StringLiterals.ToastMessage.noticeMaxTimer)
+                default: break
+                }
+            })
+            .sink {
+                output.onSetTimerSuccess.send()
+            }.store(in: cancelBag)
+        
+        input.completeEditButtonTapped
+            .networkFlatMap(self, { context, model in
+                context.patchEditTimerAPI(forModel: model)
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
+            .sink {
+                output.onEditTimerSuccess.send()
+            }.store(in: cancelBag)
+        
+        return output
     }
 }
 
-// MARK: - extension
+// MARK: - Network
 
 extension RemindTimerAddViewModel {
-    func setupDataChangeAction(changeAction: @escaping DataChangeAction,
-                               forSuccessAction: @escaping DataChangeAction,
-                               forEditSuccessAction: @escaping DataChangeAction,
-                               forUnAuthorizedAction: @escaping DataChangeAction,
-                               forUnProcessableAction: @escaping DataChangeAction,
-                               forBadRequestAction: @escaping DataChangeAction) {
-        dataChangeAction = changeAction
-        patchSuccessAction = forSuccessAction
-        editSuccessAction = forEditSuccessAction
-        unAuthorizedAction = forUnAuthorizedAction
-        unProcessableAction = forUnProcessableAction
-        badRequestAction = forBadRequestAction
-    }
-    
-    func fetchClipData(forID: Int) {
-        NetworkService.shared.timerService.getDetailTimer(timerId: forID) { result in
-            switch result {
-            case .success(let response):
-                if let data = response?.data {
-                    self.remindAddData = RemindTimerAddModel(clipTitle: data.categoryName,
-                                                             remindTime: data.remindTime,
-                                                             remindDates: data.remindDates)
+    func getDetailTimerAPI(forID: Int) -> AnyPublisher<RemindTimerAddModel?, Error> {
+        return Future<RemindTimerAddModel?, Error> { promise in
+            NetworkService.shared.timerService.getDetailTimer(timerId: forID) { result in
+                switch result {
+                case .success(let response):
+                    var remindAddData: RemindTimerAddModel?
+                    if let data = response?.data {
+                        remindAddData = RemindTimerAddModel(
+                            clipTitle: data.categoryName,
+                            remindTime: data.remindTime,
+                            remindDates: data.remindDates
+                        )
+                    }
+                    promise(.success(remindAddData))
+                case .unAuthorized, .networkFail, .notFound:
+                    promise(.failure(NetworkResult<Error>.unAuthorized))
+                default: break
                 }
-            default: break
             }
-        }
+        }.eraseToAnyPublisher()
     }
     
-    func postClipData(forClipID: Int, forModel: RemindTimerAddModel) {
-        NetworkService.shared.timerService.postCreateTimer(requestBody: PostCreateTimerRequestDTO(categoryId: forClipID,
-                                                                                                  remindTime: forModel.remindTime,
-                                                                                                  remindDates: forModel.remindDates)) { result in
-            switch result {
-            case .success:
-                self.patchSuccessAction?()
-            case .unAuthorized, .networkFail:
-                self.unAuthorizedAction?()
-            case .unProcessable:
-                self.unProcessableAction?()
-            case .badRequest:
-                self.badRequestAction?()
-            default: break
+    func postCreateTimerAPI(
+        forClipID: Int,
+        forModel: RemindTimerAddModel
+    ) -> AnyPublisher<Void, Error> {
+        return Future<Void, Error> { promise in
+            NetworkService.shared.timerService.postCreateTimer(
+                requestBody: PostCreateTimerRequestDTO(
+                    categoryId: forClipID,
+                    remindTime: forModel.remindTime,
+                    remindDates: forModel.remindDates
+                )
+            ) { result in
+                switch result {
+                case .success:
+                    promise(.success(()))
+                case .unAuthorized, .networkFail, .notFound:
+                    promise(.failure(NetworkResult<Error>.unAuthorized))
+                case .unProcessable:
+                    promise(.failure(NetworkResult<Error>.unProcessable))
+                case .badRequest:
+                    promise(.failure(NetworkResult<Error>.badRequest))
+                default: break
+                }
             }
-        }
+        }.eraseToAnyPublisher()
     }
     
-    func editClipData(forModel: RemindTimerEditModel) {
-        NetworkService.shared.timerService.patchEditTimer(timerId: forModel.remindID,
-                                                          requestBody: PatchEditTimerRequestDTO(remindTime: forModel.remindTime,
-                                                                                                remindDates: forModel.remindDates)) { result in
-            switch result {
-            case .success:
-                self.editSuccessAction?()
-            case .unAuthorized, .networkFail:
-                self.unProcessableAction?()
-            default: break
+    func patchEditTimerAPI(forModel: RemindTimerEditModel) -> AnyPublisher<Void, Error> {
+        return Future<Void, Error> { promise in
+            NetworkService.shared.timerService.patchEditTimer(
+                timerId: forModel.remindID,
+                requestBody: PatchEditTimerRequestDTO(
+                    remindTime: forModel.remindTime,
+                    remindDates: forModel.remindDates
+                )
+            ) { result in
+                switch result {
+                case .success:
+                    promise(.success(()))
+                case .unAuthorized, .networkFail, .notFound:
+                    promise(.failure(NetworkResult<Error>.unProcessable))
+                default: break
+                }
             }
-        }
+        }.eraseToAnyPublisher()
     }
 }

@@ -5,16 +5,30 @@
 //  Created by 김다예 on 1/11/24.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
 import Then
 
 final class RemindSelectClipViewController: UIViewController {
-
-    // MARK: - Properties
     
-    private let viewModel = RemindSelectClipViewModel()
+    // MARK: - View Controllable
+    
+    var onEditTimerSelected: ((RemindClipModel?) -> Void)?
+    var onPopToRoot: (() -> Void)?
+
+    // MARK: - Data Stream
+    
+    private let viewModel: RemindSelectClipViewModel!
+    private let cancelBag = CancelBag()
+
+    private var requestClipData = PassthroughSubject<Void, Never>()
+    
+    // MARK: - UI Properties
+    
+    private let clipSelectCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let nextButton: UIButton = UIButton()
     
     private var selectedClip: RemindClipModel? {
         didSet {
@@ -22,34 +36,53 @@ final class RemindSelectClipViewController: UIViewController {
         }
     }
     
-    // MARK: - UI Properties
-    
-    private let clipSelectCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    private let nextButton: UIButton = UIButton()
-    
     // MARK: - Life Cycle
+    
+    init(viewModel: RemindSelectClipViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        bindViewModels()
         setupStyle()
         setupHierarchy()
         setupLayout()
         setupDelegate()
-        setupViewModel()
-        viewModel.fetchClipData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupNavigationBar()
+        requestClipData.send()
     }
 }
 
 // MARK: - Private Extension
 
 private extension RemindSelectClipViewController {
+    func bindViewModels() {
+        let input = RemindSelectClipViewModel.Input(requestClipList: requestClipData.asDriver())
+        
+        let output = viewModel.transform(input, cancelBag: cancelBag)
+        
+        output.needToReload
+            .sink { [weak self] in
+                guard let self else { return }
+                clipSelectCollectionView.reloadData()
+            }.store(in: cancelBag)
+        
+        output.navigateToLogin
+            .sink {
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
+            }.store(in: cancelBag)
+    }
+    
     func setupStyle() {
         view.backgroundColor = .toasterBackground
         
@@ -90,20 +123,15 @@ private extension RemindSelectClipViewController {
         clipSelectCollectionView.delegate = self
         clipSelectCollectionView.dataSource = self
     }
-    
-    func setupViewModel() {
-        viewModel.setupDataChangeAction {
-            self.clipSelectCollectionView.reloadData()
-        }
-    }
-    
+
     func setupNavigationBar() {
-        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: false,
-                                                                hasRightButton: true,
-                                                                mainTitle: StringOrImageType.string("알림받을 클립 선택"),
-                                                                rightButton: StringOrImageType.image(.icClose24),
-                                                                rightButtonAction: closeButtonTapped)
-        
+        let type: ToasterNavigationType = ToasterNavigationType(
+            hasBackButton: false,
+            hasRightButton: true,
+            mainTitle: StringOrImageType.string("알림받을 클립 선택"),
+            rightButton: StringOrImageType.image(.icClose24),
+            rightButtonAction: closeButtonTapped
+        )
         if let navigationController = navigationController as? ToasterNavigationController {
             navigationController.setupNavigationBar(forType: type)
         }
@@ -114,18 +142,15 @@ private extension RemindSelectClipViewController {
                   forSubText: "지금까지 진행한 타이머 설정이\n사라져요",
                   forLeftButtonTitle: StringLiterals.Button.close,
                   forRightButtonTitle: StringLiterals.Button.cancel,
-                  forRightButtonHandler: makeTimerCancle)
+                  forRightButtonHandler: makeTimerCancel)
     }
         
-    func makeTimerCancle() {
-        dismiss(animated: false)
-        navigationController?.popViewController(animated: true)
+    func makeTimerCancel() {
+        onPopToRoot?()
     }
     
     @objc func nextButtonTapped() {
-        let nextViewController = RemindTimerAddViewController()
-        nextViewController.configureView(forModel: selectedClip)
-        navigationController?.pushViewController(nextViewController, animated: true)
+        onEditTimerSelected?(selectedClip)
     }
 }
 
@@ -133,7 +158,7 @@ private extension RemindSelectClipViewController {
 
 extension RemindSelectClipViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedClip = viewModel.clipData[indexPath.item]
+        selectedClip = viewModel.clips[indexPath.item]
     }
 }
 
@@ -141,16 +166,16 @@ extension RemindSelectClipViewController: UICollectionViewDelegate {
 
 extension RemindSelectClipViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.clipData.count
+        return viewModel.clips.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RemindSelectClipCollectionViewCell.className, for: indexPath) as? RemindSelectClipCollectionViewCell else { return UICollectionViewCell() }
         
         if indexPath.item == 0 {
-            cell.configureCell(forModel: viewModel.clipData[indexPath.item], icon: .icAllClip24)
+            cell.configureCell(forModel: viewModel.clips[indexPath.item], icon: .icAllClip24)
         } else {
-            cell.configureCell(forModel: viewModel.clipData[indexPath.item], icon: .icClip24Black)
+            cell.configureCell(forModel: viewModel.clips[indexPath.item], icon: .icClip24Black)
         }
         
         return cell

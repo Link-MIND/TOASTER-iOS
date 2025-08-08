@@ -5,55 +5,80 @@
 //  Created by 김다예 on 1/11/24.
 //
 
-import Foundation
+import Combine
+import UIKit
 
-final class RemindSelectClipViewModel {
+final class RemindSelectClipViewModel: ViewModelType {
     
-    // MARK: - Properties
-
-    typealias DataChangeAction = () -> Void
-    private var dataChangeAction: DataChangeAction?
+    private var cancelBag = CancelBag()
+    private(set) var clips: [RemindClipModel] = []
     
-    // MARK: - Data
-
-    private(set) var clipData: [RemindClipModel] = [] {
-        didSet {
-            dataChangeAction?()
-        }
+    // MARK: - Input State
+    
+    struct Input {
+        let requestClipList: Driver<Void>
     }
     
-    init() {
-        fetchClipData()
+    // MARK: - Output State
+    
+    struct Output {
+        let needToReload = PassthroughSubject<Void, Never>()
+        let navigateToLogin = PassthroughSubject<Void, Never>()
+    }
+    
+    // MARK: - Method
+
+    func transform(_ input: Input, cancelBag: CancelBag) -> Output {
+        let output = Output()
+        
+        input.requestClipList
+            .networkFlatMap(self, { context, _ in
+                context.fetchClipData()
+            }, onError: { _ in
+                output.navigateToLogin.send()
+            })
+            .sink { [weak self] clips in
+                self?.clips = clips
+                output.needToReload.send()
+            }.store(in: cancelBag)
+        return output
     }
 }
 
-// MARK: - extension
+// MARK: - Network
 
 extension RemindSelectClipViewModel {
-    func setupDataChangeAction(changeAction: @escaping DataChangeAction) {
-        dataChangeAction = changeAction
-    }
-    
-    func fetchClipData() {
-        NetworkService.shared.clipService.getAllCategory { result in
-            switch result {
-            case .success(let response):
-                
-                var clipDataList: [RemindClipModel] = [RemindClipModel(id: 0,
-                                                                       title: "전체 클립",
-                                                                       clipCount: response?.data.toastNumberInEntire ?? 0)]
-                
-                if let categories = response?.data.categories {
-                    categories.forEach { category in
-                        clipDataList.append(RemindClipModel(id: category.categoryId,
-                                                            title: category.categoryTitle,
-                                                            clipCount: category.toastNum))
+    func fetchClipData() -> AnyPublisher<[RemindClipModel], Error> {
+        return Future<[RemindClipModel], Error> { promise in
+            NetworkService.shared.clipService.getAllCategory { result in
+                switch result {
+                case .success(let response):
+                    var clips: [RemindClipModel] = [
+                        RemindClipModel(
+                            id: 0,
+                            title: "전체 클립",
+                            clipCount: response?.data.toastNumberInEntire ?? 0
+                        )
+                    ]
+                    
+                    if let categories = response?.data.categories {
+                        categories.forEach { category in
+                            clips.append(
+                                RemindClipModel(
+                                    id: category.categoryId,
+                                    title: category.categoryTitle,
+                                    clipCount: category.toastNum
+                                )
+                            )
+                        }
                     }
+                    
+                    promise(.success(clips))
+                case .unAuthorized, .networkFail, .notFound:
+                    promise(.failure(NetworkResult<Error>.unAuthorized))
+                default: break
                 }
-                
-                self.clipData = clipDataList
-            default: break
             }
-        }
+        }.eraseToAnyPublisher()
     }
 }

@@ -12,6 +12,10 @@ import Then
 
 final class SettingViewController: UIViewController {
     
+    // MARK: - View Controllable
+
+    var onChangeRoot: (() -> Void)?
+    
     // MARK: - Properties
     
     private let userInfoView = MypageHeaderView()
@@ -120,9 +124,8 @@ private extension SettingViewController {
                     self?.userName = responseData.nickname
                 }
             case .unAuthorized, .networkFail:
-                self?.changeViewController(viewController: LoginViewController())
-            default:
-                self?.changeViewController(viewController: LoginViewController())
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
+            default: break
             }
         }
     }
@@ -153,7 +156,7 @@ private extension SettingViewController {
                 let result = KeyChainService.deleteTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
                 
                 if result.access && result.refresh {
-                    self?.changeViewController(viewController: LoginViewController())
+                    self?.onChangeRoot?()
                 }
             case .notFound, .unProcessable, .networkFail:
                 print("🍞⛔️회원탈퇴 실패⛔️🍞")
@@ -172,7 +175,7 @@ private extension SettingViewController {
                 self.isToggle = response?.data?.isAllowed
                 self.setupWarningView()
             case .notFound, .networkFail:
-                self.changeViewController(viewController: LoginViewController())
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             default: break
             }
         }
@@ -184,15 +187,19 @@ private extension SettingViewController {
             case .success(let response):
                 if let responseData = response?.data {
                     DispatchQueue.main.async { [weak self] in
-                        self?.userInfoView.bindModel(model: MypageUserModel(nickname: responseData.nickname,
-                                                                                profile: responseData.profile,
-                                                                                allReadToast: responseData.allReadToast,
-                                                                                thisWeekendRead: responseData.thisWeekendRead,
-                                                                                thisWeekendSaved: responseData.thisWeekendSaved))
+                        self?.userInfoView.bindModel(
+                            model: MypageUserModel(
+                                nickname: responseData.nickname,
+                                profile: responseData.profile,
+                                allReadToast: responseData.allReadToast,
+                                thisWeekendRead: responseData.thisWeekendRead,
+                                thisWeekendSaved: responseData.thisWeekendSaved
+                            )
+                        )
                     }
                 }
             case .unAuthorized, .networkFail:
-                self?.changeViewController(viewController: LoginViewController())
+                NotificationCenter.default.post(name: .refreshTokenExpired, object: nil)
             default:
                 print("default Fail")
             }
@@ -204,7 +211,7 @@ private extension SettingViewController {
     }
     
     func popupConfirmationButtonTapped() {
-        self.changeViewController(viewController: LoginViewController())
+        onChangeRoot?()
     }
 }
 
