@@ -21,9 +21,8 @@ final class TabBarController: UITabBarController {
     
     var onHomeScene: Scene?
     var onClipScene: Scene?
-    var onPlusScene: (() -> Void)?
-    var onSearchScene: Scene?
     var onTimerScene: Scene?
+    var onMyScene: Scene?
      
     // MARK: - Life Cycle
     
@@ -49,9 +48,8 @@ private extension TabBarController {
         self.viewControllers = [
             createNavigation(for: .home),
             createNavigation(for: .clip),
-            createNavigation(for: .plus),
-            createNavigation(for: .search),
-            createNavigation(for: .timer)
+            createNavigation(for: .timer),
+            createNavigation(for: .my)
         ]
     }
     
@@ -67,10 +65,6 @@ private extension TabBarController {
             image: item.normalItem?.withRenderingMode(.alwaysOriginal),
             selectedImage: item.selectedItem?.withRenderingMode(.alwaysOriginal)
         )
-        
-        if item == .plus {
-            tabBarItem.imageInsets = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
-        }
         
         let normalAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.suitBold(size: 12),
@@ -109,9 +103,8 @@ extension TabBarController: UITabBarControllerDelegate {
         switch selectedIndex {
         case 0: onHomeScene?(controller)
         case 1: onClipScene?(controller)
-        case 2: onPlusScene?()
-        case 3: onSearchScene?(controller)
-        case 4: onTimerScene?(controller)
+        case 2: onTimerScene?(controller)
+        case 3: onMyScene?(controller)
         default: return
         }
     }

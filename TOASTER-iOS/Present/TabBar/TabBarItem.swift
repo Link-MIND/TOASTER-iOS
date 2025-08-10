@@ -9,7 +9,7 @@ import UIKit
 
 enum TabBarItem: CaseIterable {
     
-    case home, clip, plus, search, timer
+    case home, clip, timer, my
 
     // 선택되지 않은 탭
     var normalItem: UIImage? {
@@ -18,13 +18,10 @@ enum TabBarItem: CaseIterable {
             return .icHome24.withTintColor(.gray150)
         case .clip:
             return .icClipFull24.withTintColor(.gray150)
-        case .plus:
-            return .fabPlus
-        case .search:
-            return .icSearch24.withTintColor(.gray150)
         case .timer:
             return .icTimer24.withTintColor(.gray150)
-        
+        case .my:
+            return .icMy24.withTintColor(.gray150)
         }
     }
     
@@ -35,12 +32,10 @@ enum TabBarItem: CaseIterable {
             return .icHome24.withTintColor(.black900)
         case .clip:
             return .icClipFull24.withTintColor(.black900)
-        case .plus:
-            return .fabPlus
-        case .search:
-            return .icSearch24.withTintColor(.black900)
         case .timer:
             return .icTimer24.withTintColor(.black900)
+        case .my:
+            return .icMy24.withTintColor(.black900)
         }
     }
     
@@ -49,9 +44,8 @@ enum TabBarItem: CaseIterable {
         switch self {
         case .home: return StringLiterals.Tabbar.home
         case .clip: return StringLiterals.Tabbar.clip
-        case .plus: return nil
-        case .search: return StringLiterals.Tabbar.search
         case .timer: return StringLiterals.Tabbar.timer
+        case .my: return StringLiterals.Tabbar.my
         }
     }
 }

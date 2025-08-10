@@ -22,6 +22,7 @@ protocol ViewControllerFactoryProtocol {
     func makeRemindSelectClipVC() -> RemindSelectClipViewController
     func makeRemindTimerAddVC() -> RemindTimerAddViewController
     func makeSettingVC() -> SettingViewController
+    func makeMyVC() -> MyViewController
 }
 
 final class ViewControllerFactory: ViewControllerFactoryProtocol {
@@ -115,5 +116,10 @@ final class ViewControllerFactory: ViewControllerFactoryProtocol {
     func makeSettingVC() -> SettingViewController {
         let settingVC = SettingViewController()
         return settingVC
+    }
+    
+    func makeMyVC() -> MyViewController {
+        let myVC = MyViewController()
+        return myVC
     }
 }
