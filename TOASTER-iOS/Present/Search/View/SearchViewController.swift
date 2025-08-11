@@ -139,7 +139,7 @@ private extension SearchViewController {
             $0.setImage(.icSearch20, for: .normal)
             $0.addAction(
                 UIAction { _ in
-                    self.searchSubject.send(self.searchTextField.text ?? "")
+                    self.performSearch()
                 }, for: .touchUpInside
             )
         }
@@ -221,13 +221,19 @@ private extension SearchViewController {
         searchResultCollectionView.delegate = self
         searchResultCollectionView.dataSource = self
     }
+    
+    func performSearch() {
+        let query = searchTextField.text ?? ""
+        searchSubject.send(query)
+        view.endEditing(true)
+    }
 }
 
 // MARK: - UITextFieldDelegate
 
 extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        searchSubject.send(textField.text ?? "")
+        performSearch()
         return true
     }
 }
@@ -251,7 +257,6 @@ extension SearchViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 
 extension SearchViewController: UICollectionViewDataSource {
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
