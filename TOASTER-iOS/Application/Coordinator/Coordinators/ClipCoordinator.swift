@@ -33,6 +33,9 @@ final class ClipCoordinator: BaseCoordinator, CoordinatorFinishOutput {
 private extension ClipCoordinator {
     func showClipVC() {
         let vc = viewControllerFactory.makeClipVC()
+        vc.onSearchBarButtonTapped = { [weak self] in
+            self?.showSearchVC()
+        }
         vc.onEditClipSelected = { [weak self] clipList in
             self?.showEditClipVC(clipList: clipList)
         }
@@ -40,6 +43,20 @@ private extension ClipCoordinator {
             self?.showDetailClipVC(id: clipId, name: clipName)
         }
         router.setRoot(vc, animated: false)
+    }
+    
+    func showSearchVC() {
+        let vc = viewControllerFactory.makeSearchVC()
+        vc.onBack = { [weak self] in
+            self?.router.pop(animated: true)
+        }
+        vc.onLinkItemSelected = { [weak self] linkURL, isRead, id in
+            self?.showLinkWebVC(linkURL: linkURL, isRead: isRead, id: id)
+        }
+        vc.onClipItemSelected = { [weak self] id, name in
+            self?.showDetailClipVC(id: id, name: name)
+        }
+        router.push(vc, animated: false, hideBottomBarWhenPushed: true)
     }
     
     func showEditClipVC(clipList: ClipModel) {
