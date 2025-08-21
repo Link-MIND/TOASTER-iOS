@@ -21,8 +21,6 @@ final class TabBarController: UITabBarController {
     
     var onHomeScene: Scene?
     var onClipScene: Scene?
-    var onTimerScene: Scene?
-    var onMyScene: Scene?
      
     // MARK: - Life Cycle
     
@@ -47,9 +45,7 @@ private extension TabBarController {
         
         self.viewControllers = [
             createNavigation(for: .home),
-            createNavigation(for: .clip),
-            createNavigation(for: .timer),
-            createNavigation(for: .my)
+            createNavigation(for: .clip)
         ]
     }
     
@@ -103,8 +99,6 @@ extension TabBarController: UITabBarControllerDelegate {
         switch selectedIndex {
         case 0: onHomeScene?(controller)
         case 1: onClipScene?(controller)
-        case 2: onTimerScene?(controller)
-        case 3: onMyScene?(controller)
         default: return
         }
     }

@@ -60,7 +60,7 @@ final class AddLinkViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationBar()
+        //setupNavigationBar()
         if !isNavigationBarHidden { self.navigationController?.isNavigationBarHidden = false }
     }
     
@@ -105,19 +105,19 @@ private extension AddLinkViewController {
        addLinkView.nextTopButton.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
    }
     
-    func setupNavigationBar() {
-        let type: ToasterNavigationType = ToasterNavigationType(
-            hasBackButton: false,
-            hasRightButton: true,
-            mainTitle: StringOrImageType.string("링크 저장"),
-            rightButton: StringOrImageType.image(.icClose24),
-            rightButtonAction: closeButtonTapped
-        )
-        
-        if let navigationController = navigationController as? ToasterNavigationController {
-            navigationController.setupNavigationBar(forType: type)
-        }
-    }
+//    func setupNavigationBar() {
+//        let type: ToasterNavigationType = ToasterNavigationType(
+//            hasBackButton: false,
+//            hasRightButton: true,
+//            mainTitle: StringOrImageType.string("링크 저장"),
+//            rightButton: StringOrImageType.image(.icClose24),
+//            rightButtonAction: closeButtonTapped
+//        )
+//        
+//        if let navigationController = navigationController as? ToasterNavigationController {
+//            navigationController.setupNavigationBar(forType: type)
+//        }
+//    }
     
     func closeButtonTapped() {
         showPopup(forMainText: "링크 저장을 취소하시겠어요?",

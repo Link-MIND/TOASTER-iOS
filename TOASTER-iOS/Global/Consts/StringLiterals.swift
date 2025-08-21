@@ -32,6 +32,8 @@ enum StringLiterals {
         static let cancel = "취소"
         static let next = "다음"
         static let editTitle = "제목 편집"
+        static let noSetup = "설정 안함"
+        static let aWeek = "일주일"
     }
     
     enum Placeholder {
@@ -54,5 +56,11 @@ enum StringLiterals {
         static let completeEditTitle = "제목 편집 완료"
         static let noticeSetTimer = "한 클립당 하나의 타이머만 설정 가능해요"
         static let noticeMaxTimer = "타이머는 최대 다섯 개까지 설정 가능해요"
+    }
+    
+    enum BottomSheet {
+        static let saveLink = "링크 저장"
+        static let setupTimer = "타이머 설정"
+        static let selectClip = "클립 선택"
     }
 }

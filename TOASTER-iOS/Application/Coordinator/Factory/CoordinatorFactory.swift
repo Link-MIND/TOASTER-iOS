@@ -31,18 +31,6 @@ protocol CoordinatorFactoryProtocol {
         viewControllerFactory: ViewControllerFactoryProtocol,
         coordinatorFactory: CoordinatorFactoryProtocol
     ) -> ClipCoordinator
-    
-    func makeTimerCoordinator(
-        router: RouterProtocol,
-        viewControllerFactory: ViewControllerFactoryProtocol,
-        coordinatorFactory: CoordinatorFactoryProtocol
-    ) -> TimerCoordinator
-    
-    func makeMyCoordinator(
-        router: RouterProtocol,
-        viewControllerFactory: ViewControllerFactoryProtocol,
-        coordinatorFactory: CoordinatorFactoryProtocol
-    ) -> MyCoordinator
 }
 
 final class CoordinatorFactory: CoordinatorFactoryProtocol {
@@ -88,30 +76,6 @@ final class CoordinatorFactory: CoordinatorFactoryProtocol {
         coordinatorFactory: CoordinatorFactoryProtocol
     ) -> ClipCoordinator {
         return ClipCoordinator(
-            router: router,
-            viewControllerFactory: viewControllerFactory,
-            coordinatorFactory: coordinatorFactory
-        )
-    }
-    
-    func makeTimerCoordinator(
-        router: RouterProtocol,
-        viewControllerFactory: ViewControllerFactoryProtocol,
-        coordinatorFactory: CoordinatorFactoryProtocol
-    ) -> TimerCoordinator {
-        return TimerCoordinator(
-            router: router,
-            viewControllerFactory: viewControllerFactory,
-            coordinatorFactory: coordinatorFactory
-        )
-    }
-    
-    func makeMyCoordinator(
-        router: RouterProtocol,
-        viewControllerFactory: ViewControllerFactoryProtocol,
-        coordinatorFactory: CoordinatorFactoryProtocol
-    ) -> MyCoordinator {
-        return MyCoordinator(
             router: router,
             viewControllerFactory: viewControllerFactory,
             coordinatorFactory: coordinatorFactory

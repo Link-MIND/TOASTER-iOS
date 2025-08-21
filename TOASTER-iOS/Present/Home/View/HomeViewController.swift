@@ -33,6 +33,14 @@ final class HomeViewController: UIViewController {
     // MARK: - UI Properties
     
     private let homeView = HomeView()
+    private let addLinkFloatingButton = UIButton()
+    
+    private let addLinkBottomSheetView = AddLinkBottomSheetView()
+//    private lazy var addLinkBottom = ToasterBottomSheetViewController(
+//        bottomType: .white,
+//        bottomTitle: StringLiterals.BottomSheet.saveLink,
+//        insertView: AddLinkBottomSheetViewController
+//    )
     
     private var firstToolTip: ToasterTipView?
     private lazy var secondToolTip: ToasterTipView? = {
@@ -62,6 +70,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         homeView.backgroundColor = .toasterBackground
         bindViewModels()
+        setupStyle()
         setupHierarchy()
         setupLayout()
         createCollectionView()
@@ -266,13 +275,29 @@ private extension HomeViewController {
             }.store(in: cancelBag)
     }
     
+    func setupStyle() {
+        addLinkFloatingButton.setImage(.floatingBtn, for: .normal)
+        addLinkFloatingButton.addAction(
+            UIAction { _ in
+//                self.addLinkBottom.setupSheetPresentation(bottomHeight: 489)
+//                self.present(self.addLinkBottom, animated: true)
+                //self.onAddLinkSelected?()
+            }, for: .touchUpInside
+        )
+    }
+    
     func setupHierarchy() {
-        view.addSubview(homeView.collectionView)
+        view.addSubviews(homeView.collectionView, addLinkFloatingButton)
     }
     
     func setupLayout() {
         homeView.collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        addLinkFloatingButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(75)
         }
     }
     
@@ -357,9 +382,10 @@ private extension HomeViewController {
     func setupNavigationBar() {
         let type: ToasterNavigationType = ToasterNavigationType(
             hasBackButton: false,
-            hasRightButton: false,
+            hasRightButton: true,
             mainTitle: StringOrImageType.image(.wordmark),
-            rightButton: StringOrImageType.string("어쩌구"), rightButtonAction: {}
+            rightButton: StringOrImageType.image(.icSettings24),
+            rightButtonAction: rightButtonTapped
         )
         if let navigationController = navigationController as? ToasterNavigationController {
             navigationController.setupNavigationBar(forType: type)

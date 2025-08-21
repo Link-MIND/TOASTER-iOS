@@ -47,16 +47,15 @@ private extension TabBarCoordinator {
         vc.onClipScene = { [weak self] navController in
             self?.startClipCoordinator(navController: navController)
         }
-        vc.onSearchScene = { [weak self] navController in
-            self?.startSearchCoordinator(navController: navController)
-        }
-        vc.onTimerScene = { [weak self] navController in
-            self?.startTimerCoordinator(navController: navController)
-        }
-        
-        vc.onPlusScene = { [weak self] in
-            self?.handlePlusTabSelection()
-        }
+//        vc.onTimerScene = { [weak self] navController in
+//            self?.startTimerCoordinator(navController: navController)
+//        }
+//        vc.onMyScene = { [weak self] navController in
+//            self?.startMyCoordinator(navController: navController)
+//        }
+//        vc.onPlusScene = { [weak self] in
+//            self?.handlePlusTabSelection()
+//        }
         self.tabBarController = vc
     }
     
@@ -88,55 +87,55 @@ private extension TabBarCoordinator {
         coordinator.start()
     }
     
-    func startSearchCoordinator(navController: UINavigationController) {
-        let coordinator = coordinatorFactory.makeSearchCoordinator(
-            router: Router(rootViewController: navController),
-            viewControllerFactory: self.viewControllerFactory,
-            coordinatorFactory: self.coordinatorFactory
-        )
-        coordinator.onFinish = { [weak self, weak coordinator] in
-            self?.removeDependency(coordinator)
-            self?.onFinish?()
-        }
-        self.addDependency(coordinator)
-        coordinator.start()
-    }
+//    func startTimerCoordinator(navController: UINavigationController) {
+//        let coordinator = coordinatorFactory.makeTimerCoordinator(
+//            router: Router(rootViewController: navController),
+//            viewControllerFactory: self.viewControllerFactory,
+//            coordinatorFactory: self.coordinatorFactory
+//        )
+//        coordinator.onFinish = { [weak self, weak coordinator] in
+//            self?.removeDependency(coordinator)
+//            self?.onFinish?()
+//        }
+//        self.addDependency(coordinator)
+//        coordinator.start()
+//    }
+//    
+//    func startMyCoordinator(navController: UINavigationController) {
+//        let coordinator = coordinatorFactory.makeMyCoordinator(
+//            router: Router(rootViewController: navController),
+//            viewControllerFactory: self.viewControllerFactory,
+//            coordinatorFactory: self.coordinatorFactory
+//        )
+//        coordinator.onFinish = { [weak self, weak coordinator] in
+//            self?.removeDependency(coordinator)
+//            self?.onFinish?()
+//        }
+//        self.addDependency(coordinator)
+//        coordinator.start()
+//    }
     
-    func startTimerCoordinator(navController: UINavigationController) {
-        let coordinator = coordinatorFactory.makeTimerCoordinator(
-            router: Router(rootViewController: navController),
-            viewControllerFactory: self.viewControllerFactory,
-            coordinatorFactory: self.coordinatorFactory
-        )
-        coordinator.onFinish = { [weak self, weak coordinator] in
-            self?.removeDependency(coordinator)
-            self?.onFinish?()
-        }
-        self.addDependency(coordinator)
-        coordinator.start()
-    }
+//    func handlePlusTabSelection() {
+//        let vc = viewControllerFactory.makeAddLinkVC(isNavigationBarHidden: false)
+//        vc.onLinkInputCompleted = { [weak self] linkURL in
+//            self?.showSelectClipVC(linkURL: linkURL)
+//        }
+//        vc.onPopToRoot = { [weak self] in
+//            self?.tabBarController?.selectTab(0)
+//            self?.router.popToRoot(animated: false)
+//        }
+//        router.push(vc, animated: false)
+//    }
     
-    func handlePlusTabSelection() {
-        let vc = viewControllerFactory.makeAddLinkVC(isNavigationBarHidden: false)
-        vc.onLinkInputCompleted = { [weak self] linkURL in
-            self?.showSelectClipVC(linkURL: linkURL)
-        }
-        vc.onPopToRoot = { [weak self] in
-            self?.tabBarController?.selectTab(0)
-            self?.router.popToRoot(animated: false)
-        }
-        router.push(vc, animated: false)
-    }
-    
-    func showSelectClipVC(linkURL: String) {
-        let vc = ViewControllerFactory.shared.makeSelectClipVC(isNavigationBarHidden: false)
-        vc.linkURL = linkURL
-        vc.onPopToRoot = { [weak self] in
-            self?.tabBarController?.selectTab(0)
-            self?.router.popToRoot(animated: false)
-        }
-        router.push(vc, animated: true)
-    }
+//    func showSelectClipVC(linkURL: String) {
+//        let vc = ViewControllerFactory.shared.makeSelectClipVC(isNavigationBarHidden: false)
+//        vc.linkURL = linkURL
+//        vc.onPopToRoot = { [weak self] in
+//            self?.tabBarController?.selectTab(0)
+//            self?.router.popToRoot(animated: false)
+//        }
+//        router.push(vc, animated: true)
+//    }
     
     /// NotificationCenter의 .refreshTokenExpired (리프레시 토큰 만료) 상황을 감지하는 Observer Method
     /// Event가 발생하면 -> KeyChain에 있는 Token 값을 지우고 -> AppCoordinator에서 TabBarCoordinator onFinish?() 클로저 수행
