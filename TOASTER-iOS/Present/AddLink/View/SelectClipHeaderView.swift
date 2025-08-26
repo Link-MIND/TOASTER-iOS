@@ -56,7 +56,7 @@ private extension SelectClipHeaderView {
         backgroundColor = .toasterBackground
         
         desciptLabel.do {
-            $0.text = "클립을 선택해주세요"
+            $0.text = "클립 선택"
             $0.textColor = .black900
             $0.font = .suitMedium(size: 18)
         }

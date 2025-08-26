@@ -38,9 +38,6 @@ final class AppCoordinator: BaseCoordinator {
         if let pasteboardUrl = UIPasteboard.general.url, isLoggedIn {
             let vc = viewControllerFactory.makeAddLinkVC(isNavigationBarHidden: false)
             vc.embedURL(url: pasteboardUrl.absoluteString)
-            vc.onLinkInputCompleted = { [weak self] linkURL in
-                self?.showSelectClipVC(linkURL: linkURL)
-            }
             vc.onPopToRoot = { [weak self] in
                 self?.router.popToRoot(animated: false)
             }
@@ -78,14 +75,5 @@ private extension AppCoordinator {
         }
         self.addDependency(coordinator)
         coordinator.start()
-    }
-    
-    func showSelectClipVC(linkURL: String) {
-        let vc = ViewControllerFactory.shared.makeSelectClipVC(isNavigationBarHidden: false)
-        vc.linkURL = linkURL
-        vc.onPopToRoot = { [weak self] in
-            self?.router.popToRoot(animated: false)
-        }
-        router.push(vc, animated: true)
     }
 }

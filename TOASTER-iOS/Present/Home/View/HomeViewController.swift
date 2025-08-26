@@ -34,14 +34,6 @@ final class HomeViewController: UIViewController {
     
     private let homeView = HomeView()
     private let addLinkFloatingButton = UIButton()
-    
-    private let addLinkBottomSheetView = AddLinkBottomSheetView()
-//    private lazy var addLinkBottom = ToasterBottomSheetViewController(
-//        bottomType: .white,
-//        bottomTitle: StringLiterals.BottomSheet.saveLink,
-//        insertView: AddLinkBottomSheetViewController
-//    )
-    
     private var firstToolTip: ToasterTipView?
     private lazy var secondToolTip: ToasterTipView? = {
         guard let tabBarItems = tabBarController?.tabBar.items else { return nil }
@@ -279,9 +271,10 @@ private extension HomeViewController {
         addLinkFloatingButton.setImage(.floatingBtn, for: .normal)
         addLinkFloatingButton.addAction(
             UIAction { _ in
+                
 //                self.addLinkBottom.setupSheetPresentation(bottomHeight: 489)
 //                self.present(self.addLinkBottom, animated: true)
-                //self.onAddLinkSelected?()
+                self.onAddLinkSelected?()
             }, for: .touchUpInside
         )
     }

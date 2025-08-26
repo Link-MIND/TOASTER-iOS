@@ -110,7 +110,8 @@ private extension AddLinkView {
     }
     
     func setupHierarchy() {
-        addSubviews(descriptLabel, linkEmbedTextField, nextBottomButton, clearButton)
+        //addSubviews(descriptLabel, linkEmbedTextField, nextBottomButton, clearButton)
+        addSubviews(descriptLabel, linkEmbedTextField, clearButton)
         accessoryView.addSubview(nextTopButton)
     }
     
@@ -131,12 +132,12 @@ private extension AddLinkView {
             $0.trailing.equalTo(linkEmbedTextField.snp.trailing).inset(14)
         }
         
-        nextBottomButton.snp.makeConstraints {
-            $0.top.equalTo(super.snp.bottom).inset(96)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(335)
-            $0.height.equalTo(62)
-        }
+//        nextBottomButton.snp.makeConstraints {
+//            $0.top.equalTo(super.snp.bottom).inset(96)
+//            $0.centerX.equalToSuperview()
+//            $0.width.equalTo(335)
+//            $0.height.equalTo(62)
+//        }
         
         // 키보드 위의 버튼
         nextTopButton.snp.makeConstraints {

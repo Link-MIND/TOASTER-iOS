@@ -1,8 +1,8 @@
 //
-//  SelectClipViewController.swift
+//  AddLinkViewController.swift
 //  TOASTER-iOS
 //
-//  Created by Gahyun Kim on 2024/01/15.
+//  Created by 김다예 on 12/30/23.
 //
 
 import Combine
@@ -11,27 +11,45 @@ import UIKit
 import SnapKit
 import Then
 
-final class SelectClipViewController: UIViewController {
+protocol SaveLinkButtonDelegate: AnyObject {
+    func saveLinkButtonTapped()
+    func cancelLinkButtonTapped()
+}
+
+protocol SelectClipViewControllerDelegate: AnyObject {
+    func sendEmbedUrl()
+}
+
+final class AddLinkViewController: UIViewController {
     
     // MARK: - View Controllable
 
+    var onLinkInputCompleted: ((String) -> Void)?
     var onPopToRoot: (() -> Void)?
-    
+        
     // MARK: - Properties
     
-    private var isNavigationBarHidden: Bool
-    
-    var linkURL = String()
-    private var categoryID: Int?
-    weak var delegate: SaveLinkButtonDelegate?
-    
-    // MARK: - UI Properties
-    
-    private let viewModel: SelectClipViewModel!
-    private let cancelBag = CancelBag()
+    private var viewModel: AddLinkViewModel!
+    private var cancelBag = CancelBag()
     private var requestClipList = PassthroughSubject<Void, Never>()
     private var requestSaveLink = PassthroughSubject<Void, Never>()
     
+    private weak var urldelegate: SelectClipViewControllerDelegate?
+    weak var delegate: SaveLinkButtonDelegate?
+    
+    private var isNavigationBarHidden: Bool
+    private var selectedClipTapped: RemindClipModel? {
+        didSet {
+            completeButton.backgroundColor = .toasterBlack
+        }
+    }
+    
+    private var categoryID: Int?
+    var linkURL = String()
+    
+    // MARK: - UI Properties
+
+    private var addLinkView = AddLinkView()
     private let clipSelectCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let completeButton: UIButton = UIButton()
     private let addClipBottomSheetView = AddClipBottomSheetView()
@@ -41,15 +59,9 @@ final class SelectClipViewController: UIViewController {
         insertView: addClipBottomSheetView
     )
     
-    private var selectedClipTapped: RemindClipModel? {
-        didSet {
-            completeButton.backgroundColor = .toasterBlack
-        }
-    }
-    
     // MARK: - Life Cycle
     
-    init(viewModel: SelectClipViewModel, isNavigationBarHidden: Bool) {
+    init(viewModel: AddLinkViewModel, isNavigationBarHidden: Bool) {
         self.viewModel = viewModel
         self.isNavigationBarHidden = isNavigationBarHidden
         super.init(nibName: nil, bundle: nil)
@@ -66,6 +78,7 @@ final class SelectClipViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         setupDelegate()
+        hideKeyboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,10 +94,35 @@ final class SelectClipViewController: UIViewController {
     }
 }
 
-// MARK: - Private Extension
+// MARK: - extension
 
-private extension SelectClipViewController {
+extension AddLinkViewController {
+    /// 클립보드 붙여넣기 Alert -> 붙여넣기 허용 클릭 후 자동 링크 임베드를 위한 함수
+    func embedURL(url: String) {
+        addLinkView.linkEmbedTextField.becomeFirstResponder()
+        addLinkView.linkEmbedTextField.text = url
+        viewModel.embedLinkText.send(url)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.addLinkView.linkEmbedTextField.sendActions(for: .editingChanged)
+        }
+        
+        UIPasteboard.general.url = nil
+    }
+}
+
+// MARK: - Private extension
+
+private extension AddLinkViewController {
     func bindViewModels() {
+        let embedLinkText = addLinkView.linkEmbedTextField
+            .publisher(for: .editingChanged)
+            .compactMap { [weak self] _ in self?.addLinkView.linkEmbedTextField.text ?? "" }
+            .eraseToAnyPublisher()
+        
+        let clearButtonTapped = addLinkView.clearButton.publisher(for: .touchUpInside)
+            .mapVoid()
+        
         let textFieldValueChanged = addClipBottomSheetView.textFieldValueChanged
             .compactMap { ($0.object as? UITextField)?.text }
             .asDriver()
@@ -97,14 +135,43 @@ private extension SelectClipViewController {
             .map { (self.linkURL, self.categoryID) }
             .asDriver()
         
-        let input = SelectClipViewModel.Input(
+        let input = AddLinkViewModel.Input(
+            embedLinkText: embedLinkText,
+            clearButtonTapped: clearButtonTapped,
             requestClipList: requestClipList.asDriver(),
             clipNameChanged: textFieldValueChanged,
             addClipButtonTapped: addClipButtonTapped,
             completeButtonTapped: completeButtonTapped
         )
-        
         let output = viewModel.transform(input, cancelBag: cancelBag)
+        
+        output.isClearButtonHidden
+            .sink { [weak self] isHidden in
+                self?.addLinkView.clearButton.isHidden = isHidden
+            }
+            .store(in: cancelBag)
+        
+        output.isNextButtonEnabled
+            .sink { [weak self] isEnabled in
+                self?.addLinkView.nextTopButton.isEnabled = isEnabled
+                self?.addLinkView.nextTopButton.backgroundColor = isEnabled ? .black850 : .gray200
+                self?.addLinkView.nextBottomButton.isEnabled = isEnabled
+                self?.addLinkView.nextBottomButton.backgroundColor = isEnabled ? .black850 : .gray200
+            }
+            .store(in: cancelBag)
+        
+        output.linkEffectivenessMessage
+            .sink { [weak self] message in
+                if let errorMessage = message {
+                    self?.addLinkView.isValidLinkError(errorMessage)
+                    self?.addLinkView.linkEmbedTextField.layer.borderColor = UIColor.toasterError.cgColor
+                    self?.addLinkView.linkEmbedTextField.layer.borderWidth = 1
+                } else {
+                    self?.addLinkView.resetError()
+                    self?.addLinkView.linkEmbedTextField.layer.borderColor = UIColor.clear.cgColor
+                }
+            }
+            .store(in: cancelBag)
         
         output.needToReload
             .sink { [weak self] _ in
@@ -178,18 +245,30 @@ private extension SelectClipViewController {
             $0.titleLabel?.font = .suitBold(size: 16)
             $0.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         }
+        
+        addLinkView.nextBottomButton.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
+        addLinkView.nextTopButton.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
     }
     
     func setupHierarchy() {
-        view.addSubviews(clipSelectCollectionView,
-                         completeButton)
+        view.addSubviews(
+            addLinkView,
+            clipSelectCollectionView,
+            completeButton
+        )
     }
     
     func setupLayout() {
-        clipSelectCollectionView.snp.makeConstraints {
+        addLinkView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalTo(completeButton.snp.top).offset(-10)
+            $0.height.equalTo(142)
+        }
+        
+        clipSelectCollectionView.snp.makeConstraints {
+            $0.top.equalTo(addLinkView.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
         completeButton.snp.makeConstraints {
@@ -206,11 +285,13 @@ private extension SelectClipViewController {
     }
     
     func setupNavigationBar() {
-        let type: ToasterNavigationType = ToasterNavigationType(hasBackButton: true,
-                                                                hasRightButton: true,
-                                                                mainTitle: StringOrImageType.string("링크 저장"),
-                                                                rightButton: StringOrImageType.image(.icClose24),
-                                                                rightButtonAction: closeButtonTapped)
+        let type: ToasterNavigationType = ToasterNavigationType(
+            hasBackButton: false,
+            hasRightButton: true,
+            mainTitle: StringOrImageType.string("링크 저장"),
+            rightButton: StringOrImageType.image(.icClose24),
+            rightButtonAction: closeButtonTapped
+        )
         
         if let navigationController = navigationController as? ToasterNavigationController {
             navigationController.setupNavigationBar(forType: type)
@@ -218,16 +299,21 @@ private extension SelectClipViewController {
     }
     
     func closeButtonTapped() {
-        showPopup(forMainText: "링크 저장을 취소하시겠어요?",
-                  forSubText: "저장 중인 링크가 사라져요",
-                  forLeftButtonTitle: StringLiterals.Button.close,
-                  forRightButtonTitle: StringLiterals.Button.delete,
-                  forRightButtonHandler: rightButtonTapped)
+        showPopup(
+            forMainText: "링크 저장을 취소하시겠어요?",
+            forSubText: "저장 중인 링크가 사라져요",
+            forLeftButtonTitle: StringLiterals.Button.close,
+            forRightButtonTitle: StringLiterals.Button.delete,
+            forRightButtonHandler: rightButtonTapped
+        )
     }
     
     func rightButtonTapped() {
-        delegate?.cancelLinkButtonTapped()
         onPopToRoot?()
+    }
+    
+    @objc func tappedNextBottomButton() {
+        onLinkInputCompleted?(addLinkView.linkEmbedTextField.text ?? "")
     }
     
     @objc func completeButtonTapped() {
@@ -245,7 +331,7 @@ private extension SelectClipViewController {
 
 // MARK: - UICollectionViewDelegate
 
-extension SelectClipViewController: UICollectionViewDelegate {
+extension AddLinkViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item != 0 {
             if let cell = collectionView.cellForItem(at: .SubSequence(item: 0, section: 0)) {
@@ -266,7 +352,7 @@ extension SelectClipViewController: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDataSource
 
-extension SelectClipViewController: UICollectionViewDataSource {
+extension AddLinkViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.selectedClip.count
     }
@@ -308,7 +394,7 @@ extension SelectClipViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension SelectClipViewController: UICollectionViewDelegateFlowLayout {
+extension AddLinkViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -328,7 +414,7 @@ extension SelectClipViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension SelectClipViewController: SelectClipHeaderViewlDelegate {
+extension AddLinkViewController: SelectClipHeaderViewlDelegate {
     func addClipCellTapped() {
         if viewModel.selectedClip.count > 15 {
             showToastMessage(width: 243,
@@ -341,7 +427,7 @@ extension SelectClipViewController: SelectClipHeaderViewlDelegate {
     }
 }
 
-extension SelectClipViewController: AddClipBottomSheetViewDelegate {
+extension AddLinkViewController: AddClipBottomSheetViewDelegate {
     func addHeightBottom() {
         addClipBottom.setupSheetHeightChanges(bottomHeight: 219)
     }
