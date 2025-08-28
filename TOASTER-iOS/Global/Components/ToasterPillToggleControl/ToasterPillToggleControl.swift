@@ -23,7 +23,10 @@ final class ToasterPillToggleControl: UIView {
     private(set) var selectedSegment: Segment = .first {
         didSet {
             guard oldValue != selectedSegment else { return }
-            updateSelectionUI()
+            firstButton.isSelected  = (selectedSegment == .first)
+            secondButton.isSelected = (selectedSegment == .second)
+            firstButton.setNeedsUpdateConfiguration()
+            secondButton.setNeedsUpdateConfiguration()
             onValueChanged?(selectedSegment)
         }
     }
@@ -49,8 +52,8 @@ final class ToasterPillToggleControl: UIView {
         secondTitle: String
     ) {
         self.init(frame: .zero)
-        firstButton.setTitle(firstTitle, for: .normal)
-        secondButton.setTitle(secondTitle, for: .normal)
+        firstButton.configuration?.title = firstTitle
+        secondButton.configuration?.title = secondTitle
     }
     
     @available(*, unavailable)
@@ -74,23 +77,30 @@ private extension ToasterPillToggleControl {
         containerStackView.do {
             $0.axis = .horizontal
             $0.alignment = .fill
-            $0.distribution = .fillEqually
+            $0.distribution = .fillProportionally
             $0.spacing = 6
         }
         
+        firstButton.isSelected = true
         [firstButton, secondButton].forEach {
-            $0.titleLabel?.font = .suitBold(size: 14)
-            $0.layer.cornerRadius = 12
-            $0.configuration?.contentInsets = NSDirectionalEdgeInsets(
-                top: 8,
-                leading: 12,
-                bottom: 8,
-                trailing: 12
-            )
             $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+            
+            var config = UIButton.Configuration.filled()
+            config.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 8, bottom: 6, trailing: 8)
+            config.background.cornerRadius = 8
+            config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+                var out = incoming
+                out.font = .suitBold(size: 12)
+                return out
+            }
+            $0.configurationUpdateHandler = { [weak self] button in
+                var config = button.configuration
+                config?.baseBackgroundColor = button.isSelected ? .gray800 : .gray100
+                config?.baseForegroundColor = button.isSelected ? .toasterWhite : .gray500
+                button.configuration = config
+            }
+            $0.configuration = config
         }
-        
-        updateSelectionUI()
     }
     
     func setupHierarchy() {
@@ -100,20 +110,7 @@ private extension ToasterPillToggleControl {
     }
     
     func setupLayout() {
-        containerStackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-    }
-    
-    func updateSelectionUI() {
-        let selected = selectedSegment == .first ? firstButton : secondButton
-        let deselected = selectedSegment == .first ? secondButton : firstButton
-
-        selected.backgroundColor = .gray800
-        selected.setTitleColor(.toasterWhite, for: .normal)
-
-        deselected.backgroundColor = .gray100
-        deselected.setTitleColor(.gray500, for: .normal)
+        containerStackView.snp.makeConstraints { $0.edges.equalToSuperview() }
     }
     
     @objc func buttonTapped(_ sender: UIButton) {

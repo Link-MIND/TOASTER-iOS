@@ -89,6 +89,7 @@
 		39BE4BC02B4ABB9E002B471D /* DetailClipEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BE4BBF2B4ABB9E002B471D /* DetailClipEmptyView.swift */; };
 		39BE4BC22B4ABBB0002B471D /* LinkOptionBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BE4BC12B4ABBB0002B471D /* LinkOptionBottomSheetView.swift */; };
 		39C3926B2B491F47005B2B0F /* NSObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C3926A2B491F47005B2B0F /* NSObject+.swift */; };
+		39E170132E5FE6D000609DC4 /* SetupTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E170122E5FE6D000609DC4 /* SetupTimerView.swift */; };
 		39E794F92B479C8600F16A38 /* ClipEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E794F82B479C8600F16A38 /* ClipEmptyView.swift */; };
 		39E919192E4890E200F762FD /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E919182E4890E200F762FD /* MyViewController.swift */; };
 		39EF95FF2B501BD600F301FC /* EditClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF95FE2B501BD600F301FC /* EditClipViewController.swift */; };
@@ -442,6 +443,7 @@
 		39BE4BBF2B4ABB9E002B471D /* DetailClipEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClipEmptyView.swift; sourceTree = "<group>"; };
 		39BE4BC12B4ABBB0002B471D /* LinkOptionBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkOptionBottomSheetView.swift; sourceTree = "<group>"; };
 		39C3926A2B491F47005B2B0F /* NSObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+.swift"; sourceTree = "<group>"; };
+		39E170122E5FE6D000609DC4 /* SetupTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTimerView.swift; sourceTree = "<group>"; };
 		39E794F82B479C8600F16A38 /* ClipEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipEmptyView.swift; sourceTree = "<group>"; };
 		39E919182E4890E200F762FD /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		39EF95FE2B501BD600F301FC /* EditClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClipViewController.swift; sourceTree = "<group>"; };
@@ -1765,6 +1767,7 @@
 			isa = PBXGroup;
 			children = (
 				8315CD852B517DBF0061F377 /* AddLinkView.swift */,
+				39E170122E5FE6D000609DC4 /* SetupTimerView.swift */,
 				8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */,
 			);
 			path = View;
@@ -2164,6 +2167,7 @@
 				3FEA674B2CB51BBC00675805 /* PatchChangeCategoryRequestDTO.swift in Sources */,
 				83CFC3392B568BE700A2EB2B /* RecommendSiteModel.swift in Sources */,
 				391908442B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift in Sources */,
+				39E170132E5FE6D000609DC4 /* SetupTimerView.swift in Sources */,
 				6BE6D9F42B4EF568008B06FA /* RemindTimerEditBottomSheetView.swift in Sources */,
 				6BE6DA3D2B5067CA008B06FA /* PostSocialLoginResponseDTO.swift in Sources */,
 				39E919192E4890E200F762FD /* MyViewController.swift in Sources */,
