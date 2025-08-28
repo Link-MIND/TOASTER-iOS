@@ -50,6 +50,7 @@ final class AddLinkViewController: UIViewController {
     // MARK: - UI Properties
 
     private var addLinkView = AddLinkView()
+    private let selectClipHeaderView = SelectClipHeaderView()
     private let clipSelectCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let completeButton: UIButton = UIButton()
     private let addClipBottomSheetView = AddClipBottomSheetView()
@@ -226,13 +227,19 @@ private extension AddLinkViewController {
     func setupStyle() {
         view.backgroundColor = .toasterBackground
         
+        selectClipHeaderView.do {
+            $0.bindData(count: viewModel.selectedClip.count)
+        }
+//        headerView.setupView()
+        //            headerView.bindData(count: viewModel.selectedClip.count)
+        
         clipSelectCollectionView.do {
             $0.register(RemindSelectClipCollectionViewCell.self,
                         forCellWithReuseIdentifier: RemindSelectClipCollectionViewCell.className)
             
-            $0.register(SelectClipHeaderView.self,
-                        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                        withReuseIdentifier: SelectClipHeaderView.className)
+//            $0.register(SelectClipHeaderView.self,
+//                        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+//                        withReuseIdentifier: SelectClipHeaderView.className)
             
             $0.backgroundColor = .toasterBackground
         }
@@ -253,6 +260,7 @@ private extension AddLinkViewController {
     func setupHierarchy() {
         view.addSubviews(
             addLinkView,
+            selectClipHeaderView,
             clipSelectCollectionView,
             completeButton
         )
@@ -265,8 +273,14 @@ private extension AddLinkViewController {
             $0.height.equalTo(142)
         }
         
-        clipSelectCollectionView.snp.makeConstraints {
+        selectClipHeaderView.snp.makeConstraints {
             $0.top.equalTo(addLinkView.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(120)
+        }
+        
+        clipSelectCollectionView.snp.makeConstraints {
+            $0.top.equalTo(selectClipHeaderView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -279,6 +293,7 @@ private extension AddLinkViewController {
     }
     
     func setupDelegate() {
+        selectClipHeaderView.selectClipHeaderViewDelegate = self
         clipSelectCollectionView.delegate = self
         clipSelectCollectionView.dataSource = self
         addClipBottomSheetView.addClipBottomSheetViewDelegate = self
@@ -369,27 +384,27 @@ extension AddLinkViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: SelectClipHeaderView.className,
-                for: indexPath
-            ) as? SelectClipHeaderView else { return UICollectionReusableView() }
-            headerView.selectClipHeaderViewDelegate = self
-            headerView.setupView()
-            headerView.bindData(count: viewModel.selectedClip.count)
-            return headerView
-        }
-        return UICollectionReusableView()
-    }
-    
-    // Header 크기 지정
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: 335, height: 68)
-    }
+//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        if kind == UICollectionView.elementKindSectionHeader {
+//            guard let headerView = collectionView.dequeueReusableSupplementaryView(
+//                ofKind: UICollectionView.elementKindSectionHeader,
+//                withReuseIdentifier: SelectClipHeaderView.className,
+//                for: indexPath
+//            ) as? SelectClipHeaderView else { return UICollectionReusableView() }
+//            headerView.selectClipHeaderViewDelegate = self
+//            headerView.setupView()
+//            headerView.bindData(count: viewModel.selectedClip.count)
+//            return headerView
+//        }
+//        return UICollectionReusableView()
+//    }
+//    
+//    // Header 크기 지정
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        return CGSize(width: 335, height: 68)
+//    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

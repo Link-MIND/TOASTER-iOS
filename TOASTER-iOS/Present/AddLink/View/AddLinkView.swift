@@ -33,9 +33,10 @@ final class AddLinkView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setLinkEmbedTextField()
-        setupView()
+        setupStyle()
+        setupHierarchy()
+        setupLayout()
     }
     
     @available(*, unavailable)
@@ -44,12 +45,6 @@ final class AddLinkView: UIView {
     }
     
     // MARK: - Make View
-    
-    func setupView() {
-        setupStyle()
-        setupHierarchy()
-        setupLayout()
-    }
     
     func setLinkEmbedTextField() {
         linkEmbedTextField.resignFirstResponder()

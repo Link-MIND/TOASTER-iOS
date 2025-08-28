@@ -23,16 +23,17 @@ final class SelectClipHeaderView: UICollectionReusableView {
     // MARK: - UI Properties
     
     private let desciptLabel = UILabel()
-    private let totalCountLabel = UILabel()
+//    private let totalCountLabel = UILabel()
+    private let clipToggleControl = ToasterPillToggleControl(
+        firstTitle: "내 클립(0)",
+        secondTitle: "공유 클립(0)"
+    )
     private let addClipButton = UIButton()
     
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-    }
-    
-    func setupView() {
         setupStyle()
         setupHierarchy()
         setupLayout()
@@ -45,7 +46,7 @@ final class SelectClipHeaderView: UICollectionReusableView {
 
 extension SelectClipHeaderView {
     func bindData(count: Int) {
-        totalCountLabel.text = "전체 (\(count))"
+        //totalCountLabel.text = "전체 (\(count))"
     }
 }
 
@@ -61,10 +62,10 @@ private extension SelectClipHeaderView {
             $0.font = .suitMedium(size: 18)
         }
         
-        totalCountLabel.do {
-            $0.textColor = .gray500
-            $0.font = .suitBold(size: 12)
-        }
+//        totalCountLabel.do {
+//            $0.textColor = .gray500
+//            $0.font = .suitBold(size: 12)
+//        }
         
         addClipButton.do {
             $0.setImage(.icPlus18Orange, for: .normal)
@@ -76,9 +77,14 @@ private extension SelectClipHeaderView {
     }
     
     func setupHierarchy() {
-        addSubviews(desciptLabel, 
-                    totalCountLabel,
-                    addClipButton)
+//        addSubviews(desciptLabel, 
+//                    totalCountLabel,
+//                    addClipButton)
+        addSubviews(
+            desciptLabel,
+            clipToggleControl,
+            addClipButton
+        )
     }
     
     func setupLayout() {
@@ -87,10 +93,14 @@ private extension SelectClipHeaderView {
             $0.leading.equalToSuperview().inset(20)
         }
         
-        totalCountLabel.snp.makeConstraints {
+        clipToggleControl.snp.makeConstraints {
             $0.top.equalTo(desciptLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview().inset(20)
         }
+//        totalCountLabel.snp.makeConstraints {
+//            $0.top.equalTo(desciptLabel.snp.bottom).offset(20)
+//            $0.leading.equalToSuperview().inset(20)
+//        }
         
         addClipButton.snp.makeConstraints {
             $0.top.equalTo(desciptLabel.snp.bottom).offset(15)

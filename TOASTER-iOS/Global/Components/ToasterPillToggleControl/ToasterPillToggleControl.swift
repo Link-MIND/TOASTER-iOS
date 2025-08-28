@@ -14,24 +14,17 @@ final class ToasterPillToggleControl: UIView {
     enum Segment: Int {
         case first = 0
         case second = 1
-    }
-    
-    struct Configuration {
-        var cornerRadius: CGFloat = 12
-        var spacing: CGFloat = 6
-        var contentInset: NSDirectionalEdgeInsets = .init(top: 8, leading: 12, bottom: 8, trailing: 12)
         
-        var selectedBackground: UIColor = .gray800
-        var selectedTitle: UIColor = .toasterWhite
-        var deselectedBackground: UIColor = .gray100
-        var deselectedTitle: UIColor = .gray500
+        var toggled: Segment { self == .first ? .second : .first }
     }
     
     // MARK: - Properties
     
     private(set) var selectedSegment: Segment = .first {
         didSet {
-            
+            guard oldValue != selectedSegment else { return }
+            updateSelectionUI()
+            onValueChanged?(selectedSegment)
         }
     }
     var onValueChanged: ((Segment) -> Void)?
@@ -51,6 +44,15 @@ final class ToasterPillToggleControl: UIView {
         setupLayout()
     }
     
+    convenience init(
+        firstTitle: String,
+        secondTitle: String
+    ) {
+        self.init(frame: .zero)
+        firstButton.setTitle(firstTitle, for: .normal)
+        secondButton.setTitle(secondTitle, for: .normal)
+    }
+    
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -60,6 +62,9 @@ final class ToasterPillToggleControl: UIView {
 // MARK: - Extensions
 
 extension ToasterPillToggleControl {
+    func setSelected(_ segment: Segment) {
+        selectedSegment = segment
+    }
 }
 
 // MARK: - Private Extensions
@@ -70,21 +75,48 @@ private extension ToasterPillToggleControl {
             $0.axis = .horizontal
             $0.alignment = .fill
             $0.distribution = .fillEqually
+            $0.spacing = 6
         }
         
         [firstButton, secondButton].forEach {
             $0.titleLabel?.font = .suitBold(size: 14)
+            $0.layer.cornerRadius = 12
+            $0.configuration?.contentInsets = NSDirectionalEdgeInsets(
+                top: 8,
+                leading: 12,
+                bottom: 8,
+                trailing: 12
+            )
+            $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
+        
+        updateSelectionUI()
     }
     
     func setupHierarchy() {
         addSubview(containerStackView)
-        containerStackView.addSubviews(firstButton, secondButton)
+        containerStackView.addArrangedSubview(firstButton)
+        containerStackView.addArrangedSubview(secondButton)
     }
     
     func setupLayout() {
         containerStackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+    
+    func updateSelectionUI() {
+        let selected = selectedSegment == .first ? firstButton : secondButton
+        let deselected = selectedSegment == .first ? secondButton : firstButton
+
+        selected.backgroundColor = .gray800
+        selected.setTitleColor(.toasterWhite, for: .normal)
+
+        deselected.backgroundColor = .gray100
+        deselected.setTitleColor(.gray500, for: .normal)
+    }
+    
+    @objc func buttonTapped(_ sender: UIButton) {
+        selectedSegment = (sender == firstButton) ? .first : .second
     }
 }
