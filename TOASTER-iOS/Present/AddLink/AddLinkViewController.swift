@@ -24,7 +24,6 @@ final class AddLinkViewController: UIViewController {
     
     // MARK: - View Controllable
 
-    var onLinkInputCompleted: ((String) -> Void)?
     var onPopToRoot: (() -> Void)?
         
     // MARK: - Properties
@@ -50,6 +49,11 @@ final class AddLinkViewController: UIViewController {
     // MARK: - UI Properties
 
     private var addLinkView = AddLinkView()
+    private let contentContainer = UIView()
+    private var contentHeightConstraint: Constraint?
+    private var isContentRevealed = false
+    
+    private let setupTimerView = SetupTimerView()
     private let selectClipHeaderView = SelectClipHeaderView()
     private let clipSelectCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let completeButton: UIButton = UIButton()
@@ -85,7 +89,6 @@ final class AddLinkViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
-        requestClipList.send()
         if !isNavigationBarHidden { self.navigationController?.isNavigationBarHidden = false }
     }
     
@@ -154,22 +157,27 @@ private extension AddLinkViewController {
         
         output.isNextButtonEnabled
             .sink { [weak self] isEnabled in
-                self?.addLinkView.nextTopButton.isEnabled = isEnabled
-                self?.addLinkView.nextTopButton.backgroundColor = isEnabled ? .black850 : .gray200
-                self?.addLinkView.nextBottomButton.isEnabled = isEnabled
-                self?.addLinkView.nextBottomButton.backgroundColor = isEnabled ? .black850 : .gray200
+                guard let self else { return }
+                if isEnabled { self.revealContent() } else { self.collapseContent() }
+                self.addLinkView.completeTopButton.isEnabled = isEnabled
+                self.addLinkView.completeTopButton.backgroundColor = isEnabled ? .black850 : .gray200
+                self.completeButton.isEnabled = isEnabled
+                self.completeButton.backgroundColor = isEnabled ? .black850 : .gray200
             }
             .store(in: cancelBag)
         
         output.linkEffectivenessMessage
             .sink { [weak self] message in
+                guard let self else { return }
                 if let errorMessage = message {
-                    self?.addLinkView.isValidLinkError(errorMessage)
-                    self?.addLinkView.linkEmbedTextField.layer.borderColor = UIColor.toasterError.cgColor
-                    self?.addLinkView.linkEmbedTextField.layer.borderWidth = 1
+                    self.addLinkView.isValidLinkError(errorMessage)
+                    self.addLinkView.linkEmbedTextField.layer.borderColor = UIColor.toasterError.cgColor
+                    self.addLinkView.linkEmbedTextField.layer.borderWidth = 1
                 } else {
-                    self?.addLinkView.resetError()
-                    self?.addLinkView.linkEmbedTextField.layer.borderColor = UIColor.clear.cgColor
+                    self.addLinkView.resetError()
+                    self.addLinkView.linkEmbedTextField.layer.borderColor = UIColor.clear.cgColor
+                    self.revealContent()
+                    self.requestClipList.send()
                 }
             }
             .store(in: cancelBag)
@@ -227,19 +235,18 @@ private extension AddLinkViewController {
     func setupStyle() {
         view.backgroundColor = .toasterBackground
         
+        contentContainer.do {
+            $0.alpha = 0
+            $0.isHidden = true
+        }
+        
         selectClipHeaderView.do {
             $0.bindData(count: viewModel.selectedClip.count)
         }
-//        headerView.setupView()
-        //            headerView.bindData(count: viewModel.selectedClip.count)
         
         clipSelectCollectionView.do {
             $0.register(RemindSelectClipCollectionViewCell.self,
                         forCellWithReuseIdentifier: RemindSelectClipCollectionViewCell.className)
-            
-//            $0.register(SelectClipHeaderView.self,
-//                        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-//                        withReuseIdentifier: SelectClipHeaderView.className)
             
             $0.backgroundColor = .toasterBackground
         }
@@ -253,16 +260,20 @@ private extension AddLinkViewController {
             $0.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         }
         
-        addLinkView.nextBottomButton.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
-        addLinkView.nextTopButton.addTarget(self, action: #selector(tappedNextBottomButton), for: .touchUpInside)
+        addLinkView.completeTopButton.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
     }
     
     func setupHierarchy() {
         view.addSubviews(
             addLinkView,
-            selectClipHeaderView,
-            clipSelectCollectionView,
+            contentContainer,
             completeButton
+        )
+        
+        contentContainer.addSubviews(
+            setupTimerView,
+            selectClipHeaderView,
+            clipSelectCollectionView
         )
     }
     
@@ -270,13 +281,25 @@ private extension AddLinkViewController {
         addLinkView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(142)
+            $0.height.equalTo(54)
+        }
+        
+        contentContainer.snp.makeConstraints {
+            $0.top.equalTo(addLinkView.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            contentHeightConstraint = $0.height.equalTo(0).constraint
+        }
+        
+        setupTimerView.snp.makeConstraints {
+            $0.top.equalTo(addLinkView.snp.bottom).offset(30)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(76)
         }
         
         selectClipHeaderView.snp.makeConstraints {
-            $0.top.equalTo(addLinkView.snp.bottom)
+            $0.top.equalTo(setupTimerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(120)
+            $0.height.equalTo(82)
         }
         
         clipSelectCollectionView.snp.makeConstraints {
@@ -327,11 +350,58 @@ private extension AddLinkViewController {
         onPopToRoot?()
     }
     
-    @objc func tappedNextBottomButton() {
-        onLinkInputCompleted?(addLinkView.linkEmbedTextField.text ?? "")
+    func revealContent() {
+        guard !isContentRevealed else { return }
+        isContentRevealed = true
+        contentContainer.isHidden = false
+        contentHeightConstraint?.deactivate()
+
+        contentContainer.transform = CGAffineTransform(translationX: 0, y: 16)
+        UIView.animate(
+            withDuration: 0.35,
+            delay: 0,
+            usingSpringWithDamping: 0.9,
+            initialSpringVelocity: 0.5,
+            options: [.allowUserInteraction, .curveEaseOut],
+            animations: { [weak self] in
+                guard let self else { return }
+                self.contentContainer.alpha = 1
+                self.contentContainer.transform = .identity
+                self.view.layoutIfNeeded()
+            },
+            completion: nil
+        )
+    }
+    
+    func collapseContent() {
+        guard isContentRevealed else { return }
+        isContentRevealed = false
+
+        contentHeightConstraint?.activate()
+        UIView.animate(
+            withDuration: 0.25,
+            animations: { [weak self] in
+                guard let self else { return }
+                self.contentContainer.alpha = 0
+                self.view.layoutIfNeeded()
+            },
+            completion: { [weak self] _ in
+                self?.contentContainer.isHidden = true
+            }
+        )
     }
     
     @objc func completeButtonTapped() {
+        addLinkView.completeTopButton.loadingButtonTapped(
+            loadingTitle: "저장 중...",
+            loadingAnimationSize: 16,
+            task: { [weak self] _ in
+                DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
+                    self?.requestSaveLink.send()
+                }
+            }
+        )
+        
         completeButton.loadingButtonTapped(
             loadingTitle: "저장 중...",
             loadingAnimationSize: 16,
@@ -383,28 +453,6 @@ extension AddLinkViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        if kind == UICollectionView.elementKindSectionHeader {
-//            guard let headerView = collectionView.dequeueReusableSupplementaryView(
-//                ofKind: UICollectionView.elementKindSectionHeader,
-//                withReuseIdentifier: SelectClipHeaderView.className,
-//                for: indexPath
-//            ) as? SelectClipHeaderView else { return UICollectionReusableView() }
-//            headerView.selectClipHeaderViewDelegate = self
-//            headerView.setupView()
-//            headerView.bindData(count: viewModel.selectedClip.count)
-//            return headerView
-//        }
-//        return UICollectionReusableView()
-//    }
-//    
-//    // Header 크기 지정
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        return CGSize(width: 335, height: 68)
-//    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
