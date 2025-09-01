@@ -12,10 +12,6 @@ import Then
 
 final class AddLinkView: UIView {
     
-    // MARK: - Property
-
-    private var keyboardHeight: CGFloat = 100
-    
     // MARK: - UI Components
     
     private(set) var linkEmbedTextField = UITextField()
@@ -56,8 +52,6 @@ final class AddLinkView: UIView {
 
 private extension AddLinkView {
     func setupStyle() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
         self.backgroundColor = .toasterBackground
         
         linkEmbedTextField.do {
@@ -67,7 +61,6 @@ private extension AddLinkView {
             $0.makeRounded(radius: 12)
             $0.inputAccessoryView = accessoryView
             $0.addPadding(left: 14, right: 42)
-            $0.addTarget(self, action: #selector(self.textFieldDidChange), for: .touchUpInside)
         }
         
         clearButton.do {
@@ -112,24 +105,11 @@ private extension AddLinkView {
             $0.height.equalTo(56)
         }
     }
-    
-    @objc
-    func keyboardWillShow(_ notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            keyboardHeight = keyboardSize.height
-        }
-    }
-    
+
     @objc 
     func cancelButtonTapped() {
         linkEmbedTextField.text = ""
         linkEmbedTextField.becomeFirstResponder()
-    }
-    
-    // TODO: - 텍스트 필드 변경되었을 때 추적을 위한 objc 메서드 (추후 기능 수정 필요)
-    @objc func textFieldDidChange() {
-//        nextBottomButton.backgroundColor = .black850
-//        nextBottomButton.isEnabled = true
     }
 }
 

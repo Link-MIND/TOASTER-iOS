@@ -34,7 +34,7 @@ final class AddLinkViewController: UIViewController {
     private var requestSaveLink = PassthroughSubject<Void, Never>()
     
     private weak var urldelegate: SelectClipViewControllerDelegate?
-    weak var delegate: SaveLinkButtonDelegate?
+    private weak var delegate: SaveLinkButtonDelegate?
     
     private var isNavigationBarHidden: Bool
     private var selectedClipTapped: RemindClipModel? {
@@ -44,7 +44,7 @@ final class AddLinkViewController: UIViewController {
     }
     
     private var categoryID: Int?
-    var linkURL = String()
+    private var linkURL = String()
     
     // MARK: - UI Properties
 
@@ -106,6 +106,7 @@ extension AddLinkViewController {
         addLinkView.linkEmbedTextField.becomeFirstResponder()
         addLinkView.linkEmbedTextField.text = url
         viewModel.embedLinkText.send(url)
+        self.linkURL = url
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.addLinkView.linkEmbedTextField.sendActions(for: .editingChanged)
@@ -124,8 +125,19 @@ private extension AddLinkViewController {
             .compactMap { [weak self] _ in self?.addLinkView.linkEmbedTextField.text ?? "" }
             .eraseToAnyPublisher()
         
+        embedLinkText
+            .sink { [weak self] text in
+                self?.linkURL = text
+            }
+            .store(in: cancelBag)
+        
         let clearButtonTapped = addLinkView.clearButton.publisher(for: .touchUpInside)
             .mapVoid()
+            .handleEvents(
+                receiveOutput: { [weak self] in
+                    self?.linkURL = ""
+                }
+            ).eraseToAnyPublisher()
         
         let textFieldValueChanged = addClipBottomSheetView.textFieldValueChanged
             .compactMap { ($0.object as? UITextField)?.text }
@@ -176,8 +188,8 @@ private extension AddLinkViewController {
                 } else {
                     self.addLinkView.resetError()
                     self.addLinkView.linkEmbedTextField.layer.borderColor = UIColor.clear.cgColor
-                    self.revealContent()
                     self.requestClipList.send()
+                    self.revealContent()
                 }
             }
             .store(in: cancelBag)
@@ -253,10 +265,11 @@ private extension AddLinkViewController {
         
         completeButton.do {
             $0.makeRounded(radius: 12)
-            $0.backgroundColor = .black850
             $0.setTitle(StringLiterals.Button.complete, for: .normal)
             $0.setTitleColor(.toasterWhite, for: .normal)
             $0.titleLabel?.font = .suitBold(size: 16)
+            $0.isEnabled = false
+            $0.backgroundColor = $0.isEnabled ? .black850 : .gray200
             $0.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         }
         
@@ -288,10 +301,11 @@ private extension AddLinkViewController {
             $0.top.equalTo(addLinkView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             contentHeightConstraint = $0.height.equalTo(0).constraint
+            $0.bottom.equalToSuperview()
         }
         
         setupTimerView.snp.makeConstraints {
-            $0.top.equalTo(addLinkView.snp.bottom).offset(30)
+            $0.top.equalToSuperview().offset(30)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(76)
         }
@@ -356,17 +370,11 @@ private extension AddLinkViewController {
         contentContainer.isHidden = false
         contentHeightConstraint?.deactivate()
 
-        contentContainer.transform = CGAffineTransform(translationX: 0, y: 16)
         UIView.animate(
             withDuration: 0.35,
-            delay: 0,
-            usingSpringWithDamping: 0.9,
-            initialSpringVelocity: 0.5,
-            options: [.allowUserInteraction, .curveEaseOut],
             animations: { [weak self] in
                 guard let self else { return }
                 self.contentContainer.alpha = 1
-                self.contentContainer.transform = .identity
                 self.view.layoutIfNeeded()
             },
             completion: nil
@@ -391,26 +399,25 @@ private extension AddLinkViewController {
         )
     }
     
-    @objc func completeButtonTapped() {
-        addLinkView.completeTopButton.loadingButtonTapped(
-            loadingTitle: "저장 중...",
-            loadingAnimationSize: 16,
-            task: { [weak self] _ in
-                DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-                    self?.requestSaveLink.send()
+    @objc func completeButtonTapped(_ sender: UIButton) {
+        let triggerSave: (UIButton) -> Void = { button in
+            button.loadingButtonTapped(
+                loadingTitle: "저장 중...",
+                loadingAnimationSize: 16,
+                task: { _ in
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                        self?.requestSaveLink.send()
+                    }
                 }
-            }
-        )
-        
-        completeButton.loadingButtonTapped(
-            loadingTitle: "저장 중...",
-            loadingAnimationSize: 16,
-            task: { [weak self] _ in
-                DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-                    self?.requestSaveLink.send()
-                }
-            }
-        )
+            )
+        }
+
+        switch sender {
+        case completeButton:
+            triggerSave(completeButton)
+        default:
+            triggerSave(addLinkView.completeTopButton)
+        }
     }
 }
 

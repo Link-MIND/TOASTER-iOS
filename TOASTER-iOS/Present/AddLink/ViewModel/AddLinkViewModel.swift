@@ -9,16 +9,13 @@ import Combine
 import UIKit
 
 final class AddLinkViewModel: ViewModelType {
-    
-    private var cancelBag: CancelBag = CancelBag()
-    
+        
     var selectedClip: [RemindClipModel] = []
     let embedLinkText = PassthroughSubject<String, Never>()
     
     struct Input {
         let embedLinkText: AnyPublisher<String, Never>
         let clearButtonTapped: AnyPublisher<Void, Never>
-        
         let requestClipList: Driver<Void>
         let clipNameChanged: Driver<String>
         let addClipButtonTapped: Driver<String>
@@ -30,7 +27,6 @@ final class AddLinkViewModel: ViewModelType {
         let isNextButtonEnabled = CurrentValueSubject<Bool, Never>(false)
         let textFieldBorderColor = PassthroughSubject<UIColor, Never>()
         let linkEffectivenessMessage = PassthroughSubject<String?, Never>()
-        
         let needToReload = PassthroughSubject<Void, Never>()
         let duplicateClipName = PassthroughSubject<Bool, Never>()
         let addClipResult = PassthroughSubject<Bool, Never>()
