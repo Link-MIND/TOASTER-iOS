@@ -46,7 +46,7 @@ private extension HomeCoordinator {
             self?.showDetailClipVC(id: id, name: name)
         }
         vc.onAddLinkSelected = { [weak self] in
-            self?.startAddLinkCoordinator()
+            self?.showAddLinkVC()
         }
         router.setRoot(vc, animated: false)
     }
@@ -60,15 +60,6 @@ private extension HomeCoordinator {
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
     
-    func showSettingVC() {
-        let vc = viewControllerFactory.makeSettingVC()
-        vc.onChangeRoot = { [weak self] in
-            self?.router.dismiss()  // 로그아웃 완료 Alert dismiss
-            self?.onFinish?()
-        }
-        router.push(vc, animated: true, hideBottomBarWhenPushed: true)
-    }
-    
     func showDetailClipVC(id: Int, name: String) {
         let vc = viewControllerFactory.makeDetailClipVC()
         vc.setupCategory(id: id, name: name)
@@ -78,18 +69,37 @@ private extension HomeCoordinator {
         router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
     
-    func startAddLinkCoordinator() {
-        let coordinator = coordinatorFactory.makeAddLinkCoordinator(
-            router: router,
-            viewControllerFactory: viewControllerFactory,
-            coordinatorFactory: coordinatorFactory,
-            isNavigationBarHidden: true
-        )
-        coordinator.onFinish = { [weak self, weak coordinator] in
-            self?.removeDependency(coordinator)
-            self?.start()
+    func showSettingVC() {
+        let vc = viewControllerFactory.makeSettingVC()
+        vc.onChangeRoot = { [weak self] in
+            self?.router.dismiss()  // 로그아웃 완료 Alert dismiss
+            self?.onFinish?()
         }
-        self.addDependency(coordinator)
-        coordinator.start()
+        router.push(vc, animated: true, hideBottomBarWhenPushed: true)
     }
+    
+    func showAddLinkVC() {
+        let vc = viewControllerFactory.makeAddLinkVC(isNavigationBarHidden: true)
+        vc.onPopToRoot = { [weak self] in
+            self?.router.dismiss(animated: false) {
+                self?.router.pop(animated: true)
+            }
+        }
+        router.push(vc, animated: true, hideBottomBarWhenPushed: true)
+    }
+    
+//    func startAddLinkCoordinator() {
+//        let coordinator = coordinatorFactory.makeAddLinkCoordinator(
+//            router: router,
+//            viewControllerFactory: viewControllerFactory,
+//            coordinatorFactory: coordinatorFactory,
+//            isNavigationBarHidden: true
+//        )
+//        coordinator.onFinish = { [weak self, weak coordinator] in
+//            self?.removeDependency(coordinator)
+//            self?.start()
+//        }
+//        self.addDependency(coordinator)
+//        coordinator.start()
+//    }
 }

@@ -36,25 +36,14 @@ final class AddLinkCoordinator: BaseCoordinator, CoordinatorFinishOutput {
 private extension AddLinkCoordinator {
     func showAddLinkVC() {
         let vc = viewControllerFactory.makeAddLinkVC(isNavigationBarHidden: isNavigationBarHidden)
-        vc.onLinkInputCompleted = { [weak self] linkURL in
-            self?.showSelectClipVC(linkURL: linkURL)
-        }
+//        vc.onLinkInputCompleted = { [weak self] linkURL in
+//            self?.showSelectClipVC(linkURL: linkURL)
+//        }
         vc.onPopToRoot = { [weak self] in
             self?.router.dismiss(animated: false, completion: {
                 self?.onFinish?()
             })
         }
         router.setRoot(vc, animated: true, hideBottomBarWhenPushed: true)
-    }
-    
-    func showSelectClipVC(linkURL: String) {
-        let vc = ViewControllerFactory.shared.makeSelectClipVC(isNavigationBarHidden: isNavigationBarHidden)
-        vc.linkURL = linkURL
-        vc.onPopToRoot = { [weak self] in
-            self?.router.dismiss(animated: false, completion: {
-                self?.onFinish?()
-            })
-        }
-        router.push(vc, animated: true)
     }
 }

@@ -14,7 +14,6 @@ protocol ViewControllerFactoryProtocol {
     func makeClipVC() -> ClipViewController
     func makeEditClipVC() -> EditClipViewController
     func makeAddLinkVC(isNavigationBarHidden: Bool) -> AddLinkViewController
-    func makeSelectClipVC(isNavigationBarHidden: Bool) -> SelectClipViewController
     func makeDetailClipVC() -> DetailClipViewController
     func makeLinkWebVC() -> LinkWebViewController
     func makeSearchVC() -> SearchViewController
@@ -22,6 +21,7 @@ protocol ViewControllerFactoryProtocol {
     func makeRemindSelectClipVC() -> RemindSelectClipViewController
     func makeRemindTimerAddVC() -> RemindTimerAddViewController
     func makeSettingVC() -> SettingViewController
+    func makeMyVC() -> MyViewController
 }
 
 final class ViewControllerFactory: ViewControllerFactoryProtocol {
@@ -67,15 +67,6 @@ final class ViewControllerFactory: ViewControllerFactoryProtocol {
         return addLinkVC
     }
     
-    func makeSelectClipVC(isNavigationBarHidden: Bool) -> SelectClipViewController {
-        let viewModel = SelectClipViewModel()
-        let selectClipVC = SelectClipViewController(
-            viewModel: viewModel,
-            isNavigationBarHidden: isNavigationBarHidden
-        )
-        return selectClipVC
-    }
-    
     func makeDetailClipVC() -> DetailClipViewController {
         let viewModel = DetailClipViewModel()
         let detailClipVC = DetailClipViewController(viewModel: viewModel)
@@ -115,5 +106,10 @@ final class ViewControllerFactory: ViewControllerFactoryProtocol {
     func makeSettingVC() -> SettingViewController {
         let settingVC = SettingViewController()
         return settingVC
+    }
+    
+    func makeMyVC() -> MyViewController {
+        let myVC = MyViewController()
+        return myVC
     }
 }

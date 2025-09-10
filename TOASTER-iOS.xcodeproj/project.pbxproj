@@ -12,7 +12,6 @@
 		39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39049C8E2B43F70400C9196E /* ToasterBottomSheetViewController.swift */; };
 		3904AC1D2D2DED51001FEB8C /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904AC1C2D2DED51001FEB8C /* TabBarCoordinator.swift */; };
 		3904AC212D2DEDAA001FEB8C /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904AC202D2DEDAA001FEB8C /* HomeCoordinator.swift */; };
-		3904AC232D2DEE28001FEB8C /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904AC222D2DEE28001FEB8C /* SearchCoordinator.swift */; };
 		3904AC252D2DEE49001FEB8C /* TimerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904AC242D2DEE49001FEB8C /* TimerCoordinator.swift */; };
 		3904AC272D30FFC0001FEB8C /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904AC262D30FFC0001FEB8C /* LoginCoordinator.swift */; };
 		3904AC292D315924001FEB8C /* CoordinatorFinishOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3904AC282D315924001FEB8C /* CoordinatorFinishOutput.swift */; };
@@ -90,12 +89,16 @@
 		39BE4BC02B4ABB9E002B471D /* DetailClipEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BE4BBF2B4ABB9E002B471D /* DetailClipEmptyView.swift */; };
 		39BE4BC22B4ABBB0002B471D /* LinkOptionBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BE4BC12B4ABBB0002B471D /* LinkOptionBottomSheetView.swift */; };
 		39C3926B2B491F47005B2B0F /* NSObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C3926A2B491F47005B2B0F /* NSObject+.swift */; };
+		39E170132E5FE6D000609DC4 /* SetupTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E170122E5FE6D000609DC4 /* SetupTimerView.swift */; };
 		39E794F92B479C8600F16A38 /* ClipEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E794F82B479C8600F16A38 /* ClipEmptyView.swift */; };
+		39E919192E4890E200F762FD /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E919182E4890E200F762FD /* MyViewController.swift */; };
 		39EF95FF2B501BD600F301FC /* EditClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF95FE2B501BD600F301FC /* EditClipViewController.swift */; };
 		39EF96012B501E8A00F301FC /* EditClipNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF96002B501E8A00F301FC /* EditClipNoticeView.swift */; };
 		39EF96042B5020D600F301FC /* EditClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF96032B5020D600F301FC /* EditClipCollectionViewCell.swift */; };
 		3D20B9912DF056AB00D7775A /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D20B9902DF056AB00D7775A /* Notification.swift */; };
 		3D20B9922DF056AB00D7775A /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D20B9902DF056AB00D7775A /* Notification.swift */; };
+		3D7871182E5C195F001423E1 /* ToasterPillToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7871172E5C195F001423E1 /* ToasterPillToggleControl.swift */; };
+		3D7871192E5C195F001423E1 /* ToasterPillToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7871172E5C195F001423E1 /* ToasterPillToggleControl.swift */; };
 		3F1F26182BAA8E7D004F75CE /* SUIT-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39BC5B0E2B410EF2004024E6 /* SUIT-Bold.otf */; };
 		3F1F261B2BAA9820004F75CE /* RemindSelectClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA032B4F2AF5008B06FA /* RemindSelectClipCollectionViewCell.swift */; };
 		3F1F261C2BAA9887004F75CE /* RemindSelectClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE6DA0A2B4F3063008B06FA /* RemindSelectClipViewModel.swift */; };
@@ -322,10 +325,8 @@
 		830517A72B4D7225009FFB60 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517A62B4D7225009FFB60 /* HomeView.swift */; };
 		830517AA2B4D95E9009FFB60 /* HomeFooterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517A92B4D95E9009FFB60 /* HomeFooterCollectionView.swift */; };
 		830517B02B4D9A3B009FFB60 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830517AF2B4D9A3B009FFB60 /* UILabel+.swift */; };
-		8309F5882B8DCEAC00A1420A /* SelectClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309F5872B8DCEAC00A1420A /* SelectClipViewModel.swift */; };
 		8315CD842B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */; };
 		8315CD862B517DBF0061F377 /* AddLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD852B517DBF0061F377 /* AddLinkView.swift */; };
-		8315CD8C2B54782F0061F377 /* SelectClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */; };
 		8315CD8E2B547EE30061F377 /* SelectClipHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */; };
 		8315CD912B5521F70061F377 /* SelectClipModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315CD902B5521F70061F377 /* SelectClipModel.swift */; };
 		832F0ED72C9C07EA00E38571 /* AddLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832F0ED62C9C07EA00E38571 /* AddLinkViewModel.swift */; };
@@ -376,7 +377,6 @@
 		39049C8E2B43F70400C9196E /* ToasterBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterBottomSheetViewController.swift; sourceTree = "<group>"; };
 		3904AC1C2D2DED51001FEB8C /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		3904AC202D2DEDAA001FEB8C /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
-		3904AC222D2DEE28001FEB8C /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		3904AC242D2DEE49001FEB8C /* TimerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCoordinator.swift; sourceTree = "<group>"; };
 		3904AC262D30FFC0001FEB8C /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		3904AC282D315924001FEB8C /* CoordinatorFinishOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFinishOutput.swift; sourceTree = "<group>"; };
@@ -399,7 +399,6 @@
 		3967F96B2D2CE7BB00B0E9FF /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		3967F96F2D2CF03200B0E9FF /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		3967F9722D2D28FF00B0E9FF /* ClipCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipCoordinator.swift; sourceTree = "<group>"; };
-		396D7EC72C855F180034A14E /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		396D7ECA2C855F5F0034A14E /* LinkWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWebViewModel.swift; sourceTree = "<group>"; };
 		396D7ECC2C880F1F0034A14E /* LinkWebToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkWebToolBarView.swift; sourceTree = "<group>"; };
 		396DCDF32CA19EC600FEF7C8 /* PatchPopupHiddenResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchPopupHiddenResponseDTO.swift; sourceTree = "<group>"; };
@@ -444,11 +443,14 @@
 		39BE4BBF2B4ABB9E002B471D /* DetailClipEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClipEmptyView.swift; sourceTree = "<group>"; };
 		39BE4BC12B4ABBB0002B471D /* LinkOptionBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkOptionBottomSheetView.swift; sourceTree = "<group>"; };
 		39C3926A2B491F47005B2B0F /* NSObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+.swift"; sourceTree = "<group>"; };
+		39E170122E5FE6D000609DC4 /* SetupTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupTimerView.swift; sourceTree = "<group>"; };
 		39E794F82B479C8600F16A38 /* ClipEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipEmptyView.swift; sourceTree = "<group>"; };
+		39E919182E4890E200F762FD /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		39EF95FE2B501BD600F301FC /* EditClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClipViewController.swift; sourceTree = "<group>"; };
 		39EF96002B501E8A00F301FC /* EditClipNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClipNoticeView.swift; sourceTree = "<group>"; };
 		39EF96032B5020D600F301FC /* EditClipCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClipCollectionViewCell.swift; sourceTree = "<group>"; };
 		3D20B9902DF056AB00D7775A /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		3D7871172E5C195F001423E1 /* ToasterPillToggleControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToasterPillToggleControl.swift; sourceTree = "<group>"; };
 		3F1F26252BAAC231004F75CE /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		3F2BFAC82B40370D00DA76B7 /* SocialLoginButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginButtonView.swift; sourceTree = "<group>"; };
 		3F2BFACA2B40373C00DA76B7 /* SocialLoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginType.swift; sourceTree = "<group>"; };
@@ -581,10 +583,8 @@
 		830517A62B4D7225009FFB60 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		830517A92B4D95E9009FFB60 /* HomeFooterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFooterCollectionView.swift; sourceTree = "<group>"; };
 		830517AF2B4D9A3B009FFB60 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
-		8309F5872B8DCEAC00A1420A /* SelectClipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipViewModel.swift; sourceTree = "<group>"; };
 		8315CD832B501BC70061F377 /* UserClipEmptyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserClipEmptyCollectionViewCell.swift; sourceTree = "<group>"; };
 		8315CD852B517DBF0061F377 /* AddLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLinkView.swift; sourceTree = "<group>"; };
-		8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipViewController.swift; sourceTree = "<group>"; };
 		8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipHeaderView.swift; sourceTree = "<group>"; };
 		8315CD902B5521F70061F377 /* SelectClipModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClipModel.swift; sourceTree = "<group>"; };
 		832F0ED62C9C07EA00E38571 /* AddLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLinkViewModel.swift; sourceTree = "<group>"; };
@@ -750,14 +750,6 @@
 			path = DTO;
 			sourceTree = "<group>";
 		};
-		397215502CA8CDFF009DF1F9 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				396D7EC72C855F180034A14E /* ViewModelType.swift */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		397215552CA8D0A1009DF1F9 /* UIKit+ */ = {
 			isa = PBXGroup;
 			children = (
@@ -849,7 +841,6 @@
 				3904AC202D2DEDAA001FEB8C /* HomeCoordinator.swift */,
 				3967F9722D2D28FF00B0E9FF /* ClipCoordinator.swift */,
 				3904AC562D379F00001FEB8C /* AddLinkCoordinator.swift */,
-				3904AC222D2DEE28001FEB8C /* SearchCoordinator.swift */,
 				3904AC242D2DEE49001FEB8C /* TimerCoordinator.swift */,
 			);
 			path = Coordinators;
@@ -963,6 +954,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		39E9191A2E48910B00F762FD /* My */ = {
+			isa = PBXGroup;
+			children = (
+				39E919182E4890E200F762FD /* MyViewController.swift */,
+			);
+			path = My;
+			sourceTree = "<group>";
+		};
 		39EF95FD2B501BC400F301FC /* EditClip */ = {
 			isa = PBXGroup;
 			children = (
@@ -981,6 +980,14 @@
 				39EF96002B501E8A00F301FC /* EditClipNoticeView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		3D7871162E5C18F2001423E1 /* ToasterPillToggleControl */ = {
+			isa = PBXGroup;
+			children = (
+				3D7871172E5C195F001423E1 /* ToasterPillToggleControl.swift */,
+			);
+			path = ToasterPillToggleControl;
 			sourceTree = "<group>";
 		};
 		3F2BFAC72B4036E200DA76B7 /* View */ = {
@@ -1054,7 +1061,6 @@
 				3FF2BF002BA17492001D7DC1 /* ToasterShareExtension */,
 				6B6AE64C2B3FF101000E2366 /* Products */,
 				390925C52B4EF66C00487AA3 /* Frameworks */,
-				397215502CA8CDFF009DF1F9 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1146,6 +1152,7 @@
 		6B6AE6832B3FF514000E2366 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				3D7871162E5C18F2001423E1 /* ToasterPillToggleControl */,
 				39A232DB2CB8F1B900ACC803 /* ToasterTipView */,
 				39AE73C52CB3D3DF00F89793 /* ToasterLoadingView */,
 				6BC493662B45D78F00544249 /* ToasterNavigationController */,
@@ -1195,6 +1202,7 @@
 		6B6AE6872B3FF55F000E2366 /* Present */ = {
 			isa = PBXGroup;
 			children = (
+				39E9191A2E48910B00F762FD /* My */,
 				3913B0AC2BCEC9A30031A3EB /* UpdateAlert */,
 				39B54E712B53C4F100538DAE /* Setting */,
 				39EF95FD2B501BC400F301FC /* EditClip */,
@@ -1246,8 +1254,10 @@
 		6B6AE6942B3FF5AB000E2366 /* AddLink */ = {
 			isa = PBXGroup;
 			children = (
-				8309F5832B8DCE3200A1420A /* LinkEmbed */,
-				8315CD882B5478050061F377 /* SelectClip */,
+				6B6AE6952B3FF5B5000E2366 /* AddLinkViewController.swift */,
+				8309F5862B8DCE8100A1420A /* Model */,
+				8309F5852B8DCE7B00A1420A /* View */,
+				832F0ED52C9C07C500E38571 /* ViewModel */,
 			);
 			path = AddLink;
 			sourceTree = "<group>";
@@ -1753,21 +1763,12 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		8309F5832B8DCE3200A1420A /* LinkEmbed */ = {
-			isa = PBXGroup;
-			children = (
-				8309F5862B8DCE8100A1420A /* Model */,
-				8309F5852B8DCE7B00A1420A /* View */,
-				832F0ED52C9C07C500E38571 /* ViewModel */,
-			);
-			path = LinkEmbed;
-			sourceTree = "<group>";
-		};
 		8309F5852B8DCE7B00A1420A /* View */ = {
 			isa = PBXGroup;
 			children = (
 				8315CD852B517DBF0061F377 /* AddLinkView.swift */,
-				6B6AE6952B3FF5B5000E2366 /* AddLinkViewController.swift */,
+				39E170122E5FE6D000609DC4 /* SetupTimerView.swift */,
+				8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1776,6 +1777,7 @@
 			isa = PBXGroup;
 			children = (
 				83CFC33A2B57324700A2EB2B /* SaveLinkModel.swift */,
+				8315CD902B5521F70061F377 /* SelectClipModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1805,41 +1807,6 @@
 				39B54E792B53D49900538DAE /* SettingTableViewCell.swift */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		8315CD882B5478050061F377 /* SelectClip */ = {
-			isa = PBXGroup;
-			children = (
-				8315CD922B5522590061F377 /* Model */,
-				8315CD932B55226A0061F377 /* View */,
-				8315CD942B5522760061F377 /* ViewModel */,
-			);
-			path = SelectClip;
-			sourceTree = "<group>";
-		};
-		8315CD922B5522590061F377 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				8315CD902B5521F70061F377 /* SelectClipModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		8315CD932B55226A0061F377 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				8315CD8B2B54782F0061F377 /* SelectClipViewController.swift */,
-				8315CD8D2B547EE30061F377 /* SelectClipHeaderView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		8315CD942B5522760061F377 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				8309F5872B8DCEAC00A1420A /* SelectClipViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		832F0ED52C9C07C500E38571 /* ViewModel */ = {
@@ -2066,6 +2033,7 @@
 				39A232E02CB8F29A00ACC803 /* ToasterTipView.swift in Sources */,
 				3F3ED2A02BA1A478004E79F0 /* TimerTargetType.swift in Sources */,
 				3F3ED2AA2BA1AAB7004E79F0 /* FontLiterals.swift in Sources */,
+				3D7871192E5C195F001423E1 /* ToasterPillToggleControl.swift in Sources */,
 				3F3ED2A62BA1A48F004E79F0 /* NoneDataResponseDTO.swift in Sources */,
 				83474A6B2BED06F1009B9C48 /* PatchEditLinkTitleRequestDTO.swift in Sources */,
 				3F3ED2A12BA1A478004E79F0 /* GetDetailTimerResponseDTO.swift in Sources */,
@@ -2142,7 +2110,6 @@
 				3F6CD49D2B86229A00DEC113 /* CustomPageIndicatorView.swift in Sources */,
 				6BE6DAB32B547BEF008B06FA /* GetRecommendSiteResponseDTO.swift in Sources */,
 				3904AC252D2DEE49001FEB8C /* TimerCoordinator.swift in Sources */,
-				3904AC232D2DEE28001FEB8C /* SearchCoordinator.swift in Sources */,
 				6B6AE6532B3FF101000E2366 /* ViewController.swift in Sources */,
 				392461802CD0D1FB00C0CBC4 /* TipUserDefaults.swift in Sources */,
 				6B6AE6902B3FF59C000E2366 /* DetailClipViewController.swift in Sources */,
@@ -2190,6 +2157,7 @@
 				6B6AE6992B3FF5C1000E2366 /* SearchViewController.swift in Sources */,
 				6BE6DA3B2B5064BC008B06FA /* AuthAPIService.swift in Sources */,
 				6B0E85DC2B564949001BC15F /* RemindTimerAddModel.swift in Sources */,
+				3D7871182E5C195F001423E1 /* ToasterPillToggleControl.swift in Sources */,
 				6BE6DA512B50B309008B06FA /* PatchPushAlarmRequestDTO.swift in Sources */,
 				830517962B4D21BB009FFB60 /* CompositioinalFactory.swift in Sources */,
 				39A232E12CB8F29A00ACC803 /* ToasterTipView.swift in Sources */,
@@ -2199,8 +2167,10 @@
 				3FEA674B2CB51BBC00675805 /* PatchChangeCategoryRequestDTO.swift in Sources */,
 				83CFC3392B568BE700A2EB2B /* RecommendSiteModel.swift in Sources */,
 				391908442B56D027006F978A /* PatchEditNameCategoryRequestDTO.swift in Sources */,
+				39E170132E5FE6D000609DC4 /* SetupTimerView.swift in Sources */,
 				6BE6D9F42B4EF568008B06FA /* RemindTimerEditBottomSheetView.swift in Sources */,
 				6BE6DA3D2B5067CA008B06FA /* PostSocialLoginResponseDTO.swift in Sources */,
+				39E919192E4890E200F762FD /* MyViewController.swift in Sources */,
 				3904AC532D34D38D001FEB8C /* CustomTabBar.swift in Sources */,
 				398BE7F32B456367001595E0 /* ToasterToastMessageView.swift in Sources */,
 				3909A0622B62185E005A4546 /* ClipModel.swift in Sources */,
@@ -2231,7 +2201,6 @@
 				3904AC272D30FFC0001FEB8C /* LoginCoordinator.swift in Sources */,
 				6BE6D9DE2B4E9054008B06FA /* AlarmOffStateButton.swift in Sources */,
 				390247AA2B58016C00F9A86A /* PatchOpenLinkRequestDTO.swift in Sources */,
-				8309F5882B8DCEAC00A1420A /* SelectClipViewModel.swift in Sources */,
 				3967F96A2D2CE6B200B0E9FF /* Coordinator.swift in Sources */,
 				39049C8F2B43F70400C9196E /* ToasterBottomSheetViewController.swift in Sources */,
 				6BE6DAB12B547BE1008B06FA /* GetMainPageSearchResponseDTO.swift in Sources */,
@@ -2239,7 +2208,6 @@
 				8315CD862B517DBF0061F377 /* AddLinkView.swift in Sources */,
 				8315CD912B5521F70061F377 /* SelectClipModel.swift in Sources */,
 				3FA8654F2BBD799600A9DB8F /* PostTokenHealthResponseDTO.swift in Sources */,
-				8315CD8C2B54782F0061F377 /* SelectClipViewController.swift in Sources */,
 				398BE7FE2B46C164001595E0 /* AddClipBottomSheetView.swift in Sources */,
 				6BE6DA012B4F2ACA008B06FA /* RemindSelectClipViewController.swift in Sources */,
 				6BE6DA592B50B45E008B06FA /* PatchPushAlarmResponseDTO.swift in Sources */,
@@ -2356,7 +2324,7 @@
 				CODE_SIGN_ENTITLEMENTS = ToasterShareExtension/ToasterShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = N3H27N59VG;
+				DEVELOPMENT_TEAM = JF6B89ULG6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToasterShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ToasterShareExtension;
@@ -2368,7 +2336,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "TeamLinkMIND.TOASTER-iOS.ToasterShareExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "TeamLinkMIND.TOASTER-iOS.ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2383,7 +2351,7 @@
 				CODE_SIGN_ENTITLEMENTS = ToasterShareExtension/ToasterShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = N3H27N59VG;
+				DEVELOPMENT_TEAM = JF6B89ULG6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToasterShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ToasterShareExtension;
@@ -2395,7 +2363,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "TeamLinkMIND.TOASTER-iOS.ToasterShareExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "TeamLinkMIND.TOASTER-iOS.ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2535,7 +2503,7 @@
 				CODE_SIGN_ENTITLEMENTS = "TOASTER-iOS/TOASTER-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = N3H27N59VG;
+				DEVELOPMENT_TEAM = JF6B89ULG6;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TOASTER-iOS/Global/Supporting Files/Info.plist";
@@ -2570,7 +2538,7 @@
 				CODE_SIGN_ENTITLEMENTS = "TOASTER-iOS/TOASTER-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = N3H27N59VG;
+				DEVELOPMENT_TEAM = JF6B89ULG6;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TOASTER-iOS/Global/Supporting Files/Info.plist";

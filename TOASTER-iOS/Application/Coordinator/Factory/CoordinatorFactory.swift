@@ -31,25 +31,6 @@ protocol CoordinatorFactoryProtocol {
         viewControllerFactory: ViewControllerFactoryProtocol,
         coordinatorFactory: CoordinatorFactoryProtocol
     ) -> ClipCoordinator
-    
-    func makeAddLinkCoordinator(
-        router: RouterProtocol,
-        viewControllerFactory: ViewControllerFactoryProtocol,
-        coordinatorFactory: CoordinatorFactoryProtocol,
-        isNavigationBarHidden: Bool
-    ) -> AddLinkCoordinator
-    
-    func makeSearchCoordinator(
-        router: RouterProtocol,
-        viewControllerFactory: ViewControllerFactoryProtocol,
-        coordinatorFactory: CoordinatorFactoryProtocol
-    ) -> SearchCoordinator
-    
-    func makeTimerCoordinator(
-        router: RouterProtocol,
-        viewControllerFactory: ViewControllerFactoryProtocol,
-        coordinatorFactory: CoordinatorFactoryProtocol
-    ) -> TimerCoordinator
 }
 
 final class CoordinatorFactory: CoordinatorFactoryProtocol {
@@ -95,44 +76,6 @@ final class CoordinatorFactory: CoordinatorFactoryProtocol {
         coordinatorFactory: CoordinatorFactoryProtocol
     ) -> ClipCoordinator {
         return ClipCoordinator(
-            router: router,
-            viewControllerFactory: viewControllerFactory,
-            coordinatorFactory: coordinatorFactory
-        )
-    }
-    
-    func makeAddLinkCoordinator(
-        router: RouterProtocol,
-        viewControllerFactory: ViewControllerFactoryProtocol,
-        coordinatorFactory: CoordinatorFactoryProtocol,
-        isNavigationBarHidden: Bool
-    ) -> AddLinkCoordinator {
-        return AddLinkCoordinator(
-            router: router,
-            viewControllerFactory: viewControllerFactory,
-            coordinatorFactory: coordinatorFactory,
-            isNavigationBarHidden: isNavigationBarHidden
-        )
-    }
-    
-    func makeSearchCoordinator(
-        router: RouterProtocol,
-        viewControllerFactory: ViewControllerFactoryProtocol,
-        coordinatorFactory: CoordinatorFactoryProtocol
-    ) -> SearchCoordinator {
-        return SearchCoordinator(
-            router: router,
-            viewControllerFactory: viewControllerFactory,
-            coordinatorFactory: coordinatorFactory
-        )
-    }
-    
-    func makeTimerCoordinator(
-        router: RouterProtocol,
-        viewControllerFactory: ViewControllerFactoryProtocol,
-        coordinatorFactory: CoordinatorFactoryProtocol
-    ) -> TimerCoordinator {
-        return TimerCoordinator(
             router: router,
             viewControllerFactory: viewControllerFactory,
             coordinatorFactory: coordinatorFactory
