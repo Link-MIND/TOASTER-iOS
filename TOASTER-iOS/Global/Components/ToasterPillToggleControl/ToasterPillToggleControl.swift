@@ -93,7 +93,7 @@ private extension ToasterPillToggleControl {
                 out.font = .suitBold(size: 12)
                 return out
             }
-            $0.configurationUpdateHandler = { [weak self] button in
+            $0.configurationUpdateHandler = { button in
                 var config = button.configuration
                 config?.baseBackgroundColor = button.isSelected ? .gray800 : .gray100
                 config?.baseForegroundColor = button.isSelected ? .toasterWhite : .gray500

@@ -1981,7 +1981,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif command -v mint >/dev/null 2>&1; then\n  mint run swiftlint swiftlint --quiet --config \"${SRCROOT}/.swiftlint.yml\" || true\nelif command -v swiftlint >/dev/null 2>&1; then\n  swiftlint --quiet --config \"${SRCROOT}/.swiftlint.yml\" || true\nelse\n  echo \"warning: SwiftLint not installed. Install with 'brew install swiftlint'.\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

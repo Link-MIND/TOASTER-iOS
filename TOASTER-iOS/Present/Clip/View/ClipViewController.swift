@@ -241,7 +241,7 @@ extension ClipViewController: ClipCollectionHeaderViewDelegate {
         if viewModel.clipList.clips.count >= 15 {
             showToastMessage(width: 243, status: .warning, message: StringLiterals.ToastMessage.noticeMaxClip)
         } else {
-            addClipBottom.setupSheetPresentation(bottomHeight: 198)
+            addClipBottom.setupSheetPresentation(bottomHeight: 246)
             present(addClipBottom, animated: true)
         }
     }
@@ -249,10 +249,10 @@ extension ClipViewController: ClipCollectionHeaderViewDelegate {
 
 extension ClipViewController: AddClipBottomSheetViewDelegate {
     func addHeightBottom() {
-        addClipBottom.setupSheetHeightChanges(bottomHeight: 219)
+        addClipBottom.setupSheetHeightChanges(bottomHeight: 267)
     }
     
     func minusHeightBottom() {
-        addClipBottom.setupSheetHeightChanges(bottomHeight: 198)
+        addClipBottom.setupSheetHeightChanges(bottomHeight: 246)
     }
 }

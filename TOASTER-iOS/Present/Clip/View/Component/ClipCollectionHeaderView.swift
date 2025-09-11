@@ -22,7 +22,10 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
     
     // MARK: - UI Components
     
-    private let clipCountLabel = UILabel()
+    private let clipToggleControl = ToasterPillToggleControl(
+        firstTitle: "내 클립(0)",
+        secondTitle: "공유 클립(0)"
+    )
     private let addClipButton = UIButton()
     
     // MARK: - Life Cycles
@@ -48,15 +51,15 @@ extension ClipCollectionHeaderView {
         addClipButton.isHidden = isHidden
         
         if isHidden {
-            clipCountLabel.snp.remakeConstraints {
-                $0.top.equalToSuperview()
-                $0.leading.equalToSuperview().inset(20)
-            }
+//            clipCountLabel.snp.remakeConstraints {
+//                $0.top.equalToSuperview()
+//                $0.leading.equalToSuperview().inset(20)
+//            }
         }
     }
     
     func setupDataBind(title: String, count: Int) {
-        clipCountLabel.text = "\(title) (\(count))"
+        //clipCountLabel.text = "\(title) (\(count))"
     }
 }
 
@@ -65,12 +68,6 @@ extension ClipCollectionHeaderView {
 private extension ClipCollectionHeaderView {
     func setupStyle() {
         backgroundColor = .toasterBackground
-        
-        clipCountLabel.do {
-            $0.textColor = .gray500
-            $0.font = .suitBold(size: 12)
-            $0.text = "전체 (n)"
-        }
         
         addClipButton.do {
             $0.setImage(.icPlus18Orange, for: .normal)
@@ -82,17 +79,17 @@ private extension ClipCollectionHeaderView {
     }
     
     func setupHierarchy() {
-        addSubviews(clipCountLabel, addClipButton)
+        addSubviews(clipToggleControl, addClipButton)
     }
     
     func setupLayout() {
-        clipCountLabel.snp.makeConstraints {
+        clipToggleControl.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(20)
         }
         
         addClipButton.snp.makeConstraints {
-            $0.centerY.equalTo(clipCountLabel)
+            $0.centerY.equalTo(clipToggleControl)
             $0.trailing.equalToSuperview().inset(20)
         }
     }
