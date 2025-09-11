@@ -112,6 +112,16 @@ extension AddClipBottomSheetView {
     func setupTextField(message: String) {
         addClipTextField.text = message
     }
+    
+    /// 클립 이름 수정 상황일 경우 사용 - 공유하기 섹션 동작을 모두 숨김
+    func setShareSectionHidden() {
+        [shareTitleLabel, shareDescriptionStack, shareSwitch].forEach {
+            $0.isHidden = true
+            $0.isUserInteractionEnabled = false
+        }
+        setNeedsLayout()
+        layoutIfNeeded()
+    }
 }
 
 // MARK: - Private Extensions
