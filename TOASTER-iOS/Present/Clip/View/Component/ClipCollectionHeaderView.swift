@@ -22,10 +22,8 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
     
     // MARK: - UI Components
     
-    private let clipToggleControl = ToasterPillToggleControl(
-        firstTitle: "내 클립(0)",
-        secondTitle: "공유 클립(0)"
-    )
+    private let clipToggleControl = ToasterPillToggleControl()
+    private let clipCountLabel = UILabel()
     private let addClipButton = UIButton()
     
     // MARK: - Life Cycles
@@ -49,17 +47,26 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
 extension ClipCollectionHeaderView {
     func isDetailClipView(isHidden: Bool) {
         addClipButton.isHidden = isHidden
+        clipToggleControl.isHidden = isHidden
+        clipCountLabel.isHidden = !isHidden
         
         if isHidden {
-//            clipCountLabel.snp.remakeConstraints {
-//                $0.top.equalToSuperview()
-//                $0.leading.equalToSuperview().inset(20)
-//            }
+            clipCountLabel.snp.remakeConstraints {
+                $0.top.equalToSuperview()
+                $0.leading.equalToSuperview().inset(20)
+            }
         }
     }
     
     func setupDataBind(title: String, count: Int) {
-        //clipCountLabel.text = "\(title) (\(count))"
+        clipCountLabel.text = "\(title) (\(count))"
+    }
+    
+    func setupDataBind(myCount: Int, sharedCount: Int) {
+        clipToggleControl.setupTitles(
+            first: "내 클립(\(myCount))",
+            second: "공유 클립(\(sharedCount))"
+        )
     }
 }
 
@@ -68,6 +75,13 @@ extension ClipCollectionHeaderView {
 private extension ClipCollectionHeaderView {
     func setupStyle() {
         backgroundColor = .toasterBackground
+        
+        clipCountLabel.do {
+            $0.textColor = .gray500
+            $0.font = .suitBold(size: 12)
+            $0.text = "전체 (n)"
+            $0.isHidden = true
+        }
         
         addClipButton.do {
             $0.setImage(.icPlus18Orange, for: .normal)
@@ -79,11 +93,16 @@ private extension ClipCollectionHeaderView {
     }
     
     func setupHierarchy() {
-        addSubviews(clipToggleControl, addClipButton)
+        addSubviews(clipToggleControl, clipCountLabel, addClipButton)
     }
     
     func setupLayout() {
         clipToggleControl.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        clipCountLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(20)
         }

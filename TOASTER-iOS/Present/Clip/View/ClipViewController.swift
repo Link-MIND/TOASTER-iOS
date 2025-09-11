@@ -199,8 +199,11 @@ extension ClipViewController: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
             headerView.isDetailClipView(isHidden: false)
-            headerView.setupDataBind(title: "전체",
-                                     count: viewModel.clipList.clips.count + 1)
+            // TODO: - 공유 클립 카운트 서버 나오면 추후 연결할 것
+            headerView.setupDataBind(
+                myCount: viewModel.clipList.clips.count + 1,
+                sharedCount: 0
+            )
             headerView.clipCollectionHeaderViewDelegate = self
             return headerView
         }

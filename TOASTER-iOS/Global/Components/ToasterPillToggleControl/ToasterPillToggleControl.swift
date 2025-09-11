@@ -68,6 +68,19 @@ extension ToasterPillToggleControl {
     func setSelected(_ segment: Segment) {
         selectedSegment = segment
     }
+    
+    func setupTitles(first: String, second: String) {
+        applyTitle(first, to: firstButton)
+        applyTitle(second, to: secondButton)
+    }
+
+    func updateFirstTitle(_ title: String) {
+        applyTitle(title, to: firstButton)
+    }
+
+    func updateSecondTitle(_ title: String) {
+        applyTitle(title, to: secondButton)
+    }
 }
 
 // MARK: - Private Extensions
@@ -111,6 +124,12 @@ private extension ToasterPillToggleControl {
     
     func setupLayout() {
         containerStackView.snp.makeConstraints { $0.edges.equalToSuperview() }
+    }
+    
+    func applyTitle(_ title: String, to button: UIButton) {
+        var config = button.configuration ?? .filled()
+        config.title = title
+        button.configuration = config
     }
     
     @objc func buttonTapped(_ sender: UIButton) {
