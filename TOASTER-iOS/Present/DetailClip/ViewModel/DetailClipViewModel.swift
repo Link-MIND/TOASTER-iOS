@@ -74,7 +74,7 @@ final class DetailClipViewModel: ViewModelType {
                     case 0:
                         context.getDetailAllCategoryAPI(filter: .all)
                     case 1:
-                        context.getDetailAllCategoryAPI(filter: .read)
+                        context.getDetailAllCategoryAPI(filter: .unread)
                     default:
                         context.getDetailAllCategoryAPI(filter: .unread)
                     }
@@ -83,9 +83,9 @@ final class DetailClipViewModel: ViewModelType {
                     case 0:
                         context.getDetailCategoryAPI(categoryID: self.currentCategoryId, filter: .all)
                     case 1:
-                        context.getDetailCategoryAPI(categoryID: self.currentCategoryId, filter: .read)
-                    default:
                         context.getDetailCategoryAPI(categoryID: self.currentCategoryId, filter: .unread)
+                    default:
+                        context.getDetailAllCategoryAPI(filter: .unread)
                     }
                 }
             }, onError: { _ in

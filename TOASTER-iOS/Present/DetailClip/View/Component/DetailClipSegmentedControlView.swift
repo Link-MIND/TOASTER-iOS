@@ -42,8 +42,8 @@ private extension DetailClipSegmentedControlView {
         
         readSegmentedControl.do {
             $0.insertSegment(withTitle: "전체", at: 0, animated: true)
-            $0.insertSegment(withTitle: "열람", at: 1, animated: true)
-            $0.insertSegment(withTitle: "미열람", at: 2, animated: true)
+            $0.insertSegment(withTitle: "미열람", at: 1, animated: true)
+            $0.insertSegment(withTitle: "타버린 링크", at: 2, animated: true)
             $0.selectedSegmentIndex = 0
             $0.setTitleTextAttributes([
                 NSAttributedString.Key.foregroundColor: UIColor.black850,
