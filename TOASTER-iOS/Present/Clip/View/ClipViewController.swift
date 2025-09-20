@@ -199,8 +199,11 @@ extension ClipViewController: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ClipCollectionHeaderView.className, for: indexPath) as? ClipCollectionHeaderView else { return UICollectionReusableView() }
             headerView.isDetailClipView(isHidden: false)
-            headerView.setupDataBind(title: "전체",
-                                     count: viewModel.clipList.clips.count + 1)
+            // TODO: - 공유 클립 카운트 서버 나오면 추후 연결할 것
+            headerView.setupDataBind(
+                myCount: viewModel.clipList.clips.count + 1,
+                sharedCount: 0
+            )
             headerView.clipCollectionHeaderViewDelegate = self
             return headerView
         }
@@ -228,7 +231,7 @@ extension ClipViewController: UICollectionViewDelegateFlowLayout {
     
     // referenceSizeForHeaderInSection: 각 섹션의 헤더 뷰 크기를 CGSize 형태로 return
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 90)
+        return CGSize(width: collectionView.frame.width, height: 57)
     }
 }
 
@@ -241,7 +244,7 @@ extension ClipViewController: ClipCollectionHeaderViewDelegate {
         if viewModel.clipList.clips.count >= 15 {
             showToastMessage(width: 243, status: .warning, message: StringLiterals.ToastMessage.noticeMaxClip)
         } else {
-            addClipBottom.setupSheetPresentation(bottomHeight: 198)
+            addClipBottom.setupSheetPresentation(bottomHeight: 246)
             present(addClipBottom, animated: true)
         }
     }
@@ -249,10 +252,10 @@ extension ClipViewController: ClipCollectionHeaderViewDelegate {
 
 extension ClipViewController: AddClipBottomSheetViewDelegate {
     func addHeightBottom() {
-        addClipBottom.setupSheetHeightChanges(bottomHeight: 219)
+        addClipBottom.setupSheetHeightChanges(bottomHeight: 267)
     }
     
     func minusHeightBottom() {
-        addClipBottom.setupSheetHeightChanges(bottomHeight: 198)
+        addClipBottom.setupSheetHeightChanges(bottomHeight: 246)
     }
 }

@@ -23,10 +23,7 @@ final class SelectClipHeaderView: UICollectionReusableView {
     // MARK: - UI Properties
     
     private let desciptLabel = UILabel()
-    private let clipToggleControl = ToasterPillToggleControl(
-        firstTitle: "내 클립(0)",
-        secondTitle: "공유 클립(0)"
-    )
+    private let clipToggleControl = ToasterPillToggleControl()
     private let addClipButton = UIButton()
     
     // MARK: - Life Cycle
@@ -45,8 +42,11 @@ final class SelectClipHeaderView: UICollectionReusableView {
 
 extension SelectClipHeaderView {
     func bindData(count: Int) {
-        // TODO: - 클립 카운트 값 추후 바인딩 되도록 수정필요
-        // totalCountLabel.text = "전체 (\(count))"
+        // TODO: - 클립 카운트 값 공유 클립도 추후 바인딩 되도록 수정필요
+        clipToggleControl.setupTitles(
+            first: "내 클립(\(count))",
+            second: "공유 클립(\(0))"
+        )
     }
 }
 

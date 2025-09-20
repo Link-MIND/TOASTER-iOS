@@ -93,7 +93,7 @@ private extension MainCollectionViewCell {
             $0.progressTintColor = .toasterPrimary
             $0.makeRounded(radius: 6)
             $0.clipsToBounds = true
-            $0.subviews[1].makeRounded(radius: 6)
+            $0.subviews[0].makeRounded(radius: 6)
         }
     }
     

@@ -196,6 +196,7 @@ private extension AddLinkViewController {
         
         output.needToReload
             .sink { [weak self] _ in
+                self?.selectClipHeaderView.bindData(count: self?.viewModel.selectedClip.count ?? 0)
                 self?.clipSelectCollectionView.reloadData()
             }.store(in: cancelBag)
         
@@ -250,10 +251,6 @@ private extension AddLinkViewController {
         contentContainer.do {
             $0.alpha = 0
             $0.isHidden = true
-        }
-        
-        selectClipHeaderView.do {
-            $0.bindData(count: viewModel.selectedClip.count)
         }
         
         clipSelectCollectionView.do {
@@ -491,7 +488,7 @@ extension AddLinkViewController: SelectClipHeaderViewlDelegate {
                              status: .warning,
                              message: StringLiterals.ToastMessage.noticeMaxClip)
         } else {
-            addClipBottom.setupSheetPresentation(bottomHeight: 198)
+            addClipBottom.setupSheetPresentation(bottomHeight: 246)
             self.present(addClipBottom, animated: true)
         }
     }
@@ -499,10 +496,10 @@ extension AddLinkViewController: SelectClipHeaderViewlDelegate {
 
 extension AddLinkViewController: AddClipBottomSheetViewDelegate {
     func addHeightBottom() {
-        addClipBottom.setupSheetHeightChanges(bottomHeight: 219)
+        addClipBottom.setupSheetHeightChanges(bottomHeight: 267)
     }
     
     func minusHeightBottom() {
-        addClipBottom.setupSheetHeightChanges(bottomHeight: 198)
+        addClipBottom.setupSheetHeightChanges(bottomHeight: 246)
     }
 }

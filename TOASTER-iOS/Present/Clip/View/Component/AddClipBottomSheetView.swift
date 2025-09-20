@@ -45,6 +45,14 @@ final class AddClipBottomSheetView: UIView {
         }
     }
     
+    private(set) var isShareOn: Bool = false {
+        didSet {
+            shareDescriptionLabel.text = isShareOn
+            ? "친구와 함께 저장해요."
+            : "나만 볼 수 있어요."
+        }
+    }
+    
     // MARK: - UI Components
     
     private(set) var addClipTextField = UITextField()
@@ -52,15 +60,21 @@ final class AddClipBottomSheetView: UIView {
     private let errorMessage = UILabel()
     private let clearButton = UIButton()
     
+    private let shareTitleLabel = UILabel()
+    private let shareDescriptionStack = UIStackView()
+    private let shareInfoIcon = UIImageView()
+    private let shareDescriptionLabel = UILabel()
+    private let shareSwitch = UISwitch()
+    
     lazy var textFieldValueChanged = NotificationCenter.default
         .publisher(for: UITextField.textDidChangeNotification, object: self.addClipTextField)
     lazy var addClipButtonTap = addClipButton.publisher(for: .touchUpInside)
+    lazy var shareSwitchChanged = shareSwitch.publisher(for: .valueChanged)
     
     // MARK: - Life Cycles
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupStyle()
         setupHierarchy()
         setupLayout()
@@ -97,6 +111,16 @@ extension AddClipBottomSheetView {
     
     func setupTextField(message: String) {
         addClipTextField.text = message
+    }
+    
+    /// 클립 이름 수정 상황일 경우 사용 - 공유하기 섹션 동작을 모두 숨김
+    func setShareSectionHidden() {
+        [shareTitleLabel, shareDescriptionStack, shareSwitch].forEach {
+            $0.isHidden = true
+            $0.isUserInteractionEnabled = false
+        }
+        setNeedsLayout()
+        layoutIfNeeded()
     }
 }
 
@@ -137,11 +161,50 @@ private extension AddClipBottomSheetView {
             $0.setImage(.icSearchCancle, for: .normal)
             $0.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
         }
+        
+        shareTitleLabel.do {
+            $0.text = "공유하기"
+            $0.font = .suitMedium(size: 16)
+            $0.textColor = .black900
+        }
+        
+        shareDescriptionStack.do {
+            $0.axis = .horizontal
+            $0.spacing = 5
+            $0.alignment = .leading
+            $0.isLayoutMarginsRelativeArrangement = false
+        }
+        
+        shareInfoIcon.do {
+            $0.image = .icAlert18Dark
+            $0.contentMode = .scaleAspectFit
+        }
+        
+        shareDescriptionLabel.do {
+            $0.font = .suitMedium(size: 13)
+            $0.textColor = .gray400
+            $0.text = "나만 볼 수 있어요."
+        }
+        
+        shareSwitch.do {
+            $0.onTintColor = .toasterPrimary
+            $0.isOn = isShareOn
+            $0.isUserInteractionEnabled = true
+            $0.addTarget(self, action: #selector(shareSwitchValueChanged), for: .valueChanged)
+        }
     }
     
     func setupHierarchy() {
-        addSubviews(addClipTextField, addClipButton, errorMessage)
+        addSubviews(
+            addClipTextField,
+            errorMessage,
+            shareTitleLabel,
+            shareDescriptionStack,
+            shareSwitch,
+            addClipButton
+        )
         addClipTextField.addSubview(clearButton)
+        shareDescriptionStack.addArrangedSubviews(shareInfoIcon, shareDescriptionLabel)
     }
     
     func setupLayout() {
@@ -154,6 +217,27 @@ private extension AddClipBottomSheetView {
         errorMessage.snp.makeConstraints {
             $0.top.equalTo(addClipTextField.snp.bottom).offset(6)
             $0.leading.equalTo(addClipTextField)
+        }
+        
+        shareTitleLabel.snp.makeConstraints {
+            $0.bottom.equalTo(addClipButton.snp.top).offset(-26)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        shareDescriptionStack.snp.makeConstraints {
+            $0.centerY.equalTo(shareTitleLabel)
+            $0.leading.equalTo(shareTitleLabel.snp.trailing).offset(12)
+        }
+        
+        shareInfoIcon.snp.makeConstraints {
+            $0.size.equalTo(14)
+        }
+        
+        shareSwitch.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(28)
+            $0.centerY.equalTo(shareTitleLabel)
+            $0.width.equalTo(40)
+            $0.height.equalTo(24)
         }
         
         addClipButton.snp.makeConstraints {
@@ -216,6 +300,11 @@ private extension AddClipBottomSheetView {
     @objc
     func clearButtonTapped() {
         resetTextField()
+    }
+    
+    @objc
+    func shareSwitchValueChanged(_ sender: UISwitch) {
+        isShareOn = sender.isOn
     }
 }
 
