@@ -158,6 +158,7 @@ private extension EditClipViewController {
         
         editClipBottomSheetView.do {
             $0.addClipBottomSheetViewDelegate = self
+            $0.setShareSectionHidden()
         }
     }
     

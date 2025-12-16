@@ -33,7 +33,7 @@ final class HomeViewController: UIViewController {
     // MARK: - UI Properties
     
     private let homeView = HomeView()
-    
+    private let addLinkFloatingButton = UIButton()
     private var firstToolTip: ToasterTipView?
     private lazy var secondToolTip: ToasterTipView? = {
         guard let tabBarItems = tabBarController?.tabBar.items else { return nil }
@@ -62,6 +62,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         homeView.backgroundColor = .toasterBackground
         bindViewModels()
+        setupStyle()
         setupHierarchy()
         setupLayout()
         createCollectionView()
@@ -266,13 +267,30 @@ private extension HomeViewController {
             }.store(in: cancelBag)
     }
     
+    func setupStyle() {
+        addLinkFloatingButton.setImage(.floatingBtn, for: .normal)
+        addLinkFloatingButton.addAction(
+            UIAction { _ in
+                
+//                self.addLinkBottom.setupSheetPresentation(bottomHeight: 489)
+//                self.present(self.addLinkBottom, animated: true)
+                self.onAddLinkSelected?()
+            }, for: .touchUpInside
+        )
+    }
+    
     func setupHierarchy() {
-        view.addSubview(homeView.collectionView)
+        view.addSubviews(homeView.collectionView, addLinkFloatingButton)
     }
     
     func setupLayout() {
         homeView.collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        addLinkFloatingButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(75)
         }
     }
     

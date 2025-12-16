@@ -15,6 +15,7 @@ final class SearchViewController: UIViewController {
     
     // MARK: - View Controllable
     
+    var onBack: (() -> Void)?
     var onLinkItemSelected: ((String, Bool, Int) -> Void)?
     var onClipItemSelected: ((Int, String) -> Void)?
     
@@ -34,6 +35,7 @@ final class SearchViewController: UIViewController {
     
     private let navigationBar: UIView = UIView()
     private let searchTextField: UITextField = UITextField()
+    private let backButton: UIButton = UIButton()
     private let searchButton: UIButton = UIButton()
     private let clearButton: UIButton = UIButton()
     
@@ -65,7 +67,12 @@ final class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationBar()
+        hideNavigationBar()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        showNavigationBar()
     }
 }
 
@@ -119,12 +126,22 @@ private extension SearchViewController {
             $0.backgroundColor = .toasterBackground
         }
         
+        backButton.do {
+            $0.setImage(.icArrowLeft24, for: .normal)
+            $0.addAction(
+                UIAction { _ in
+                    self.onBack?()
+                }, for: .touchUpInside
+            )
+        }
+        
         searchButton.do {
             $0.setImage(.icSearch20, for: .normal)
             $0.addAction(
                 UIAction { _ in
-                    self.searchSubject.send(self.searchTextField.text ?? "")
-            }, for: .touchUpInside)
+                    self.performSearch()
+                }, for: .touchUpInside
+            )
         }
         
         clearButton.do {
@@ -155,7 +172,7 @@ private extension SearchViewController {
     
     func setupHierarchy() {
         view.addSubviews(navigationBar, emptyView, searchResultCollectionView)
-        navigationBar.addSubview(searchTextField)
+        navigationBar.addSubviews(backButton, searchTextField)
         searchTextField.addSubviews(searchButton, clearButton)
     }
     
@@ -164,6 +181,12 @@ private extension SearchViewController {
             $0.height.equalTo(64)
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview()
+        }
+        
+        backButton.snp.makeConstraints {
+            $0.width.height.equalTo(24)
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(20)
         }
         
         [searchButton, clearButton].forEach {
@@ -176,8 +199,9 @@ private extension SearchViewController {
         
         searchTextField.snp.makeConstraints {
             $0.height.equalTo(42)
-            $0.top.equalToSuperview()
-            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(backButton.snp.trailing).offset(12)
+            $0.trailing.equalToSuperview().inset(20)
         }
         
         emptyView.snp.makeConstraints {
@@ -198,17 +222,10 @@ private extension SearchViewController {
         searchResultCollectionView.dataSource = self
     }
     
-    func setupNavigationBar() {
-        let type: ToasterNavigationType = ToasterNavigationType(
-            hasBackButton: false,
-            hasRightButton: false,
-            mainTitle: StringOrImageType.string(StringLiterals.Tabbar.search),
-            rightButton: StringOrImageType.string(""),
-            rightButtonAction: {}
-        )
-        if let navigationController = navigationController as? ToasterNavigationController {
-            navigationController.setupNavigationBar(forType: type)
-        }
+    func performSearch() {
+        let query = searchTextField.text ?? ""
+        searchSubject.send(query)
+        view.endEditing(true)
     }
 }
 
@@ -216,7 +233,7 @@ private extension SearchViewController {
 
 extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        searchSubject.send(textField.text ?? "")
+        performSearch()
         return true
     }
 }
@@ -240,7 +257,6 @@ extension SearchViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 
 extension SearchViewController: UICollectionViewDataSource {
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
@@ -260,7 +276,7 @@ extension SearchViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailClipListCollectionViewCell.className, for: indexPath) as? DetailClipListCollectionViewCell,
-                    let text = searchTextField.text else { return UICollectionViewCell() }
+                  let text = searchTextField.text else { return UICollectionViewCell() }
             cell.configureCell(forModel: viewModel.searchResults.detailClipList[indexPath.item],
                                forText: text)
             return cell

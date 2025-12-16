@@ -22,6 +22,7 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
     
     // MARK: - UI Components
     
+    private let clipToggleControl = ToasterPillToggleControl()
     private let clipCountLabel = UILabel()
     private let addClipButton = UIButton()
     
@@ -46,6 +47,8 @@ final class ClipCollectionHeaderView: UICollectionReusableView {
 extension ClipCollectionHeaderView {
     func isDetailClipView(isHidden: Bool) {
         addClipButton.isHidden = isHidden
+        clipToggleControl.isHidden = isHidden
+        clipCountLabel.isHidden = !isHidden
         
         if isHidden {
             clipCountLabel.snp.remakeConstraints {
@@ -57,6 +60,13 @@ extension ClipCollectionHeaderView {
     
     func setupDataBind(title: String, count: Int) {
         clipCountLabel.text = "\(title) (\(count))"
+    }
+    
+    func setupDataBind(myCount: Int, sharedCount: Int) {
+        clipToggleControl.setupTitles(
+            first: "내 클립(\(myCount))",
+            second: "공유 클립(\(sharedCount))"
+        )
     }
 }
 
@@ -70,6 +80,7 @@ private extension ClipCollectionHeaderView {
             $0.textColor = .gray500
             $0.font = .suitBold(size: 12)
             $0.text = "전체 (n)"
+            $0.isHidden = true
         }
         
         addClipButton.do {
@@ -82,29 +93,28 @@ private extension ClipCollectionHeaderView {
     }
     
     func setupHierarchy() {
-        addSubviews(clipCountLabel, addClipButton)
+        addSubviews(clipToggleControl, clipCountLabel, addClipButton)
     }
     
     func setupLayout() {
+        clipToggleControl.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(20)
+        }
         
         clipCountLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(4)
+            $0.top.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(20)
         }
         
         addClipButton.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.centerY.equalTo(clipToggleControl)
             $0.trailing.equalToSuperview().inset(20)
         }
     }
     
     @objc
     func buttonTapped(_ sender: UIButton) {
-        switch sender {
-        case addClipButton:
-            clipCollectionHeaderViewDelegate?.addClipButtonTapped()
-        default:
-            break
-        }
+        clipCollectionHeaderViewDelegate?.addClipButtonTapped()
     }
 }
