@@ -5,49 +5,35 @@
 //  Created by 민 on 9/23/24.
 //
 
+import Combine
 import Foundation
 
 import Moya
 
 protocol PopupAPIServiceProtocol {
-    func getPopupInfo(completion: @escaping (NetworkResult<GetPopupInfoResponseDTO>) -> Void)
-    func patchEditPopupHidden(requestBody: PatchPopupHiddenRequestDTO,
-                              completion: @escaping (NetworkResult<PatchPopupHiddenResponseDTO>) -> Void)
+    func getPopupInfo() -> AnyPublisher<GetPopupInfoResponseDTO, ToasterError>
+    
+    func patchEditPopupHidden(requestBody: PatchPopupHiddenRequestDTO) -> AnyPublisher<PatchPopupHiddenResponseDTO, ToasterError>
 }
 
-final class PopupAPIService: BaseAPIService, PopupAPIServiceProtocol {
-    private let provider = MoyaProvider<PopupTargetType>.init(session: Session(interceptor: APIInterceptor.shared), plugins: [MoyaPlugin()])
-
-    func getPopupInfo(completion: @escaping (NetworkResult<GetPopupInfoResponseDTO>) -> Void) {
-        provider.request(.getPopupInfo) { result in
-            switch result {
-            case .success(let response):
-                let networkResult: NetworkResult<GetPopupInfoResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                print(networkResult.stateDescription)
-                completion(networkResult)
-            case .failure(let error):
-                if let response = error.response {
-                    let networkResult: NetworkResult<GetPopupInfoResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                    completion(networkResult)
-                }
-            }
-        }
+final class PopupAPIService: BaseAPIService<PopupTargetType>, PopupAPIServiceProtocol {
+    private let provider = MoyaProvider<PopupTargetType>(
+        session: Session(interceptor: APIInterceptor.shared),
+        plugins: [MoyaPlugin()]
+    )
+    
+    func getPopupInfo() -> AnyPublisher<GetPopupInfoResponseDTO, ToasterError> {
+        return requestWithCombine(
+            provider: provider,
+            target: .getPopupInfo,
+            responseType: GetPopupInfoResponseDTO.self
+        )
     }
     
-    func patchEditPopupHidden(requestBody: PatchPopupHiddenRequestDTO,
-                              completion: @escaping (NetworkResult<PatchPopupHiddenResponseDTO>) -> Void) {
-        provider.request(.patchEditPopupHidden(requestBody: requestBody)) { result in
-            switch result {
-            case .success(let response):
-                let networkResult: NetworkResult<PatchPopupHiddenResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                print(networkResult.stateDescription)
-                completion(networkResult)
-            case .failure(let error):
-                if let response = error.response {
-                    let networkResult: NetworkResult<PatchPopupHiddenResponseDTO> = self.fetchNetworkResult(statusCode: response.statusCode, data: response.data)
-                    completion(networkResult)
-                }
-            }
-        }
-    }
-}
+    func patchEditPopupHidden(requestBody: PatchPopupHiddenRequestDTO) -> AnyPublisher<PatchPopupHiddenResponseDTO, ToasterError> {
+        return requestWithCombine(
+            provider: provider,
+            target: .patchEditPopupHidden(requestBody: requestBody),
+            responseType: PatchPopupHiddenResponseDTO.self
+        )
+    }}

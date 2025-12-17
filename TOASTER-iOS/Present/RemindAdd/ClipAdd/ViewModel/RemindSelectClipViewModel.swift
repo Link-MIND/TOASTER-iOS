@@ -48,37 +48,27 @@ final class RemindSelectClipViewModel: ViewModelType {
 // MARK: - Network
 
 extension RemindSelectClipViewModel {
-    func fetchClipData() -> AnyPublisher<[RemindClipModel], Error> {
-        return Future<[RemindClipModel], Error> { promise in
-            NetworkService.shared.clipService.getAllCategory { result in
-                switch result {
-                case .success(let response):
-                    var clips: [RemindClipModel] = [
+    func fetchClipData() -> AnyPublisher<[RemindClipModel], ToasterError> {
+        return NetworkService.shared.clipService.getAllCategory()
+            .map { response in
+                var clips: [RemindClipModel] = [
+                    RemindClipModel(
+                        id: 0,
+                        title: "전체 클립",
+                        clipCount: response.data.toastNumberInEntire
+                    )
+                ]
+                response.data.categories.forEach { category in
+                    clips.append(
                         RemindClipModel(
-                            id: 0,
-                            title: "전체 클립",
-                            clipCount: response?.data.toastNumberInEntire ?? 0
+                            id: category.categoryId,
+                            title: category.categoryTitle,
+                            clipCount: category.toastNum
                         )
-                    ]
-                    
-                    if let categories = response?.data.categories {
-                        categories.forEach { category in
-                            clips.append(
-                                RemindClipModel(
-                                    id: category.categoryId,
-                                    title: category.categoryTitle,
-                                    clipCount: category.toastNum
-                                )
-                            )
-                        }
-                    }
-                    
-                    promise(.success(clips))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default: break
+                    )
                 }
+                return clips
             }
-        }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
 }

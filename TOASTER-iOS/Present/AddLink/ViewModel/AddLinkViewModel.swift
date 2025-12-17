@@ -131,83 +131,47 @@ private extension AddLinkViewModel {
 // MARK: - Network
 
 private extension AddLinkViewModel {
-    func postSaveLink(url: String, category: Int?) -> AnyPublisher<Bool, Error> {
-        return Future<Bool, Error> { promise in
-            let request = PostSaveLinkRequestDTO(linkUrl: url, categoryId: category)
-            NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
-                switch result {
-                case .success:
-                    promise(.success(true))
-                case .badRequest, .serverErr:
-                    promise(.success(false))
-                case .networkFail, .unAuthorized, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
-                }
-            }
-        }.eraseToAnyPublisher()
+    func postSaveLink(url: String, category: Int?) -> AnyPublisher<Bool, ToasterError> {
+        let request = PostSaveLinkRequestDTO(linkUrl: url, categoryId: category)
+
+        return NetworkService.shared.toastService.postSaveLink(requestBody: request)
+            .map { _ in true }
+            .eraseToAnyPublisher()
     }
     
-    func fetchClipData() -> AnyPublisher<[RemindClipModel], Error> {
-        return Future<[RemindClipModel], Error> { promise in
-            NetworkService.shared.clipService.getAllCategory { result in
-                switch result {
-                case .success(let response):
-                    var clipDataList: [RemindClipModel] = [
-                        RemindClipModel(
-                            id: nil,
-                            title: "전체 클립",
-                            clipCount: response?.data.toastNumberInEntire ?? 0
-                        )
-                    ]
-                    response?.data.categories.forEach {
-                        let clipData = RemindClipModel(
-                            id: $0.categoryId,
-                            title: $0.categoryTitle,
-                            clipCount: $0.toastNum
-                        )
-                        clipDataList.append(clipData)
-                    }
-                    promise(.success(clipDataList))
-                case .networkFail, .unAuthorized, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
+    func fetchClipData() -> AnyPublisher<[RemindClipModel], ToasterError> {
+        return NetworkService.shared.clipService.getAllCategory()
+            .map { response in
+                var clipDataList: [RemindClipModel] = [
+                    RemindClipModel(
+                        id: nil,
+                        title: "전체 클립",
+                        clipCount: response.data.toastNumberInEntire
+                    )
+                ]
+                response.data.categories.forEach {
+                    let clipData = RemindClipModel(
+                        id: $0.categoryId,
+                        title: $0.categoryTitle,
+                        clipCount: $0.toastNum
+                    )
+                    clipDataList.append(clipData)
                 }
+                return clipDataList
             }
-        }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
     
-    func getCheckCategoryAPI(categoryTitle: String) -> AnyPublisher<Bool, Error> {
-        return Future<Bool, Error> { promise in
-            NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle) { result in
-                switch result {
-                case .success(let response):
-                    if let data = response?.data.isDupicated, categoryTitle.count < 16 {
-                        promise(.success(data))
-                    }
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
-                }
-            }
-        }.eraseToAnyPublisher()
+    func getCheckCategoryAPI(categoryTitle: String) -> AnyPublisher<Bool, ToasterError> {
+        return NetworkService.shared.clipService.getCheckCategory(categoryTitle: categoryTitle)
+            .map { $0.data.isDupicated && categoryTitle.count < 16 }
+            .eraseToAnyPublisher()
     }
     
-    func postAddCategoryAPI(requestBody: String) -> AnyPublisher<Bool, Error> {
-        return Future<Bool, Error> { promise in
-            NetworkService.shared.clipService.postAddCategory(requestBody: PostAddCategoryRequestDTO(categoryTitle: requestBody)) { result in
-                switch result {
-                case .success:
-                    promise(.success(true))
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
-                }
-            }
-        }.eraseToAnyPublisher()
+    func postAddCategoryAPI(requestBody: String) -> AnyPublisher<Bool, ToasterError> {
+        let dto = PostAddCategoryRequestDTO(categoryTitle: requestBody)
+        return NetworkService.shared.clipService.postAddCategory(requestBody: dto)
+            .map { _ in true }
+            .eraseToAnyPublisher()
     }
 }

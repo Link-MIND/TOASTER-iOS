@@ -71,42 +71,28 @@ final class SearchViewModel: ViewModelType {
 // MARK: - Network
 
 private extension SearchViewModel {
-    func fetchSearchResult(forText: String) -> AnyPublisher<SearchResultModel, Error> {
-        return Future<SearchResultModel, Error> { promise in
-            NetworkService.shared.searchService.getMainPageSearch(searchText: forText) { result in
-                switch result {
-                case .success(let response):
-                    let detailClips = response?.data?.toasts.map {
-                        SearchResultDetailClipModel(
-                            iD: $0.toastId,
-                            title: $0.toastTitle,
-                            link: $0.linkUrl,
-                            imageURL: $0.thumbnailUrl,
-                            clipTitle: $0.categoryTitle,
-                            isRead: $0.isRead
-                        )
-                    }
-                    let clips = response?.data?.categories.map {
-                        SearchResultClipModel(
-                            iD: $0.categoryId,
-                            title: $0.title,
-                            numberOfDetailClip: $0.toastNum
-                        )
-                    }
-                    promise(
-                        .success(
-                            SearchResultModel(
-                                detailClipList: detailClips ?? [],
-                                clipList: clips ?? []
-                            )
-                        )
+    func fetchSearchResult(forText: String) -> AnyPublisher<SearchResultModel, ToasterError> {
+        return NetworkService.shared.searchService.getMainPageSearch(searchText: forText)
+            .map { response in
+                let detailClips = response.data?.toasts.map {
+                    SearchResultDetailClipModel(
+                        iD: $0.toastId,
+                        title: $0.toastTitle,
+                        link: $0.linkUrl,
+                        imageURL: $0.thumbnailUrl,
+                        clipTitle: $0.categoryTitle,
+                        isRead: $0.isRead
                     )
-                case .unAuthorized, .networkFail, .notFound:
-                    promise(.failure(NetworkResult<Error>.unAuthorized))
-                default:
-                    return
                 }
+                let clips = response.data?.categories.map {
+                    SearchResultClipModel(
+                        iD: $0.categoryId,
+                        title: $0.title,
+                        numberOfDetailClip: $0.toastNum
+                    )
+                }
+                return SearchResultModel(detailClipList: detailClips ?? [], clipList: clips ?? [])
             }
-        }.eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
 }

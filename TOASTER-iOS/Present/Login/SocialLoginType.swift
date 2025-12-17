@@ -45,4 +45,22 @@ enum SocialLoginType {
             return .icAppleLogin24
         }
     }
+    
+    var serverValue: String {
+        switch self {
+        case .kakao: 
+            return "KAKAO"
+        case .apple: 
+            return "APPLE"
+        }
+    }
+    
+    var userDefaultsValue: String {
+        switch self {
+        case .kakao: 
+            return "\(Config.kakaoLogin)"
+        case .apple:
+            return Config.appleLogin
+        }
+    }
 }

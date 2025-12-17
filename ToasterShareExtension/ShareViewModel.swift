@@ -39,18 +39,9 @@ final class ShareViewModel: ViewModelType {
         let saveLinkResultPublisher = input.completeButtonTap
             .combineLatest(categoryIDPublisher)
             .map { _, categoryID in categoryID }
-            .flatMap { [weak self] categoryID -> AnyPublisher<Bool, Never> in
-                guard let self else {
-                    return Just(false).eraseToAnyPublisher()
-                }
-                
-                return self.postSaveLink(id: categoryID)
-                    .catch { error -> AnyPublisher<Bool, Never> in
-                        print("실패: \(error.localizedDescription)")
-                        return Just(false).eraseToAnyPublisher()
-                    }
-                    .eraseToAnyPublisher()
-            }
+            .networkFlatMap(self, { context, categoryID in
+                context.postSaveLink(id: categoryID)
+            })
             .eraseToAnyPublisher()
 
         return Output(
@@ -72,21 +63,11 @@ final class ShareViewModel: ViewModelType {
 // MARK: - API Methods
 
 private extension ShareViewModel {
-    func postSaveLink(id: Int?) -> AnyPublisher<Bool, Error> {
+    func postSaveLink(id: Int?) -> AnyPublisher<Bool, ToasterError> {
         let request = PostSaveLinkRequestDTO(linkUrl: self.urlString, categoryId: id)
         
-        return Future<Bool, Error> { promise in
-            NetworkService.shared.toastService.postSaveLink(requestBody: request) { result in
-                switch result {
-                case .success:
-                    print("저장 성공")
-                    promise(.success(true))
-                case .networkFail, .unAuthorized, .notFound, .badRequest, .serverErr, .decodeErr, .unProcessable:
-                    print("저장 실패")
-                    promise(.failure(NSError(domain: "PostSaveLinkError", code: 0, userInfo: [NSLocalizedDescriptionKey: "링크 저장에 실패했습니다."])))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
+        return NetworkService.shared.toastService.postSaveLink(requestBody: request)
+            .map { _ in true }
+            .eraseToAnyPublisher()
     }
 }

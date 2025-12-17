@@ -5,6 +5,7 @@
 //  Created by 김다예 on 1/12/24.
 //
 
+import Combine
 import Foundation
 
 import Moya
@@ -17,10 +18,12 @@ protocol UserAPIServiceProtocol {
     func getMainPage(completion: @escaping (NetworkResult<GetMainPageResponseDTO>) -> Void)
 }
 
-final class UserAPIService: BaseAPIService, UserAPIServiceProtocol {
+final class UserAPIService: BaseAPIService<UserTargetType>, UserAPIServiceProtocol {
+    private let provider = MoyaProvider<UserTargetType>(
+        session: Session(interceptor: APIInterceptor.shared),
+        plugins: [MoyaPlugin()]
+    )
     
-    private let provider = MoyaProvider<UserTargetType>.init(session: Session(interceptor: APIInterceptor.shared), plugins: [MoyaPlugin()])
-
     func getSettingPage(completion: @escaping (NetworkResult<GetSettingPageResponseDTO>) -> Void) {
         provider.request(.getSettingPage) { result in
             switch result {
@@ -53,7 +56,7 @@ final class UserAPIService: BaseAPIService, UserAPIServiceProtocol {
         }
     }
     
-    func patchPushAlarm(requestBody: PatchPushAlarmRequestDTO, 
+    func patchPushAlarm(requestBody: PatchPushAlarmRequestDTO,
                         completion: @escaping (NetworkResult<PatchPushAlarmResponseDTO>) -> Void) {
         provider.request(.patchPushAlarm(requestBody: requestBody)) { result in
             switch result {

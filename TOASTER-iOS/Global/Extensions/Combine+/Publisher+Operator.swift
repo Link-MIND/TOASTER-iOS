@@ -6,13 +6,18 @@
 //
 
 import Combine
-import Foundation
 
 public extension Publisher {
     
     /**
      `networkFlatMap`은 네트워크 함수 호출 시
      `flatMap` 연산을 수행하면서, 메모리 누수 방지와 에러 처리를 위한 반복 코드 사용을 줄이기 위한 커스텀 Operator입니다.
+     
+     - Parameters:
+        - weakSelf: self 참조의 순환 방지를 위한 약한 참조
+        - firstTransform: 실제 네트워크 Publisher를 반환하는 변환 클로저
+        - onError: 에러 발생 시 side-effect로 실행할 클로저
+        - secondTransform: 에러 발생 시 대체 Publisher를 반환 (기본값은 Empty)
      */
     func networkFlatMap<SelfPublisher: AnyObject, NewPublisher: Publisher>(
         _ weakSelf: SelfPublisher?,

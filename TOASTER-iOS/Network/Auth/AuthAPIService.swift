@@ -20,7 +20,7 @@ protocol AuthAPIServiceProtocol {
                          completion: @escaping (NetworkResult<PostTokenHealthResponseDTO>) -> Void)
 }
 
-final class AuthAPIService: BaseAPIService, AuthAPIServiceProtocol {
+final class AuthAPIService: BaseAPIService<AuthTargetType>, AuthAPIServiceProtocol {
     
     private let provider = MoyaProvider<AuthTargetType>.init(session: Session(interceptor: APIInterceptor.shared), plugins: [MoyaPlugin()])
     
