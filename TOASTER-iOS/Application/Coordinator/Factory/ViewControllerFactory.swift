@@ -30,7 +30,8 @@ final class ViewControllerFactory: ViewControllerFactoryProtocol {
     private init() {}
     
     func makeLoginVC() -> LoginViewController {
-        let loginVC = LoginViewController()
+        let viewModel = LoginViewModel()
+        let loginVC = LoginViewController(viewModel: viewModel)
         return loginVC
     }
     

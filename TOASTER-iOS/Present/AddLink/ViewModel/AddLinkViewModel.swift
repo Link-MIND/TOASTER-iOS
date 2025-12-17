@@ -130,7 +130,7 @@ private extension AddLinkViewModel {
 
 // MARK: - Network
 
-private extension SelectClipViewModel {
+private extension AddLinkViewModel {
     func postSaveLink(url: String, category: Int?) -> AnyPublisher<Bool, ToasterError> {
         let request = PostSaveLinkRequestDTO(linkUrl: url, categoryId: category)
 
