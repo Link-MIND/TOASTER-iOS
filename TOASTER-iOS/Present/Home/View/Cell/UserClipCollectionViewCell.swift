@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
+@MainActor
 protocol UserClipCollectionViewCellDelegate: AnyObject {
     func addClipCellTapped()
 }

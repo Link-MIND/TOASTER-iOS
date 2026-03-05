@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 protocol RouterProtocol: AnyObject {
     func setRoot(_ viewController: UIViewController, animated: Bool)
     func setRoot(_ viewController: UIViewController, animated: Bool, hideBottomBarWhenPushed: Bool)

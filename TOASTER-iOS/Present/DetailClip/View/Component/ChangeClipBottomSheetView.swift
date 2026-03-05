@@ -174,6 +174,7 @@ extension ChangeClipBottomSheetView: UICollectionViewDelegateFlowLayout {
     }
 }
 
+@MainActor
 protocol ChangeClipBottomSheetViewDelegate: AnyObject {
     func didSelectClip(selectClipId: Int)
     func completButtonTap()

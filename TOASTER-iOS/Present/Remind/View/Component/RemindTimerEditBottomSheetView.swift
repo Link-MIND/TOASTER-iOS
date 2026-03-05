@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
+@MainActor
 protocol RemindEditViewDelegate: AnyObject {
     func editTimer(forID: Int?)
     func deleteTimer(forID: Int?)

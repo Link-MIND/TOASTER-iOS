@@ -149,7 +149,9 @@ private extension TabBarCoordinator {
                 accessKey: Config.accessTokenKey,
                 refreshKey: Config.refreshTokenKey
             )
-            self?.onFinish?()
+            Task { @MainActor in
+                self?.onFinish?()
+            }
         }
     }
 }

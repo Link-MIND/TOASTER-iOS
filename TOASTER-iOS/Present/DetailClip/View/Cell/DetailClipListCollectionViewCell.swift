@@ -11,6 +11,7 @@ import Kingfisher
 import SnapKit
 import Then
 
+@MainActor
 protocol DetailClipListCollectionViewCellDelegate: AnyObject {
     func modifiedButtonTapped(toastId: Int)
 }

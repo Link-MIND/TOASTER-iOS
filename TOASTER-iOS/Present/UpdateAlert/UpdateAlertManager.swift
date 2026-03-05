@@ -7,10 +7,11 @@
 
 import UIKit
 
-final class UpdateAlertManager {
+struct UpdateAlertManager {
     private let appId = "6476194200"
     
     /// Alert 표출 함수
+    @MainActor
     func showUpdateAlert(type: UpdateAlertType,
                          on viewController: UIViewController) {
         let alertViewController = UIAlertController(title: type.title,

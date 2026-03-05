@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
+@MainActor
 protocol SelectClipHeaderViewlDelegate: AnyObject {
     func addClipCellTapped()
 }
