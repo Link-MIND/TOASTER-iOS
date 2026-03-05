@@ -16,7 +16,7 @@ final class APIInterceptor: RequestInterceptor {
     /// 재발급을 받고 다시 기존 API 를 호출해야하기 때문에 Requset 의 Header 를 변경해야 한다.
     /// 해당 프로퍼티가 true 일 경우 기존의 Requset 의 Header 를 변경
     /// 재발급을 받은 적이 없는 false 의 경우 TargetType 을 통해 Header 를 설정한 Requset 를 기본으로 사용
-    private var isTokenRefreshed = false
+    nonisolated(unsafe) private var isTokenRefreshed = false
 
     static let shared = APIInterceptor()
 

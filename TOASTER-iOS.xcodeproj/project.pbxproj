@@ -1911,7 +1911,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 2630;
 				TargetAttributes = {
 					3FF2BEFE2BA17492001D7DC1 = {
 						CreatedOnToolsVersion = 15.3;
@@ -2343,7 +2343,6 @@
 				CODE_SIGN_ENTITLEMENTS = ToasterShareExtension/ToasterShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JF6B89ULG6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToasterShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ToasterShareExtension;
@@ -2370,7 +2369,6 @@
 				CODE_SIGN_ENTITLEMENTS = ToasterShareExtension/ToasterShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JF6B89ULG6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToasterShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ToasterShareExtension;
@@ -2427,6 +2425,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = JF6B89ULG6;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -2450,8 +2449,10 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = targeted;
 			};
 			name = Debug;
 		};
@@ -2491,6 +2492,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = JF6B89ULG6;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -2507,7 +2509,9 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -2521,7 +2525,6 @@
 				CODE_SIGN_ENTITLEMENTS = "TOASTER-iOS/TOASTER-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JF6B89ULG6;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TOASTER-iOS/Global/Supporting Files/Info.plist";
@@ -2555,7 +2558,6 @@
 				CODE_SIGN_ENTITLEMENTS = "TOASTER-iOS/TOASTER-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JF6B89ULG6;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TOASTER-iOS/Global/Supporting Files/Info.plist";
