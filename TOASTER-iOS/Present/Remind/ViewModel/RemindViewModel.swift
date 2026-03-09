@@ -25,9 +25,7 @@ final class RemindViewModel {
     /// RemindViewType을 저장하기 위한 프로퍼티
     private var remindViewType: RemindViewType = .deviceOnAppOnNoneData {
         didSet {
-            DispatchQueue.main.async {
-                self.dataChangeAction?(self.remindViewType)
-            }
+            self.dataChangeAction?(self.remindViewType)
         }
     }
     

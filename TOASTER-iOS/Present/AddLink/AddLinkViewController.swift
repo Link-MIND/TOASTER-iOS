@@ -402,8 +402,11 @@ private extension AddLinkViewController {
                 loadingTitle: "저장 중...",
                 loadingAnimationSize: 16,
                 task: { _ in
-                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                        self?.requestSaveLink.send()
+                    Task {
+                        try? await Task.sleep(for: .seconds(0.5))
+                        await MainActor.run { [weak self] in
+                            self?.requestSaveLink.send()
+                        }
                     }
                 }
             )

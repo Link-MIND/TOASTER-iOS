@@ -109,9 +109,12 @@ private extension ChangeClipBottomSheetView {
             loadingTitle: "이동 중...",
             loadingAnimationSize: 16,
             task: { completion in
-                DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-                    self.delegate?.completButtonTap()
-                    completion()
+                Task {
+                    try? await Task.sleep(for: .seconds(0.5))
+                    await MainActor.run {
+                        self.delegate?.completButtonTap()
+                        completion()
+                    }
                 }
             }
         )

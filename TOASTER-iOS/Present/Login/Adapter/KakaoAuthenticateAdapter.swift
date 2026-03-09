@@ -52,7 +52,6 @@ final class KakaoAuthenticateAdapter: NSObject, AuthenticationAdapterProtocol {
     }
 
     /// 카카오톡 간편로그인을 통해 토큰을 받아오는 메서드
-    @MainActor
     func getLoginToken() async throws -> SocialLoginTokenModel {
         return try await withCheckedThrowingContinuation { continuation in
             UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
@@ -72,7 +71,6 @@ final class KakaoAuthenticateAdapter: NSObject, AuthenticationAdapterProtocol {
     }
     
     /// 카카오톡 간편로그인을 할 수 없는 경우 웹에서 이메일로 로그인 해서 토큰을 받아오는 메서드
-    @MainActor
     func getTokenKakaoAccount() async throws -> SocialLoginTokenModel {
         return try await withCheckedThrowingContinuation { continuation in
             UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
