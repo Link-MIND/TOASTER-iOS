@@ -9,7 +9,7 @@ import Foundation
 
 final class NetworkService {
     
-    static let shared = NetworkService()
+    nonisolated(unsafe) static let shared = NetworkService()
 
     private init() {}
     
