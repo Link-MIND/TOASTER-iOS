@@ -1,4 +1,4 @@
-sensitivity: balanced
+sensitivity: learning
 
 team_rules:
   - "ViewModel은 @MainActor로 선언"
