@@ -1,0 +1,12 @@
+sensitivity: balanced
+
+team_rules:
+  - "ViewModel은 @MainActor로 선언"
+  - "Force unwrap(!) 금지"
+  - "더 이상 상속되지 않을 class에는 꼭 final 키워드를 붙이도록 한다."
+  - "class에서 사용되는 프로퍼티는 모두 private으로 선언하자. (외부에서 접근할 일이 있다면 함수를 통해 접근하도록 하자..)"
+  - "길어지더라도 약어와 생략을 지양하자 (VC, TVC, Config 등등 XXX → ViewController, TableViewCell, Configure)"
+  - "Global 위치에 함수를 만들 것이면 퀵헬프 주석을 한 줄이라도 꼭 달아주자."
+  - "self를 되도록 빼기"
+ignore:
+  - "*.generated.swift"
