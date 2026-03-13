@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
-      - uses: mini-min/ios-code-review@v1
+      - uses: mini-min/Swift-Code-Review-Bot@v1
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
           provider: gemini
