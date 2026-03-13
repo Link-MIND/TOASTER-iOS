@@ -1,0 +1,17 @@
+name: iOS Code Review
+on:
+  pull_request:
+    paths: ['**/*.swift']
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: mini-min/ios-code-review@v1
+        with:
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+          provider: gemini
