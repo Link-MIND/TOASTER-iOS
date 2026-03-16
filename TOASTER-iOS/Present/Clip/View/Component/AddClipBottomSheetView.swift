@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
+@MainActor
 protocol AddClipBottomSheetViewDelegate: AnyObject {
     func addHeightBottom()
     func minusHeightBottom()

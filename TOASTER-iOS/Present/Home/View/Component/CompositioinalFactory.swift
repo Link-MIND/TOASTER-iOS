@@ -9,6 +9,7 @@ import UIKit
 
 // MARK: - Compositional Layout
 
+@MainActor
 enum CompositionalFactory {
     static func create() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, _ environment) -> NSCollectionLayoutSection? in

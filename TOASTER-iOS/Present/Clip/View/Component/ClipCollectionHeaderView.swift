@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
+@MainActor
 protocol ClipCollectionHeaderViewDelegate: AnyObject {
     func addClipButtonTapped()
 }

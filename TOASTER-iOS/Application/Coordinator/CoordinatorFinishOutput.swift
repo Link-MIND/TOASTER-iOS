@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 protocol CoordinatorFinishOutput {
     var onFinish: (() -> Void)? { get set }
 }

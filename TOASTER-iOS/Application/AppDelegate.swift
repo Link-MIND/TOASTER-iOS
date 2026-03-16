@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.set(true, forKey: "isAppAlarmOn")
         
         // MARK: - 카카오 로그인 설정
-
+        
         KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
         
         let result = KeyChainService.loadTokens(accessKey: Config.accessTokenKey, refreshKey: Config.refreshTokenKey)
@@ -50,8 +50,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 switch loginType {
                 case Config.appleLogin:
-                    checkAppleLogin { [weak self] result in
-                        self?.isLogin = result
+                    Task { [weak self] in
+                        let result = await self?.checkAppleLogin() ?? false
+                        await MainActor.run { [weak self] in
+                            self?.isLogin = result
+                        }
                     }
                 case Config.kakaoLogin:
                     checkKakaoLogin { [weak self] result in
@@ -108,31 +111,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func checkAppleLogin(completion: @escaping (Bool) -> Void) {
+    func checkAppleLogin() async -> Bool {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
-        appleIDProvider.getCredentialState(forUserID: UserDefaults.standard.string(forKey: Config.appleUserID) ?? "") { (credentialState, error) in
-            switch credentialState {
-            case .authorized:
-                print("해당 ID는 연동되어있습니다.")
-                completion(true)
-            case .revoked:
-                print("해당 ID는 연동되어있지않습니다.")
-                completion(false)
-            case .notFound:
-                print("해당 ID를 찾을 수 없습니다.")
-                completion(false)
-            default:
-                break
+        return await withCheckedContinuation { continuation in
+            appleIDProvider.getCredentialState(forUserID: UserDefaults.standard.string(forKey: Config.appleUserID) ?? "") { credentialState, _ in
+                switch credentialState {
+                case .authorized:
+                    print("해당 ID는 연동되어있습니다.")
+                    continuation.resume(returning: true)
+                case .revoked:
+                    print("해당 ID는 연동되어있지 않습니다.")
+                    continuation.resume(returning: false)
+                case .notFound:
+                    print("해당 ID를 찾을 수 없습니다.")
+                    continuation.resume(returning: false)
+                default:
+                    continuation.resume(returning: false)
+                }
             }
         }
     }
 }
 
 // MARK: - MessagingDelegate
+
 extension AppDelegate: MessagingDelegate {
     
     // FCM 토큰을 받았을 때 실행
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+    nonisolated func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         if let fcmToken {
             let _ = KeyChainService.saveFCMToken(fcmToken: fcmToken, key: Config.fcmTokenKey)
         }
@@ -140,16 +146,20 @@ extension AppDelegate: MessagingDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        if let navigationViewController = UIApplication.shared.keyWindow?.rootViewController as? ToasterNavigationController {
-            navigationViewController.popToRootViewController(animated: false)
-            if let tabBarController = navigationViewController.topViewController as? TabBarController {
-                tabBarController.selectedIndex = 0
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                            didReceive response: UNNotificationResponse,
+                                            withCompletionHandler completionHandler: @escaping () -> Void) {
+        Task { @MainActor in
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let navigationViewController = windowScene.windows
+                .first(where: { $0.isKeyWindow })?
+                .rootViewController as? ToasterNavigationController {
+                navigationViewController.popToRootViewController(animated: false)
+                if let tabBarController = navigationViewController.topViewController as? TabBarController {
+                    tabBarController.selectedIndex = 0
+                }
             }
         }
+        completionHandler()
     }
 }

@@ -141,8 +141,10 @@ private extension LinkWebViewController {
             progressObservation = $0.observe(
                 \.estimatedProgress,
                  options: [.new]) { [weak self] object, _ in
-                     let progress = Float(object.estimatedProgress)
-                     self?.progressView.progress = progress
+                     MainActor.assumeIsolated {
+                         let progress = Float(object.estimatedProgress)
+                         self?.progressView.progress = progress
+                     }
                  }
         }
     }

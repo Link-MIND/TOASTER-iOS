@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
+@MainActor
 protocol RemindAlarmOffBottomSheetViewDelegate: AnyObject {
     func alarmButtonTapped()
 }

@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
+@MainActor
 protocol TimerRepeatBottomSheetDelegate: AnyObject {
     func nextButtonTapped(selectedList: Set<Int>)
 }

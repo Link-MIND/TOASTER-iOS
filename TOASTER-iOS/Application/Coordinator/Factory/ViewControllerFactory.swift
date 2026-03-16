@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 protocol ViewControllerFactoryProtocol {
     func makeLoginVC() -> LoginViewController
     func makeTabBarVC() -> TabBarController
